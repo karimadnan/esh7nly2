@@ -12,8 +12,8 @@ import VodaCash from './components/VodaCash';
 import EtisCash from './components/EtisCash';
 import * as registerServiceWorker from './registerServiceWorker';
 
-localStorage.setItem("Server","http://192.168.1.6:5000/")
-// localStorage.setItem("Server","https://esh7nlytest.herokuapp.com/")
+// localStorage.setItem("Server","http://192.168.1.6:5000/")
+localStorage.setItem("Server","https://esh7nlytest.herokuapp.com/")
 
 Flux.createRoute('/',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));

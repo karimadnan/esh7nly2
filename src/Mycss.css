@@ -64,6 +64,40 @@
   text-align: center;
 }
 
+.leagueLogo{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 35%;
+  padding: 60px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/LeagueLogo.png');
+}
+
+.GameDesc  {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  border: 1px solid #f1f1f1;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 35%;
+  padding: 177px;
+  text-align: right;
+}
+
 .pubg {
   transition: background-size 0.6s ease;
   background-size: 100%;

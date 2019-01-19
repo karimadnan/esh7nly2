@@ -88,9 +88,13 @@ class Games extends Component {
   }
 
   SingleGame = () => {
+    var t=this.state.GameType+"Logo"
     if(!this.state.Games){
       return (
-        <div style={{marginTop: "140px"}}>
+        <div>
+        <div className={t}>
+        </div>
+        <div className="GameDesc">
         <div> 
         <Select
         value={this.state.SelectedOff}
@@ -99,6 +103,7 @@ class Games extends Component {
       />
         </div>
       <h3> {this.state.SelectedOff.value}</h3>
+      </div>
       </div>
       )
     }
