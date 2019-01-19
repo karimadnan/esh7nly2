@@ -11,12 +11,24 @@ class Games extends Component {
 
     state = {
       ErrorModal: false,
+      PaymentModal: false,
       ErrorMsg: '',
+      ExtraData:{},
       Url: localStorage.getItem('Server'),
       Games: true,
       OffersOps: [],
       SelectedOff: "",
-      GameType: ''
+      GameType: '',
+      SelectedServer:"",
+      paymentfill:"",
+      leagName:"",
+      ServerOps:[{value:"west",label:"west"},
+      {value:"nord",label:"nord"}],
+      PaymentOps: [
+        {value: "Vodafone-Cash", label: "Vodafone Cash"},
+        {value: "Etisalat-Cash", label: "Etisalat Cash"},
+        {value: "Direct-Pay", label: "Direct Payment"}],
+        SelectedPay: ''
     }
 
     onOpenModal = (type) => {
@@ -33,7 +45,10 @@ class Games extends Component {
       });
       // console.log(`Option selected:`, type);
     }
-
+    updateInput(key, value) {
+  
+      this.setState({ [key]: value });
+    }
   getGameDetails(name) {
     var that = this
     axios.get(`${this.state.Url}getGame?Name=${name}`)
@@ -86,10 +101,10 @@ class Games extends Component {
       )
     }
   }
-
+  
   SingleGame = () => {
     var t=this.state.GameType+"Logo"
-    if(!this.state.Games){
+    if(!this.state.Games && this.state.GameType =="league"){
       return (
         <div>
         <div className={t}>
@@ -102,13 +117,62 @@ class Games extends Component {
         options={this.state.OffersOps} placeholder='Choose Offer'
       />
         </div>
-      <h3> {this.state.SelectedOff.value}</h3>
+      <p> {this.state.SelectedOff.value}</p>
+      <Select
+        value={this.state.SelectedServer}
+        onChange={this.handleChange.bind(this, 'SelectedServer')}
+        options={this.state.ServerOps} placeholder='Choose Server'
+      />
+      <input  onChange={e => this.updateInput("leagName", e.target.value)}  type="text" placeholder="Summoner Name"></input>
+      <button onClick={()=> {
+        this.CheckOut()
+      }}>
+        Checkout
+      </button>
       </div>
       </div>
       )
     }
+    else if(!this.state.Games && this.state.GameType =="fortnite"){
+
+    }
   }
 
+  CheckOut = () => {
+    if(!localStorage.getItem("ID")){
+        this.setState({ErrorModal: true, ErrorMsg: "Please Login"})
+  }
+  if(this.state.GameType =="league"){
+  if(!this.state.SelectedOff || this.state.leagName =="" || !this.state.SelectedServer){
+    this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
+  }
+  else{
+    let obj={
+      "summonerName":this.state.leagName,
+      "SelectedOff":this.state.SelectedOff.value,
+      "SelectedServer":this.state.SelectedServer.value
+    }
+    this.setState({ExtraData:obj,PaymentModal:true})
+  }
+
+  }
+}
+paymentModal(){
+if(this.state.SelectedPay.value =="Direct-Pay"){
+  return(
+    <div>
+        <input  onChange={e => this.updateInput("paymentfill", e.target.value)}  type="text" placeholder="phone Number"></input>
+    </div>
+  );
+}
+else{
+  return(
+    <div>
+        <input  onChange={e => this.updateInput("paymentfill", e.target.value)}  type="text" placeholder="trans Id"></input>
+    </div>
+  ); 
+}
+}
   render() {
 
     return (
@@ -118,6 +182,14 @@ class Games extends Component {
     <Getlogin />
     <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center>
           <h2>{this.state.ErrorMsg}</h2>
+    </Modal>
+    <Modal open={this.state.PaymentModal} onClose={this.onCloseModal.bind(this,'PaymentModal')} center>
+    <Select
+        value={this.state.SelectedPay}
+        onChange={this.handleChange.bind(this, 'SelectedPay')}
+        options={this.state.PaymentOps} placeholder='Choose Payment'
+      />
+          {this.paymentModal()}
     </Modal>
     {this.GamesRender()}
     {this.SingleGame()}

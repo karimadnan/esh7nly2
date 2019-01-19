@@ -10,11 +10,12 @@ import SignUp from './components/SignUp';
 import Games from './components/Games';
 import VodaCash from './components/VodaCash';
 import EtisCash from './components/EtisCash';
+import Checkout from './components/Checkout';
 import * as registerServiceWorker from './registerServiceWorker';
 
 // localStorage.setItem("Server","http://192.168.1.6:5000/")
 localStorage.setItem("Server","https://esh7nlytest.herokuapp.com/")
-localStorage.setItem("LoggedIn", "false")
+
 
 Flux.createRoute('/',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
@@ -44,6 +45,11 @@ Flux.createRoute('/VodaCash',function(){
 Flux.createRoute('/EtisCash',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<EtisCash />,document.getElementById('root'));
+})
+
+Flux.createRoute('/Checkout/{Price}/{Game}',function(p){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Checkout Value={p.Price} Game={p.Game}/>,document.getElementById('root'));
 })
 
 // ReactDOM.render(<Main />, document.getElementById('root'));

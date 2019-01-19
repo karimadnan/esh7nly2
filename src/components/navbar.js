@@ -46,9 +46,8 @@ updateInput(key, value) {
 }
 
 logout =() =>{
+  localStorage.clear()
   localStorage.setItem("LoggedIn", "false");
-  localStorage.setItem("Name", "");
-  localStorage.setItem("Access", 0);
   window.location.reload()
 }
 
@@ -70,10 +69,11 @@ var that=this;
             let X = response.data.data[0]
             var UserName = X.Name
             var UserAccess = X.Access
-  
+
             localStorage.setItem("LoggedIn", "true");
             localStorage.setItem("Name", UserName);
             localStorage.setItem("Access", UserAccess);
+            localStorage.setItem("ID", X._id);
             that.setState({logged: true, name: UserName, access: UserAccess});
           })
           .catch(function (error) {
