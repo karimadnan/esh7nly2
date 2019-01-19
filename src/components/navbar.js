@@ -6,7 +6,6 @@ import Modal from 'react-responsive-modal';
 // axios.defaults.baseURL=localStorage.getItem("server")
 
 
-
 class Getlogin extends Component {
 
     state = {
