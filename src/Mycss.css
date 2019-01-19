@@ -9,7 +9,7 @@
   font-weight: bold;
   border: 2px solid #f1f1f1;
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 86%;
   transform: translate(-50%, -50%);
   z-index: 5;
@@ -31,7 +31,7 @@
   font-weight: bold;
   border: 2px solid #f1f1f1;
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 58%;
   transform: translate(-50%, -50%);
   z-index: 5;
@@ -53,7 +53,7 @@
   font-weight: bold;
   border: 2px solid #f1f1f1;
   position: absolute;
-  top: 60%;
+  top: 65%;
   left: 30%;
   transform: translate(-50%, -50%);
   z-index: 5;
@@ -75,7 +75,7 @@
   font-weight: bold;
   border: 2px solid #f1f1f1;
   position: absolute;
-  top: 30%;
+  top: 35%;
   left: 86%;
   transform: translate(-50%, -50%);
   z-index: 5;
@@ -97,7 +97,7 @@
   font-weight: bold;
   border: 2px solid #f1f1f1;
   position: absolute;
-  top: 30%;
+  top: 35%;
   left: 58%;
   transform: translate(-50%, -50%);
   z-index: 5;
@@ -118,7 +118,7 @@
   color: white;
   font-weight: bold;
   border: 2px solid #f1f1f1;
-  top: 30%;
+  top: 35%;
   left: 30%;
   transform: translate(-50%, -50%);
   width: 25%;
@@ -183,6 +183,86 @@
   text-align: center;
 }
 
+.Voda-title {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  border: 1px solid #f1f1f1;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 35%;
+  padding: 10px;
+  text-align: center;
+}
+
+.Voda-title2  {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  border: 1px solid #f1f1f1;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 35%;
+  padding: 177px;
+  text-align: right;
+}
+
+.Voda-text {
+  white-space: nowrap;
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  position: absolute;
+  top: 10%;
+  left: 80%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 35%;
+}
+
+.Voda-text3 p {
+  white-space: nowrap;
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  position: absolute;
+  top: 39%;
+  left: 76%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 35%;
+}
+
+.Voda-text2 p {
+  white-space: nowrap;
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  position: absolute;
+  top: 30%;
+  left: 76%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 35%;
+}
+
+.Voda-text p {
+  white-space: nowrap;
+  color: rgb(252, 252, 252);
+  font-weight: bold;
+  position: absolute;
+  top: 120%;
+  left: -35%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 35%;
+}
+
 .signup_recruiter {
   transform: translate(-35%, 50%);
   width: 400%;
@@ -212,6 +292,32 @@
 .bg-image {
   /* The image used */
   background-image: url("Images/newbg.png");
+
+  /* Full height */
+  height:stretch;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.voda-bg {
+  /* The image used */
+  background-image: url("Images/vodabg.png");
+
+  /* Full height */
+  height:stretch;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.etis-bg {
+  /* The image used */
+  background-image: url("Images/etisalatbg.png");
 
   /* Full height */
   height:stretch;

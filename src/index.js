@@ -8,7 +8,12 @@ import App from './App';
 import Main from './components/main';
 import SignUp from './components/SignUp';
 import Games from './components/Games';
+import VodaCash from './components/VodaCash';
+import EtisCash from './components/EtisCash';
 import * as registerServiceWorker from './registerServiceWorker';
+
+localStorage.setItem("Server","http://192.168.1.6:5000/")
+// localStorage.setItem("Server","https://esh7nlytest.herokuapp.com/")
 
 Flux.createRoute('/',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
@@ -30,7 +35,15 @@ Flux.createRoute('/Games',function(){
     ReactDOM.render(<Games />,document.getElementById('root'));
 })
 
+Flux.createRoute('/VodaCash',function(){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<VodaCash />,document.getElementById('root'));
+})
 
+Flux.createRoute('/EtisCash',function(){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<EtisCash />,document.getElementById('root'));
+})
 
 // ReactDOM.render(<Main />, document.getElementById('root'));
 

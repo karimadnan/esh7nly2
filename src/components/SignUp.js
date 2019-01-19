@@ -39,12 +39,12 @@ class SignUp extends Component {
 
 <div class="radio">
   <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios1" value="Male" checked></input>
+    <input type="radio" style={{cursor: 'pointer'}} name="optionsRadios" id="optionsRadios1" value="Male" checked></input>
     Male
     </label>
     <span>   </span>
     <label>
-    <input type="radio" name="optionsRadios" id="optionsRadios2" value="Female" checked></input>
+    <input type="radio" style={{cursor: 'pointer'}} name="optionsRadios" id="optionsRadios2" value="Female" checked></input>
     Female
     </label>
 </div>
