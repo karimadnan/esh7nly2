@@ -76,6 +76,7 @@ class Games extends Component {
     if(this.state.Games){
 
       return (
+
         <div className="bg-image"> 
 
         <div class="league" onClick={()=>{this.getGameDetails("league")}}>  
@@ -97,7 +98,7 @@ class Games extends Component {
         </div>
     
     
-        </div>
+      </div>
       )
     }
   }
@@ -106,31 +107,93 @@ class Games extends Component {
     var t=this.state.GameType+"Logo"
     if(!this.state.Games && this.state.GameType =="league"){
       return (
-        <div>
-        <div className={t}>
+
+        <div class="container">
+
+        {/* Game LOGO */}
+         <div class="col-xs-12">
+            <div className={t}> </div>
         </div>
+
+        {/* Offers BODY */}
         <div className="GameDesc">
-        <div> 
-        <Select
-        value={this.state.SelectedOff}
-        onChange={this.handleChange.bind(this, 'SelectedOff')}
-        options={this.state.OffersOps} placeholder='Choose Offer'
-      />
-        </div>
-      <p> {this.state.SelectedOff.value}</p>
-      <Select
-        value={this.state.SelectedServer}
-        onChange={this.handleChange.bind(this, 'SelectedServer')}
-        options={this.state.ServerOps} placeholder='Choose Server'
-      />
-      <input  onChange={e => this.updateInput("leagName", e.target.value)}  type="text" placeholder="Summoner Name"></input>
-      <button onClick={()=> {
+
+
+      <div class="row">
+
+        <label for="ChooseOffer" class="col-xs-5">Choose Offer:</label>
+        <div class="col-xs-7">
+              <Select
+              value={this.state.SelectedOff}
+              onChange={this.handleChange.bind(this, 'SelectedOff')}
+              options={this.state.OffersOps} placeholder='Choose Offer'
+            />
+         </div>
+         <div class="col-xs-12">
+            <p></p>
+         </div>
+      </div>
+
+
+
+      <div class="row">
+
+        <label for="ChooseServer" class="col-xs-5">Choose Server:</label>
+        <div class="col-xs-7">
+          <Select      
+              value={this.state.SelectedServer}
+              onChange={this.handleChange.bind(this, 'SelectedServer')}
+              options={this.state.ServerOps} placeholder='Choose Server'
+            />
+         </div>
+         <div class="col-xs-12">
+            <p></p>
+         </div>
+      </div>
+
+
+      <div class="row">
+      <label for="ChooseServer" class="col-xs-6">League Name:</label>
+      <input class="col-xs-6" 
+      style=
+        {{
+          marginLeft : -15,
+          color : "black"
+        }}
+        onChange={e => this.updateInput("leagName", e.target.value)}  type="text" placeholder="Summoner Name"></input>
+
+         <div class="col-xs-12">
+            <p></p>
+         </div>
+     </div>
+
+      <div class="row">
+      <label for="Payment" class="col-xs-6">Total To Pay:</label>
+      <div class="col-xs-6">
+      <p> {! this.state.SelectedOff.value && <p>0$</p>}</p>
+      {this.state.SelectedOff.value && <p> {this.state.SelectedOff.value} = {this.state.SelectedOff.label}</p>}
+      </div>
+      </div>
+
+      <div class="row">
+      <label for="CheckOut" class="col-xs-6">Proceed to checkout:</label>
+      <button class="col-xs-6 btn btn-primary"      
+      style=
+        {{
+          marginLeft : -15,
+          color : "white"
+        }}
+        onClick={()=> {
         this.CheckOut()
       }}>
         Checkout
       </button>
       </div>
+      
+        </div>
+      {/* Offers BODY END */}
       </div>
+
       )
     }
     else if(!this.state.Games && this.state.GameType =="fortnite"){
@@ -139,9 +202,6 @@ class Games extends Component {
   }
 
   CheckOut = () => {
-    if(!localStorage.getItem("ID")){
-        this.setState({ErrorModal: true, ErrorMsg: "Please Login"})
-  }
   if(this.state.GameType =="league"){
   if(!this.state.SelectedOff || this.state.leagName =="" || !this.state.SelectedServer){
     this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
@@ -152,7 +212,13 @@ class Games extends Component {
       "SelectedOff":this.state.SelectedOff.value,
       "SelectedServer":this.state.SelectedServer.value
     }
-    this.setState({ExtraData:obj,PaymentModal:true})
+    if(!localStorage.getItem("ID")){
+      this.setState({ErrorModal: true, ErrorMsg: "Please Login"})
+    }
+    else{
+      this.setState({ExtraData:obj,PaymentModal:true})
+    }
+
   }
 
   }

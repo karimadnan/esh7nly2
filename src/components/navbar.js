@@ -100,8 +100,14 @@ return (
     <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand"onClick={()=>{ReactRouter.goTo("/Main")}} style={{cursor: 'pointer'}}><b>E<span class="glyphicon glyphicon-usd"></span>h7nly</b></a>
-        </div>
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand"onClick={()=>{ReactRouter.goTo("/Main")}} style={{cursor: 'pointer'}}><b>E<span class="glyphicon glyphicon-usd"></span>h7nly</b></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li ><a onClick={()=>{ReactRouter.goTo("/Main")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-home"></span> Home</a></li>
           <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-tag"></span> Payment / الدفع<span class="caret"></span></a>
@@ -130,32 +136,28 @@ return (
       { ! this.state.logged &&  <a  class="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> <b>Login</b> <span class="caret"></span></a> }
               <ul id="login-dp" class="dropdown-menu">
               <li>
-              <div class="row">
-              <div class="col-md-12">
-            
-              <div class="form-group">
+              <div class="form-group col col-xs-6">
                  <label class="sr-only" for="exampleInputEmail2">Phone</label>
                  <input type="text"  class="form-control" value={this.state.Phone} onChange={e => this.updateInput("Phone", e.target.value)} id="exampleInputEmail2" placeholder="Phone Number" required></input>
               </div>	
-              <div class="form-group">
+              <div class="form-group col col-xs-6">
                            <label class="sr-only" for="exampleInputPassword2">Password</label>
                            <input type="password"  class="form-control" value={this.state.Password} onChange={e => this.updateInput("Password", e.target.value)} id="exampleInputPassword2" placeholder="Password" required></input>
-                           <div class="help-block text-right"><a >Forgot your password ?</a></div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group col col-xs-6">
                            <button onClick={login} disabled={!this.state.Phone.length || !this.state.Password.length} class="btn btn-primary btn-block">Log in</button> 
                         </div>	
-            
-                
-                  </div>
-                
-               </div>
+                        <div class="col col-xs-6"><label style=
+                                                  {{
+                                                    color : "white"
+                                                  }}>Forgot password ?</label></div>
                 </li>
               </ul> 
         </li>
 
         </ul>
 
+      </div>
       </div>
     </nav>
     </div>);

@@ -69,11 +69,9 @@
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
   position: absolute;
-  top: 20%;
+  top: 25%;
   left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-45%, 80%);
   z-index: 2;
   width: 35%;
   padding: 60px;
@@ -85,17 +83,16 @@
 .GameDesc  {
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-  color: rgb(212, 14, 14);
+  color: rgb(255, 255, 255);
   font-weight: bold;
   border: 1px solid #f1f1f1;
   position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-27%, 110%);
+  left: 40%;
   z-index: 2;
-  width: 35%;
-  padding: 177px;
-  text-align: right;
+  width: 50%;
+  padding: 25px;
+
 }
 
 .pubg {
@@ -506,10 +503,25 @@
 }
 
 #login-dp{
-    min-width: 250px;
-    padding: 14px 14px 0;
+    min-width: 350px;
+    padding: 15px 5px 0;
     overflow:hidden;
-    background-color:rgba(255,255,255,.8);
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    color: rgb(252, 252, 252);
+    font-weight: bold;
+    border: 1px solid #f1f1f1;
+}
+
+@media screen and (max-width: 700px) {
+  
+  #login-dp{
+    font-weight: bold;
+    min-width: 250px;
+    padding: 5px 1px 0;
+    overflow:hidden;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
 }
 #login-dp .help-block{
     font-size:12px    
@@ -520,40 +532,74 @@
     clear:both;
     padding:14px;
 }
-#login-dp .social-buttons{
-    margin:12px 0    
-}
-#login-dp .social-buttons a{
-    width: 49%;
-}
 #login-dp .form-group {
     margin-bottom: 10px;
 }
-.btn-fb{
-    color: #fff;
-    background-color:#3b5998;
-}
-.btn-fb:hover{
-    color: #fff;
-    background-color:#496ebc 
-}
-.btn-tw{
-    color: #fff;
-    background-color:#55acee;
-}
-.btn-tw:hover{
-    color: #fff;
-    background-color:#59b5fa;
+
+  .leagueLogo{
+    border: 1px solid #f1f1f1;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    -webkit-transform: translate(-50%, 50%);
+    z-index: 2;
+    width: 100%;
+    padding: 100px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('Images/LeagueLogo.png');
+  }
+
+  .GameDesc  {
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    border: 1px solid #f1f1f1;
+    position: absolute;
+    -webkit-transform: translate(-38%, 150%);
+    left: 40%;
+    width: 80%;
+    padding: 25px;
+  }
 }
 
-.Signup form span.help-block {
-  font-size: 14px;
-  padding-bottom: 10px;
-  color: #999;
-}
+  @media screen and (max-width: 400px) {
 
+    .leagueLogo{
+      border: 1px solid #f1f1f1;
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+      position: absolute;
+      top: 105%;
+      left: 50%;
+      -webkit-transform: translate(-50%, 50%);
+      z-index: 2;
+      width: 100%;
+      padding: 100px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-image: url('Images/LeagueLogo.png');
+    }
+  
+    .GameDesc  {
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+      border: 1px solid #f1f1f1;
+      position: absolute;
+      -webkit-transform: translate(-38%, 150%);
+      left: 40%;
+      width: 91%;
+      padding: 5px;
+    }
+}
 @media screen and (max-width: 600px) {
   
+
   .bg-image {
     /* The image used */
     background-image: url("Images/bgresp.png");
@@ -572,7 +618,7 @@
     font-weight: bold;
     border: 2px solid #f1f1f1;
     position: absolute;
-    top: 95%;
+    top: 103%;
     left: 68.5%;
     transform: translate(-50%, -50%);
     z-index: 5;
@@ -594,7 +640,7 @@
     font-weight: bold;
     border: 2px solid #f1f1f1;
     position: absolute;
-    top: 80%;
+    top: 88%;
     left: 68.5%;
     transform: translate(-50%, -50%);
     z-index: 5;
@@ -616,7 +662,7 @@
     font-weight: bold;
     border: 2px solid #f1f1f1;
     position: absolute;
-    top: 65%;
+    top: 73%;
     left: 68.5%;
     transform: translate(-50%, -50%);
     z-index: 5;
@@ -638,7 +684,7 @@
     font-weight: bold;
     border: 2px solid #f1f1f1;
     position: absolute;
-    top: 50%;
+    top: 58%;
     left: 68.5%;
     transform: translate(-50%, -50%);
     z-index: 5;
@@ -660,7 +706,7 @@
     font-weight: bold;
     border: 2px solid #f1f1f1;
     position: absolute;
-    top: 35%;
+    top: 43%;
     left: 68.5%;
     transform: translate(-50%, -50%);
     z-index: 5;
@@ -681,7 +727,7 @@
     color: white;
     font-weight: bold;
     border: 2px solid #f1f1f1;
-    top: 20%;
+    top: 28%;
     left: 68.5%;
     transform: translate(-50%, -50%);
     width: 90%;

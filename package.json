@@ -5,11 +5,12 @@
   "dependencies": {
     "axios": "^0.18.0",
     "flux-react-router": "^0.6.1",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-responsive-modal": "^3.5.1",
     "react-scripts": "1.0.17",
-    "react-select": "^2.3.0"
+    "react-select": "^2.3.0",
+    "reactstrap": "^7.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
