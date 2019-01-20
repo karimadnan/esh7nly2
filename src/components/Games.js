@@ -17,11 +17,12 @@ class Games extends Component {
       Url: localStorage.getItem('Server'),
       Games: true,
       OffersOps: [],
-      SelectedOff: "",
+      SelectedOff: '',
       GameType: '',
-      SelectedServer:"",
-      paymentfill:"",
-      leagName:"",
+      SelectedServer:'',
+      paymentfill:'',
+      leagName:'',
+      BgChose: '',
       ServerOps:[{value:"west",label:"west"},
       {value:"nord",label:"nord"}],
       PaymentOps: [
@@ -38,7 +39,6 @@ class Games extends Component {
     onCloseModal = (type) => {
       this.setState({[type]: false });
     };
-
     handleChange(type, value) {
       console.log(value, type)
       this.setState({[type]: value}, () =>{
@@ -102,14 +102,31 @@ class Games extends Component {
       )
     }
   }
-  
+
   SingleGame = () => {
+
+    const customStyles = {
+      option: (provided, state) => ({
+        ...provided,
+        borderBottom: '1px dotted black',
+        color: state.isSelected ? 'red' : 'blue',
+        color: 'red',
+        padding: 10,
+      }),
+      singleValue: (provided, state) => {
+        const opacity = state.isDisabled ? 0.5 : 1;
+        const transition = 'opacity 300ms';
+    
+        return { ...provided, opacity, transition };
+      }
+    }
+
     var t=this.state.GameType+"Logo"
+
     if(!this.state.Games && this.state.GameType =="league"){
       return (
-
+        <div className="bgr-league0"> 
         <div class="container">
-
         {/* Game LOGO */}
          <div class="col-xs-12">
             <div className={t}> </div>
@@ -121,9 +138,10 @@ class Games extends Component {
 
       <div class="row">
 
-        <label for="ChooseOffer" class="col-xs-5">Choose Offer:</label>
+        <label for="ChooseOffer" class="col-xs-5">1-Choose Offer:</label>
         <div class="col-xs-7">
               <Select
+              styles={customStyles}
               value={this.state.SelectedOff}
               onChange={this.handleChange.bind(this, 'SelectedOff')}
               options={this.state.OffersOps} placeholder='Choose Offer'
@@ -138,9 +156,10 @@ class Games extends Component {
 
       <div class="row">
 
-        <label for="ChooseServer" class="col-xs-5">Choose Server:</label>
+        <label for="ChooseServer" class="col-xs-5">2-Choose Server:</label>
         <div class="col-xs-7">
           <Select      
+              styles={customStyles}
               value={this.state.SelectedServer}
               onChange={this.handleChange.bind(this, 'SelectedServer')}
               options={this.state.ServerOps} placeholder='Choose Server'
@@ -153,7 +172,7 @@ class Games extends Component {
 
 
       <div class="row">
-      <label for="ChooseServer" class="col-xs-6">League Name:</label>
+      <label for="ChooseServer" class="col-xs-6">3-League Name:</label>
       <input class="col-xs-6" 
       style=
         {{
@@ -170,7 +189,7 @@ class Games extends Component {
       <div class="row">
       <label for="Payment" class="col-xs-6">Total To Pay:</label>
       <div class="col-xs-6">
-      <p> {! this.state.SelectedOff.value && <p>0$</p>}</p>
+      {! this.state.SelectedOff.value && <p>0$</p>}
       {this.state.SelectedOff.value && <p> {this.state.SelectedOff.value} = {this.state.SelectedOff.label}</p>}
       </div>
       </div>
@@ -193,11 +212,82 @@ class Games extends Component {
         </div>
       {/* Offers BODY END */}
       </div>
+      </div>
 
       )
     }
     else if(!this.state.Games && this.state.GameType =="fortnite"){
+      return (
+        <div className="bgr-fortnite0"> 
+           <div class="container">
+                {/* Game LOGO */}
+                <div class="col-xs-12">
+                    <div className={t}> </div>
+                </div>
+                <div className="GameDesc">
 
+                        <div class="col-xs-12">
+                            <p></p>
+                        </div>
+                        
+                      <div class="row">
+                      <label for="ChooseOffer" class="col-xs-5">1-Choose Offer:</label>
+                      <div class="col-xs-7">
+                            <Select
+                            styles={customStyles}
+                            value={this.state.SelectedOff}
+                            onChange={this.handleChange.bind(this, 'SelectedOff')}
+                            options={this.state.OffersOps} placeholder='Choose Offer'
+                          />
+                      </div>
+                    </div>
+
+                        <div class="col-xs-12">
+                            <p></p>
+                        </div>
+
+                      <div class="row">
+                      <label for="ChooseServer" class="col-xs-6">2-Phone Number:</label>
+                      <input class="col-xs-6" 
+                      style=
+                        {{
+                          marginLeft : -15,
+                          color : "black"
+                        }}
+                        onChange={e => this.updateInput("leagName", e.target.value)}  type="text" placeholder="Phone Number"></input>
+
+                        <div class="col-xs-12">
+                            <p></p>
+                        </div>
+                        </div>
+
+
+                    <div class="row">
+                        <label for="Payment" class="col-xs-6">Total To Pay:</label>
+                        <div class="col-xs-6">
+                        {! this.state.SelectedOff.value && <p>0$</p>}
+                        {this.state.SelectedOff.value && <p> {this.state.SelectedOff.value} = {this.state.SelectedOff.label}</p>}
+                        </div>
+                    </div>
+
+                    <div class="row">
+                          <label for="CheckOut" class="col-xs-6">Proceed to checkout:</label>
+                          <button class="col-xs-6 btn btn-primary"      
+                          style=
+                            {{
+                              marginLeft : -15,
+                              color : "white"
+                            }}
+                            onClick={()=> {
+                            this.CheckOut()
+                          }}>
+                            Checkout
+                          </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
     }
   }
 
@@ -222,7 +312,11 @@ class Games extends Component {
   }
 
   }
+  else if(this.state.GameType =="fortnite"){
+      
+  }
 }
+
 paymentModal(){
 if(this.state.SelectedPay.value =="Direct-Pay"){
   return(

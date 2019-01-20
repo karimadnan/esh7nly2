@@ -116,7 +116,7 @@ return (
               <li><a onClick={()=>{ReactRouter.goTo("/EtisCash")}} style={{cursor: 'pointer'}} >Etisalat Cash</a></li>
             </ul>
           </li>
-          <li><a onClick={()=>{ReactRouter.goTo("/Games")}} style={{cursor: 'pointer'}}><span class="	glyphicon glyphicon glyphicon-king"></span> Games Prices</a></li>
+          <li><a onClick={()=>{ReactRouter.goTo("/Games")}} style={{cursor: 'pointer'}}><span class="	glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
           <li><a href="#"><span class="	glyphicon glyphicon-earphone"></span> Contact Us</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
