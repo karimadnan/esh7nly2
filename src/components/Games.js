@@ -6,6 +6,7 @@ import Getlogin from './navbar';
 import axios from 'axios';
 import Modal from 'react-responsive-modal';
 import Select from 'react-select';
+import '../Respcss.css';
 
 class Games extends Component {
 
@@ -120,7 +121,6 @@ class Games extends Component {
         ...provided,
         borderBottom: '1px dotted black',
         color: state.isSelected ? 'red' : 'blue',
-        color: 'red',
         padding: 10,
       }),
       singleValue: (provided, state) => {
@@ -133,7 +133,7 @@ class Games extends Component {
 
     var t=this.state.GameType+"Logo"
 
-    if(!this.state.Games && this.state.GameType =="league"){
+    if(!this.state.Games && this.state.GameType ==="league"){
       return (
         <div className="bgr-league0"> 
         <div class="container">
@@ -226,7 +226,7 @@ class Games extends Component {
 
       )
     }
-    else if(!this.state.Games && this.state.GameType =="fortnite"){
+    else if(!this.state.Games && this.state.GameType ==="fortnite"){
       return (
         <div className="bgr-fortnite0"> 
            <div class="container">
@@ -303,8 +303,8 @@ class Games extends Component {
 
   CheckOut = () => {
     // LEAGUE CHECKOUT
-  if(this.state.GameType =="league"){
-  if(!this.state.SelectedOff || this.state.leagName =="" || !this.state.SelectedServer){
+  if(this.state.GameType ==="league"){
+  if(!this.state.SelectedOff || this.state.leagName ==="" || !this.state.SelectedServer){
     this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
   }
   else{
@@ -324,8 +324,8 @@ class Games extends Component {
 
   }
   // FORTNITE CHECKOUT
-  else if(this.state.GameType =="fortnite"){
-    if(!this.state.SelectedOff || this.state.fortPhone ==""){
+  else if(this.state.GameType ==="fortnite"){
+    if(!this.state.SelectedOff || this.state.fortPhone ===""){
       this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
     }
     else{
@@ -345,7 +345,7 @@ class Games extends Component {
 }
 
 paymentModal(){
-if(this.state.SelectedPay.value =="Direct-Pay"){
+if(this.state.SelectedPay.value ==="Direct-Pay"){
   return(
     <div>
         <input  onChange={e => this.updateInput("paymentfill", e.target.value)}  type="text" placeholder="phone Number"></input>

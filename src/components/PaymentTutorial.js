@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import '../Mycss.css';
+import '../Respcss.css';
 import Getlogin from './navbar';
 
 class Games extends Component {
@@ -50,7 +51,7 @@ state = {
   SinglePayment = () => {
     var t=this.state.PaymentOps+"Logo"
 
-    if(!this.state.ChoosePay && this.state.PaymentOps =='VodaCash'){
+    if(!this.state.ChoosePay && this.state.PaymentOps ==='VodaCash'){
       return (
       <div class="container">
       <div class="col-xs-12">
@@ -81,7 +82,7 @@ state = {
       </div>
       )
     }
-    else if(!this.state.ChoosePay && this.state.PaymentOps =='EtisCash'){
+    else if(!this.state.ChoosePay && this.state.PaymentOps ==='EtisCash'){
       return (
         <div class="container">
         <div class="col-xs-12">
@@ -111,7 +112,7 @@ state = {
           </div>
         )
         }
-     else if(!this.state.ChoosePay && this.state.PaymentOps =='DirectPay'){
+     else if(!this.state.ChoosePay && this.state.PaymentOps ==='DirectPay'){
         return (
          <div class="col-xs-12">
              <div className={t}> 

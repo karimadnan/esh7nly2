@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import '../App.css';
 import '../Mycss.css';
+import '../Respcss.css';
+import Getlogin from './navbar';
 
 // var ReactRouter = require('flux-react-router');
  // ReactRouter.goTo("/DriverTrips")
@@ -14,6 +16,7 @@ class SignUp extends Component {
     <div >
 
     <div className="bg-image"> 
+    <Getlogin />
     <div class="container">
     <div class="bg-text">
 

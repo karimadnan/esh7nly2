@@ -3,6 +3,7 @@ import '../Mycss.css';
 import axios from 'axios';
 import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
+import '../Respcss.css';
 // axios.defaults.baseURL=localStorage.getItem("server")
 
 
@@ -28,7 +29,7 @@ class Getlogin extends Component {
     };
 
 componentWillMount(){
-  if(localStorage.getItem("LoggedIn") != "false"){
+  if(localStorage.getItem("LoggedIn") !== "false"){
     this.setState({logged: true}); 
     this.setState({access: localStorage.getItem("Access")});
     this.setState({name: localStorage.getItem("Name")});
@@ -110,7 +111,7 @@ return (
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li ><a onClick={()=>{ReactRouter.goTo("/Main")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li ><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/Payment")}}><span class="glyphicon glyphicon-tag"></span> Payment / الدفع</a>
+          <li ><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/Payment")}}><span class="glyphicon glyphicon-tag"></span> How To Buy / ازاى تشترى</a>
           </li>
           <li><a onClick={()=>{ReactRouter.goTo("/Games")}} style={{cursor: 'pointer'}}><span class="	glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
           <li><a href="#"><span class="	glyphicon glyphicon-earphone"></span> Contact Us</a></li>
