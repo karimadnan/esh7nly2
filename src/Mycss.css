@@ -105,7 +105,7 @@
   position: absolute;
   top: 105%;
   left: 50%;
-  -webkit-transform: translate(-50%, 50%);
+  -webkit-transform: translate(-130%, 75%);
   z-index: 2;
   width: 30%;
   padding: 70px;
@@ -114,9 +114,39 @@
   background-image: url('Images/VodaCashLogo.png');
 }
 
+.EtisCashLogo{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 105%;
+  left: 50%;
+  -webkit-transform: translate(-130%, 75%);
+  z-index: 2;
+  width: 30%;
+  padding: 70px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/EtisCashLogo.png');
+}
 
+.DirectPayLogo{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 105%;
+  left: 50%;
+  -webkit-transform: translate(-50%, 50%);
+  z-index: 2;
+  width: 30%;
+  padding: 70px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/DirectPay.png');
+}
 
-.VodaCash:hover, .EtisCash:hover {
+.VodaCash:hover, .EtisCash:hover, .DirectPay:hover {
   box-shadow:0 0 25px rgb(252, 252, 252);
   transition: all 0.5s;
   -webkit-transition: all 0.5s;
@@ -159,6 +189,21 @@
   background-image: url('Images/Vodacash.png');
 }
 
+.DirectPay{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  -webkit-transform: translate(180%, 50%);
+  z-index: 2;
+  width: 15%;
+  padding: 100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/DirectPay.png');
+}
 .PaymentDesc  {
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
@@ -166,11 +211,25 @@
   font-weight: bold;
   border: 1px solid #f1f1f1;
   position: absolute;
-  -webkit-transform: translate(-35%, 250%);
+  -webkit-transform: translate(-37.5%, 250%);
   left: 40%;
   z-index: 2;
   width: 50%;
   padding: 15px;
+
+}
+
+.PaymentDesc2  {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  border: 1px solid #f1f1f1;
+  position: absolute;
+  -webkit-transform: translate(65%, 20%);
+  z-index: 2;
+  text-align: right;
+
 
 }
 
@@ -660,7 +719,130 @@
 }
 
 @media screen and (max-width: 700px) {
+
+  .PaymentDesc2  {
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    border: 1px solid #f1f1f1;
+    position: absolute;
+    -webkit-transform: translate(-5%, 35%);
+    z-index: 2;
+    text-align: right;
+    width: 100%;
+  }
+
+  .VodaCashLogo{
+    border: 1px solid #f1f1f1;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    -webkit-transform: translate(-50%, 50%);
+    z-index: 2;
+    width: 100%;
+    padding: 70px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('Images/VodaCashLogo.png');
+  }
   
+  .EtisCashLogo{
+    border: 1px solid #f1f1f1;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    -webkit-transform: translate(-50%, 50%);
+    z-index: 2;
+    width: 100%;
+    padding: 70px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('Images/EtisCashLogo.png');
+  }
+  
+  .DirectPayLogo{
+    border: 1px solid #f1f1f1;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    position: absolute;
+    top: 105%;
+    left: 50%;
+    -webkit-transform: translate(-50%, 50%);
+    z-index: 2;
+    width: 90%;
+    padding: 70px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('Images/DirectPay.png');
+  }
+
+  .EtisCash{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  -webkit-transform: translate(-78%, 170%);
+  z-index: 2;
+  width: 190%;
+  padding: 50px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/EtisCashLogo.png');
+}
+
+.VodaCash{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  -webkit-transform: translate(-25%, 60%);
+  z-index: 2;
+  width: 190%;
+  padding: 50px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/VodaCashLogo.png');
+}
+
+.DirectPay{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  -webkit-transform: translate(-25%, 280%);
+  z-index: 2;
+  width: 190%;
+  padding: 50px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/DirectPayResp.png');
+}
+
+
+.PaymentDesc  {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  border: 1px solid #f1f1f1;
+  position: absolute;
+  -webkit-transform: translate(-40%, 180%);
+  z-index: 2;
+  width: 90%;
+  padding: 24px;
+
+}
   #login-dp{
     font-weight: bold;
     min-width: 250px;
@@ -729,6 +911,20 @@
 }
 
   @media screen and (max-width: 400px) {
+
+    .PaymentDesc  {
+      background-color: rgb(0,0,0); /* Fallback color */
+      background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+      color: rgb(255, 255, 255);
+      font-weight: bold;
+      border: 1px solid #f1f1f1;
+      position: absolute;
+      -webkit-transform: translate(-40%, 180%);
+      z-index: 2;
+      width: 90%;
+      padding: 20px;
+    
+    }
 
     .leagueLogo{
       border: 1px solid #f1f1f1;
