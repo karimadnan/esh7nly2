@@ -110,11 +110,7 @@ return (
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li ><a onClick={()=>{ReactRouter.goTo("/Main")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-tag"></span> Payment / الدفع<span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a onClick={()=>{ReactRouter.goTo("/VodaCash")}} style={{cursor: 'pointer'}} >Vodafone Cash</a></li>
-              <li><a onClick={()=>{ReactRouter.goTo("/EtisCash")}} style={{cursor: 'pointer'}} >Etisalat Cash</a></li>
-            </ul>
+          <li ><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/Payment")}}><span class="glyphicon glyphicon-tag"></span> Payment / الدفع</a>
           </li>
           <li><a onClick={()=>{ReactRouter.goTo("/Games")}} style={{cursor: 'pointer'}}><span class="	glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
           <li><a href="#"><span class="	glyphicon glyphicon-earphone"></span> Contact Us</a></li>

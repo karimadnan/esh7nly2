@@ -8,8 +8,7 @@ import App from './App';
 import Main from './components/main';
 import SignUp from './components/SignUp';
 import Games from './components/Games';
-import VodaCash from './components/VodaCash';
-import EtisCash from './components/EtisCash';
+import Payment from './components/PaymentTutorial';
 import Checkout from './components/Checkout';
 import * as registerServiceWorker from './registerServiceWorker';
 
@@ -37,14 +36,9 @@ Flux.createRoute('/Games',function(){
     ReactDOM.render(<Games />,document.getElementById('root'));
 })
 
-Flux.createRoute('/VodaCash',function(){
+Flux.createRoute('/Payment',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<VodaCash />,document.getElementById('root'));
-})
-
-Flux.createRoute('/EtisCash',function(){
-    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<EtisCash />,document.getElementById('root'));
+    ReactDOM.render(<Payment />,document.getElementById('root'));
 })
 
 Flux.createRoute('/Checkout/{Price}/{Game}',function(p){

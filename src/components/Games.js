@@ -22,9 +22,19 @@ class Games extends Component {
       SelectedServer:'',
       paymentfill:'',
       leagName:'',
+      fortPhone: '',
       BgChose: '',
-      ServerOps:[{value:"west",label:"west"},
-      {value:"nord",label:"nord"}],
+      ServerOps:[{value:"EU West",label:"EU West"},
+      {value:"EU Nordic and East",label:"EU Nordic and East"},
+      {value:"North America",label:"North America"},
+      {value:"Turkey",label:"Turkey"},
+      {value:"Japan",label:"Japan"},
+      {value:"Brazil",label:"Brazil"},
+      {value:"Russia",label:"Russia"},
+      {value:"Oceania",label:"Oceania"},
+      {value:"Latin America North",label:"Latin America North"},
+      {value:"Latin America South",label:"Latin America South"}
+      ],
       PaymentOps: [
         {value: "Vodafone-Cash", label: "Vodafone Cash"},
         {value: "Etisalat-Cash", label: "Etisalat Cash"},
@@ -254,7 +264,7 @@ class Games extends Component {
                           marginLeft : -15,
                           color : "black"
                         }}
-                        onChange={e => this.updateInput("leagName", e.target.value)}  type="text" placeholder="Phone Number"></input>
+                        onChange={e => this.updateInput("fortPhone", e.target.value)}  type="text" placeholder="Phone Number"></input>
 
                         <div class="col-xs-12">
                             <p></p>
@@ -292,6 +302,7 @@ class Games extends Component {
   }
 
   CheckOut = () => {
+    // LEAGUE CHECKOUT
   if(this.state.GameType =="league"){
   if(!this.state.SelectedOff || this.state.leagName =="" || !this.state.SelectedServer){
     this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
@@ -312,8 +323,24 @@ class Games extends Component {
   }
 
   }
+  // FORTNITE CHECKOUT
   else if(this.state.GameType =="fortnite"){
-      
+    if(!this.state.SelectedOff || this.state.fortPhone ==""){
+      this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
+    }
+    else{
+      let obj={
+        "PhoneNumber":this.state.fortPhone,
+        "SelectedOff":this.state.SelectedOff.value
+      }
+      if(!localStorage.getItem("ID")){
+        this.setState({ErrorModal: true, ErrorMsg: "Please Login"})
+      }
+      else{
+        this.setState({ExtraData:obj,PaymentModal:true})
+      }
+  
+    }
   }
 }
 
@@ -340,8 +367,11 @@ else{
   <div>
     <div className="bg-image"> 
     <Getlogin />
-    <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center>
+    <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+            showCloseIcon={false}
+           >
           <h2>{this.state.ErrorMsg}</h2>
+          <p>Check for missing fields</p>
     </Modal>
     <Modal open={this.state.PaymentModal} onClose={this.onCloseModal.bind(this,'PaymentModal')} center>
     <Select

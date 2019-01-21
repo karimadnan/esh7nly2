@@ -1,3 +1,5 @@
+
+
 .game2{
   transition: background-size 0.6s ease;
   background-size: 100%;
@@ -94,6 +96,82 @@
   background-position: center;
   background-repeat: no-repeat;
   background-image: url('Images/LeagueLogo.png');
+}
+
+.VodaCashLogo{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 105%;
+  left: 50%;
+  -webkit-transform: translate(-50%, 50%);
+  z-index: 2;
+  width: 30%;
+  padding: 70px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/VodaCashLogo.png');
+}
+
+
+
+.VodaCash:hover, .EtisCash:hover {
+  box-shadow:0 0 25px rgb(252, 252, 252);
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 100;
+  border: 1px solid #eca011;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.8); /* Black w/opacity/see-through */
+}
+
+.EtisCash{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  -webkit-transform: translate(-215%, 50%);
+  z-index: 2;
+  width: 15%;
+  padding:100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/Etiscash.png');
+}
+
+.VodaCash{
+  border: 1px solid #f1f1f1;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  -webkit-transform: translate(-50%, 50%);
+  z-index: 2;
+  width: 15%;
+  padding: 100px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/Vodacash.png');
+}
+
+.PaymentDesc  {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  border: 1px solid #f1f1f1;
+  position: absolute;
+  -webkit-transform: translate(-35%, 250%);
+  left: 40%;
+  z-index: 2;
+  width: 50%;
+  padding: 15px;
+
 }
 
 .GameDesc  {
