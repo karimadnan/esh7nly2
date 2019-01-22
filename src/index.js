@@ -10,6 +10,7 @@ import SignUp from './components/SignUp';
 import Games from './components/Games';
 import Payment from './components/PaymentTutorial';
 import Checkout from './components/Checkout';
+import FortniteShop from './components/FortniteShop';
 import * as registerServiceWorker from './registerServiceWorker';
 
 // localStorage.setItem("Server","http://192.168.1.6:5000/")
@@ -40,6 +41,12 @@ Flux.createRoute('/Payment',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Payment />,document.getElementById('root'));
 })
+
+Flux.createRoute('/FortniteShop',function(){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<FortniteShop />,document.getElementById('root'));
+})
+
 
 Flux.createRoute('/Checkout/{Price}/{Game}',function(p){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));

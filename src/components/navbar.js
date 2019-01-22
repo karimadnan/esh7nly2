@@ -113,7 +113,8 @@ return (
           <li ><a onClick={()=>{ReactRouter.goTo("/Main")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-home"></span> Home</a></li>
           <li ><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/Payment")}}><span class="glyphicon glyphicon-tag"></span> How To Buy / ازاى تشترى</a>
           </li>
-          <li><a onClick={()=>{ReactRouter.goTo("/Games")}} style={{cursor: 'pointer'}}><span class="	glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
+          <li><a onClick={()=>{ReactRouter.goTo("/Games")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
+          <li><a onClick={()=>{ReactRouter.goTo("/FortniteShop")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-star"></span> Fortnite Today's Shop</a></li>
           <li><a href="#"><span class="	glyphicon glyphicon-earphone"></span> Contact Us</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

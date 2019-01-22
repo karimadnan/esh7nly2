@@ -24,8 +24,12 @@ class Games extends Component {
       paymentfill:'',
       leagName:'',
       fortPhone: '',
-      BgChose: '',
-      ServerOps:[{value:"EU West",label:"EU West"},
+      SelectedPlat: '',
+      PlatformOps: [
+      {value: "PC", label:"PC"},    
+      {value: "Mobile", label: "Mobile"}],
+      ServerOps:[
+      {value:"EU West",label:"EU West"},
       {value:"EU Nordic and East",label:"EU Nordic and East"},
       {value:"North America",label:"North America"},
       {value:"Turkey",label:"Turkey"},
@@ -121,7 +125,6 @@ class Games extends Component {
         ...provided,
         borderBottom: '1px dotted black',
         color: state.isSelected ? 'red' : 'blue',
-        padding: 10,
       }),
       singleValue: (provided, state) => {
         const opacity = state.isDisabled ? 0.5 : 1;
@@ -257,7 +260,23 @@ class Games extends Component {
                         </div>
 
                       <div class="row">
-                      <label for="ChooseServer" class="col-xs-6">2-Phone Number:</label>
+                      <label for="ChooseOffer" class="col-xs-5">2-Your Platform:</label>
+                      <div class="col-xs-7">
+                            <Select
+                            styles={customStyles}
+                            value={this.state.SelectedPlat}
+                            onChange={this.handleChange.bind(this, 'SelectedPlat')}
+                            options={this.state.PlatformOps} placeholder='PC / Mobile'
+                          />
+                      </div>
+                    </div>
+
+                        <div class="col-xs-12">
+                            <p></p>
+                        </div>
+
+                      <div class="row">
+                      <label for="ChooseServer" class="col-xs-6">3-Phone Number:</label>
                       <input class="col-xs-6" 
                       style=
                         {{
@@ -325,11 +344,12 @@ class Games extends Component {
   }
   // FORTNITE CHECKOUT
   else if(this.state.GameType ==="fortnite"){
-    if(!this.state.SelectedOff || this.state.fortPhone ===""){
+    if(!this.state.SelectedOff || !this.state.SelectedPlat || this.state.fortPhone ===""){
       this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
     }
     else{
       let obj={
+        "SelectedPlat":this.state.SelectedPlat,
         "PhoneNumber":this.state.fortPhone,
         "SelectedOff":this.state.SelectedOff.value
       }
@@ -366,12 +386,13 @@ else{
 
   <div>
     <div className="bg-image"> 
+
     <Getlogin />
     <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
             showCloseIcon={false}
            >
           <h2>{this.state.ErrorMsg}</h2>
-          <p>Check for missing fields</p>
+          <p>Check your info again</p>
     </Modal>
     <Modal open={this.state.PaymentModal} onClose={this.onCloseModal.bind(this,'PaymentModal')} center>
     <Select
@@ -383,6 +404,7 @@ else{
     </Modal>
     {this.GamesRender()}
     {this.SingleGame()}
+
     </div>
     </div>
     );
