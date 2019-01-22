@@ -26,7 +26,7 @@
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
   color: white;
   font-weight: bold;
-  border: 2px solid #f1f1f1;
+  border-radius: 1.95rem;
   position: absolute;
   top: 65%;
   left: 86%;
@@ -48,7 +48,7 @@
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
   color: white;
   font-weight: bold;
-  border: 2px solid #f1f1f1;
+  border-radius: 1.95rem;
   position: absolute;
   top: 65%;
   left: 58%;
@@ -70,7 +70,7 @@
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
   color: white;
   font-weight: bold;
-  border: 2px solid #f1f1f1;
+  border-radius: 1.95rem;
   position: absolute;
   top: 65%;
   left: 30%;
@@ -84,7 +84,7 @@
 }
 
 .fortniteLogo{
-  border: 1px solid #f1f1f1;
+  border-radius: 1.95rem;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
   position: absolute;
@@ -100,7 +100,7 @@
 }
 
 .leagueLogo{
-  border: 1px solid #f1f1f1;
+  border-radius: 1.95rem;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
   position: absolute;
@@ -116,7 +116,7 @@
 }
 
 .VodaCashLogo{
-  border-radius: 0.85rem;
+  border-radius: 1.85rem;
   border: 1px solid #e70505;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
@@ -133,7 +133,7 @@
 }
 
 .EtisCashLogo{
-  border-radius: 0.85rem;
+  border-radius: 1.85rem;
   border: 1px solid #0ddb06;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
@@ -150,7 +150,7 @@
 }
 
 .DirectPayLogo{
-  border-radius: 0.85rem;
+  border-radius: 1.85rem;
   border: 1px solid #06a5e4;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
@@ -178,7 +178,7 @@
 }
 
 .EtisCash{
-  border-radius: 0.85rem;
+  border-radius: 1.85rem;
   border: 1px solid #28e40f;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
@@ -195,7 +195,7 @@
 }
 
 .VodaCash{
-  border-radius: 0.85rem;
+  border-radius: 1.85rem;
   border: 1px solid #e60303;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
@@ -212,7 +212,7 @@
 }
 
 .DirectPay{
-  border-radius: 0.85rem;
+  border-radius: 1.85rem;
   border: 1px solid #0691e2;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
@@ -275,7 +275,7 @@
   background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
   color: rgb(255, 255, 255);
   font-weight: bold;
-  border: 1px solid #f1f1f1;
+  border-radius: 1.95rem;
   position: absolute;
   -webkit-transform: translate(-27%, 110%);
   left: 40%;
@@ -294,7 +294,7 @@
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
   color: white;
   font-weight: bold;
-  border: 2px solid #f1f1f1;
+  border-radius: 1.85rem;
   position: absolute;
   top: 35%;
   left: 86%;
@@ -308,6 +308,7 @@
 }
 
 .fortnite {
+  border-radius: 1.95rem;
   transition: background-size 0.6s ease;
   background-size: 100%;
   cursor: pointer;
@@ -316,7 +317,6 @@
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
   color: white;
   font-weight: bold;
-  border: 2px solid #f1f1f1;
   position: absolute;
   top: 35%;
   left: 58%;
@@ -330,6 +330,7 @@
 }
 
 .league {
+  border-radius: 1.95rem;
   transition: background-size 0.6s ease;
   background-size: 100%;
   cursor: pointer;
@@ -338,7 +339,7 @@
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
   color: white;
   font-weight: bold;
-  border: 2px solid #f1f1f1;
+
   top: 35%;
   left: 30%;
   transform: translate(-50%, -50%);
@@ -393,7 +394,7 @@
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
   color: rgb(252, 252, 252);
   font-weight: bold;
-  border: 1px solid #f1f1f1;
+  border-radius: 1.95rem;
   position: absolute;
   top: 40%;
   left: 50%;
@@ -723,9 +724,10 @@
     padding: 15px 5px 0;
     overflow:hidden;
     background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.8); /* Black w/opacity/see-through */
+    background-color: rgba(0,0,0, 1.5); /* Black w/opacity/see-through */
     color: rgb(252, 252, 252);
     font-weight: bold;
-    border: 1px solid #f1f1f1;
+    border: 0.5px solid #f1f1f1;
+    border-radius: 1.95rem;
 }
 
