@@ -1,3 +1,4 @@
+
 .badge, .badge2 {
   display: inline-block;
   padding: 0.15em 1.9em;
@@ -15,6 +16,11 @@
   color: #fff;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+}
+
+.badge-dark2 {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.3); /* Black w/opacity/see-through */
 }
 
 .game2{
@@ -164,6 +170,12 @@
   background-position: center;
   background-repeat: no-repeat;
   background-image: url('Images/DirectPay.png');
+}
+
+.FortShop:hover {
+  border: 5px solid #fda707;
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 100;
 }
 
 .VodaCash:hover, .EtisCash:hover, .DirectPay:hover {
@@ -514,7 +526,7 @@
 .bgr-fortnite0 {
   /* The image used */
   background-image: url("Images/fortr1.png");
-
+  overflow-x: hidden;
   /* Full height */
   height:stretch;
 
@@ -528,7 +540,7 @@
 .bgr-league0 {
   /* The image used */
   background-image: url("Images/leaguer1.png");
-
+  overflow-x: hidden;
   /* Full height */
   height:stretch;
 
@@ -541,7 +553,7 @@
 .bgr-league1 {
   /* The image used */
   background-image: url("Images/leaguer2.png");
-
+  overflow-x: hidden;
   /* Full height */
   height:stretch;
 
@@ -554,7 +566,7 @@
 .bgr-league2 {
   /* The image used */
   background-image: url("Images/leaguer3.jpg");
-
+  overflow-x: hidden;
   /* Full height */
   height:stretch;
 
@@ -563,13 +575,14 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .bg-image {
   /* The image used */
   background-image: url("Images/newbg.png");
 
   /* Full height */
-  height:stretch;
-
+  height: stretch;
+  overflow-x: hidden;
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;

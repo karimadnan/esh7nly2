@@ -16,6 +16,7 @@ class Main extends Component {
 
 
 <div>
+
 <Getlogin />
 <div className="bg-image">
 </div>

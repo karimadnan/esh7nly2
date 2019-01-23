@@ -58,7 +58,6 @@ class Games extends Component {
       console.log(value, type)
       this.setState({[type]: value}, () =>{
       });
-      // console.log(`Option selected:`, type);
     }
     updateInput(key, value) {
   
