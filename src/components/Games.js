@@ -105,7 +105,7 @@ class Games extends Component {
         <div class="crossfire" onClick={()=>{ReactRouter.goTo("/Main")}}>
         </div>
     
-        <div class="game1" onClick={()=>{ReactRouter.goTo("/Main")}}>
+        <div class="steamgames" onClick={()=>{ReactRouter.goTo("/Main")}}>
         </div>
     
         <div class="game2" onClick={()=>{ReactRouter.goTo("/Main")}}>

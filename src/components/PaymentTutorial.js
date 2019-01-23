@@ -33,9 +33,10 @@ state = {
         </div>
         </div>
       <div class="col-xs-6">
-        <div class="DirectPay" style={{cursor: 'pointer'}} onClick={()=>{this.updateOps("PaymentOps", "DirectPay")}}>
+        <div class="Fawry" style={{cursor: 'pointer'}} onClick={()=>{this.updateOps("PaymentOps", "Fawry")}}>
         </div>
         </div>
+
 
         <div className="PaymentDesc"> 
         <h3> * Choose one of the payment options above:</h3>
@@ -112,7 +113,7 @@ state = {
           </div>
         )
         }
-     else if(!this.state.ChoosePay && this.state.PaymentOps ==='DirectPay'){
+     else if(!this.state.ChoosePay && this.state.PaymentOps ==='Fawry'){
         return (
           <div class="container">
          <div class="col-xs-12">

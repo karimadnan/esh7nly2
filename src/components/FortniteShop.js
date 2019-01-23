@@ -147,7 +147,7 @@ style={{float: "right",width: 20, height: 20, marginTop: 5, WebkitTransform: 'tr
 </h1>
 <h1 class="badge badge-dark col-xs-3" style={{color : this.state.ItemFontColor}}>{this.state.ShopChoseItemData.rarity} {this.state.ShopChoseItemData.type}</h1>
 
-<button class="badge badge-dark2 btn btn-primary col-xs-2" style={{float: "right",margin: 15,color : "white"}} onClick={()=> {this.updateState("ShopChose", false), this.updateState("ItemStored", false)}}>
+<button class="badge badge-dark2 btn btn-primary col-xs-2" style={{float: "right",margin: 15,color : "red"}} onClick={()=> {this.updateState("ShopChose", false), this.updateState("ItemStored", false)}}>
 Back To Shop
 </button>
 </div>
