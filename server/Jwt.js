@@ -17,7 +17,7 @@ var
           payload,
           tokenSecret, 
           {
-              expiresIn : '1h'
+              expiresIn : '2h'
           }
       );
   };
