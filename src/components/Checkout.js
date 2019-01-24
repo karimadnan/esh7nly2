@@ -35,7 +35,6 @@ onOpenModal = (type) => {
   handleChange(type, value) {
     console.log(value, type)
     this.setState({[type]: value});
-
   }
     render(){
   return (
