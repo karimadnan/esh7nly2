@@ -4,7 +4,8 @@ import axios from 'axios';
 import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
 import '../Respcss.css';
-// axios.defaults.baseURL=localStorage.getItem("server")
+
+
 
 
 class Getlogin extends Component {
@@ -17,7 +18,7 @@ class Getlogin extends Component {
       Password: "",
       token: "",
       name: "",
-      logged: true,
+      logged: false,
       access: 0
     }
 
@@ -29,11 +30,22 @@ class Getlogin extends Component {
       this.setState({[type]: false });
     };
 
-componentWillMount(){
+componentDidMount(){
+  var that = this
+  console.log(localStorage.getItem("Token"), "checkingToken")
   if(localStorage.getItem("Token")){
-    this.setState({logged: true}); 
-    this.setState({access: localStorage.getItem("Access")});
-    this.setState({name: localStorage.getItem("Name")});
+    axios.get(this.state.Url+"checkToken",{headers: {auth: localStorage.getItem('Token')}})
+    .then(function (response) {
+    // console.log(response)
+    that.setState({logged: true}); 
+    that.setState({access: localStorage.getItem("Access")});
+    that.setState({name: localStorage.getItem("Name")});
+    })
+    .catch(function (error) {
+      // console.log(error)
+      localStorage.clear()
+      // window.location.reload()
+    })
 }
 else{
     this.setState({logged: false}); 
@@ -49,7 +61,6 @@ updateInput(key, value) {
 
 logout =() =>{
   localStorage.clear()
-  localStorage.setItem("Token", "");
   window.location.reload()
 }
 
@@ -101,12 +112,25 @@ login() {
     } 
   
 render() {
-
+  const customStyles = {
+    overlay: {
+      background: "#b2dbbf"
+    }
+  ,
+  customModal:{  
+    width: "60%"
+  }
+  }
 return (
   
     <div class="container">
-            <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center>
-          <h2>{this.state.ErrorMsg}</h2>
+        <Modal          
+         classNames={{
+          overlay: customStyles.overlay,
+          modal: customStyles.customModal,
+        }}
+        open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center>
+            <h2>{this.state.ErrorMsg}</h2>
         </Modal>
     <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">

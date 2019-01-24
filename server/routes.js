@@ -48,75 +48,88 @@ return res.status(400).send({ message: 'Missing fields'});
 
 });
     
-    router.post('/createOrder', function(req, res, next) {
-      //  console.log(req.body,"thebody");
-         var body =req.body;
-         Validator.check(body,'NewOrder').then((success)=>{ 
-          const collection = DB.dbo.collection('orders');
-          body.user= new ObjectId(body.user);
-          body.createdAt=Date.now();
-          body['status']="pending";
-         collection.insertOne(body,(err,result)=>{
-          if(err){
-            console.log('createOrder Error =>',err)
-            return res.status(500).send(err);
+router.post('/createOrder', function(req, res, next) {
+  //  console.log(req.body,"thebody");
+      var body =req.body;
+      Validator.check(body,'NewOrder').then((success)=>{ 
+      const collection = DB.dbo.collection('orders');
+      body.user= new ObjectId(body.user);
+      body.createdAt=Date.now();
+      body['status']="pending";
+      collection.insertOne(body,(err,result)=>{
+      if(err){
+        console.log('createOrder Error =>',err)
+        return res.status(500).send(err);
+      }
+      return res.status(200).send({ message: 'Order Created',data:[]});
+    });
+    },err=>{
+      console.log('NewOrder validation',err)
+      return res.status(400).send(err);
+    })  
+  });
+router.get('/getAllOrders', function(req, res, next) {
+      const collection = DB.dbo.collection('orders');
+      collection.aggregate([
+      {
+        $lookup:
+          {
+            from: "users",
+            localField: "user",
+            foreignField: "_id",
+            as: "user"
           }
-          return res.status(200).send({ message: 'Order Created',data:[]});
-        });
-        },err=>{
-          console.log('NewOrder validation',err)
-          return res.status(400).send(err);
-        })  
-      });
-      router.get('/getAllOrders', function(req, res, next) {
-           const collection = DB.dbo.collection('orders');
-           collection.aggregate([
-            {
-              $lookup:
-                {
-                  from: "users",
-                  localField: "user",
-                  foreignField: "_id",
-                  as: "user"
-                }
-           },
-           { $unwind:"$user" }
-           ]).toArray(function(err, docs) {
-            if(err){
-            return res.status(500).send({ message: 'DB Error',error:err});
-              }
-              if(!docs[0]){
-              return res.status(202).send({ message: 'No Data',date:[]});
-              }
-            return res.status(200).send({ message: 'all orders',data:docs});
-          });  
-        });
+      },
+      { $unwind:"$user" }
+      ]).toArray(function(err, docs) {
+      if(err){
+      return res.status(500).send({ message: 'DB Error',error:err});
+        }
+        if(!docs[0]){
+        return res.status(202).send({ message: 'No Data',date:[]});
+        }
+      return res.status(200).send({ message: 'all orders',data:docs});
+    });  
+  });
     
-        router.get('/getOrderForuser', function(req, res, next) {
-          const collection = DB.dbo.collection('orders');
-          collection.find({user:new ObjectId(req.query.userId)}).toArray(function(err, docs) {
-            if(err){
-            return res.status(500).send({ message: 'DB Error',error:err});
-              }
-              if(!docs[0]){
-              return res.status(202).send({ message: 'No Data',data:[]});
-              }
-            return res.status(200).send({ message: 'Orders found',data:docs});
-          }); 
-       });
+  router.get('/getOrderForuser', function(req, res, next) {
+    const collection = DB.dbo.collection('orders');
+    collection.find({user:new ObjectId(req.query.userId)}).toArray(function(err, docs) {
+      if(err){
+      return res.status(500).send({ message: 'DB Error',error:err});
+        }
+        if(!docs[0]){
+        return res.status(202).send({ message: 'No Data',data:[]});
+        }
+      return res.status(200).send({ message: 'Orders found',data:docs});
+    }); 
+  });
     
-       router.get('/getGame', function(req, res, next) {
-        const collection = DB.dbo.collection('games');
-        collection.find({Name:req.query.Name}).toArray(function(err, docs) {
-          if(err){
-          return res.status(500).send({ message: 'DB Error',error:err});
-            }
-            if(!docs[0]){
-            return res.status(202).send({ message: 'No Data',data:[]});
-            }
-          return res.status(200).send({ message: 'Game found',data:docs});
-        }); 
-     });
+  router.get('/getGame', function(req, res, next) {
+  const collection = DB.dbo.collection('games');
+  collection.find({Name:req.query.Name}).toArray(function(err, docs) {
+    if(err){
+    return res.status(500).send({ message: 'DB Error',error:err});
+      }
+      if(!docs[0]){
+      return res.status(202).send({ message: 'No Data',data:[]});
+      }
+    return res.status(200).send({ message: 'Game found',data:docs});
+  }); 
+});
+router.get('/checkToken', function(req, res, next) {
+  if(!req.headers.auth){
+   return res.status(401).send({message:'No Header'})
+  }
+  jwToken.verify(req.headers.auth,function(err,payload){
+    if(err){
+      return res.status(401).send({message:"No Valid"})
+    }
+    else {
+      return res.status(200).send({message:"Valid"})
+    }
+  })
+});
 // router.post('/userlogin',async function(req, res, next) {
 //       var body=req.body;
 //       if(!body.phoneNumber || !body.password){  
