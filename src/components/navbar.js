@@ -30,7 +30,7 @@ class Getlogin extends Component {
     };
 
 componentWillMount(){
-  if(localStorage.getItem("Token") !== ""){
+  if(localStorage.getItem("Token")){
     this.setState({logged: true}); 
     this.setState({access: localStorage.getItem("Access")});
     this.setState({name: localStorage.getItem("Name")});
