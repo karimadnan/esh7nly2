@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import Flux from 'flux-react-router';
-
+import './index.css'
 
 import App from './App';
 import Main from './components/main';
@@ -22,33 +21,33 @@ Flux.createRoute('/',function(){
     ReactDOM.render(<Main />,document.getElementById('root'));
 })
 
-Flux.createRoute('/Main',function(){
+Flux.createRoute('/main',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Main />,document.getElementById('root'));
 })
 
-Flux.createRoute('/SignUp',function(){
+Flux.createRoute('/signup',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<SignUp />,document.getElementById('root'));
 })
 
-Flux.createRoute('/Games',function(){
+Flux.createRoute('/games',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Games />,document.getElementById('root'));
 })
 
-Flux.createRoute('/Payment',function(){
+Flux.createRoute('/payment',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Payment />,document.getElementById('root'));
 })
 
-Flux.createRoute('/FortniteShop',function(){
+Flux.createRoute('/fortniteshop',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<FortniteShop />,document.getElementById('root'));
 })
 
 
-Flux.createRoute('/Checkout/{Price}/{Game}',function(p){
+Flux.createRoute('/checkout/{Price}/{Game}',function(p){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Checkout Value={p.Price} Game={p.Game}/>,document.getElementById('root'));
 })

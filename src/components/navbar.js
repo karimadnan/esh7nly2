@@ -106,20 +106,20 @@ return (
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand"onClick={()=>{ReactRouter.goTo("/Main")}} style={{cursor: 'pointer'}}><b>E<span class="glyphicon glyphicon-usd"></span>h7nly</b></a>
+      <a class="navbar-brand"onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><b>E<span class="glyphicon glyphicon-usd"></span>h7nly</b></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li ><a onClick={()=>{ReactRouter.goTo("/Main")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-home"></span> Home</a></li>
-          <li ><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/Payment")}}><span class="glyphicon glyphicon-tag"></span> How To Buy / ازاى تشترى</a>
+          <li ><a onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-home"></span> Home</a></li>
+          <li ><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span class="glyphicon glyphicon-tag"></span> How To Buy / ازاى تشترى</a>
           </li>
-          <li><a onClick={()=>{ReactRouter.goTo("/Games")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
-          <li><a onClick={()=>{ReactRouter.goTo("/FortniteShop")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-star"></span> Fortnite Today's Shop</a></li>
+          <li><a onClick={()=>{ReactRouter.goTo("/games")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
+          <li><a onClick={()=>{ReactRouter.goTo("/fortniteshop")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-star"></span> Fortnite Today's Shop</a></li>
           <li><a href="#"><span class="	glyphicon glyphicon-earphone"></span> Contact Us</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
         {/* Logged in noSignup*/}
-      { ! this.state.logged &&  <li><a onClick={()=>{ReactRouter.goTo("/SignUp")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> }
+      { ! this.state.logged &&  <li><a onClick={()=>{ReactRouter.goTo("/signup")}} style={{cursor: 'pointer'}}><span class="glyphicon glyphicon-user"></span> Sign Up</a></li> }
         {/* Logout */}
       {   this.state.logged &&  <li><a onClick={this.logout} style={{cursor: 'pointer'}}><span class="	glyphicon glyphicon-log-out"></span> Logout</a></li> }
         {/* User */}

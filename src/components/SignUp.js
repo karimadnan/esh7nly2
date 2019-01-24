@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../App.css';
+
 import '../Mycss.css';
 import '../Respcss.css';
 import Getlogin from './navbar';

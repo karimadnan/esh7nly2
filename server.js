@@ -10,7 +10,7 @@ const url = process.env.MONGODB_URI;
 const dbname = process.env.DBName;
 let DB = require('./server/Mongo');
 const normalizePort =port => parseInt(port ,10);
-const PORT = normalizePort(process.env.PORT || 5000);
+const PORT = normalizePort(process.env.PORT || 4000);
 
 const app =express();
 

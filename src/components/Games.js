@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../App.css';
+
 import '../Mycss.css';
 import ReactRouter from 'flux-react-router';
 import Getlogin from './navbar';
@@ -99,16 +99,16 @@ class Games extends Component {
         <div class="fortnite" onClick={()=>{this.getGameDetails("fortnite")}}>
         </div>
     
-        <div class="pubg" onClick={()=>{ReactRouter.goTo("/Main")}}>
+        <div class="pubg" onClick={()=>{ReactRouter.goTo("/main")}}>
         </div>
     
-        <div class="crossfire" onClick={()=>{ReactRouter.goTo("/Main")}}>
+        <div class="crossfire" onClick={()=>{ReactRouter.goTo("/main")}}>
         </div>
     
-        <div class="steamgames" onClick={()=>{ReactRouter.goTo("/Main")}}>
+        <div class="steamgames" onClick={()=>{ReactRouter.goTo("/main")}}>
         </div>
     
-        <div class="game2" onClick={()=>{ReactRouter.goTo("/Main")}}>
+        <div class="game2" onClick={()=>{ReactRouter.goTo("/main")}}>
         </div>
     
     
