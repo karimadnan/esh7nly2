@@ -12,8 +12,8 @@ import Checkout from './components/Checkout';
 import FortniteShop from './components/FortniteShop';
 import * as registerServiceWorker from './registerServiceWorker';
 
-localStorage.setItem("Server","http://192.168.1.3:4000/server/")
-// localStorage.setItem("Server"," https://esh7ntest.herokuapp.com/server/")
+// localStorage.setItem("Server","http://192.168.1.3:4000/server/")
+localStorage.setItem("Server"," https://esh7ntest.herokuapp.com/server/")
 
 
 Flux.createRoute('/',function(){
