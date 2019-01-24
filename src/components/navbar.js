@@ -76,7 +76,6 @@ login() {
               var UserName = X.Name
               var UserAccess = X.Access
               var Token = X._token
-              localStorage.setItem("LoggedIn", "true");
               localStorage.setItem("Name", UserName);
               localStorage.setItem("Access", UserAccess);
               localStorage.setItem("Token", X._token);
