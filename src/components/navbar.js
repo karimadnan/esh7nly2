@@ -15,8 +15,9 @@ class Getlogin extends Component {
       Url: localStorage.getItem('Server'),
       Phone: "",
       Password: "",
-      logged: "false",
+      token: "",
       name: "",
+      logged: true,
       access: 0
     }
 
@@ -29,7 +30,7 @@ class Getlogin extends Component {
     };
 
 componentWillMount(){
-  if(localStorage.getItem("LoggedIn") !== "false"){
+  if(localStorage.getItem("Token") !== ""){
     this.setState({logged: true}); 
     this.setState({access: localStorage.getItem("Access")});
     this.setState({name: localStorage.getItem("Name")});
@@ -48,49 +49,59 @@ updateInput(key, value) {
 
 logout =() =>{
   localStorage.clear()
-  localStorage.setItem("LoggedIn", "false");
+  localStorage.setItem("Token", "");
   window.location.reload()
 }
 
-render() {
-
-
-
-const login =()=>{
-
-var headers = {
-    'Content-Type': 'application/json'
+keyClicked (e) {
+if (e.key === "Enter"){
+this.login();
 }
-var that=this;
-  if(this.state.Phone  && this.state.Password ){
-          let Data = {Phone: that.state.Phone, Password: that.state.Password}
-          axios.post(that.state.Url+"login", Data, {headers: headers})
-          .then(function (response) {
+}
 
-            let X = response.data.data[0]
-            var UserName = X.Name
-            var UserAccess = X.Access
+login() {
 
-            localStorage.setItem("LoggedIn", "true");
-            localStorage.setItem("Name", UserName);
-            localStorage.setItem("Access", UserAccess);
-            localStorage.setItem("ID", X._id);
-            that.setState({logged: true, name: UserName, access: UserAccess});
-          })
-          .catch(function (error) {
-            console.log(error.response,"----------------------");
-            that.setState({
-              ErrorModal:true,
-              ErrorMsg:error.response.data.message
+  var headers = {
+      'Content-Type': 'application/json'
+  }
+  var that=this;
+    if(this.state.Phone  && this.state.Password ){
+            let Data = {Phone: that.state.Phone, Password: that.state.Password}
+            axios.post(that.state.Url+"login", Data, {headers: headers})
+            .then(function (response) {
+                  console.log(response)
+              
+              
+              let X = response.data.data
+              var UserName = X.Name
+              var UserAccess = X.Access
+              var Token = X._token
+              localStorage.setItem("LoggedIn", "true");
+              localStorage.setItem("Name", UserName);
+              localStorage.setItem("Access", UserAccess);
+              localStorage.setItem("Token", X._token);
+  
+              that.setState({token: Token, name: UserName, access: UserAccess, logged: true});
             })
-          }); 
+            .catch(function (error) {
+              console.log(error.response)
+              if (error.response.data.message){
+                that.setState({
+                  ErrorModal:true,
+                  ErrorMsg:error.response.data.message
+                })
+              }
+  
+            }); 
+        }
+  
+      else{
+          this.setState({ErrorModal: true, ErrorMsg: "Please fill your info."})
       }
-
-    else{
-
-    }
-
-  } 
+  
+    } 
+  
+render() {
 
 return (
   
@@ -130,20 +141,20 @@ return (
               {   this.state.access > 1 &&  <li><a href="#">Admin Dashboard</a></li> }  
             </ul>
           </li>}
-          <li class="dropdown"> 
-      { ! this.state.logged &&  <a  class="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> <b>Login</b> <span class="caret"></span></a> }
-              <ul id="login-dp" class="dropdown-menu">
+          { ! this.state.logged &&    <li class="dropdown"> 
+      { ! this.state.logged &&  <a   class="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> <b>Login</b> <span class="caret"></span></a> }
+              <ul id="login-dp"  class="dropdown-menu">
               <li>
               <div class="form-group col col-xs-6">
                  <label class="sr-only" for="exampleInputEmail2">Phone</label>
-                 <input type="text"  class="form-control" value={this.state.Phone} onChange={e => this.updateInput("Phone", e.target.value)} id="exampleInputEmail2" placeholder="Phone Number" required></input>
+                 <input type="text" onKeyPress={this.keyClicked.bind(this)} class="form-control" value={this.state.Phone} onChange={e => this.updateInput("Phone", e.target.value)} id="exampleInputEmail2" placeholder="Phone Number" required></input>
               </div>	
               <div class="form-group col col-xs-6">
                            <label class="sr-only" for="exampleInputPassword2">Password</label>
-                           <input type="password"  class="form-control" value={this.state.Password} onChange={e => this.updateInput("Password", e.target.value)} id="exampleInputPassword2" placeholder="Password" required></input>
+                           <input type="password" onKeyPress={this.keyClicked.bind(this)} class="form-control" value={this.state.Password} onChange={e => this.updateInput("Password", e.target.value)} id="exampleInputPassword2" placeholder="Password" required></input>
                         </div>
                         <div class="form-group col col-xs-6">
-                           <button onClick={login} disabled={!this.state.Phone.length || !this.state.Password.length} class="btn btn-primary btn-block">Log in</button> 
+                           <button onClick={this.login} disabled={!this.state.Phone.length || !this.state.Password.length} class="btn btn-primary btn-block">Log in</button> 
                         </div>	
                         <div class="col col-xs-6"><label style=
                                                   {{
@@ -151,7 +162,7 @@ return (
                                                   }}>Forgot password ?</label></div>
                 </li>
               </ul> 
-        </li>
+        </li>}
 
         </ul>
 
