@@ -117,6 +117,20 @@ return res.status(400).send({ message: 'Missing fields'});
           return res.status(200).send({ message: 'Game found',data:docs});
         }); 
      });
+
+     router.get('/checkToken', function(req, res, next) {
+          if(!req.headers.auth){           
+        return res.status(401).send({message:'No Header'}) 
+        }   
+      var token =req.headers.auth;
+      jwToken.verify(token, function (err, payload) {
+          if (err) {
+            return res.status(401).send({ message: 'InValid auth'});
+          };
+          return res.status(200).send({ message: 'Valid auth'});
+       });
+    
+    });     
 // router.post('/userlogin',async function(req, res, next) {
 //       var body=req.body;
 //       if(!body.phoneNumber || !body.password){  
