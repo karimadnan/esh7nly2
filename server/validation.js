@@ -27,12 +27,12 @@ let Validator =  {
 			let rejectMsg = false;
 			Validator[validateTarget].forEach(item=>{
 				if(!item.oneOfTheseIsRequired && (typeof body[item['value']] == 'undefined')){
-					reject({ message: `${item.msg} is missing .` });
+					reject({ message: `${item.msg} ` });
 				}
 				if(item.objectPropertiesAllRequired){
 					item.objectPropertiesAllRequired.forEach(required=>{
 						if(!body[item['value']][required['value']] || typeof body[item['value']][required['value']]== 'undefined'){
-							reject({ message: `${required.msg} is missing`});
+							reject({ message: `${required.msg}`});
 						}
 					});
 				}

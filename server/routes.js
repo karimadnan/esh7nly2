@@ -9,9 +9,8 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-      res.render('index', { title: 'Express' });
-    });
-    
+res.render('index', { title: 'Express' });
+});   
 router.post('/login',async function(req, res, next) {
 //  console.log(req.body,"thebody");
 if(!req.body.Phone || !req.body.Password){
@@ -72,7 +71,7 @@ router.post('/signup',function(req, res, next) {
     console.log('signup validation',err)
     return res.status(400).send(err);
   })
-  });  
+});  
 router.post('/createOrder', function(req, res, next) {
   //  console.log(req.body,"thebody");
       var body =req.body;
@@ -92,69 +91,69 @@ router.post('/createOrder', function(req, res, next) {
       console.log('NewOrder validation',err)
       return res.status(400).send(err);
     })  
-  });
-  router.get('/getAllOrders', function(req, res, next) {
-        const collection = DB.dbo.collection('orders');
-        collection.aggregate([
-        {
-          $lookup:
-            {
-              from: "users",
-              localField: "user",
-              foreignField: "_id",
-              as: "user"
-            }
-        },
-        { $unwind:"$user" }
-        ]).toArray(function(err, docs) {
-        if(err){
-        return res.status(500).send({ message: 'DB Error',error:err});
+});
+router.get('/getAllOrders', function(req, res, next) {
+      const collection = DB.dbo.collection('orders');
+      collection.aggregate([
+      {
+        $lookup:
+          {
+            from: "users",
+            localField: "user",
+            foreignField: "_id",
+            as: "user"
           }
-          if(!docs[0]){
-          return res.status(202).send({ message: 'No Data',date:[]});
-          }
-        return res.status(200).send({ message: 'all orders',data:docs});
-      });  
-    });
-    
-  router.get('/getOrderForuser', function(req, res, next) {
-    const collection = DB.dbo.collection('orders');
-    collection.find({user:new ObjectId(req.query.userId)}).toArray(function(err, docs) {
+      },
+      { $unwind:"$user" }
+      ]).toArray(function(err, docs) {
       if(err){
       return res.status(500).send({ message: 'DB Error',error:err});
         }
         if(!docs[0]){
-        return res.status(202).send({ message: 'No Data',data:[]});
+        return res.status(202).send({ message: 'No Data',date:[]});
         }
-      return res.status(200).send({ message: 'Orders found',data:docs});
-    }); 
-  });
+      return res.status(200).send({ message: 'all orders',data:docs});
+    });  
+});
     
-    router.get('/getGame', function(req, res, next) {
-    const collection = DB.dbo.collection('games');
-    collection.find({Name:req.query.Name}).toArray(function(err, docs) {
-      if(err){
-      return res.status(500).send({ message: 'DB Error',error:err});
-        }
-        if(!docs[0]){
-        return res.status(202).send({ message: 'No Data',data:[]});
-        }
-      return res.status(200).send({ message: 'Game found',data:docs});
-    }); 
-  });
+router.get('/getOrderForuser', function(req, res, next) {
+  const collection = DB.dbo.collection('orders');
+  collection.find({user:new ObjectId(req.query.userId)}).toArray(function(err, docs) {
+    if(err){
+    return res.status(500).send({ message: 'DB Error',error:err});
+      }
+      if(!docs[0]){
+      return res.status(202).send({ message: 'No Data',data:[]});
+      }
+    return res.status(200).send({ message: 'Orders found',data:docs});
+  }); 
+});
+    
+router.get('/getGame', function(req, res, next) {
+  const collection = DB.dbo.collection('games');
+  collection.find({Name:req.query.Name}).toArray(function(err, docs) {
+    if(err){
+    return res.status(500).send({ message: 'DB Error',error:err});
+      }
+      if(!docs[0]){
+      return res.status(202).send({ message: 'No Data',data:[]});
+      }
+    return res.status(200).send({ message: 'Game found',data:docs});
+  }); 
+});
 
-  router.get('/checkToken', function(req, res, next) {
-          if(!req.headers.authorization){         
-        return res.status(401).send({message:'No Header'}) 
-        }   
-      var token =req.headers.authorization;
-      jwToken.verify(token, function (err, payload) {
-          if (err) {
-            return res.status(401).send({ message: 'InValid auth'});
-          };
-          return res.status(200).send({ message: 'Valid auth'});
-       });
-    
-    });     
+router.get('/checkToken', function(req, res, next) {
+        if(!req.headers.authorization){         
+      return res.status(401).send({message:'No Header'}) 
+      }   
+    var token =req.headers.authorization;
+    jwToken.verify(token, function (err, payload) {
+        if (err) {
+          return res.status(401).send({ message: 'InValid auth'});
+        };
+        return res.status(200).send({ message: 'Valid auth'});
+      });
+  
+});     
 
 module.exports = router;
