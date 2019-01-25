@@ -119,10 +119,10 @@ return res.status(400).send({ message: 'Missing fields'});
      });
 
      router.get('/checkToken', function(req, res, next) {
-          if(!req.headers.auth){           
+          if(!req.headers.authorization){         
         return res.status(401).send({message:'No Header'}) 
         }   
-      var token =req.headers.auth;
+      var token =req.headers.authorization;
       jwToken.verify(token, function (err, payload) {
           if (err) {
             return res.status(401).send({ message: 'InValid auth'});
