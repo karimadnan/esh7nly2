@@ -115,7 +115,28 @@ router.get('/getAllOrders', function(req, res, next) {
       return res.status(200).send({ message: 'all orders',data:docs});
     });  
 });
-    
+router.post('/viewOrder',function(req, res, next){
+var body= req.body;
+if(!body.orderID){
+return res.status(400).send({message:'Missing fields'})
+}
+const collection = DB.dbo.collection('orders');
+collection.updateOne({_id:new ObjectId(body.orderID)}, {$set:{"status":"InProgress"}}, function(err, res) {
+  if (err) {
+   console.log("failed To update ordet")
+   console.log("Error =>",err)
+   return res.status(500).send({message:"Update Failed"})
+  }
+   return res.status(200).send({message:"Orders is In Progress"});
+});
+}) 
+router.post('/endOrder',function(req, res, next){
+  var body= req.body;
+  if(!body.orderID){
+  return res.status(400).send({message:'Missing fields'})
+  }
+  
+})   
 router.get('/getOrderForuser', function(req, res, next) {
   const collection = DB.dbo.collection('orders');
   collection.find({user:new ObjectId(req.query.userId)}).toArray(function(err, docs) {
