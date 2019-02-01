@@ -4,7 +4,7 @@ import axios from 'axios';
 import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
 import '../Respcss.css';
-// axios.defaults.baseURL=localStorage.getItem("server")
+
 
 
 class Getlogin extends Component {
@@ -17,7 +17,7 @@ class Getlogin extends Component {
       Password: "",
       token: "",
       name: "",
-      logged: true,
+      logged: false,
       access: 0
     }
 
@@ -30,10 +30,29 @@ class Getlogin extends Component {
     };
 
 componentWillMount(){
-  if(localStorage.getItem("Token")){
-    this.setState({logged: true}); 
-    this.setState({access: localStorage.getItem("Access")});
-    this.setState({name: localStorage.getItem("Name")});
+  var that = this
+  var token = localStorage.getItem("Token")
+  if(token){
+    axios.get(this.state.Url+"checkToken", 
+    {
+      headers: { 'Authorization': token }
+    }
+  )
+    .then(function (response) {
+    // console.log(response)
+    that.setState({logged: true}); 
+    that.setState({access: localStorage.getItem("Access")});
+    that.setState({name: localStorage.getItem("Name")});
+    })
+    .catch(function (error) {
+      // console.log(error)
+      localStorage.clear()
+      that.setState({
+        ErrorModal:true,
+        ErrorMsg: "You're not logged in",
+        logged: false
+      })
+    })
 }
 else{
     this.setState({logged: false}); 
@@ -43,13 +62,11 @@ else{
 }
 
 updateInput(key, value) {
-  
   this.setState({ [key]: value });
 }
 
 logout =() =>{
   localStorage.clear()
-  localStorage.setItem("Token", "");
   window.location.reload()
 }
 
@@ -102,11 +119,29 @@ login() {
   
 render() {
 
+  const customStyles = {
+    overlay: {
+    },
+    modal: {
+      top: '-10%',
+      marginLeft: '80%',
+      left: "0px",
+      right: "0px",
+      bottom: 'auto',
+      width: '25%',
+      borderRadius: '10px',
+      padding: "10px"
+    },
+  }
+
+
 return (
   
     <div class="container">
-            <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center>
-          <h2>{this.state.ErrorMsg}</h2>
+        <Modal          
+        open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+        styles={customStyles}>
+            <h2>{this.state.ErrorMsg}</h2>
         </Modal>
     <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
@@ -137,7 +172,7 @@ return (
             <ul class="dropdown-menu">
               <li><a href="#">Purchase History</a></li>
         {/* Admin Dashboard */}
-              {   this.state.access > 1 &&  <li><a href="#">Admin Dashboard</a></li> }  
+              {   this.state.access > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}>Admin Dashboard</a></li> }  
             </ul>
           </li>}
           { ! this.state.logged &&    <li class="dropdown"> 

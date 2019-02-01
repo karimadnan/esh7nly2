@@ -8,9 +8,7 @@ import Getlogin from './navbar';
 import axios from 'axios';
 import Modal from 'react-responsive-modal';
 import Select from 'react-select';
-import Vbucks from '../Images/fortnite-vbucks-icon.png';
-import Rp from '../Images/rp.png';
-import amumu from '../Images/amumusad.png';
+
 
 class Games extends Component {
 
@@ -26,7 +24,6 @@ class Games extends Component {
       GameType: '',
       SelectedServer:'',
       paymentfill:'',
-      tibiaChar:'',
       leagName:'',
       pubgName: '',
       crossfireName: '',
@@ -40,6 +37,7 @@ class Games extends Component {
       {value:"EU Nordic and East",label:"EU Nordic and East"},
       {value:"North America",label:"North America"},
       {value:"Turkey",label:"Turkey"},
+      {value:"Japan",label:"Japan"},
       {value:"Brazil",label:"Brazil"},
       {value:"Russia",label:"Russia"},
       {value:"Oceania",label:"Oceania"},
@@ -65,12 +63,9 @@ class Games extends Component {
       });
     }
     updateInput(key, value) {
+  
       this.setState({ [key]: value });
     }
-    refreshBack(){
-      this.setState({Games: true, GameType: '', SelectedOff: ''})
-    }
-
   getGameDetails(name) {
     var that = this
     axios.get(`${this.state.Url}getGame?Name=${name}`)
@@ -123,7 +118,7 @@ class Games extends Component {
     </div>
 
     <div class="col-xs-12  col-md-4">    
-      <div class="tibia" onClick={()=>{this.getGameDetails("tibia")}}></div>
+      <div class="game2" onClick={()=>{ReactRouter.goTo("/main")}}></div>
     </div>
 
   </div>
@@ -153,20 +148,16 @@ class Games extends Component {
     if(!this.state.Games && this.state.GameType ==="league"){
       return (
         <div className="bgr-league0"> 
-
         <div class="container">
-
         {/* Game LOGO */}
          <div class="col-xs-12">
-            <div className={t}>
-             </div>
-             <button class="badge badge-dark2 btn btn-primary" style={{color : "red"}}  onClick={()=> {this.refreshBack()}}>
-        Back To List
-        </button>
+            <div className={t}> </div>
         </div>
 
         {/* Offers BODY */}
         <div className="GameDesc">
+
+
       <div class="row">
 
         <label for="ChooseOffer" class="col-xs-6">1-Choose Offer:</label>
@@ -222,7 +213,7 @@ class Games extends Component {
       <label for="Payment" class="col-xs-6">Total To Pay:</label>
       <div class="col-xs-6">
       {! this.state.SelectedOff.value && <p style={{textAlign: "center"}}>0$</p>}
-      {this.state.SelectedOff.value && <p style={{textAlign: "center"}}> {this.state.SelectedOff.value} = {this.state.SelectedOff.label} <img style ={{width: 30, height: 30}} src={Rp} alt=""/></p>}
+      {this.state.SelectedOff.value && <p style={{textAlign: "center"}}> {this.state.SelectedOff.value} = {this.state.SelectedOff.label}</p>}
       </div>
       </div>
 
@@ -255,9 +246,6 @@ class Games extends Component {
                 {/* Game LOGO */}
                 <div class="col-xs-12">
                     <div className={t}> </div>
-                    <button class="badge badge-dark2 btn btn-primary" style={{color : "red"}}  onClick={()=> {this.refreshBack()}}>
-                        Back To List
-                    </button>
                 </div>
                 <div className="GameDesc">
 
@@ -318,7 +306,7 @@ class Games extends Component {
                         <label for="Payment" class="col-xs-6">Total To Pay:</label>
                         <div class="col-xs-6">
                         {! this.state.SelectedOff.value && <p style={{textAlign: "center"}}>0$</p>}
-                        {this.state.SelectedOff.value && <p style={{textAlign: "center"}}> {this.state.SelectedOff.value} = {this.state.SelectedOff.label} <img style ={{width: 20, height: 20}} src={Vbucks} alt=""/></p>}
+                        {this.state.SelectedOff.value && <p style={{textAlign: "center"}}> {this.state.SelectedOff.value} = {this.state.SelectedOff.label}</p>}
                         </div>
                     </div>
 
@@ -349,9 +337,6 @@ class Games extends Component {
     {/* Game LOGO */}
      <div class="col-xs-12">
         <div className={t}> </div>
-        <button class="badge badge-dark2 btn btn-primary" style={{color : "red"}}  onClick={()=> {this.refreshBack()}}>
-            Back To List
-        </button>
     </div>
 
     {/* Offers BODY */}
@@ -448,9 +433,6 @@ class Games extends Component {
       {/* Game LOGO */}
        <div class="col-xs-12">
           <div className={t}> </div>
-          <button class="badge badge-dark2 btn btn-primary" style={{color : "red"}}  onClick={()=> {this.refreshBack()}}>
-            Back To List
-        </button>
       </div>
   
       {/* Offers BODY */}
@@ -477,7 +459,7 @@ class Games extends Component {
            </div>
   
         <div class="row">
-        <label for="crossfireName" class="col-xs-6">2-Crossfire Name:</label>
+        <label for="ChooseServer" class="col-xs-6">2-Crossfire Name:</label>
         <div class="col-xs-6">
             <input class="form-control" 
             style=
@@ -530,9 +512,6 @@ class Games extends Component {
         {/* Game LOGO */}
          <div class="col-xs-12">
             <div className={t}> </div>
-            <button class="badge badge-dark2 btn btn-primary" style={{color : "red"}}  onClick={()=> {this.refreshBack()}}>
-                Back To List
-            </button>
         </div>
     
         {/* Offers BODY */}
@@ -559,7 +538,7 @@ class Games extends Component {
              </div>
     
           <div class="row">
-          <label for="steamEmail" class="col-xs-6">2-Your Email:</label>
+          <label for="ChooseServer" class="col-xs-6">2-Your Email:</label>
           <div class="col-xs-6">
               <input class="form-control" 
               style=
@@ -604,89 +583,6 @@ class Games extends Component {
     
       )
       }
-      else if(!this.state.Games && this.state.GameType ==="tibia")  {
-
-        return (
-          <div className="bgr-tibia0"> 
-          <div class="container">
-          {/* Game LOGO */}
-           <div class="col-xs-12">
-              <div className={t}> </div>
-              <button class="badge badge-dark2 btn btn-primary" style={{color : "red"}}  onClick={()=> {this.refreshBack()}}>
-                  Back To List
-              </button>
-          </div>
-      
-          {/* Offers BODY */}
-          <div className="GameDesc">
-      
-                  <div class="col-xs-12">
-                      <p></p>
-                  </div>
-                  
-                <div class="row">
-                <label for="ChooseOffer" class="col-xs-6">1-Choose Offer:</label>
-                <div class="col-xs-6">
-                      <Select
-                      styles={customStyles}
-                      value={this.state.SelectedOff}
-                      onChange={this.handleChange.bind(this, 'SelectedOff')}
-                      options={this.state.OffersOps} placeholder='Choose Offer'
-                    />
-                </div>
-              </div>
-      
-               <div class="col-xs-12">
-                  <p></p>
-               </div>
-      
-            <div class="row">
-            <label for="tibiaChar" class="col-xs-6">2-Tibia Character:</label>
-            <div class="col-xs-6">
-                <input class="form-control" 
-                style=
-                  {{
-                    marginLeft : 0,
-                    color : "black"
-                  }}
-                  onChange={e => this.updateInput("tibiaChar", e.target.value)}  type="text" placeholder="Your Ingame Name"></input>
-            </div>
-               <div class="col-xs-12">
-                  <p></p>
-               </div>
-             </div>
-      
-              <div class="row">
-                  <label for="Payment" class="col-xs-6">Total To Pay:</label>
-                  <div class="col-xs-6">
-                  {! this.state.SelectedOff.value && <p style={{textAlign: "center"}}>0$</p>}
-                  {this.state.SelectedOff.value && <p style={{textAlign: "center"}}> {this.state.SelectedOff.value} = {this.state.SelectedOff.label}</p>}
-                  </div>
-              </div>
-      
-              
-              <div class="row">
-                <label for="CheckOut" class="col-xs-6">Proceed to checkout:</label>
-                <button class="btn btn-primary col-xs-6"      
-                style=
-                  {{
-                    marginLeft : 0,
-                    color : "white"
-                  }}
-                  onClick={()=> {
-                  this.CheckOut()
-                }}>
-                  Checkout
-                </button>
-              </div>
-              
-          </div>
-          </div>
-          </div>
-      
-        )
-        }
-
   }
 
   CheckOut = () => {
@@ -745,16 +641,14 @@ else{
 }
   render() {
 
-    const ErrorStyle = {
+    const customStyles = {
       overlay: {
-        background: "transparent"
       },
       modal: {
-        backgroundColor: 'rgba(219, 105, 105, 0.9)',
-        color: "white",
         borderRadius: '10px',
       },
     }
+
     return (
 
   <div>
@@ -762,9 +656,10 @@ else{
 
     <Getlogin />
     <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
-          styles={ErrorStyle}>
+            styles={customStyles}>
           <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
-          <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img>    </Modal>
+          <img style ={{width: 150, height: 120}} class="col-xs-6" src="https://purepng.com/public/uploads/large/purepng.com-regifted-amumu-skinsplashartchampionleague-of-legendsskinamumu-331519923175q8nzf.png" alt=""></img>
+    </Modal>
     <Modal open={this.state.PaymentModal} onClose={this.onCloseModal.bind(this,'PaymentModal')} center>
     <Select
         value={this.state.SelectedPay}
