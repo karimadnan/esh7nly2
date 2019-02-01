@@ -11,7 +11,14 @@ let Validator =  {
         {value:'paymentMethod',msg:'No paymentMethod selected'},
         {value:'orderType',msg:'No orderType selected'},
         {value:'user',msg:'You need to login'}
-    ],
+	],
+	signup:[
+		{value:'Name',msg:'Enter Your Name'},
+		{value:'Phone',msg:'Enter Your Phone'},
+		{value:'Password',msg:'Enter Your Password'},
+        {value:'Gender',msg:'No Gender selected'},
+        {value:'Email',msg:'Enter Your Email'}
+	],
 	check: function (body, validateTarget) {
 		return new Promise((resolve, reject) => {
 			if (!body || typeof (body) !== 'object') {
@@ -20,12 +27,12 @@ let Validator =  {
 			let rejectMsg = false;
 			Validator[validateTarget].forEach(item=>{
 				if(!item.oneOfTheseIsRequired && (typeof body[item['value']] == 'undefined')){
-					reject({ message: `${item.msg} is missing .` });
+					reject({ message: `${item.msg} ` });
 				}
 				if(item.objectPropertiesAllRequired){
 					item.objectPropertiesAllRequired.forEach(required=>{
 						if(!body[item['value']][required['value']] || typeof body[item['value']][required['value']]== 'undefined'){
-							reject({ message: `${required.msg} is missing`});
+							reject({ message: `${required.msg}`});
 						}
 					});
 				}
