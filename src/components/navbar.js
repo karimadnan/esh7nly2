@@ -7,7 +7,6 @@ import '../Respcss.css';
 
 
 
-
 class Getlogin extends Component {
 
     state = {
@@ -30,11 +29,15 @@ class Getlogin extends Component {
       this.setState({[type]: false });
     };
 
-componentDidMount(){
+componentWillMount(){
   var that = this
-  console.log(localStorage.getItem("Token"), "checkingToken")
-  if(localStorage.getItem("Token")){
-    axios.get(this.state.Url+"checkToken",{headers: {auth: localStorage.getItem('Token')}})
+  var token = localStorage.getItem("Token")
+  if(token){
+    axios.get(this.state.Url+"checkToken", 
+    {
+      headers: { 'Authorization': token }
+    }
+  )
     .then(function (response) {
     // console.log(response)
     that.setState({logged: true}); 
@@ -44,7 +47,11 @@ componentDidMount(){
     .catch(function (error) {
       // console.log(error)
       localStorage.clear()
-      // window.location.reload()
+      that.setState({
+        ErrorModal:true,
+        ErrorMsg: "You're not logged in",
+        logged: false
+      })
     })
 }
 else{
@@ -55,7 +62,6 @@ else{
 }
 
 updateInput(key, value) {
-  
   this.setState({ [key]: value });
 }
 
@@ -112,24 +118,29 @@ login() {
     } 
   
 render() {
+
   const customStyles = {
     overlay: {
-      background: "#b2dbbf"
-    }
-  ,
-  customModal:{  
-    width: "60%"
+    },
+    modal: {
+      top: '-10%',
+      marginLeft: '80%',
+      left: "0px",
+      right: "0px",
+      bottom: 'auto',
+      width: '25%',
+      borderRadius: '10px',
+      padding: "10px"
+    },
   }
-  }
+
+
 return (
   
     <div class="container">
         <Modal          
-         classNames={{
-          overlay: customStyles.overlay,
-          modal: customStyles.customModal,
-        }}
-        open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center>
+        open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+        styles={customStyles}>
             <h2>{this.state.ErrorMsg}</h2>
         </Modal>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -161,7 +172,7 @@ return (
             <ul class="dropdown-menu">
               <li><a href="#">Purchase History</a></li>
         {/* Admin Dashboard */}
-              {   this.state.access > 1 &&  <li><a href="#">Admin Dashboard</a></li> }  
+              {   this.state.access > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}>Admin Dashboard</a></li> }  
             </ul>
           </li>}
           { ! this.state.logged &&    <li class="dropdown"> 

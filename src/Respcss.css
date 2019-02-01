@@ -1,5 +1,81 @@
 @media screen and (max-width: 700px) {
 
+  .newsContent {
+    width: 340px;
+  }
+  
+
+  .slideShit{
+    width: 0;
+    height: 0;
+  }
+
+  .panelGames {
+    background-image: url('Images/paneltest.png');
+    background-repeat: no-repeat;
+  }
+  
+  .panelFb {
+    background-image: url('Images/fbpanel2.png');
+    background-repeat: no-repeat;
+  }
+  
+  .panelAds {
+    background-image: url('Images/panelads.png');
+    background-repeat: no-repeat;
+  }
+
+  .newsTitleBg {
+  margin-top: 70px;
+  }
+
+  .panelGames {
+    background-image: url('Images/paneltest.png');
+    background-repeat: no-repeat;
+    height: 0px;
+  }
+  
+  .panelFb {
+    background-image: url('Images/fbpanel.png');
+    background-repeat: no-repeat;
+    height: 0px;
+  }
+  
+  .panelAds {
+    background-image: url('Images/panelads.png');
+    background-repeat: no-repeat;
+    height: 0px;
+  }
+
+  .signUpLogo{
+    border-radius: 1.95rem;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, 50%);
+    z-index: 2;
+    width: 80%;
+    text-align: center;
+    color: white;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    padding: 18px;
+  }
+
+  .Signup {
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    border-radius: 1.95rem;
+    position: absolute;
+    width: 100%;
+    height: 65%;
+    text-align: right;
+
+  }
+  
   .splash-card {
     margin-bottom: 20px;
     -webkit-transform: translate(14%, 40%);
@@ -190,56 +266,11 @@
   #login-dp .form-group {
       margin-bottom: 10px;
   }
-  .fortniteLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 105%;
-    left: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    z-index: 2;
-    width: 100%;
-    padding: 80px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url('Images/fortlogo.png');
-  }
   
-  
-    .leagueLogo{
-      border-radius: 1.95rem;
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-      position: absolute;
-      top: 105%;
-      left: 50%;
-      -webkit-transform: translate(-50%, 50%);
-      z-index: 2;
-      width: 100%;
-      padding: 100px;
-      background-position: center;
-      background-repeat: no-repeat;
-      background-image: url('Images/LeagueLogo.png');
-    }
-  
-    .GameDesc  {
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-      color: rgb(255, 255, 255);
-      font-weight: bold;
-      border-radius: 1.95rem;
-      position: absolute;
-      -webkit-transform: translate(-38%, 150%);
-      left: 40%;
-      width: 80%;
-      padding: 25px;
-    }
   }
 
   @media screen and (max-width: 400px) {
 
-      
   .badge {
     display: inline-block;
     padding: 0.05em 1.9em;
@@ -262,7 +293,7 @@
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: 0.85rem;
-    transform: translate(2%, 320%);
+    transform: translate(-10%, 320%);
     font-size: 15px
   }
   
@@ -320,151 +351,18 @@
 }
 
 @media screen and (max-width: 600px) {
-  
 
     .bg-image {
       /* The image used */
       background-image: url("Images/bgresp.png");
     /* Full height */
         height: stretch;
+        overflow-x: hidden;
         /* Center and scale the image nicely */
         background-position: center;
         background-repeat: repeat;
         background-size: cover;
     }
-  
-    .game2{
-      transition: background-size 0.6s ease;
-      background-size: 100%;
-      cursor: pointer;
-      background-image: url('');
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-      color: white;
-      font-weight: bold;
-      border-radius: 1.95rem;
-      position: absolute;
-      top: 103%;
-      left: 68.5%;
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      width: 90%;
-      height: 12%;
-      padding: 10px;
-      margin: -10ex;
-      text-align: center;
-    }
-    
-    .game1{
-      transition: background-size 0.6s ease;
-      background-size: 100%;
-      cursor: pointer;
-      background-image: url('');
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-      color: white;
-      font-weight: bold;
-      border-radius: 1.95rem;
-      position: absolute;
-      top: 88%;
-      left: 68.5%;
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      width: 90%;
-      height: 12%;
-      padding: 10px;
-      margin: -10ex;
-      text-align: center;
-    }
-  
-    .crossfire {
-      transition: background-size 0.6s ease;
-      background-size: 100%;
-      cursor: pointer;
-      background-image: url('https://cdn.pbrd.co/images/HVn6mCd.jpg');
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-      color: white;
-      font-weight: bold;
-      border-radius: 1.95rem;
-      position: absolute;
-      top: 73%;
-      left: 68.5%;
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      width: 90%;
-      height: 12%;
-      padding: 10px;
-      margin: -10ex;
-      text-align: center;
-    }
-  
-    .pubg {
-      transition: background-size 0.6s ease;
-      background-size: 100%;
-      cursor: pointer;
-      background-image: url('https://cdn.pbrd.co/images/HVn02d3.jpg');
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-      color: white;
-      font-weight: bold;
-      border-radius: 1.95rem;
-      position: absolute;
-      top: 58%;
-      left: 68.5%;
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      width: 90%;
-      height: 12%;
-      padding: 10px;
-      margin: -10ex;
-      text-align: center;
-    }
-  
-    .fortnite {
-      transition: background-size 0.6s ease;
-      background-size: 100%;
-      cursor: pointer;
-      background-image: url('https://cdn.pbrd.co/images/HVmW5FS.png');
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-      color: white;
-      font-weight: bold;
-      border-radius: 1.95rem;
-      position: absolute;
-      top: 43%;
-      left: 68.5%;
-      transform: translate(-50%, -50%);
-      z-index: 5;
-      width: 90%;
-      height: 12%;
-      padding: 10px;
-      margin: -10ex;
-      text-align: center;
-    }
-  
-    .league {
-      transition: background-size 0.6s ease;
-      background-size: 100%;
-      cursor: pointer;
-      background-image: url('https://cdn.pbrd.co/images/HVmZjvV.jpg');
-      background-color: rgb(0,0,0); /* Fallback color */
-      background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-      color: white;
-      font-weight: bold;
-      border-radius: 1.95rem;
-      top: 28%;
-      left: 68.5%;
-      transform: translate(-50%, -50%);
-      width: 90%;
-      height: 12%;
-      padding: 10px;
-      margin: -10ex;
-      text-align: center;
-      position: absolute;
-      overflow:hidden;
-    }
-    
   }
   
 
@@ -529,6 +427,7 @@
   }
   
   @media screen and (max-width: 500px) {
+
     .bg-text {
       background-color: rgb(0,0,0); /* Fallback color */
       background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */

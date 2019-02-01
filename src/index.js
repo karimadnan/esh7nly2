@@ -10,10 +10,11 @@ import Games from './components/Games';
 import Payment from './components/PaymentTutorial';
 import Checkout from './components/Checkout';
 import FortniteShop from './components/FortniteShop';
+import Admindashboard from './components/admindashboard';
 import * as registerServiceWorker from './registerServiceWorker';
 
-localStorage.setItem("Server","http://192.168.1.2:4000/server/")
-// localStorage.setItem("Server"," https://esh7ntest.herokuapp.com/server/")
+// localStorage.setItem("Server","http://192.168.1.2:4000/server/")
+localStorage.setItem("Server"," https://esh7ntest.herokuapp.com/server/")
 
 
 Flux.createRoute('/',function(){
@@ -44,6 +45,11 @@ Flux.createRoute('/payment',function(){
 Flux.createRoute('/fortniteshop',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<FortniteShop />,document.getElementById('root'));
+})
+
+Flux.createRoute('/admindashboard',function(){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Admindashboard />,document.getElementById('root'));
 })
 
 
