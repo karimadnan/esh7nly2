@@ -45,7 +45,7 @@ class FortniteShop extends Component {
         this.setState({ShopChosenImg: image.img3})
       }
     }
-
+    
     getSingleItem = (name, type) =>{
         axios.get(`https://fnbr.co/api/images/`, 
         {
@@ -73,7 +73,7 @@ class FortniteShop extends Component {
           console.log(response)
         })
         .catch(e => {
-          console.log('Error: ', e.response)
+          console.log('ErrorFFFFF: ', e.response)
       })
 
     }
@@ -196,6 +196,7 @@ class FortniteShop extends Component {
     }
     else if(this.state.ShopChose === true){
     var rarity = "card splash-card2 rarity-"+this.state.ShopChoseItem.rarity
+
     return (
     
     <div>
@@ -207,13 +208,12 @@ class FortniteShop extends Component {
     <img src={this.state.vbucksIcon} alt="V-Bucks"
     style={{float: "right",width: 20, height: 20, marginTop: 5, WebkitTransform: 'translate(0%, 35%)'}}></img>
     </h1>
-    <h1 class="badge badge-dark col-xs-3" style={{color : this.state.ItemFontColor}}>{this.state.ShopChoseItem.rarity} {this.state.ShopChoseItem.type}</h1>
+    <h1 class="badge badge-dark col-xs-3" style={{textTransform: 'uppercase', color : this.state.ItemFontColor}}>{this.state.ShopChoseItem.rarity} {this.state.ShopChoseItem.type}</h1>
     
     <button class="badge badge-dark2 btn btn-primary col-xs-2" style={{float: "right",margin: 15,color : "red"}} onClick={()=> {this.updateState("ShopChose", false), this.updateState("ItemStored", false)}}>
     Back To Shop
     </button>
     </div>
-    
     <div class="col-xs-6">
     <div class ={rarity}>
     <img src={this.state.ShopChosenImg} style={{width: 440, height: 400}} alt=""/>

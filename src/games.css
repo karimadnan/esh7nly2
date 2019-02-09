@@ -1,46 +1,34 @@
+.paymentBody {
+  background-color: #0000008c;
+  width: 1000px;
+  height: 500px;
+  color: #fafafa;
+  border-radius: 1.95rem;
+  margin: auto;
+  font-family: "Arial";
+  -webkit-transform: translate(0%, 20%);
+  display: block;
+  }  
+
 .leagueLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    -webkit-transform: translate(-45%, 80%);
-    z-index: 2;
-    width: 35%;
-    padding: 60px;
+    width: 1100px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('Images/LeagueLogo.png');
   }
   
   .steamLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    -webkit-transform: translate(-45%, 80%);
-    z-index: 2;
-    width: 35%;
-    padding: 60px;
+    width: 1100px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url('Images/steampaymentlogo.png');
+    background-image: url('Images/steamgameslogo.png');
   }
   
   .tibiaLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    -webkit-transform: translate(-45%, 80%);
-    z-index: 2;
-    width: 35%;
-    padding: 60px;
+    width: 1100px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('Images/tibialogo.png');
@@ -125,32 +113,17 @@
   }
   
   .fortniteLogo{
+    width: 1100px;
+    height: 300px;
     border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    -webkit-transform: translate(-45%, 80%);
-    z-index: 2;
-    width: 35%;
-    padding: 60px;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('Images/fortlogo.png');
   }
   
   .crossfireLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    -webkit-transform: translate(-45%, 80%);
-    z-index: 2;
-    width: 35%;
-    padding: 60px;
+    width: 1100px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('Images/crossfirelogopayment.png');
@@ -158,32 +131,23 @@
   
   .pubgLogo{
     border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 25%;
-    left: 50%;
-    -webkit-transform: translate(-45%, 80%);
-    z-index: 2;
-    width: 35%;
-    padding: 60px;
+    width: 1100px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('Images/pubgLogo2.png');
   }
   
 .GameDesc  {
+    -webkit-transform: translate(35%, 0%);
+    text-align: center;
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
     color: rgb(255, 255, 255);
     font-weight: bold;
     border-radius: 1.95rem;
-    position: absolute;
-    -webkit-transform: translate(-27%, 110%);
-    left: 40%;
-    z-index: 2;
-    width: 50%;
-    padding: 25px;
+    width: 650px;
+    height: 250px;
 }
 
 .pubg {
@@ -294,7 +258,7 @@
     transition: background-size 0.6s ease;
     background-size: 100%;
     cursor: pointer;
-    background-image: url('Images/league.jpg');
+    background-image: url('Images/leagueoffers.png');
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
     color: white;
@@ -364,127 +328,74 @@
 
 @media screen and (max-width: 999px) {
 
-.fortniteLogo{
+  .leagueLogo{
+    width: 350px;
+    height: 300px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('Images/LeagueLogo.png');
+  }
+
+  .paymentBody {
+    background-color: #0000008c;
+    width: 350px;
+    height: 500px;
+    color: #fafafa;
     border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 105%;
-    left: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    z-index: 2;
-    width: 100%;
-    padding: 80px;
+    margin: auto;
+    font-family: 'impact';
+    -webkit-transform: translate(0%, 15%);
+    display: block;
+    }  
+
+.fortniteLogo{
+    width: 350px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('Images/fortlogo.png');
 }
 
 .crossfireLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 105%;
-    left: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    z-index: 2;
-    width: 100%;
-    padding: 70px;
+    width: 350px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('Images/crossfirelogopayment.png');
 }
 
 .pubgLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 105%;
-    left: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    z-index: 2;
-    width: 100%;
-    padding: 100px;
+    width: 350px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('Images/pubgLogo2.png');
 }
 
-.leagueLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 105%;
-    left: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    z-index: 2;
-    width: 100%;
-    padding: 100px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url('Images/LeagueLogo.png');
-}
-
-.pubgLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 105%;
-    left: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    z-index: 2;
-    width: 100%;
-    padding: 100px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url('Images/pubgLogo2.png');
-}
 
 .GameDesc  {
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    color: rgb(255, 255, 255);
-    font-weight: bold;
-    border-radius: 1.95rem;
-    position: absolute;
-    -webkit-transform: translate(-38%, 150%);
-    left: 40%;
-    width: 80%;
-    padding: 25px;
-    overflow: hidden;
+  -webkit-transform: translate(-5%, 10%);
+  text-align: center;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.7); /* Black w/opacity/see-through */
+  color: rgb(255, 255, 255);
+  font-weight: bold;
+  border-radius: 1.95rem;
+  width: 350px;
+  height: 250px;
 }
 
   .steamLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 105%;
-    left: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    z-index: 2;
-    width: 100%;
-    padding: 80px;
+    width: 350px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url('Images/steampaymentlogo.png');
+    background-image: url('Images/steamgameslogo.png');
   }
  
   .tibiaLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-    position: absolute;
-    top: 105%;
-    left: 50%;
-    -webkit-transform: translate(-50%, 50%);
-    z-index: 2;
-    width: 100%;
-    padding: 80px;
+    width: 350px;
+    height: 300px;
     background-position: center;
     background-repeat: no-repeat;
     background-image: url('Images/tibialogo.png');
@@ -592,7 +503,7 @@
     transition: background-size 0.6s ease;
     background-size: 100%;
     cursor: pointer;
-    background-image: url('Images/league.jpg');
+    background-image: url('Images/league.png');
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
     width: 100%;

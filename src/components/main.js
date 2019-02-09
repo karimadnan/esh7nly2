@@ -5,14 +5,13 @@ import Getlogin from './navbar';
 import { Slide } from 'react-slideshow-image';
 import moment from 'moment';
 import crossfire from '../Images/crossfirepayment.png';
-import fortnite from '../Images/917873.png';
+import fortnite from '../Images/fortnite.jpg';
 import pubg from '../Images/pubg.jpg';
 import tibia from '../Images/tibialanding.png';
-import league from '../Images/leagueoffers.jpg';
+import league from '../Images/leagueoffers.png';
 import steam from '../Images/steampayment.jpg';
-import { FacebookProvider, Page } from 'react-facebook';
-
-const FB = window.FB;
+import { FacebookProvider, Page, CustomChat } from 'react-facebook';
+import Footer from './footer';
 
 class Main extends Component {
 
@@ -23,7 +22,7 @@ class Main extends Component {
 
     ]
     }
-
+  
   
   Slideshow = () => {
 
@@ -39,10 +38,10 @@ class Main extends Component {
         <Slide {...properties}>
 
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} class="col-lg-6" src={fortnite} alt=""></img>
-            <div class="card-image-overlay">
-                <div id ="slidedesc" class="card-body">
-                    <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
+          <img style ={{width: 350, height: 130}} className="col-lg-6" src={fortnite} alt=""></img>
+            <div className="card-image-overlay">
+                <div id ="slidedesc" className="card-body">
+                    <h4 className ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
                        <span>Fortnite</span>
                     </h4>
                 </div>
@@ -50,29 +49,29 @@ class Main extends Component {
           </div>
           
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} class="col-xs-6" src={crossfire} alt=""></img>
-          <div class="card-image-overlay">
-                <div id ="slidedesc" class="card-body">
-                    <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
+          <img style ={{width: 350, height: 130}} className="col-xs-6" src={crossfire} alt=""></img>
+          <div className="card-image-overlay">
+                <div id ="slidedesc" className="card-body">
+                    <h4 className ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
                        <span>Crossfire</span>
                     </h4>
                 </div>
             </div>
           </div>
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} class="col-xs-6" src={pubg} alt=""></img>
-          <div class="card-image-overlay">
-                <div id ="slidedesc" class="card-body">
-                    <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
+          <img style ={{width: 350, height: 130}} className="col-xs-6" src={pubg} alt=""></img>
+          <div className="card-image-overlay">
+                <div id ="slidedesc" className="card-body">
+                    <h4 className ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
                        <span>Pubg</span>
                     </h4>
                 </div>
             </div>
           </div>
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} class="col-xs-6" src={tibia} alt=""></img>
-          <div class="card-image-overlay">
-                <div id ="slidedesc" class="card-body">
+          <img style ={{width: 350, height: 130}} className="col-xs-6" src={tibia} alt=""></img>
+          <div className="card-image-overlay">
+                <div id ="slidedesc" className="card-body">
                     <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
                        <span>Tibia</span>
                     </h4>
@@ -111,7 +110,7 @@ class Main extends Component {
     let date = this.state.News[row].date
 
       return (
-        <div>
+        <div key={row}>
           <div class="newsTitleBg">
               <div class="paraShit">
                 <p>{moment(date).format('LL')}</p>
@@ -121,7 +120,7 @@ class Main extends Component {
               </div>
           </div>
 
-          <div class ="newsContent">
+          <div style={{marginBottom: 10}} class ="newsContent">
             <p style={{fontSize: 16}}> {this.state.News[row].content}</p>
           </div>
        </div>             
@@ -131,6 +130,7 @@ class Main extends Component {
   return (
     
     <div >
+
               <div class="newsBody col-md-6 col-lg-6 col-xs-6">
                         {news}
               </div>
@@ -143,8 +143,9 @@ class Main extends Component {
               </div>
               <div class="col-md-offset-6 col-lg-offset-6 col-xs-offset-6 ">
                   <div class ="panelFb" >
+ 
                       <div class="fbShit">
-                      <FacebookProvider appId="1984023341904164">
+                      <FacebookProvider key="1" appId="1984023341904164">
                       <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
                     </FacebookProvider> 
               </div>
@@ -163,6 +164,7 @@ render(){
   return(
     <div>
       <Getlogin />
+
       <div className="bg-image">
       {this.renderPage()}
       </div>
