@@ -15,7 +15,7 @@ import Select from 'react-select';
 import Vbucks from '../Images/fortnite-vbucks-icon.png';
 import Rp from '../Images/rp.png';
 import amumu from '../Images/amumusad.png';
-
+import fortniteDab from '../Images/fortnitedab.png';
 
 
 const customStyles = {
@@ -811,6 +811,7 @@ else{
 }
 
 paymentRender(){
+if (!this.state.SuccessModal){
   var bg = "bgr-"+this.state.GameType+"0"
 if(this.state.Payment){
   return(
@@ -874,8 +875,10 @@ if(this.state.Payment){
   );
 }
 }
+}
 
 createOrder() {
+
   var that = this
   var headers = {
     'Content-Type': 'application/json',
@@ -886,7 +889,7 @@ createOrder() {
   if (this.state.transId.length >= 12 && /^\d+$/.test(this.state.transId)){
   axios.post(this.state.Url+"createOrder", Data, {headers: headers})
   .then(function (response) {
-      console.log(response)
+    that.setState({SuccessModal: true, SuccessMsg: "Your order has been placed, to track your order go to your account orders page."})
   })
   .catch(function (error) {
       that.setState({ErrorModal: true, ErrorMsg: error.response.data.message})
@@ -910,12 +913,28 @@ render() {
     },
   }
 
+  const SuccessStyle = {
+    overlay: {
+      background: "transparent"
+    },
+    modal: {
+      backgroundColor: 'rgba(124, 214, 105, 0.9)',
+      color: "white",
+      borderRadius: '10px',
+    },
+  }
+
 return (
+  
   <div>
       <div className="bg-image"> 
 
       <Getlogin />
-
+      <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
+          styles={SuccessStyle}>
+          <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
+          <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
+      </Modal>
       <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
           styles={ErrorStyle}>
           <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>

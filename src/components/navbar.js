@@ -168,7 +168,7 @@ return (
         {/* User */}
       {   this.state.logged && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="glyphicon glyphicon-user"></span> {this.state.name} <span className="caret"></span></a>
             <ul className="dropdown-menu">
-              <li><a href="#">Purchase History</a></li>
+              <li><a href="#">Your Orders</a></li>
         {/* Admin Dashboard */}
               {   this.state.access > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}>Admin Dashboard</a></li> }  
             </ul>

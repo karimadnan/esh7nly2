@@ -14,17 +14,26 @@ Url: localStorage.getItem('Server'),
 ordersData: []
 }
 
-
-
 updateInput(key, value) {
   this.setState({ [key]: value });
 }
 
+getOrdersHistory() {
+  var that = this
+  axios.get(`${this.state.Url}getAllOrdersHistory`, {headers: this.state.headers})
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error.response);
+    })
+}
+
 getAllOrders(){
 
-  var that = this
+var that = this
 
-  axios.get(`${this.state.Url}getAllOrders`, {headers: this.state.headers})
+axios.get(`${this.state.Url}getAllOrders`, {headers: this.state.headers})
   .then(function (response) {
     var objects = []
     response.data.data.forEach(element => {
@@ -77,6 +86,12 @@ endOrder(id) {
 })
 }
 
+toggle() {
+  this.setState({
+    tooltipOpen: !this.state.tooltipOpen
+  });
+}
+
 table() {
   if (this.state.ordersData.length > 0){
     var counter = 0
@@ -85,11 +100,14 @@ table() {
       <br/>
       <br/>
       <br/>
+      <h3 onClick={()=>{this.updateInput("operation", "")}} class="adminBody" style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-chevron-left"></span> Back to menu </h3>
     <div style={{backgroundColor: "white"}}>
       <table class="table table-striped">
       <thead>
       <tr>
         <th scope="col">#</th>
+        <th scope="col">Trans ID</th>
+        <th scope="col">Phone</th>
         <th scope="col">Game</th>
         <th scope="col">Status</th>
         <th scope="col">View</th>
@@ -100,12 +118,15 @@ table() {
         {this.state.ordersData.map(row => {
             counter ++;
             return (
+
               <tr key={counter}>
                 <th scope="row">{counter}</th>
-                <td>{row.game}</td>
+                <th ><span class="label label-default">{row.transId}</span></th>
+                <th ><span class="label label-info">{row.userPhone}</span></th>
+                <td style={{fontWeight: "bold", textTransform: 'uppercase'}}>{row.game}</td>
                 <td>{row.status === "pending" ? <span class="label label-default">Pending</span> : <span class="label label-primary">InProgress</span>}</td>
-                <td><span style={{cursor: 'pointer'}} onClick={()=>{console.log(row.data)}} className="glyphicon glyphicon-eye-open"></span></td>
-            <td> {row.status === "pending" ? <button  onClick={this.viewOrder.bind(this, row.orderID)} class="btn btn-success"> Check </button> : 
+                <td><span style={{cursor: 'pointer'}} className="glyphicon glyphicon-eye-open"></span></td>
+                <td> {row.status === "pending" ? <button  onClick={this.viewOrder.bind(this, row.orderID)} class="btn btn-success"> Check </button> : 
                    <button  onClick={this.endOrder.bind(this, row.orderID)} class="btn btn-danger"> End </button> } </td>
               </tr>
             )
@@ -187,6 +208,14 @@ renderPage() {
     </div>
     )
   }
+  else if (this.state.operation === "orders"){
+    this.getOrdersHistory()
+    return (
+    <div class="container">
+
+    </div>
+    )
+  }
     return (
         <div class="container">
 
@@ -221,7 +250,6 @@ renderPage() {
 
         </div>
 )
-
 
 }    
 
