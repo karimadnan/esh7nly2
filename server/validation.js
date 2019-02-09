@@ -1,4 +1,4 @@
-
+const jwToken=require('./Jwt');
 let Validator =  {
 	// obje: [
 	// 	{value:'value',msg:'output'},
@@ -9,8 +9,9 @@ let Validator =  {
     NewOrder:[
         {value:'game',msg:'No game selected'},
         {value:'paymentMethod',msg:'No paymentMethod selected'},
-        {value:'orderType',msg:'No orderType selected'},
-        {value:'user',msg:'You need to login'}
+		{value:'orderType',msg:'No orderType selected'},
+		{value:'transId',msg:'Enter You transaction id'},
+		{value:'extra',msg:'No extra Date'}
 	],
 	signup:[
 		{value:'Name',msg:'Enter Your Name'},
@@ -57,7 +58,31 @@ let Validator =  {
 
 			resolve(body);
 		})
-	}
+	},
+	checkJWT: function (req, res, next) {   
+        var token;
+        if (req.headers && req.headers.authorization) {
+			token=req.headers.authorization;
+        } else if (req.query.token) {
+            token = req.query.token;
+        } else { 
+            return res.status(401).send({ message: 'No Authorization found' });
+        }
+        jwToken.verify(token, function (err, payload) {
+            if (err) {
+                console.log(err);
+                return res.status(401).send({ message: 'Token Invalid' });
+            };
+            req.token = payload;
+                next();          
+        });
+	},
+	isAdmin:function (req,res,next) {
+        if(req.token.access && req.token.access == 2){
+			return next();     
+        }
+	    return res.status(401).send({ message: 'unAuthorized Action' });
+    },
 }
 
 module.exports = Validator;
