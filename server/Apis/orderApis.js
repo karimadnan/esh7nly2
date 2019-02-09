@@ -46,6 +46,29 @@ const orderApis = {
     return res.status(200).send({ message: 'all orders',data:docs});
     });  
     },
+    getAllOrdersHistory:function(req, res, next) {
+        const collection = DB.dbo.collection('ordersHistory');
+        collection.aggregate([
+        {
+            $lookup:
+            {
+                from: "users",
+                localField: "user",
+                foreignField: "_id",
+                as: "user"
+            }
+        },
+        { $unwind:"$user" }
+        ]).toArray(function(err, docs) {
+        if(err){
+        return res.status(500).send({ message: 'DB Error',error:err});
+            }
+            if(!docs[0]){
+            return res.status(202).send({ message: 'No Data',date:[]});
+            }
+        return res.status(200).send({ message: 'all orders',data:docs});
+        });  
+    },
     viewOrder:function(req, res, next){
         var body= req.body;
         if(!body.orderID){
@@ -78,15 +101,17 @@ const orderApis = {
     doc['endedBy']=new ObjectId(req.token.userId);
     delete doc._id;
     delete doc.status;
+    var rom = await collection.remove({ _id: new ObjectId(body.orderID)}).catch(err =>{   
+        return  res.status(500).send({ message: 'server error 002'}); 
+    });;
     collection2.insertOne(doc,(err,result)=>{
         if(err){
             console.log('endOrder Error =>',err)
             return res.status(500).send({ message: 'server error'});
         }
         return res.status(200).send({ message: 'Order Ended',data:[]});
-        });
+    });
     },
-
     getOrderForuser:function(req, res, next) {
     const collection = DB.dbo.collection('orders');
     collection.find({user:new ObjectId(req.query.userId)}).toArray(function(err, docs) {
