@@ -2,7 +2,7 @@ let DB = require('../Mongo');
 var bcrypt = require('bcrypt-nodejs');
 const Validator =require('../validation');
 const jwToken=require('../Jwt');
-
+var ObjectId = require('mongodb').ObjectID;
 
 const loginApis = {
 
@@ -79,8 +79,14 @@ if (err) {
 return res.status(200).send({ message: 'Valid auth'});
 });
 
-}
-
+},
+getUserbyId:async function(req, res, next){
+const collection = DB.dbo.collection('users');
+var doc = await collection.findOne({ _id: new ObjectId(req.body.userId) },{fields:{_id:0, Name: 1, Phone: 1,Access:1 ,Email:1}} ).catch(err =>{   
+return  res.status(500).send({ message: 'server error 003'}); 
+});  
+return res.status(200).send({ message: 'User',doc});
+},
 
 };
 
