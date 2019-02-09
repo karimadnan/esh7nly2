@@ -13,7 +13,7 @@ import Admindashboard from './components/admindashboard';
 import ContactUs from './components/ContactUs';
 import * as registerServiceWorker from './registerServiceWorker';
 
-// localStorage.setItem("Server","http://192.168.1.2:4000/server/")
+// localStorage.setItem("Server","http://192.168.1.7:4000/server/")
 localStorage.setItem("Server"," https://esh7ntest.herokuapp.com/server/")
 
 Flux.createRoute('/',function(){

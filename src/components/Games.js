@@ -853,7 +853,7 @@ if(this.state.Payment){
             </div>
         </div>
         <div class="col-md-4 col-lg-4 col-xs-4">
-            <button class="btn btn-primary btn-block">Place Order</button> 
+            <button onClick={()=> {this.createOrder()}} class="btn btn-primary btn-block">Place Order</button> 
         </div>	
 
         <div style={{marginTop: 10}} class="col-xs-12 col-md-12 col-lg-12">
@@ -873,8 +873,30 @@ if(this.state.Payment){
     </div>
   );
 }
-
 }
+
+createOrder() {
+  var that = this
+  var headers = {
+    'Content-Type': 'application/json',
+    'authorization': localStorage.getItem("Token")
+  }
+
+  let Data = {game: this.state.GameType, paymentMethod: this.state.SelectedPay.value, orderType: "normal", extra: this.state.ExtraData, transId: this.state.transId}
+  if (this.state.transId.length >= 12 && /^\d+$/.test(this.state.transId)){
+  axios.post(this.state.Url+"createOrder", Data, {headers: headers})
+  .then(function (response) {
+      console.log(response)
+  })
+  .catch(function (error) {
+      that.setState({ErrorModal: true, ErrorMsg: error.response.data.message})
+  })
+  }
+  else {
+    this.setState({ErrorModal: true, ErrorMsg: "Make sure to enter the 12 transaction id number correctly"})
+  }
+}
+
 
 render() {
   const ErrorStyle = {
