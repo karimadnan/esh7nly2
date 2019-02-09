@@ -1,3 +1,74 @@
+.footer {
+  position: absolute;
+  left:0;
+  bottom:0;
+  right:0;
+  width: 100%;
+  height: 60px;
+  background-color: #161616;
+}
+
+.SignUpBOX {
+  border: 20px solid transparent;
+  background-image: url('Images/newsbg.png');
+  border-image-source: url('Images/borders.png');
+  border-image-slice: 20;
+  border-image-repeat: round;
+  color: #fff;
+  text-align: center;
+  max-width: 700px;
+  height: 400px;
+  margin: 0 auto;
+}
+
+.signUpLogo{
+  max-width: 400px;
+  margin: 0 auto;
+  border: 20px solid transparent;
+  background-image: url('Images/newsbg.png');
+  border-image-source: url('Images/borders.png');
+  border-image-slice: 20;
+  border-image-repeat: round;
+  text-align: center;
+  color: white;
+  font-family: Impact;
+}
+
+.ContactUs1{
+  display: block;
+  padding: 0.15em 1.9em;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.85rem;
+  margin: 0 auto;
+}
+
+.badge-dark3 {
+  color: #fff;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+  width: 1000px;
+}
+
+.alert-danger{
+  border-bottom: 2.5px solid;
+  border-color: #bb3737;
+}
+
+.alert-info{
+  border-bottom: 2.5px solid;
+  border-color: #5786ec;
+}
+
+
+.activeNav {
+font-weight: bold;
+border-bottom: 2.5px solid;
+border-bottom-color: #0686db;
+background-color: #00000081;
+}
+
 .adminInput {
   border: 0px solid #f1f1f1;
   width: 105%;
@@ -75,6 +146,7 @@ background-color: #0ddb06;
   background-image: url('Images/Alert.png');
   height: 157px;
   width: 346px;
+  margin: 0 auto;
 }
 
 .paraShit{
@@ -274,6 +346,22 @@ background-color: #0ddb06;
   -o-transform: scale(1,1.3);
 }
 
+.backbtn{
+  padding: 0.15em 1.9em;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 2;
+  border-radius: 0.85rem;
+  float: right;
+}
+
+.checkoutbtn{
+  width: 150px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 0.85rem;
+}
+
 .badge, .badge2 {
   display: inline-block;
   padding: 0.15em 1.9em;
@@ -288,44 +376,26 @@ background-color: #0ddb06;
 }
 
 .badge-dark {
+  border-radius: 1.95rem;
   color: #fff;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
 }
 
 .badge-dark2 {
+  border-radius: 1.95rem;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.3); /* Black w/opacity/see-through */
 }
 
-.signUpLogo{
-  border-radius: 1.95rem;
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, 50%);
-  z-index: 2;
-  width: 30%;
-  text-align: center;
-  color: white;
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-  padding: 18px;
-}
-
 .VodaCashLogo{
+  margin: 0 auto;
+  width: 600px;
+  height: 100px;
   border-radius: 1.85rem;
   border: 1px solid #e70505;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-  position: absolute;
-  top: 105%;
-  left: 50%;
-  -webkit-transform: translate(-130%, 75%);
-  z-index: 2;
-  width: 30%;
-  padding: 70px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url('Images/VodaCashLogo.png');
@@ -336,13 +406,9 @@ background-color: #0ddb06;
   border: 1px solid #0ddb06;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-  position: absolute;
-  top: 105%;
-  left: 50%;
-  -webkit-transform: translate(-130%, 75%);
-  z-index: 2;
-  width: 30%;
-  padding: 70px;
+  margin: 0 auto;
+  width: 600px;
+  height: 100px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url('Images/EtisCashLogo.png');
@@ -353,13 +419,9 @@ background-color: #0ddb06;
   border: 1px solid #fffb03;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-  position: absolute;
-  top: 105%;
-  left: 50%;
-  -webkit-transform: translate(-170%, 46%);
-  z-index: 2;
-  width: 30%;
-  padding: 70px;
+  margin: 0 auto;
+  width: 600px;
+  height: 100px;
   background-position: center;
   background-repeat: no-repeat;
   background-image: url('Images/fawrypaymenttest2.png');

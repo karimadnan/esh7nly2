@@ -16,6 +16,10 @@ state = {
     this.setState({ChoosePay: false})
   }
 
+  refreshBack(){
+    this.setState({PaymentOps: '', ChoosePay: true})
+  }
+
   PaymentRender = () => {
     if(this.state.ChoosePay){
 
@@ -55,16 +59,25 @@ state = {
     if(!this.state.ChoosePay && this.state.PaymentOps ==='VodaCash'){
       return (
       <div class="container">
+      <br/>
+      <br/>
+      <br/>
       <div class="col-xs-12">
             <div className={t}> 
             </div>
       </div>
-      <div class="col-xs-12">
-        <div className="PaymentDesc2"> 
+      
+      <div class="col-xs-12 col-md-12 col-lg-12">
+          <button class="backbtn badge-dark2 btn btn-primary" style={{color : "red", marginTop: 5}}  onClick={()=> {this.refreshBack()}}>
+            Back To List
+          </button>
+     </div>
 
-        <h3> ازاى تشترك فى فودافون كاش؟ *</h3>
+      <div class="col-xs-12">
+        <div style={{textAlign: "right", paddingRight: 10, fontSize: 20, fontWeight: "bold"}} className="badge-dark"> 
+        <h1 > ازاى تشترك فى فودافون كاش؟ *</h1>
             <p> .هتروح اى فرع فودافون بالبطاقة و خط فودافون بأسمك و تشترك ببلاش</p>
-            <h3> ازاى تشترى؟ *</h3>
+            <h1 > ازاى تشترى؟ *</h1>
             <p> ١- بعد ما تشترك و انت فى الفرع اودع الفلوس  </p>
             <p> #٢- وانت فى البيت اطلب *7000</p>
             <p>٣- دوس 1 للعربى و 2 للانجليزى</p>
@@ -86,20 +99,30 @@ state = {
     else if(!this.state.ChoosePay && this.state.PaymentOps ==='EtisCash'){
       return (
         <div class="container">
+      <br/>
+      <br/>
+      <br/>
         <div class="col-xs-12">
               <div className={t}>  </div>
         </div>
-              <div class="col-xs-12">
-              <div className="PaymentDesc2"> 
+
+        <div class="col-xs-12 col-md-12 col-lg-12">
+          <button class="backbtn badge-dark2 btn btn-primary" style={{color : "red", marginTop: 5}}  onClick={()=> {this.refreshBack()}}>
+            Back To List
+          </button>
+       </div>
+
+        <div class="col-xs-12 col-md-12 col-lg-12">
+          <div style={{textAlign: "right", paddingRight: 10, fontSize: 20, fontWeight: "bold"}} className="badge-dark"> 
       
-              <h3> ازاى تشترك فى فودافون كاش؟ *</h3>
-                  <p> .هتروح اى فرع فودافون بالبطاقة و خط فودافون بأسمك و تشترك ببلاش</p>
-                  <h3> ازاى تشترى؟ *</h3>
+              <h1 > ازاى تشترك فى اتصالات كاش؟ *</h1>
+                  <p> .هتروح اى فرع اتصالات بالبطاقة و خط اتصالات بأسمك و تشترك ببلاش</p>
+                  <h1 > ازاى تشترى؟ *</h1>
                   <p> ١- بعد ما تشترك و انت فى الفرع اودع الفلوس  </p>
-                  <p> #٢- وانت فى البيت اطلب *7000</p>
-                  <p>٣- دوس 1 للعربى و 2 للانجليزى</p>
-                  <p>٤- اختار "تحويل الاموال" بإدخال الرقم 1</p>
-                  <p> ٥- اضغط الرقم 1 لادخال رقم موبايل المرسل اليه</p>
+                  <p> #٢- وانت فى البيت اطلب *777</p>
+                  <p>٣- ستحصل على قائمة فلوس إختار "تحويل نقود" بالضغط على رقم 1</p>
+                  <p>٤- أدخل كلمة المرور</p>
+                  <p> ٥- أدخل المبلغ الذي تريد تحويله</p>
                   <p>٦- ادخل رقم موبايل المرسل اليه : 01012487427</p>
                   <p>٧- اضغط الرقم 1 لتأكيد الرقم و ادخل المبلغ اللى عايز تبعته</p>
                   <p>٨- اكد على العملية بإدخال الرقم السرى الخاص بك 4 ارقام</p>
@@ -116,13 +139,24 @@ state = {
      else if(!this.state.ChoosePay && this.state.PaymentOps ==='Fawry'){
         return (
           <div class="container">
+        <br/>
+        <br/>
+        <br/>
+
          <div class="col-xs-12">
              <div className={t}> 
-             </div>
+        </div>
+
+        <div class="col-xs-12 col-md-12 col-lg-12">
+          <button class="backbtn badge-dark2 btn btn-primary" style={{color : "red", marginTop: 5}}  onClick={()=> {this.refreshBack()}}>
+            Back To List
+          </button>
+        </div>
+
               <div class="col-xs-12">
-              <div className="PaymentDesc3"> 
-                  <h1>*الدفع بالكاش داخل القاهرة فقط*</h1>
-                   <h3> ازاى تشترى بالكاش على طول؟</h3>
+              <div style={{textAlign: "right", paddingRight: 10, fontSize: 20, fontWeight: "bold"}} className="badge-dark"> 
+                  <h1 >*الدفع بالكاش داخل القاهرة فقط*</h1>
+                   <h1 > ازاى تشترى بالكاش على طول؟</h1>
                    <p> ١- هتختار العرض العايزه و هتدخل رقم الموبايل</p>
                    <p>٢-هيوصلنا الرقم وواحد من الادمنز هيتصل بيك </p>
                    <p>٣-هيسألك على التفاصيل و هيقولك اقرب مكان تدفع فيه على حسب منطقتك</p>

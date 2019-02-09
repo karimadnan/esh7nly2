@@ -27,7 +27,6 @@ class SignUp extends Component {
   }
   
   componentWillMount(){
-    // this.googleVerify()
 }
 
 updateInput(key, value) {
@@ -44,6 +43,7 @@ onCloseModal = (type) => {
 
 onChange = (value) => {
   this.setState({captcha: value})
+  // this.googleVerify()
 }
 
 onExpired = () => {
@@ -78,7 +78,7 @@ createUser = () => {
   var that = this
  if (this.state.name != '' && this.state.name.length >= 6) {
    if (this.state.password === this.state.confirmPassword){
-    if (this.state.phone.length == 11){
+    if (this.state.phone.length == 11 && /^\d+$/.test(this.state.phone)){
       let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (re.test(this.state.email)){
         if(this.state.password.length >= 7){
@@ -149,107 +149,80 @@ if (!this.state.SuccessModal){
   </Modal>
   <div className="bg-image"> 
 
-<div class="container">
-<div class="col-xs-12">
-      <div className="signUpLogo col-xs-12"> 
-      <h1> Create Account</h1>
+    <br/>
+    <br/>
+    <br/>
+
+    <div style={{marginBottom: 10}}class="col-xs-12 col-md-12 col-lg-12">
+            <div className="signUpLogo"> 
+              <h1> Create Account</h1>
+            </div>
+    </div>
+
+<div class="col-xs-12 col-md-12 col-lg-12">
+  <div class="SignUpBOX">
+
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                  <p >Your Name:</p>
+              </div>
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                  <input class="Login" type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="First and second name" required></input>
+              </div>
+<br/>
+<br/>
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                   <p >Mobile Number:</p>
+              </div>
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                   <input class="Login" type="text"  onChange={e => this.updateInput("phone", e.target.value)} placeholder="Mobile Number"  required></input>
+              </div>
+
+<br/>
+<br/>
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                  <p >Email:</p>
+              </div>
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                  <input class="Login" type="email" onChange={e => this.updateInput("email", e.target.value)} placeholder="example@gmail.com" required></input>
+              </div>
+
+<br/>
+<br/>
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                  <p >Password:</p>
+              </div>
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                  <input class="Login" type="password" onChange={e => this.updateInput("password", e.target.value)} id="user_password" placeholder="Password"  required></input>
+              </div>
+<br/>
+<br/>
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                  <p>Confirm Password:</p>
+              </div>
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                  <input class="Login" type="password" onChange={e => this.updateInput("confirmPassword", e.target.value)} id="user_Cpassword" placeholder="Confirm Password" required></input>
+              </div>
+
+<br/>
+<br/>
+
+            <div class="g-recaptcha col-xs-12 col-md-offset-6 col-lg-offset-6">
+                <ReCAPTCHA
+                  onExpired	={this.onExpired}
+                  sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
+                  onChange={this.onChange}
+                />
+            </div>
+
+<br/>
+<br/>
+<br/>
+<br/>
+            <button type="button" onClick={()=>{this.createUser()}} class="btn btn-primary col-xs-12 col-md-12 col-lg-12">Signup</button> 
+
+        </div>
       </div>
-      </div>
-        
-  </div>
-<div class="Signup col-xs-12">
-<div class="col-xs-12">
-              <p></p>
-          </div>
-
-<div class="row col-xs-12">
-
-<div class="col-xs-6">
-  <p >Your Name:</p>
-</div>
-
-
-<div class="col-xs-6">
-<input type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="First and second name" class="Login"  required></input>
-</div>
-
-</div>
-
-<div class="col-xs-12">
-<p></p>
-</div>
-
-<div class="row col-xs-12">
-<div class="col-xs-6">
-<p >Mobile Number:</p>
-</div>
-<div class="col-xs-6">
-<input type="text" class="col-xs-6" onChange={e => this.updateInput("phone", e.target.value)} placeholder="Mobile Number" class="Login"  required></input>
-</div>
-</div>
-
-<div class="col-xs-12">
-<p></p>
-</div>
-
-<div class="row col-xs-12">
-<div class="col-xs-6">
-<p >Email:</p>
-</div>
-<div class="col-xs-6">
-<input type="email" class="col-xs-6" onChange={e => this.updateInput("email", e.target.value)} placeholder="example@gmail.com" class="Login"  required></input>
-</div>
-</div>
-
-<div class="col-xs-12">
-<p></p>
-</div>
-
-<div class="row col-xs-12">
-<div class="col-xs-6">
-<p >Password:</p>
-</div>
-<div class="col-xs-6">
-<input type="password" class="col-xs-6" onChange={e => this.updateInput("password", e.target.value)} id="user_password" placeholder="Password" class="Login"  required></input>
-</div>
-</div>
-
-<div class="col-xs-12">
-<p></p>
-</div>
-
-<div class="row col-xs-12">
-<div class="col-xs-6">
-<p>Confirm Password:</p>
-</div>
-<div class="col-xs-6">
-<input type="password" class="col-xs-6" onChange={e => this.updateInput("confirmPassword", e.target.value)} id="user_Cpassword" placeholder="Confirm Password" class="Login"  required></input>
-</div>
-</div>
-
-<div style={{marginTop: 10}}class="row col-xs-12">
-<div class="col-xs-6">
-<p>Check Captcha:</p>
-</div>
-<div class="col-xs-6">
-<ReCAPTCHA
-  onExpired	={this.onExpired}
-  sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
-  onChange={this.onChange}
-/>
-</div>
-</div>
-<div class="col-xs-12">
-<button type="button" style={{marginLeft: 13}} onClick={()=>{this.createUser()}} class="col-xs-12 btn btn-primary">Signup</button> 
-</div>
-
-<div class="row col-xs-12" >
-<div class="col-xs-6">
-</div>
-</div>
-
-</div>
-</div>
+    </div>
 </div>
   
 

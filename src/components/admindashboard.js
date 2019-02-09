@@ -99,13 +99,9 @@ renderPage() {
               <div class="col-md-12 col-lg-12 col-xs-12">
                 <h3 class="adminBody" onClick={()=>{this.updateInput("operation", "strikes")}} style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-screenshot"></span> - Add Strike</h3>
               </div>
-              {/* Passed Orders */}
+              {/* All Orders */}
               <div class="col-md-12 col-lg-12 col-xs-12">
-                <h3 class="adminBody" onClick={()=>{this.updateInput("operation", "passed")}} style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-ok-sign"></span> - Passed Orders</h3>
-              </div>
-              {/* Failed Orders */}
-              <div class="col-md-12 col-lg-12 col-xs-12">
-                <h3 class="adminBody" onClick={()=>{this.updateInput("operation", "failed")}} style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-remove-sign"></span> - Failed Orders</h3>
+                <h3 class="adminBody" onClick={()=>{this.updateInput("operation", "passed")}} style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-align-justify"></span> - All Orders</h3>
               </div>
               {/* User Check */}
               <div class="col-md-12 col-lg-12 col-xs-12">
