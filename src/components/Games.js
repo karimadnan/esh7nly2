@@ -4,6 +4,7 @@ import VodafoneCashLogo from '../Images/Vodacash.png';
 import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 
+import Fortniteshop from './FortniteShop';
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
@@ -51,16 +52,16 @@ class Games extends Component {
       leagName:'',
       pubgName: '',
       crossfireName: '',
+      netflixNumber: '',
       fortPhone: '',
       SelectedPlat: '',
-      TransId: '',
+      TransId: "",
       PlatformOps: [
       {value: "PC", label:"PC"},    
       {value: "Mobile", label: "Mobile"}],
       ServerOps:[
       {value:"EU West",label:"EU West"},
-      {value:"EU Nordic and East",label:"EU Nordic and East"},
-      {value:"North America",label:"North America"}
+      {value:"EU Nordic and East",label:"EU Nordic and East"}
       ],
       PaymentOps: [
         {value: "VodafoneCash", label: "Vodafone Cash"},
@@ -115,7 +116,6 @@ class Games extends Component {
       return (
 <div className="bg-image"> 
   <div class="container">
-
     <div class="col-xs-12 col-md-4">
       <div class="league" onClick={()=>{this.getGameDetails("league")}}></div> 
     </div>
@@ -138,6 +138,10 @@ class Games extends Component {
 
     <div class="col-xs-12  col-md-4">    
       <div class="tibia" onClick={()=>{this.getGameDetails("tibia")}}></div>
+    </div>
+
+    <div class="col-xs-12  col-md-4">    
+      <div class="netflix" onClick={()=>{this.getGameDetails("netflix")}}></div>
     </div>
 
   </div>
@@ -769,6 +773,99 @@ class Games extends Component {
       
         )
         }
+        else if(!this.state.Games && this.state.GameType ==="netflix")  {
+
+          return (
+            <div className="bgr-netflix0"> 
+            <div class="container">
+            {/* Game LOGO */}
+            <div class="col-xs-12 col-md-12 col-lg-12">
+              <div className={t}>
+              </div>
+            </div>
+  
+            <div class="col-xs-12 col-md-12 col-lg-12">
+                  <button class="backbtn badge-dark2 btn btn-primary" style={{color : "red"}}  onClick={()=> {this.refreshBack()}}>
+                    Back To List
+                  </button>
+            </div>
+        
+            {/* Offers BODY */}
+          <div class="col-xs-12 col-md-12 col-lg-12">
+            <div className="GameDesc">
+        
+                  <div class="col-xs-12 col-md-12 col-lg-12">
+                    <p/>
+                </div>   
+  
+              <div class="col-xs-6 col-md-6 col-lg-6">   
+                  <label for="ChooseOffer">1-Choose Offer:</label>
+              </div>
+                  <div class="col-xs-6 col-md-6 col-lg-6">
+                        <Select
+                        styles={customStyles}
+                        value={this.state.SelectedOff}
+                        onChange={this.handleChange.bind(this, 'SelectedOff')}
+                        options={this.state.OffersOps} placeholder='Choose Offer'
+                      />
+                  </div>
+        
+                  <div class="col-xs-12 col-md-12 col-lg-12">
+                    <p/>
+                  </div>   
+  
+            <div class="col-xs-6 col-md-6 col-lg-6">
+              <label for="netflixNumber">2-Phone Number:</label>
+            </div>
+  
+              <div class="col-xs-6 col-md-6 col-lg-6">
+                  <input class="form-control" 
+                  style=
+                    {{
+                      marginLeft : 0,
+                      color : "black"
+                    }}
+                    onChange={e => this.updateInput("netflixNumber", e.target.value)}  type="text" placeholder="Your Mobile Number"></input>
+              </div>
+  
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                  <p/>
+              </div>   
+  
+           <div class="col-xs-6 col-md-6 col-lg-6">
+              <label for="Payment">Total To Pay:</label>
+           </div>
+  
+          <div class="col-xs-6 col-md-6 col-lg-6">
+              {! this.state.SelectedOff.value && <p style={{textAlign: "center"}}>0$</p>}
+              {this.state.SelectedOff.value && <p style={{textAlign: "center"}}> {this.state.SelectedOff.value} = {this.state.SelectedOff.label}</p>}
+          </div>
+        
+          <div class="col-xs-6 col-md-6 col-lg-6">
+              <label for="CheckOut">Proceed to checkout:</label>
+          </div>
+  
+          <div class="col-xs-6 col-md-6 col-lg-6">
+                <button class="checkoutbtn btn btn-primary"      
+                  style=
+                    {{
+                      marginLeft : 0,
+                      color : "white"
+                    }}
+                    onClick={()=> {
+                    this.CheckOut()
+                  }}>
+                    Checkout
+                </button>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+        
+          )
+          }
+
       }
   }
 
@@ -804,6 +901,76 @@ if (localStorage.getItem("Token")){
     }
   }
 
+    // PUBG CHECKOUT
+    else if(this.state.GameType ==="pubg"){
+      if(!this.state.SelectedOff || !this.state.SelectedPlat || this.state.pubgName ===""){
+        this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
+      }
+      else{
+        let obj={
+          "SelectedPlat":this.state.SelectedPlat,
+          "pubgName":this.state.pubgName,
+          "SelectedOff":this.state.SelectedOff.value
+        }
+          this.setState({ExtraData:obj,Payment:true})
+      }
+    }
+
+    // CROSSFIRE CHECKOUT
+    else if(this.state.GameType ==="crossfire"){
+      if(!this.state.SelectedOff || this.state.crossfireName ===""){
+        this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
+      }
+      else{
+        let obj={
+          "crossfireName":this.state.crossfireName,
+          "SelectedOff":this.state.SelectedOff.value
+        }
+          this.setState({ExtraData:obj,Payment:true})
+      }
+    }
+
+    // STEAM CHECKOUT
+    else if(this.state.GameType ==="steam"){
+      if(!this.state.SelectedOff || this.state.steamEmail ===""){
+        this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
+      }
+      else{
+        let obj={
+          "steamEmail":this.state.steamEmail,
+          "SelectedOff":this.state.SelectedOff.value
+        }
+          this.setState({ExtraData:obj,Payment:true})
+      }
+    }
+
+    // TIBIA CHECKOUT
+    else if(this.state.GameType ==="tibia"){
+      if(!this.state.SelectedOff || this.state.tibiaChar ===""){
+        this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
+      }
+      else{
+        let obj={
+          "tibiaChar":this.state.tibiaChar,
+          "SelectedOff":this.state.SelectedOff.value
+        }
+          this.setState({ExtraData:obj,Payment:true})
+      }
+    }
+
+    // NETFLIX CHECKOUT
+    else if(this.state.GameType ==="netflix"){
+      if(!this.state.SelectedOff || this.state.netflixNumber ===""){
+        this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
+      }
+      else{
+        let obj={
+          "Number":this.state.netflixNumber,
+          "SelectedOff":this.state.SelectedOff.value
+        }
+          this.setState({ExtraData:obj,Payment:true})
+      }
+    }
 }
 else{
   this.setState({ErrorModal: true, ErrorMsg: "Please Login"})
@@ -885,8 +1052,8 @@ createOrder() {
     'authorization': localStorage.getItem("Token")
   }
 
-  let Data = {game: this.state.GameType, paymentMethod: this.state.SelectedPay.value, orderType: "normal", extra: this.state.ExtraData, transId: this.state.transId}
-  if (this.state.transId.length >= 12 && /^\d+$/.test(this.state.transId)){
+  let Data = {game: this.state.GameType, paymentMethod: this.state.SelectedPay.value, orderType: "games", extra: this.state.ExtraData, transId: this.state.transId}
+  if (this.state.transId && this.state.transId.length >= 12 && /^\d+$/.test(this.state.transId)){
   axios.post(this.state.Url+"createOrder", Data, {headers: headers})
   .then(function (response) {
     that.setState({SuccessModal: true, SuccessMsg: "Your order has been placed, to track your order go to your account orders page."})
@@ -898,6 +1065,7 @@ createOrder() {
   else {
     this.setState({ErrorModal: true, ErrorMsg: "Make sure to enter the 12 transaction id number correctly"})
   }
+  console.log(this.state.transId)
 }
 
 
@@ -927,9 +1095,9 @@ render() {
 return (
   
   <div>
+
       <div className="bg-image"> 
 
-      <Getlogin />
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
           styles={SuccessStyle}>
           <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
@@ -944,7 +1112,7 @@ return (
         {this.GamesRender()}
         {this.SingleGame()}
         {this.paymentRender()}
-
+        <Getlogin page={"Offers"}/>
       </div>
   </div>
       );

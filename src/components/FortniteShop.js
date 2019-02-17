@@ -4,6 +4,7 @@ import '../Respcss.css';
 import axios from 'axios';
 import Getlogin from './navbar';
 import moment from 'moment';
+import ReactRouter from 'flux-react-router';
 
 class FortniteShop extends Component {
 
@@ -180,6 +181,11 @@ class FortniteShop extends Component {
       return( 
     <div >
     <div className="bg-image">
+    <br/>    
+          <br/>    
+          <br/>
+          <br/>    
+
     <div class="col-md-6 col-md-6">
     <h1 class="badge badge-dark">Current Shop Rotation: {moment(this.state.shopDate).format('MMMM Do YYYY')}</h1>
     </div>
@@ -201,22 +207,34 @@ class FortniteShop extends Component {
     
     <div>
     <div className="bg-image">
-    <div class="col-xs-12">
-    <h1 class="badge badge-dark col-xs-4" style={{color : this.state.ItemFontColor}}>{this.state.ShopChoseItem.name}</h1>
-    
-    <h1 class="badge badge-dark col-xs-2" style={{margin: 20, color : "white"}}>Price: {this.state.ShopChoseItem.cost}
-    <img src={this.state.vbucksIcon} alt="V-Bucks"
-    style={{float: "right",width: 20, height: 20, marginTop: 5, WebkitTransform: 'translate(0%, 35%)'}}></img>
-    </h1>
-    <h1 class="badge badge-dark col-xs-3" style={{textTransform: 'uppercase', color : this.state.ItemFontColor}}>{this.state.ShopChoseItem.rarity} {this.state.ShopChoseItem.type}</h1>
-    
-    <button class="badge badge-dark2 btn btn-primary col-xs-2" style={{float: "right",margin: 15,color : "red"}} onClick={()=> {this.updateState("ShopChose", false), this.updateState("ItemStored", false)}}>
-    Back To Shop
-    </button>
-    </div>
-    <div class="col-xs-6">
+    <br/>    <br/>    <br/>
+
+      <div class="col-xs-6 col-md-3 col-lg-3">
+          <h1 class="badge badge-dark" style={{color : this.state.ItemFontColor}}>{this.state.ShopChoseItem.name}</h1>
+      </div>
+      <div class="col-xs-6 col-md-3 col-lg-3">
+          <h1 class="badge badge-dark" style={{color : "white"}}>Price: {this.state.ShopChoseItem.cost}
+          <img src={this.state.vbucksIcon} alt="V-Bucks"
+           style={{width: 20, height: 20}}></img>
+          </h1>
+      </div>
+
+      <div class="col-xs-6 col-md-3 col-lg-3">
+          <h1 class="badge badge-dark" style={{textTransform: 'uppercase', color : this.state.ItemFontColor}}>{this.state.ShopChoseItem.rarity} {this.state.ShopChoseItem.type}</h1>
+      </div>
+
+      <div class="col-xs-6 col-md-3 col-lg-3">
+          <button class="badge-dark btn btn-primary" onClick={()=> {this.updateState("ShopChose", false), this.updateState("ItemStored", false)}}>
+             Back To Shop
+          </button>
+      </div>
+
+
+    <div class="col-xs-12 col-md-12 col-lg-12">
+
+    <div class="col-xs-12 col-md-6 col-lg-6">
     <div class ={rarity}>
-    <img src={this.state.ShopChosenImg} style={{width: 440, height: 400}} alt=""/>
+    <img src={this.state.ShopChosenImg} style={{width: 400, height: 400}} alt=""/>
     <div class="card-image-overlay">
         <div id ="itemdesc" class="card-body">
             <h4 class ="card-title itemname" style = {{color: "white", fontSize: 25, fontWeight: 300, fontFamily: "impact", lineHeight: 2.5}}>
@@ -227,6 +245,20 @@ class FortniteShop extends Component {
     </div>
     </div>
 
+    <div class="col-xs-12 col-md-6 col-lg-6">
+    <div class ={rarity}>
+    <img onClick={()=>{ReactRouter.goTo("/games")}} src={this.state.vbucksIcon} style={{cursor: 'pointer', width: 400, height: 400, }} alt=""/>
+    <div class="card-image-overlay">
+        <div id ="itemdesc" class="card-body">
+            <h4 class ="card-title itemname" style = {{color: "white", fontSize: 25, fontWeight: 300, fontFamily: "impact", lineHeight: 2.5}}>
+            <span>Buy V-BUCKS</span>
+            </h4>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    </div>
     </div>
 
     </div>
@@ -237,13 +269,12 @@ class FortniteShop extends Component {
     }
 
   render() {
-
     return (
 
 
 <div>
 
-<Getlogin />
+<Getlogin page={"FortniteShop"}/>
 <div className="bg-image">
 {this.RenderPage()}
 </div>

@@ -1,5 +1,12 @@
 @media screen and (max-width: 700px) {
 
+  .fb-page{
+    transform:scale(0);
+    -webkit-transform:scale(0);
+    transform-origin:0 0;
+    -webkit-transform-origin:0 0;
+  }
+
   .g-recaptcha{
     transform:scale(0.90);
     -webkit-transform:scale(0.90);
@@ -69,15 +76,6 @@
     background-image: url('Images/panelads.png');
     background-repeat: no-repeat;
     height: 0px;
-  }
-
-  .signUpLogo{
-    border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
-    color: white;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    padding: 18px;
   }
 
   .Signup {

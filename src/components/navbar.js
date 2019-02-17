@@ -5,7 +5,6 @@ import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
 import '../Respcss.css';
 
-
 class Getlogin extends Component {
 
     state = {
@@ -16,6 +15,7 @@ class Getlogin extends Component {
       Password: "",
       token: "",
       name: "",
+      page: this.props.page,
       logged: false,
       access: 0
     }
@@ -48,7 +48,7 @@ componentWillMount(){
       localStorage.clear()
       that.setState({
         ErrorModal:true,
-        ErrorMsg: "You're not logged in",
+        ErrorMsg: "You're logged out",
         logged: false
       })
     })
@@ -81,13 +81,10 @@ login() {
       'Content-Type': 'application/json'
   }
   var that=this;
-    if(this.state.Phone  && this.state.Password ){
+    if(that.state.Phone  || that.state.Password){
             let Data = {Phone: that.state.Phone, Password: that.state.Password}
             axios.post(that.state.Url+"login", Data, {headers: headers})
             .then(function (response) {
-                  console.log(response)
-              
-              
               let X = response.data.data
               var UserName = X.Name
               var UserAccess = X.Access
@@ -99,7 +96,6 @@ login() {
               that.setState({token: Token, name: UserName, access: UserAccess, logged: true});
             })
             .catch(function (error) {
-              console.log(error.response)
               if (error.response.data.message){
                 that.setState({
                   ErrorModal:true,
@@ -132,9 +128,9 @@ render() {
     },
   }
 
-
+  console.log(this.state.page)
 return (
-  
+
     <div className="container">
         <Modal          
         open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
@@ -153,24 +149,24 @@ return (
     </div>
     <div className="collapse navbar-collapse" id="myNavbar">
         <ul className="nav navbar-nav">
-          <li ><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-home"></span> Home</a></li>
-          <li ><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="glyphicon glyphicon-tag"></span> How To Buy / ازاى تشترى</a>
+          <li class={this.state.page ==="Main" && "activeNav"}><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-home"></span> Home</a></li>
+          <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="glyphicon glyphicon-tag"></span> How To Buy / ازاى تشترى</a>
           </li>
-          <li ><a onClick={()=>{ReactRouter.goTo("/games")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
-          <li ><a onClick={()=>{ReactRouter.goTo("/fortniteshop")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-star"></span> Fortnite Today's Shop</a></li>
-          <li><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="	glyphicon glyphicon-earphone"></span> Contact Us / كلمنا</a></li>
+          <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/games")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
+          <li class={this.state.page ==="FortniteShop" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/fortniteshop")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-star"></span> Fortnite Today's Shop</a></li>
+          <li class={this.state.page ==="ContactUs" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="	glyphicon glyphicon-earphone"></span> Contact Us / كلمنا</a></li>
         </ul>
         <ul className="nav navbar-nav navbar-right">
         {/* Logged in noSignup*/}
-      { ! this.state.logged &&  <li><a onClick={()=>{ReactRouter.goTo("/signup")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-user"></span> Sign Up</a></li> }
-        {/* Logout */}
-      {   this.state.logged &&  <li><a onClick={this.logout} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li> }
+      { ! this.state.logged &&  <li class={this.state.page ==="SignUp" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/signup")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-user"></span> Sign Up</a></li> }
+
         {/* User */}
       {   this.state.logged && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="glyphicon glyphicon-user"></span> {this.state.name} <span className="caret"></span></a>
             <ul className="dropdown-menu">
-              <li><a href="#">Your Orders</a></li>
+              <li><a href="#"><span className="glyphicon glyphicon-euro"></span> Your Orders</a></li>
         {/* Admin Dashboard */}
-              {   this.state.access > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}>Admin Dashboard</a></li> }  
+              {   this.state.access > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> }  
+              {   this.state.logged &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li> }  
             </ul>
           </li>}
           { ! this.state.logged &&    <li className="dropdown"> 

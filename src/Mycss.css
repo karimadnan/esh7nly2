@@ -1,3 +1,14 @@
+.activeNav{
+  border-bottom: 3px solid #0686db;
+}
+
+.g-recaptcha{
+  transform:scale(1);
+  -webkit-transform:scale(1.04);
+  transform-origin:0 0;
+  -webkit-transform-origin:0 0;
+}
+
 .badge-light {
   border-radius: 1.95rem;
   color: rgb(0, 0, 0);
@@ -28,16 +39,17 @@
 }
 
 .signUpLogo{
-  max-width: 400px;
-  margin: 0 auto;
   border: 20px solid transparent;
   background-image: url('Images/newsbg.png');
   border-image-source: url('Images/borders.png');
   border-image-slice: 20;
   border-image-repeat: round;
-  text-align: center;
-  color: white;
-  font-family: Impact;
+  width: 339px;
+  height: 190px;
+  margin: 0 auto;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/signuplogo.png');
 }
 
 .ContactUs1{
@@ -119,7 +131,7 @@ background-color: #0ddb06;
   background: rgba(0,0,0,.5);
   position: absolute;
   height: 25%;
-  width: 340px;
+  width: 335px;
   bottom: 0;
 }
 
@@ -127,24 +139,18 @@ background-color: #0ddb06;
   background-image: url('Images/paneltest.png');
   background-repeat: no-repeat;
   height: 400px;
-  margin-left: 100px;
-  margin-bottom: -100px;
 }
 
 .panelFb {
   background-image: url('Images/fbpanel2.png');
   background-repeat: no-repeat;
   height: 400px;
-  margin-left: 100px;
-  margin-bottom: -100px;
 }
 
 .panelAds {
   background-image: url('Images/panelads.png');
   background-repeat: no-repeat;
   height: 400px;
-  margin-left: 100px;
-  margin-bottom: -100px;
 }
 
 .newsTitleBg{
@@ -163,8 +169,6 @@ background-color: #0ddb06;
 }
 
 .slideShit{
-  width: 40;
-  height: 100;
   position: relative;
   top: 215px;
   right: -46px;
@@ -192,6 +196,7 @@ background-color: #0ddb06;
 }
 
 .newsContent {
+  margin: 0 auto;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.6); /* Black w/opacity/see-through */
   color: rgb(255, 255, 255);
@@ -377,7 +382,6 @@ background-color: #0ddb06;
   white-space: nowrap;
   vertical-align: baseline;
   border-radius: 0.85rem;
-  transform: translate(0%, 150%);
   font-size: 20px
 }
 

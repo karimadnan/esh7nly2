@@ -13,7 +13,7 @@ render() {
     return (
   <div>
     <div className="bg-image"> 
-    <Getlogin />
+    <Getlogin page={"ContactUs"}/>
     <div class="col-xs-12 col-md-12 col-lg-12">
 
             <div style={{marginTop: 70}} class="ContactUs1 badge-dark">

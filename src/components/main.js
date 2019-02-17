@@ -38,7 +38,7 @@ class Main extends Component {
         <Slide {...properties}>
 
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} className="col-lg-6" src={fortnite} alt=""></img>
+          <img style ={{width: 349, height: 130}} className="col-lg-6" src={fortnite} alt=""></img>
             <div className="card-image-overlay">
                 <div id ="slidedesc" className="card-body">
                     <h4 className ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
@@ -49,7 +49,7 @@ class Main extends Component {
           </div>
           
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} className="col-xs-6" src={crossfire} alt=""></img>
+          <img style ={{width: 349, height: 130}} className="col-xs-6" src={crossfire} alt=""></img>
           <div className="card-image-overlay">
                 <div id ="slidedesc" className="card-body">
                     <h4 className ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
@@ -59,7 +59,7 @@ class Main extends Component {
             </div>
           </div>
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} className="col-xs-6" src={pubg} alt=""></img>
+          <img style ={{width: 349, height: 130}} className="col-xs-6" src={pubg} alt=""></img>
           <div className="card-image-overlay">
                 <div id ="slidedesc" className="card-body">
                     <h4 className ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
@@ -69,7 +69,7 @@ class Main extends Component {
             </div>
           </div>
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} className="col-xs-6" src={tibia} alt=""></img>
+          <img style ={{width: 349, height: 130}} className="col-xs-6" src={tibia} alt=""></img>
           <div className="card-image-overlay">
                 <div id ="slidedesc" className="card-body">
                     <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
@@ -79,7 +79,7 @@ class Main extends Component {
             </div>
           </div>
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} class="col-xs-6" src={league} alt=""></img>
+          <img style ={{width: 349, height: 130}} class="col-xs-6" src={league} alt=""></img>
           <div class="card-image-overlay">
                 <div id ="slidedesc" class="card-body">
                     <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
@@ -89,7 +89,7 @@ class Main extends Component {
             </div>
           </div>
           <div className="each-slide">
-          <img style ={{width: 350, height: 130}} class="col-xs-6" src={steam} alt=""></img>
+          <img style ={{width: 349, height: 130}} class="col-xs-6" src={steam} alt=""></img>
           <div class="card-image-overlay">
                 <div id ="slidedesc" class="card-body">
                     <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
@@ -130,31 +130,30 @@ class Main extends Component {
   return (
     
     <div >
-
-              <div class="newsBody col-md-6 col-lg-6 col-xs-6">
-                        {news}
-              </div>
-              <div class="col-md-offset-6 col-lg-offset-6 col-xs-offset-6">
-                      <div class ="panelGames">
-                        <div class="slideShit">
-                        {this.Slideshow()}
-                        </div>
-                      </div>
-              </div>
-              <div class="col-md-offset-6 col-lg-offset-6 col-xs-offset-6 ">
+              <div class="col-md-4 col-lg-4 col-xs-4 ">
                   <div class ="panelFb" >
- 
-                      <div class="fbShit">
+                      <div class="fbShit fb-page">
                       <FacebookProvider key="1" appId="1984023341904164">
                       <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
                     </FacebookProvider> 
               </div>
               </div>
               </div>
-              <div class="col-md-offset-6 col-lg-offset-6 col-xs-offset-6">
+              <div class="col-md-4 col-lg-4 col-xs-4">
+                      <div class ="panelGames">
+                        <div class="slideShit">
+                        {this.Slideshow()}
+                        </div>
+                      </div>
+              </div>
+              <div class="col-md-4 col-lg-4 col-xs-4">
                       <div class ="panelAds">
                       </div>
-              </div>              
+              </div>   
+
+              <div class="newsBody col-md-12 col-lg-12 col-xs-12">
+                {news}
+              </div>           
     </div>
   )
 }
@@ -163,7 +162,7 @@ class Main extends Component {
 render(){
   return(
     <div>
-      <Getlogin />
+      <Getlogin page={"Main"}/>
 
       <div className="bg-image">
       {this.renderPage()}

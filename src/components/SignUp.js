@@ -154,9 +154,8 @@ if (!this.state.SuccessModal){
     <br/>
     <br/>
 
-    <div style={{marginBottom: 10}}class="col-xs-12 col-md-12 col-lg-12">
-            <div className="signUpLogo"> 
-              <h1> Create Account</h1>
+    <div style={{marginBottom: 5}}class="col-xs-12 col-md-12 col-lg-12">
+                <div className="signUpLogo"> 
             </div>
     </div>
 
@@ -250,7 +249,7 @@ render() {
           <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
           <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
         </Modal>
-      <Getlogin />
+      <Getlogin page={"SignUp"}/>
       <div className="bg-image">
       {this.renderPage()}
       </div>

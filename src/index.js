@@ -56,7 +56,6 @@ Flux.createRoute('/contactus',function(){
     ReactDOM.render(<ContactUs />,document.getElementById('root'));
 })
 
-
 Flux.createRoute('/checkout/{Price}/{Game}',function(p){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Checkout Value={p.Price} Game={p.Game}/>,document.getElementById('root'));

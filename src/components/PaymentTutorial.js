@@ -177,7 +177,7 @@ render() {
 
   <div>
     <div className="bg-image"> 
-    <Getlogin />
+    <Getlogin page={"HowTo"}/>
     {this.PaymentRender()}
     {this.SinglePayment()}
     </div>

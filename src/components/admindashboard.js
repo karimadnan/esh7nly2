@@ -24,6 +24,7 @@ updateInput(key, value) {
   this.setState({ [key]: value });
 }
 
+
 getOrdersHistory() {
   var that = this
   axios.get(`${this.state.Url}getAllOrdersHistory`, {headers: this.state.headers})
@@ -52,12 +53,12 @@ getOrdersHistory() {
 }
 
 getAllOrders(){
-
 var that = this
 
 axios.get(`${this.state.Url}getAllOrders`, {headers: this.state.headers})
   .then(function (response) {
     var objects = []
+
     response.data.data.forEach(element => {
       let object = {
        data: element.extra,
@@ -73,7 +74,7 @@ axios.get(`${this.state.Url}getAllOrders`, {headers: this.state.headers})
      objects.push(object)
     })
     that.setState({ordersData: objects})
-    console.log(response)
+    console.log(response) 
   })
   .catch(function (error) {
     console.log(error.response);
@@ -109,20 +110,20 @@ endOrder(id) {
 tableHistory() {
   if (this.state.ordersHistory.length > 0){
     var counter = 0
-    var arr = []
     return (
     <div class="container">
 
       <br/>
       <br/>
       <br/>
+
       <div class="col-xs-12 col-md-12 col-lg-12">
       <h3 onClick={()=>{this.updateInput("operation", "")}} class="adminBody" style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-chevron-left"></span> Back to menu </h3>
       </div>
       <div class="col-xs-12 col-md-12 col-lg-12">
         <div class="col-xs-4 col-md-2 col-lg-2">
           <div class="badge-light">
-            <p style={{fontWeight: "bold", fontSize: 15, textAlign: "center"}}>Total Orders: {this.state.ordersHistory.length}</p>
+            <p style={{fontWeight: "bold", fontSize: 15, textAlign: "center"}}>Finished Orders: {this.state.ordersHistory.length}</p>
           </div>
          </div>
          <div class="col-xs-4 col-md-2 col-lg-2">
@@ -138,7 +139,7 @@ tableHistory() {
       </div>
     <div class="col-xs-12 col-md-12 col-lg-12">
     <div class="table-responsive">
-      <table style={{backgroundColor: "white"}} class="table table-striped table-bordered">
+      <table style={{backgroundColor: "white"}} class="table table-striped">
       <thead>
       <tr>
         <th scope="col">#</th>
@@ -181,18 +182,48 @@ tableHistory() {
 
 tableLeads() {
   if (this.state.ordersData.length > 0){
+
     var counter = 0
-    var arr = []
+    var pending = 0
+    var InProgress = 0
+
+
+    this.state.ordersData.map(row => {
+        if (row.status === "pending"){
+            pending ++;
+        }
+        else {
+            InProgress ++;
+        }
+      })
+
     return (
     <div class="container">
-
-      <br/>
-      <br/>
-      <br/>
+      <br/><br/><br/>
+      <div class="col-xs-12 col-md-12 col-lg-12">
       <h3 onClick={()=>{this.updateInput("operation", "")}} class="adminBody" style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-chevron-left"></span> Back to menu </h3>
-    <div style={{backgroundColor: "white"}}>
+      </div>
+      <div class="col-xs-12 col-md-12 col-lg-12">
+        <div class="col-xs-4 col-md-2 col-lg-2">
+          <div class="badge-light">
+            <p style={{fontWeight: "bold", fontSize: 15, textAlign: "center"}}>Total Orders: {this.state.ordersData.length}</p>
+          </div>
+         </div>
+         <div class="col-xs-4 col-md-2 col-lg-2">
+          <div class="badge-light">
+          <p style={{fontWeight: "bold", fontSize: 15, textAlign: "center"}}>Pending: {pending}</p>
+          </div>
+         </div>
+         <div class="col-xs-4 col-md-2 col-lg-2">
+          <div class="badge-light">
+            <p style={{fontWeight: "bold", fontSize: 15, textAlign: "center"}}>InProgress: {InProgress}</p>
+          </div>
+         </div>
+      </div>    
+
+  <div class="col-xs-12 col-md-12 col-lg-12">
     <div class="table-responsive">
-      <table class="table table-striped table-bordered">
+      <table style={{backgroundColor: "white"}} class="table table-striped table-dark">
       <thead>
       <tr>
         <th scope="col">#</th>
@@ -206,24 +237,26 @@ tableLeads() {
       </tr>
       </thead>
       <tbody>
-        {this.state.ordersData.map(row => {
-            counter ++;
-            return (
-              <tr key={counter}>
-                <th scope="row">{counter}</th>
-                <th ><span class="label label-default">{row.transId}</span></th>
-                <th ><span class="label label-info">{row.userPhone}</span></th>
-                <td style={{fontWeight: "bold", textTransform: 'uppercase'}}>{row.game}</td>
-                <td>{row.status === "pending" ? <span class="label label-default">Pending</span> : <span class="label label-primary">InProgress</span>}</td>
-                <td>{row.paymentMethod === "VodafoneCash" ? <img style ={{width: 40, height: 40}} src={VodafoneCashLogo} alt=""/> : 
-                    row.paymentMethod === "EtisalatCash" ? <img style ={{width: 40, height: 40}} src={EtisalatCashLogo} alt=""/> : <img style ={{width: 40, height: 40}} src={FawryLogo} alt=""/>}</td>
-                <td><span style={{cursor: 'pointer'}} className="glyphicon glyphicon-eye-open"></span></td>
-                <td> {row.status === "pending" ? <button  onClick={this.viewOrder.bind(this, row.orderID)} class="btn btn-primary"> Check </button> : <div>
-                  <button  style={{marginRight: 5}} onClick={this.endOrder.bind(this, row.orderID)} class="btn btn-success"> done </button>
-                  <button  onClick={this.endOrder.bind(this, row.orderID)} class="btn btn-danger"> cancel </button> </div>} </td>
-              </tr>
-            )
-        })}
+      
+      {this.state.ordersData.map(row => {
+          counter ++;
+
+          return (
+            <tr key={counter}>
+              <th scope="row">{counter}</th>
+              <th ><span class="label label-default">{row.transId}</span></th>
+              <th ><span class="label label-info">{row.userPhone}</span></th>
+              <td style={{fontWeight: "bold", textTransform: 'uppercase'}}>{row.game}</td>
+              <td>{row.status === "pending" ? <span class="label label-default">Pending</span> : <span class="label label-primary">InProgress</span>}</td>
+              <td>{row.paymentMethod === "VodafoneCash" ? <img style ={{width: 40, height: 40}} src={VodafoneCashLogo} alt=""/> : 
+                  row.paymentMethod === "EtisalatCash" ? <img style ={{width: 40, height: 40}} src={EtisalatCashLogo} alt=""/> : <img style ={{width: 40, height: 40}} src={FawryLogo} alt=""/>}</td>
+              <td ><span style={{cursor: 'pointer'}} className="glyphicon glyphicon-eye-open"></span></td>
+              <td> {row.status === "pending" ? <button  onClick={this.viewOrder.bind(this, row.orderID)} class="btn btn-primary"> Check </button> : <div>
+                <button  style={{marginRight: 5}} onClick={this.endOrder.bind(this, row.orderID)} class="btn btn-success"> done </button>
+                <button  onClick={this.endOrder.bind(this, row.orderID)} class="btn btn-danger"> cancel </button> </div>} </td>
+            </tr>
+          )
+      })}
       </tbody>
       </table>
       </div>
@@ -349,7 +382,7 @@ renderPage() {
 render(){
   return (
     <div className="admin-bg">
-      <Getlogin />
+      <Getlogin page={"Admin"}/>
       {this.renderPage()}
     </div>
   )
