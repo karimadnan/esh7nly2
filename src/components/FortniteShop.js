@@ -5,6 +5,7 @@ import axios from 'axios';
 import Getlogin from './navbar';
 import moment from 'moment';
 import ReactRouter from 'flux-react-router';
+import Footer from './footer';
 
 class FortniteShop extends Component {
 
@@ -154,7 +155,7 @@ class FortniteShop extends Component {
         let images = array.map(image => {
           var rarity = "card splash-card FortHover rarity-"+this.state.shop[image].rarity
           return (
-            <div class="col-md-2 col-md-6" key={image} >
+            <div class="col-md-3 col-md-6" key={image} >
             <div class ={rarity}>
               <img class="FortShop" 
               onClick={()=>{
@@ -179,8 +180,8 @@ class FortniteShop extends Component {
          });
 
       return( 
-    <div >
-    <div className="bg-image">
+    <div class="container">
+
     <br/>    
           <br/>    
           <br/>
@@ -196,8 +197,7 @@ class FortniteShop extends Component {
     {images}
 
     </div>
-
-    </div>
+    
     )
     }
     else if(this.state.ShopChose === true){
@@ -271,14 +271,14 @@ class FortniteShop extends Component {
   render() {
     return (
 
-
-<div>
-
-<Getlogin page={"FortniteShop"}/>
 <div className="bg-image">
+
+
 {this.RenderPage()}
+<Getlogin page={"FortniteShop"}/>
+
 </div>
-</div>
+
     );
   }
 }

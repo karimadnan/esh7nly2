@@ -17,7 +17,7 @@ import Vbucks from '../Images/fortnite-vbucks-icon.png';
 import Rp from '../Images/rp.png';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
-
+import Footer from './footer';
 
 const customStyles = {
   option: (provided, state) => ({

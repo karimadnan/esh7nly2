@@ -102,7 +102,8 @@ class Main extends Component {
                                   showFullscreenButton={false} 
                                   showPlayButton={false}
                                   showBullets={true}
-                                  showThumbnails={false}/>
+                                  showThumbnails={false}
+                                  slideInterval={4000}/>
             </div>
             
             <br/>  
@@ -119,7 +120,10 @@ render(){
       <Getlogin page={"Main"}/>
       <div className="bg-image">
       {this.renderPage()}
+      <br/>
+      <Footer />
       </div>
+
     </div>
   )
 }

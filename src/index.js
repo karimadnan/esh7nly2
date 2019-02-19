@@ -11,6 +11,7 @@ import Checkout from './components/Checkout';
 import FortniteShop from './components/FortniteShop';
 import Admindashboard from './components/admindashboard';
 import ContactUs from './components/ContactUs';
+import Privacy from './components/privacypolicy';
 import * as registerServiceWorker from './registerServiceWorker';
 
 // localStorage.setItem("Server","http://192.168.1.7:4000/server/")
@@ -54,6 +55,11 @@ Flux.createRoute('/admindashboard',function(){
 Flux.createRoute('/contactus',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<ContactUs />,document.getElementById('root'));
+})
+
+Flux.createRoute('/privacy',function(){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Privacy />,document.getElementById('root'));
 })
 
 Flux.createRoute('/checkout/{Price}/{Game}',function(p){

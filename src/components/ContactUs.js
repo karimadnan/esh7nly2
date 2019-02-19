@@ -5,6 +5,7 @@ import '../Respcss.css';
 import Getlogin from './navbar';
 import tawkChat from '../Images/tawkchat.png';
 import { FacebookProvider, Page, CustomChat } from 'react-facebook';
+import Footer from './footer';
 
 class Contact extends Component {
 
@@ -37,6 +38,7 @@ render() {
             </div>
     </div>
     </div>
+    <Footer />
     </div>
     );
   }

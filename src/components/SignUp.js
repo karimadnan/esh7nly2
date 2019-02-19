@@ -8,6 +8,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Modal from 'react-responsive-modal';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
+import Footer from './footer';
 
 class SignUp extends Component {
 
@@ -148,8 +149,6 @@ if (!this.state.SuccessModal){
         <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
         <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img>
   </Modal>
-  <div className="bg-image"> 
-
     <br/>
     <br/>
     <br/>
@@ -222,7 +221,6 @@ if (!this.state.SuccessModal){
 
         </div>
       </div>
-    </div>
 </div>
   
 
@@ -252,6 +250,7 @@ render() {
       <Getlogin page={"SignUp"}/>
       <div className="bg-image">
       {this.renderPage()}
+
       </div>
     </div>
   )

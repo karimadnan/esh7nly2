@@ -21,6 +21,23 @@
     animation: 0;
   }
   
+.PrivacyBG2 {
+  border-radius: 1.95rem;
+  color: rgb(182, 180, 180);
+  height: stretch;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: #161616;
+}
+
+.PrivacyBG {
+  color: rgb(182, 180, 180);
+  height: stretch;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: #202020;
+}
+
 .LightSlider {
   margin: 0 auto;
   width: 65%;
@@ -44,13 +61,30 @@
   background-color: rgb(255, 255, 255); /* Fallback color */
 }
 
-.footer {
-  position: absolute;
-  left:0;
-  bottom:0;
-  right:0;
-  background-color: #161616;
+.bordersep {
+  border-top: 1px solid;
+  border-color: #333!important;
 }
+
+#footerClass {
+  color: rgb(182, 180, 180);
+  background-color: rgb(27, 27, 27);
+  font-size: 16px;
+  font-family: OpenSans,sans-serif;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  position: relative;
+  padding: 1.25em 1.5em 3.5em;
+  height: 290px;
+  z-index: 10;
+  border-top: 1px solid;
+  border-color: #333!important;
+}
+
+.footer { 
+  clear: both; }
 
 .SignUpBOX {
   border: 20px solid transparent;

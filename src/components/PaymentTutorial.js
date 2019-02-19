@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import '../Mycss.css';
 import '../Respcss.css';
 import Getlogin from './navbar';
+import Footer from './footer';
 
 class Games extends Component {
 
@@ -25,7 +26,7 @@ state = {
 
       return (
 
-        <div className="bg-image"> 
+        <div className="container"> 
         
         <div class="container">
         <div class="col-xs-6">
@@ -181,6 +182,7 @@ render() {
     {this.PaymentRender()}
     {this.SinglePayment()}
     </div>
+    <Footer />
     </div>
     );
   }
