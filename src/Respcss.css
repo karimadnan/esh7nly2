@@ -30,53 +30,6 @@
     width: 400px;
   }
 
-  .newsContent {
-    width: 340px;
-  }
-  
-
-  .slideShit{
-    width: 0;
-    height: 0;
-  }
-
-  .panelGames {
-    background-image: url('Images/paneltest.png');
-    background-repeat: no-repeat;
-  }
-  
-  .panelFb {
-    background-image: url('Images/fbpanel2.png');
-    background-repeat: no-repeat;
-  }
-  
-  .panelAds {
-    background-image: url('Images/panelads.png');
-    background-repeat: no-repeat;
-  }
-
-  .newsTitleBg {
-  margin-top: 70px;
-  }
-
-  .panelGames {
-    background-image: url('Images/paneltest.png');
-    background-repeat: no-repeat;
-    height: 0px;
-  }
-  
-  .panelFb {
-    background-image: url('Images/fbpanel.png');
-    background-repeat: no-repeat;
-    height: 0px;
-  }
-  
-  .panelAds {
-    background-image: url('Images/panelads.png');
-    background-repeat: no-repeat;
-    height: 0px;
-  }
-
   .Signup {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
