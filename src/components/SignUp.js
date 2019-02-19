@@ -217,7 +217,7 @@ if (!this.state.SuccessModal){
 <br/>
 <br/>
 <br/>
-            <button type="button" onClick={()=>{this.createUser()}} class="btn btn-primary col-xs-12 col-md-12 col-lg-12">Signup</button> 
+            <button type="button" onClick={()=>{this.createUser()}} class="btn btn-primary col-xs-12 col-md-12 col-lg-12">Sign up</button> 
 
         </div>
       </div>

@@ -21,6 +21,13 @@
     animation: 0;
   }
   
+.badge-Home {
+  border-radius: 1.95rem;
+  color: #fff;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+}
+
 .PrivacyBG2 {
   border-radius: 1.95rem;
   color: rgb(182, 180, 180);

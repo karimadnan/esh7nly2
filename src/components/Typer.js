@@ -27,8 +27,8 @@ class TypedJs extends React.Component {
   
     render() {
       return (
-        <div class="badge-dark">
-            <p style={{fontSize: 40}}>Why <strong style={{fontSize: 40}}>Esh7enly?</strong> <span
+        <div class="badge-Home">
+            <p style={{fontSize: 40, textAlign: "left"}}> Why <strong style={{fontSize: 40}}>Esh7enly?</strong> <span
               style={{fontSize: 40}}
               ref={(el) => { this.el = el; }}
             />

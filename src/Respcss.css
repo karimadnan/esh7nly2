@@ -2,13 +2,8 @@
   #footerClass {
     height: 730px;
   }
-
-  .fb-page{
-    transform:scale(0.5);
-    -webkit-transform:scale(0.5);
-    transform-origin:0 0;
-    -webkit-transform-origin:0 0;
-    margin-left: -10px;
+  .badge-Home {
+    height: 200px;
   }
 
   .g-recaptcha{
