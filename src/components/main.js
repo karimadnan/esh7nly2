@@ -2,16 +2,50 @@ import React, { Component } from 'react';
 import '../Mycss.css';
 import '../Respcss.css';
 import Getlogin from './navbar';
-import { Slide } from 'react-slideshow-image';
+import ImageGallery from 'react-image-gallery';
 import moment from 'moment';
 import crossfire from '../Images/crossfirepayment.png';
-import fortnite from '../Images/fortnite.jpg';
-import pubg from '../Images/pubg.jpg';
-import tibia from '../Images/tibialanding.png';
-import league from '../Images/leagueoffers.png';
-import steam from '../Images/steampayment.jpg';
-import { FacebookProvider, Page, CustomChat } from 'react-facebook';
+import fortnite from '../Images/slider/fort.png';
+import pubg from '../Images/slider/pubg.jpg';
+import tibia from '../Images/slider/tibialanding.png';
+import league from '../Images/slider/league.png';
+import steam from '../Images/slider/steam.jpg';
 import Footer from './footer';
+import "../image-gallery.css";
+import TypedJs from './Typer';
+
+const images = [
+  {
+    original: fortnite,
+    thumbnail: fortnite,
+    thumbnailTitle: "Fortnite",
+    description: "Purchase the cheapest v-bucks out there.."
+  },
+  {
+    original: league,
+    thumbnail: league,
+    thumbnailTitle: "League of legends",
+    description: "Get league of legends RP for the best price and the safest way.."
+  },
+  {
+    original: steam,
+    thumbnail: steam,
+    thumbnailTitle: "Steam Store",
+    description: "Buy steam credit to get any game you want we will direcly mail you a steam gift card after purchase.."
+  },
+  {
+    original: tibia,
+    thumbnail: tibia,
+    thumbnailTitle: "Tibia MMORPG",
+    description: "Get premium account fast/cheap, you can also buy ingame cash as cheap as 50 L.E per 1kk.."
+  },
+  {
+    original: pubg,
+    thumbnail: pubg,
+    thumbnailTitle: "Player Unknown Battlegrounds",
+    description: "Pubg .."
+  }
+]
 
 class Main extends Component {
 
@@ -23,84 +57,6 @@ class Main extends Component {
     ]
     }
   
-  
-  Slideshow = () => {
-
-     
-    const properties = {
-      duration: 2000,
-      transitionDuration: 500,
-      infinite: true,
-      indicators: true,
-      arrows: false
-    }
-      return (
-        <Slide {...properties}>
-
-          <div className="each-slide">
-          <img style ={{width: 349, height: 130}} className="col-lg-6" src={fortnite} alt=""></img>
-            <div className="card-image-overlay">
-                <div id ="slidedesc" className="card-body">
-                    <h4 className ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
-                       <span>Fortnite</span>
-                    </h4>
-                </div>
-            </div>
-          </div>
-          
-          <div className="each-slide">
-          <img style ={{width: 349, height: 130}} className="col-xs-6" src={crossfire} alt=""></img>
-          <div className="card-image-overlay">
-                <div id ="slidedesc" className="card-body">
-                    <h4 className ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
-                       <span>Crossfire</span>
-                    </h4>
-                </div>
-            </div>
-          </div>
-          <div className="each-slide">
-          <img style ={{width: 349, height: 130}} className="col-xs-6" src={pubg} alt=""></img>
-          <div className="card-image-overlay">
-                <div id ="slidedesc" className="card-body">
-                    <h4 className ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
-                       <span>Pubg</span>
-                    </h4>
-                </div>
-            </div>
-          </div>
-          <div className="each-slide">
-          <img style ={{width: 349, height: 130}} className="col-xs-6" src={tibia} alt=""></img>
-          <div className="card-image-overlay">
-                <div id ="slidedesc" className="card-body">
-                    <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
-                       <span>Tibia</span>
-                    </h4>
-                </div>
-            </div>
-          </div>
-          <div className="each-slide">
-          <img style ={{width: 349, height: 130}} class="col-xs-6" src={league} alt=""></img>
-          <div class="card-image-overlay">
-                <div id ="slidedesc" class="card-body">
-                    <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
-                       <span>League of legends</span>
-                    </h4>
-                </div>
-            </div>
-          </div>
-          <div className="each-slide">
-          <img style ={{width: 349, height: 130}} class="col-xs-6" src={steam} alt=""></img>
-          <div class="card-image-overlay">
-                <div id ="slidedesc" class="card-body">
-                    <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontWeight: 100, fontFamily: "impact", lineHeight: 0.5}}>
-                       <span>Steam Games</span>
-                    </h4>
-                </div>
-            </div>
-          </div>
-        </Slide>
-      )}
-
   renderPage() {
     let array = [];
     for (var i = 0; i < this.state.News.length; i++) {
@@ -129,41 +85,38 @@ class Main extends Component {
 
   return (
     
-    <div >
-              <div class="col-md-4 col-lg-4 col-xs-4 ">
-                  <div class ="panelFb" >
-                      <div class="fbShit fb-page">
-                      <FacebookProvider key="1" appId="1984023341904164">
-                      <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
-                    </FacebookProvider> 
-              </div>
-              </div>
-              </div>
-              <div class="col-md-4 col-lg-4 col-xs-4">
-                      <div class ="panelGames">
-                        <div class="slideShit">
-                        {this.Slideshow()}
-                        </div>
-                      </div>
-              </div>
-              <div class="col-md-4 col-lg-4 col-xs-4">
-                      <div class ="panelAds">
-                      </div>
-              </div>   
-
-              <div class="newsBody col-md-12 col-lg-12 col-xs-12">
-                {news}
-              </div>           
+    <div class="container" >
+        <br/>    <br/>     <br/>  
+        <TypedJs  
+          strings={[
+            '<font color="green">Safe and secured transactions.</font>',
+            '<font color="aqua">Easy place and track your orders.</font>',
+            '<font color="red">Fast delivery.</font>'
+              ]}/>
+        <br/>  
+        <div class="badge-dark">
+            <br/>  
+              <div class="LightSlider">
+                    <ImageGallery items={images} 
+                                  autoPlay={true} 
+                                  showFullscreenButton={false} 
+                                  showPlayButton={false}
+                                  showBullets={true}
+                                  showThumbnails={false}/>
+            </div>
+            
+            <br/>  
+            </div>     
     </div>
   )
 }
 
   
 render(){
+
   return(
     <div>
       <Getlogin page={"Main"}/>
-
       <div className="bg-image">
       {this.renderPage()}
       </div>

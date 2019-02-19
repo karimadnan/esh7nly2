@@ -20,14 +20,16 @@
     "react-dom": "^16.7.0",
     "react-facebook": "^6.0.15",
     "react-google-recaptcha": "^1.0.5",
+    "react-image-gallery": "^0.8.12",
     "react-radio-button-group": "^1.2.7",
     "react-radio-buttons": "^1.2.2",
+    "react-responsive-carousel": "^3.1.47",
     "react-responsive-modal": "^3.5.1",
     "react-scripts": "^1.0.17",
     "react-select": "^2.3.0",
-    "react-slideshow-image": "^1.0.10",
     "react-smooth-marquee": "^1.0.0",
-    "reactstrap": "^7.1.0"
+    "reactstrap": "^7.1.0",
+    "typed.js": "^2.0.10"
   },
   "scripts": {
     "start": "node server.js",

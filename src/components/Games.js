@@ -56,9 +56,10 @@ class Games extends Component {
       fortPhone: '',
       SelectedPlat: '',
       TransId: "",
-      PlatformOps: [
-      {value: "PC", label:"PC"},    
-      {value: "Mobile", label: "Mobile"}],
+      FortPlatformOps: [
+      {value: "PC", label:"PC"}],
+      PubgPlatformOps: [
+        {value: "Mobile", label: "Mobile"}],
       ServerOps:[
       {value:"EU West",label:"EU West"},
       {value:"EU Nordic and East",label:"EU Nordic and East"}
@@ -312,7 +313,7 @@ class Games extends Component {
                           styles={customStyles}
                           value={this.state.SelectedPlat}
                           onChange={this.handleChange.bind(this, 'SelectedPlat')}
-                          options={this.state.PlatformOps} placeholder='PC / Mobile'
+                          options={this.state.FortPlatformOps} placeholder='PC'
                         />
                     </div>
 
@@ -419,7 +420,7 @@ class Games extends Component {
             styles={customStyles}
             value={this.state.SelectedPlat}
             onChange={this.handleChange.bind(this, 'SelectedPlat')}
-            options={this.state.PlatformOps} placeholder='PC / Mobile'
+            options={this.state.PubgPlatformOps} placeholder='Mobile'
           />
       </div>
 
