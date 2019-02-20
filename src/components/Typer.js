@@ -28,11 +28,11 @@ class TypedJs extends React.Component {
     render() {
       return (
         <div class="badge-Home">
-            <p style={{fontSize: 40, textAlign: "left"}}>&nbsp; <strong style={{fontSize: 40}}>{this.props.start}</strong> <span
+            <h1 style={{fontSize: 40, textAlign: "left"}}>&nbsp; <strong style={{fontSize: 40}}>{this.props.start}</strong> <span
               style={{fontSize: 40}}
               ref={(el) => { this.el = el; }}
             />
-            </p>
+            </h1>
         </div>
       );
     }

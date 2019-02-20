@@ -13,6 +13,8 @@ const normalizePort =port => parseInt(port ,10);
 const PORT = normalizePort(process.env.PORT || 4000);
 
 const app =express();
+const compression = require('compression');
+app.use(compression());
 
 
 app.use(morgan('dev'));
