@@ -7,7 +7,6 @@ import { FacebookProvider, Page, CustomChat } from 'react-facebook';
 class Footer extends Component {
 
 render() {
-
     return (
 
     <footer id="footerClass">

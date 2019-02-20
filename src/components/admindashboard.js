@@ -267,30 +267,8 @@ tableLeads() {
   }
 
 renderPage() {
-  if(this.state.operation === "news"){
-    return(
-        <div class="container">
-              <div class="newsBody col-md-12 col-lg-12 col-xs-12">
-                <h3 style={{fontFamily: "impact", color: "white", textAlign: "center"}}> <img style ={{width: 150, height: 130}} src={adminicon} alt=""></img> Admin Dashboard </h3>
-              </div>
-              <div class="col-md-12 col-lg-12 col-xs-12">
-                <h3 onClick={()=>{this.updateInput("operation", "")}} class="adminBody" style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-chevron-left"></span> Back to menu </h3>
-              </div>
-              <div class="form-group">
-                <label style={{color: "white"}} for="title">Title:</label>
-                <input type="text" class="form-control" id="title"></input>
-              </div>
-              <div class="form-group">
-                <label style={{color: "white"}} for="body">Body:</label>
-                <textarea class="form-control" rows="7" id="body"></textarea>
-              </div>
-              <div class="form-group col-md-12 col-lg-12 col-xs-12">
-                  <button class="btn btn-primary btn-block">Post</button> 
-              </div>	
-        </div>
-    )
-    }
-  else if (this.state.operation === "strikes"){
+
+  if (this.state.operation === "strikes"){
     return(
       <div class="container">
             <div class="newsBody col-md-12 col-lg-12 col-xs-12">
@@ -344,15 +322,11 @@ renderPage() {
   }
     return (
         <div class="container">
-
+              <br/><br/>
               <div class="newsBody col-md-12 col-lg-12 col-xs-12">
                 <h1 style={{fontFamily: "impact", color: "white", textAlign: "center"}}> <img style ={{width: 150, height: 130}} src={adminicon} alt=""></img> Admin Dashboard </h1>
               </div>
 
-              {/* News */}
-              <div class="col-md-12 col-lg-12 col-xs-12">
-                <h3 class="adminBody" onClick={()=>{this.updateInput("operation", "news")}} style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-plus"></span> - Post News</h3>
-              </div>
               {/* Tickets */}
               <div class="col-md-12 col-lg-12 col-xs-12">
                 <h3 class="adminBody" onClick={()=>{this.updateInput("operation", "tickets")}} style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-envelope"></span> - Check Tickets</h3>

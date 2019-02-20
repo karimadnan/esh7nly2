@@ -128,7 +128,6 @@ render() {
     },
   }
 
-  console.log(this.state.page)
 return (
 
     <div className="container">

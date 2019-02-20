@@ -37,6 +37,7 @@ const customStyles = {
 class Games extends Component {
 
     state = {
+      SuccessModal: false,
       ErrorModal: false,
       PaymentModal: false,
       ErrorMsg: '',

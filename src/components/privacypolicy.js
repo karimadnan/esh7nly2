@@ -4,11 +4,11 @@ import '../Mycss.css';
 import '../Respcss.css';
 import Getlogin from './navbar';
 import ReactRouter from 'flux-react-router';
+import Footer from './footer';
 
 class Privacy extends Component {
 
 render() {
-
     return (
         <div class ="PrivacyBG">
             <br/> <br/> <br/>
