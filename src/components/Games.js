@@ -4,11 +4,9 @@ import VodafoneCashLogo from '../Images/Vodacash.png';
 import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 
-import Fortniteshop from './FortniteShop';
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
-import ReactRouter from 'flux-react-router';
 import Getlogin from './navbar';
 import axios from 'axios';
 import Modal from 'react-responsive-modal';
@@ -17,7 +15,6 @@ import Vbucks from '../Images/fortnite-vbucks-icon.png';
 import Rp from '../Images/rp.png';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
-import Footer from './footer';
 
 const customStyles = {
   option: (provided, state) => ({
