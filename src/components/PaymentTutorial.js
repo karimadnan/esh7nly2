@@ -5,7 +5,7 @@ import '../Respcss.css';
 import Getlogin from './navbar';
 import Footer from './footer';
 
-class Games extends Component {
+class Payment extends Component {
 
 state = {
     PaymentOps: '',
@@ -173,7 +173,6 @@ state = {
        }
     }
 render() {
-
     return (
 
   <div>
@@ -188,4 +187,5 @@ render() {
   }
 }
 
-export default Games;
+
+export default Payment;

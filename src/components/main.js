@@ -47,6 +47,7 @@ const images = [
 
 class Main extends Component {
 
+
   // state = {
   //   News: [
   //     {date: "1/29/2019", title: "Testing title 1", content: "testing test testing test testing test."},
@@ -113,7 +114,6 @@ class Main extends Component {
 
   
 render(){
-
   return(
     <div>
       <Getlogin page={"Main"}/>
@@ -127,4 +127,5 @@ render(){
   )
 }
 }
+
 export default Main;

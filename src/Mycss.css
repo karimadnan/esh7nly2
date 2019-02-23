@@ -243,6 +243,13 @@ background-color: #0ddb06;
   width: 200px;
 }
 
+.splash-cardTees {
+  margin-bottom: 20px;
+  border-radius: 0;
+  height: 450px;
+  width: 450px;
+}
+
 .splash-card2 {
   -webkit-transform: translate(1%, 20%);
   border-radius: 0;
@@ -285,6 +292,40 @@ background-color: #0ddb06;
   width: 100%;
   bottom: 0;
 }
+
+#merchInfo {
+  background: rgba(0, 0, 0, 0.712);
+  position: absolute;
+  height: 9%;
+  width: 100%;
+  bottom: 0;
+}
+
+#merchiDesc {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.712);
+  position: absolute;
+  height: 10%;
+  width: 20%;
+  right: 0;
+  top: 0;
+}
+
+#merchPrice {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.705);
+  position: absolute;
+  height: 10%;
+  width: 25%;
+  left: 0;
+  top: 0;
+}
+
+#logodesc {
+  height: 100%;
+  width: 100%;
+}
+
 
 .card-img-overlay {
   position: absolute;

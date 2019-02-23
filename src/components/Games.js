@@ -4,6 +4,21 @@ import VodafoneCashLogo from '../Images/Vodacash.png';
 import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 
+import t001 from '../Images/tshirts/001.png';
+import t002 from '../Images/tshirts/002.png';
+import t003 from '../Images/tshirts/003.png';
+import t004 from '../Images/tshirts/004.png';
+import t005 from '../Images/tshirts/005.png';
+import t006 from '../Images/tshirts/006.png';
+import t007 from '../Images/tshirts/007.png';
+import t008 from '../Images/tshirts/008.png';
+import t009 from '../Images/tshirts/009.png';
+import t010 from '../Images/tshirts/010.png';
+import t011 from '../Images/tshirts/011.png';
+import t012 from '../Images/tshirts/012.png';
+import t013 from '../Images/tshirts/013.png';
+import t014 from '../Images/tshirts/014.jpg';
+
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
@@ -15,6 +30,9 @@ import Vbucks from '../Images/fortnite-vbucks-icon.png';
 import Rp from '../Images/rp.png';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
+import ReactTooltip from 'react-tooltip'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const customStyles = {
   option: (provided, state) => ({
@@ -31,16 +49,128 @@ const customStyles = {
 }
 
 
-class Games extends Component {
+class Market extends Component {
+
+  
+  notify = (id) => toast.success(`${id} added to cart!`, {
+    position: "top-right",
+    autoClose: 2500,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: false,
+    });
 
     state = {
+      Cart: [],
+      Tshirts: [
+      {
+        id: "001",
+        Name: "Calibrate",
+        price: 100,
+        img: t001,
+        rarity: "rare"
+        
+      },
+      {
+        id: "002",
+        Name: "Call me big daddy",
+        price: 100,
+        img: t002,
+        rarity: "epic"
+      },   
+      {
+        id: "003",
+        Name: "Gamer X-Ray",
+        price: 100,
+        img: t003,
+        rarity: "legendary"
+      }, 
+      {
+        id: "004",
+        Name: "Try to survive",
+        price: 100,
+        img: t004,
+        rarity: "rare"
+      },
+      {
+        id: "005",
+        Name: "Get over here",
+        price: 100,
+        img: t005,
+        rarity: "epic"
+      },
+      {
+        id: "006",
+        Name: "Atarri Monster",
+        price: 100,
+        img: t006,
+        rarity: "epic"
+      },
+      {
+        id: "007",
+        Name: "Clash of the old gods",
+        price: 100,
+        img: t007,
+        rarity: "legendary"
+      },
+      {
+        id: "008",
+        Name: "Defender",
+        price: 100,
+        img: t008,
+        rarity: "rare"
+      },
+      {
+        id: "009",
+        Name: "Fight the evil within",
+        price: 100,
+        img: t009,
+        rarity: "epic"
+      },
+      {
+        id: "010",
+        Name: "The Ram",
+        price: 100,
+        img: t010,
+        rarity: "epic"
+      },
+      {
+        id: "011",
+        Name: "Bloody Drill",
+        price: 100,
+        img: t011,
+        rarity: "legendary"
+      },
+      {
+        id: "012",
+        Name: "Undead Necromancer",
+        price: 100,
+        img: t012,
+        rarity: "rare"
+      },
+      {
+        id: "013",
+        Name: "Dark Wizard",
+        price: 100,
+        img: t013,
+        rarity: "rare"
+      },
+      {
+        id: "014",
+        Name: "Winner winner chicken dinner",
+        price: 100,
+        img: t014,
+        rarity: "legendary"
+      },
+    ],
       SuccessModal: false,
       ErrorModal: false,
       PaymentModal: false,
       ErrorMsg: '',
       ExtraData:{},
       Url: localStorage.getItem('Server'),
-      Games: true,
+      Type: '',
       OffersOps: [],
       SelectedOff: '',
       GameType: '',
@@ -109,12 +239,116 @@ class Games extends Component {
     }); 
   }
 
-  GamesRender = () => {
-    if(this.state.Games){
+updateCart(tee){
+  var array = []
+  array.push({name: tee, count: 1})
+  this.setState({Cart: array})
+}
 
-      return (
-<div className="bg-image"> 
+MarketRender = () => {
+if (this.state.Type === ""){
+  return (
+<div class="container">
+<br/> <br/>     <br/>     <br/>    
+    <div class="col-xs-12 col-md-4">
+        <div class="Games" onClick={()=>{this.updateInput("Type", "Games")}}>
+          <div id ="logodesc" data-tip="Games">
+            <ReactTooltip place="bottom" type="dark" effect="solid"/>
+          </div>
+        </div> 
+    </div>
+      <div class="col-xs-12 col-md-4">
+        <div class="Tshirts" onClick={()=>{this.updateInput("Type", "Merch")}}>
+          <div id ="logodesc" data-tip="Merch">
+              <ReactTooltip place="bottom" type="dark" effect="solid"/>
+            </div>
+        </div> 
+      </div>
+</div>
+)
+}
+else if (this.state.Type === "Merch"){
+  console.log(this.state.Cart)
+
+  let tees= this.state.Tshirts.map(image => {
+    var rarity = "card splash-cardTees FortHover rarity-"+image.rarity
+    return (
+      <div class="col-md-6 col-md-6" key={image.id} >
+      <div class ={rarity}>
+        <img class="FortShop"
+        onClick={()=>{this.notify(image.Name), this.updateCart(image.Name), this.updateInput("Type", "Merch")}} 
+        src={image.img}  style={{cursor: 'pointer'}} alt={image.id}/>
+        <ToastContainer
+                position="top-right"
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnVisibilityChange={false}
+                draggable={false}
+                pauseOnHover={false}
+          />
+         <div class="card-image-overlay">
+          <div id ="merchInfo" class="card-body">
+              <h4 class ="card-title itemname" style = {{color: "white", fontSize: 15, fontWeight: 300, fontFamily: "impact", lineHeight: 0.5}}>
+                <span>"{image.Name}"</span>
+              </h4>
+          </div>
+         </div>
+         <div id ="merchPrice" class="card-body">
+            <p style = {{color: "white", fontSize: 15, fontWeight: 300, fontFamily: "impact", lineHeight: 2.8}}>Price: {image.price} EGP</p>
+         </div>
+         <div id ="merchiDesc" class="card-body">
+            <p style = {{color: "white", fontSize: 15, fontWeight: 300, fontFamily: "impact", lineHeight: 2.8}}>ID: #{image.id}</p>
+         </div>
+      </div>
+      </div>
+      )
+   });
+  return (
+<div class="container">
+  <br/><br/> <br/><br/>
+
+<div class="col-xs-12 col-md-12 col-lg-12">
+  <div class="col-xs-6 col-md-6 col-lg-6">
+    <button class="btn btn-danger" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "")}}>
+      Back To List
+    </button>
+  </div>
+  <div class="col-xs-2 col-md-2 col-lg-2">
+    <div class="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
+      <ReactTooltip place="bottom" type="dark" effect="solid"/>
+      <p style={{textAlign: "center", fontSize: 25}}> <span className="glyphicon glyphicon-shopping-cart">: {this.state.Cart.length}</span> </p>
+    </div>
+  </div>
+  <div class="col-xs-4 col-md-4 col-lg-4">
+    <button class="btn btn-primary" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "")}}>
+      Check Out
+    </button>
+  </div>
+</div>
+  <br/><br/><br/><br/>
+      {tees}
+  </div>
+  )
+}
+else if(this.state.Type === "Games" && this.state.GameType === ''){
+return (
   <div class="container">
+    <br/> <br/>    <br/> 
+    <div class="col-xs-12 col-md-12 col-lg-12">
+      <div class="col-xs-12 col-md-6 col-lg-6">
+        <div class="badge-dark">
+          <h1>Choose your game from the list</h1>
+        </div>
+    </div>
+    <div class="col-xs-12 col-md-6 col-lg-6">
+      <button class="btn btn-danger" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{this.updateInput("Type", "")}}>
+        Back To List
+      </button>
+     </div>
+    </div>
+
     <div class="col-xs-12 col-md-4">
       <div class="league" onClick={()=>{this.getGameDetails("league")}}></div> 
     </div>
@@ -144,7 +378,6 @@ class Games extends Component {
     </div>
 
   </div>
-</div>
       )
     }
   }
@@ -153,7 +386,7 @@ class Games extends Component {
   if(!this.state.Payment){
     var t=this.state.GameType+"Logo"
 
-    if(!this.state.Games && this.state.GameType ==="league"){
+    if(this.state.Type === "Games" && this.state.GameType ==="league"){
       return (
       <div className="bgr-league0"> 
         <div class="container">
@@ -261,7 +494,7 @@ class Games extends Component {
 
       )
     }
-    else if(!this.state.Games && this.state.GameType ==="fortnite"){
+    else if(this.state.Type === "Games" && this.state.GameType ==="fortnite"){
       return (
         <div className="bgr-fortnite0"> 
            <div class="container">
@@ -365,7 +598,7 @@ class Games extends Component {
         </div>
         )
     }
-  else if(!this.state.Games && this.state.GameType ==="pubg")  {
+  else if(this.state.Type === "Games" && this.state.GameType ==="pubg")  {
 
   return (
     <div className="bgr-pubg0"> 
@@ -483,7 +716,7 @@ class Games extends Component {
 
   )
   }
-  else if(!this.state.Games && this.state.GameType ==="crossfire")  {
+  else if(this.state.Type === "Games" && this.state.GameType ==="crossfire")  {
 
     return (
 <div className="bgr-crossfire0"> 
@@ -583,7 +816,7 @@ class Games extends Component {
   
     )
     }
-    else if(!this.state.Games && this.state.GameType ==="steam")  {
+    else if(this.state.Type === "Games" && this.state.GameType ==="steam")  {
 
       return (
         <div className="bgr-steam0"> 
@@ -680,7 +913,7 @@ class Games extends Component {
     
       )
       }
-      else if(!this.state.Games && this.state.GameType ==="tibia")  {
+      else if(this.state.Type === "Games" && this.state.GameType ==="tibia")  {
 
         return (
           <div className="bgr-tibia0"> 
@@ -772,7 +1005,7 @@ class Games extends Component {
       
         )
         }
-        else if(!this.state.Games && this.state.GameType ==="netflix")  {
+        else if(this.state.Type === "Games" && this.state.GameType ==="netflix")  {
 
           return (
             <div className="bgr-netflix0"> 
@@ -1092,11 +1325,7 @@ render() {
   }
 
 return (
-  
-  <div>
-
-      <div className="bg-image"> 
-
+<div className="bg-image"> 
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
           styles={SuccessStyle}>
           <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
@@ -1108,14 +1337,13 @@ return (
           <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
       </Modal>
 
-        {this.GamesRender()}
+        {this.MarketRender()}
         {this.SingleGame()}
         {this.paymentRender()}
         <Getlogin page={"Offers"}/>
-      </div>
   </div>
       );
   }
 }
 
-export default Games;
+export default Market;

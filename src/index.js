@@ -5,7 +5,7 @@ import './index.css'
 
 import Main from './components/main';
 import SignUp from './components/SignUp';
-import Games from './components/Games';
+import Market from './components/Games';
 import Payment from './components/PaymentTutorial';
 import Checkout from './components/Checkout';
 import FortniteShop from './components/FortniteShop';
@@ -32,9 +32,9 @@ Flux.createRoute('/signup',function(){
     ReactDOM.render(<SignUp />,document.getElementById('root'));
 })
 
-Flux.createRoute('/games',function(){
+Flux.createRoute('/market',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<Games />,document.getElementById('root'));
+    ReactDOM.render(<Market />,document.getElementById('root'));
 })
 
 Flux.createRoute('/payment',function(){
@@ -67,12 +67,17 @@ Flux.createRoute('/checkout/{Price}/{Game}',function(p){
     ReactDOM.render(<Checkout Value={p.Price} Game={p.Game}/>,document.getElementById('root'));
 })
 
-// ReactDOM.render(<Main />, document.getElementById('root'));
+// ReactDOM.render(   
+// <Provider store={store} >
+//     <Main />    
+// </Provider>, document.getElementById('root'));
 
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
+
+
 registerServiceWorker.unregister();
 
 Flux.init();

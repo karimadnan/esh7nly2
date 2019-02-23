@@ -151,7 +151,7 @@ return (
           <li class={this.state.page ==="Main" && "activeNav"}><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-home"></span> Home</a></li>
           <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="glyphicon glyphicon-tag"></span> How To Buy / ازاى تشترى</a>
           </li>
-          <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/games")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon glyphicon-king"></span> Games Offers</a></li>
+          <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/market")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-shopping-cart"></span> Market</a></li>
           <li class={this.state.page ==="FortniteShop" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/fortniteshop")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-star"></span> Fortnite Today's Shop</a></li>
           <li class={this.state.page ==="ContactUs" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="	glyphicon glyphicon-earphone"></span> Contact Us / كلمنا</a></li>
         </ul>
