@@ -18,6 +18,10 @@ import t011 from '../Images/tshirts/011.png';
 import t012 from '../Images/tshirts/012.png';
 import t013 from '../Images/tshirts/013.png';
 import t014 from '../Images/tshirts/014.jpg';
+import t015 from '../Images/tshirts/015.png';
+import t016 from '../Images/tshirts/016.png';
+import t017 from '../Images/tshirts/017.png';
+import t018 from '../Images/tshirts/018.png';
 
 import '../Mycss.css';
 import '../games.css';
@@ -66,7 +70,7 @@ class Market extends Component {
       Tshirts: [
       {
         id: "001",
-        Name: "Calibrate",
+        Name: "Dab on them",
         price: 100,
         img: t001,
         rarity: "rare"
@@ -74,7 +78,7 @@ class Market extends Component {
       },
       {
         id: "002",
-        Name: "Call me big daddy",
+        Name: "Draaaaaaaven",
         price: 100,
         img: t002,
         rarity: "epic"
@@ -144,7 +148,7 @@ class Market extends Component {
       },
       {
         id: "012",
-        Name: "Undead Necromancer",
+        Name: "Challenger",
         price: 100,
         img: t012,
         rarity: "rare"
@@ -161,6 +165,34 @@ class Market extends Component {
         Name: "Winner winner chicken dinner",
         price: 100,
         img: t014,
+        rarity: "legendary"
+      },
+      {
+        id: "015",
+        Name: "Rapture",
+        price: 100,
+        img: t015,
+        rarity: "epic"
+      },
+      {
+        id: "016",
+        Name: "The viking",
+        price: 100,
+        img: t016,
+        rarity: "uncommon"
+      },
+      {
+        id: "017",
+        Name: "Crypts",
+        price: 100,
+        img: t017,
+        rarity: "rare"
+      },
+      {
+        id: "018",
+        Name: "Bronze noob",
+        price: 100,
+        img: t018,
         rarity: "legendary"
       },
     ],
@@ -250,14 +282,14 @@ if (this.state.Type === ""){
   return (
 <div class="container">
 <br/> <br/>     <br/>     <br/>    
-    <div class="col-xs-12 col-md-4">
+    <div class="col-xs-12 col-md-12">
         <div class="Games" onClick={()=>{this.updateInput("Type", "Games")}}>
           <div id ="logodesc" data-tip="Games">
             <ReactTooltip place="bottom" type="dark" effect="solid"/>
           </div>
         </div> 
     </div>
-      <div class="col-xs-12 col-md-4">
+      <div class="col-xs-12 col-md-12" style={{marginTop: 20}}>
         <div class="Tshirts" onClick={()=>{this.updateInput("Type", "Merch")}}>
           <div id ="logodesc" data-tip="Merch">
               <ReactTooltip place="bottom" type="dark" effect="solid"/>
@@ -310,18 +342,18 @@ else if (this.state.Type === "Merch"){
   <br/><br/> <br/><br/>
 
 <div class="col-xs-12 col-md-12 col-lg-12">
-  <div class="col-xs-6 col-md-6 col-lg-6">
+  <div class="col-xs-12 col-md-6 col-lg-6">
     <button class="btn btn-danger" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "")}}>
       Back To List
     </button>
   </div>
-  <div class="col-xs-2 col-md-2 col-lg-2">
+  <div class="col-xs-6 col-md-2 col-lg-2">
     <div class="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
       <ReactTooltip place="bottom" type="dark" effect="solid"/>
       <p style={{textAlign: "center", fontSize: 25}}> <span className="glyphicon glyphicon-shopping-cart">: {this.state.Cart.length}</span> </p>
     </div>
   </div>
-  <div class="col-xs-4 col-md-4 col-lg-4">
+  <div class="col-xs-12 col-md-4 col-lg-4">
     <button class="btn btn-primary" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "")}}>
       Check Out
     </button>
