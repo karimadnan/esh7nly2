@@ -22,4 +22,13 @@ router.get('/signup', function(req, res, next) {
 router.get('/market', function(req, res, next) {
     return res.sendFile(path.resolve(Front, 'index.html'))
 }); 
+router.get('/admindashboard', function(req, res, next) {
+    return res.sendFile(path.resolve(Front, 'index.html'))
+}); 
+router.get('/privacy', function(req, res, next) {
+    return res.sendFile(path.resolve(Front, 'index.html'))
+}); 
+router.get('/contactus', function(req, res, next) {
+    return res.sendFile(path.resolve(Front, 'index.html'))
+}); 
 module.exports = router;

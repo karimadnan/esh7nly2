@@ -107,7 +107,7 @@ class Main extends Component {
                     <ImageGallery items={images} 
                                   autoPlay={true} 
                                   showFullscreenButton={false} 
-                                  showPlayButton={false}
+                                  showPlayButton={true}
                                   showBullets={true}
                                   showThumbnails={false}
                                   slideInterval={4000}/>
