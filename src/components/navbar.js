@@ -4,6 +4,9 @@ import axios from 'axios';
 import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
 import '../Respcss.css';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {loginFunction} from '../actions/index';
 
 class Getlogin extends Component {
 
@@ -13,11 +16,7 @@ class Getlogin extends Component {
       Url: localStorage.getItem('Server'),
       Phone: "",
       Password: "",
-      token: "",
-      name: "",
       page: this.props.page,
-      logged: false,
-      access: 0
     }
 
     onOpenModal = (type) => {
@@ -30,7 +29,8 @@ class Getlogin extends Component {
 
 componentWillMount(){
   var that = this
-  var token = localStorage.getItem("Token")
+  var token = this.props.loginData.token
+  if (this.props.loginData.loggedState){
   if(token){
     axios.get(this.state.Url+"checkToken", 
     {
@@ -38,26 +38,19 @@ componentWillMount(){
     }
   )
     .then(function (response) {
-    // console.log(response)
-    that.setState({logged: true}); 
-    that.setState({access: localStorage.getItem("Access")});
-    that.setState({name: localStorage.getItem("Name")});
     })
     .catch(function (error) {
       // console.log(error)
-      localStorage.clear()
       that.setState({
         ErrorModal:true,
         ErrorMsg: "You're logged out",
-        logged: false
       })
     })
 }
 else{
-    this.setState({logged: false}); 
-    this.setState({name: ""});
-    this.setState({access: 0});
+  this.props.loginCall(null, 'logout')
 } 
+}
 }
 
 updateInput(key, value) {
@@ -65,8 +58,8 @@ updateInput(key, value) {
 }
 
 logout =() =>{
-  localStorage.clear()
-  window.location.reload()
+  this.props.loginCall(null, 'logout')
+  window.location.reload();
 }
 
 keyClicked (e) {
@@ -81,19 +74,12 @@ login() {
       'Content-Type': 'application/json'
   }
   var that=this;
-    if(that.state.Phone  || that.state.Password){
+    if(this.state.Phone  || this.state.Password){
             let Data = {Phone: that.state.Phone, Password: that.state.Password}
             axios.post(that.state.Url+"login", Data, {headers: headers})
             .then(function (response) {
-              let X = response.data.data
-              var UserName = X.Name
-              var UserAccess = X.Access
-              var Token = X._token
-              localStorage.setItem("Name", UserName);
-              localStorage.setItem("Access", UserAccess);
-              localStorage.setItem("Token", X._token);
-  
-              that.setState({token: Token, name: UserName, access: UserAccess, logged: true});
+              console.log(response)
+              that.props.loginCall(response.data.data, 'login')
             })
             .catch(function (error) {
               if (error.response.data.message){
@@ -113,6 +99,7 @@ login() {
     } 
   
 render() {
+
   const customStyles = {
     overlay: {
     },
@@ -157,19 +144,16 @@ return (
         </ul>
         <ul className="nav navbar-nav navbar-right">
         {/* Logged in noSignup*/}
-      { ! this.state.logged &&  <li class={this.state.page ==="SignUp" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/signup")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-user"></span> Sign Up</a></li> }
-
-        {/* User */}
-      {   this.state.logged && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="glyphicon glyphicon-user"></span> {this.state.name} <span className="caret"></span></a>
+      {   this.props.loginData.loggedState && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="glyphicon glyphicon-user"></span> {this.props.loginData.userName} <span className="caret"></span></a>
             <ul className="dropdown-menu">
               <li><a href="#"><span className="glyphicon glyphicon-euro"></span> Your Orders</a></li>
         {/* Admin Dashboard */}
-              {   this.state.access > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> }  
-              {   this.state.logged &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li> }  
+              {   this.props.loginData.session > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> }  
+              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li> }  
             </ul>
           </li>}
-          { ! this.state.logged &&    <li className="dropdown"> 
-      { ! this.state.logged &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="glyphicon glyphicon-cog"></span> <b>Login</b> <span className="caret"></span></a> }
+          { ! this.props.loginData.loggedState &&    <li className="dropdown"> 
+      { ! this.props.loginData.loggedState &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="glyphicon glyphicon-cog"></span> <b>Login</b> <span className="caret"></span></a> }
               <ul id="login-dp"  className="dropdown-menu">
               <li>
               <div className="form-group col col-xs-6">
@@ -183,10 +167,9 @@ return (
                         <div className="form-group col col-xs-6">
                            <button onClick={this.login} disabled={!this.state.Phone.length || !this.state.Password.length} className="btn btn-primary btn-block">Log in</button> 
                         </div>	
-                        <div className="col col-xs-6"><label style=
-                              {{
-                                color : "white"
-                              }}>Forgot password ?</label></div>
+                        <div className="col col-xs-6">
+                         <a onClick={()=>{ReactRouter.goTo("/signup")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-user"></span> Sign Up</a>
+                        </div>
                 </li>
               </ul> 
         </li>}
@@ -199,7 +182,17 @@ return (
 
 }
 }
-export default Getlogin;
+function mapStateToProps(state){
+  return {
+      loginData: state.loginSession
+  }
+}
+
+function matchDispatchToProps(dispatch){
+  return bindActionCreators({loginCall: loginFunction}, dispatch)
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(Getlogin);
 
 
 

@@ -8,6 +8,7 @@ import pubg from '../Images/slider/pubg.jpg';
 import tibia from '../Images/slider/tibialanding.png';
 import league from '../Images/slider/league.png';
 import steam from '../Images/slider/steam.jpg';
+import tshirts from '../Images/slider/tshirts.png';
 import Footer from './footer';
 import "../image-gallery.css";
 import TypedJs from './Typer';
@@ -18,6 +19,12 @@ const images = [
     thumbnail: fortnite,
     originalTitle: "Fortnite",
     description: "Purchase the cheapest v-bucks out there.."
+  },
+  {
+    original: tshirts,
+    thumbnail: tshirts,
+    originalTitle: "Gaming Merch",
+    description: "High quality tshirts for your favorite games."
   },
   {
     original: league,
@@ -116,8 +123,8 @@ class Main extends Component {
 render(){
   return(
     <div>
-      <Getlogin page={"Main"}/>
       <div className="bg-image">
+      <Getlogin page={"Main"}/>
       {this.renderPage()}
       <br/>
       <Footer />

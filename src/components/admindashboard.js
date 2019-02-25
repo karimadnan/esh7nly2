@@ -6,13 +6,14 @@ import VodafoneCashLogo from '../Images/Vodacash.png';
 import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 import moment from 'moment';
+import {connect} from 'react-redux';
 
 class Admindashboard extends Component {
 
 state = {
 headers: {
   'Content-Type': 'application/json',
-  'authorization': localStorage.getItem("Token")},
+  'authorization': this.props.loginData.token},
 operation: "",
 Url: localStorage.getItem('Server'),
 ordersData: [],
@@ -362,4 +363,11 @@ render(){
   )
 }
 }
-export default Admindashboard;
+
+function mapStateToProps(state){
+  return {
+      loginData: state.loginSession
+  }
+}
+
+export default connect(mapStateToProps)(Admindashboard);
