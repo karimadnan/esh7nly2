@@ -33,6 +33,7 @@
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
+    "redux-persist-transform-encrypt": "^2.0.1",
     "typed.js": "^2.0.10"
   },
   "scripts": {

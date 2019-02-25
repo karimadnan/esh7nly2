@@ -21,11 +21,20 @@ import {Provider} from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
+import createEncryptor from 'redux-persist-transform-encrypt'
 
+const key = "MyReduxSecretKeyPleaseKeepAway"
+const encryptor = createEncryptor({
+secretKey: key,
+onError: function(error) {
+console.log("ERROR",error)
+}
+})
 
 const persistConfig = {
     key: 'root',
     storage,
+    transforms: [encryptor]
   }
 
 const persistedReducer = persistReducer(persistConfig, allReducers)
