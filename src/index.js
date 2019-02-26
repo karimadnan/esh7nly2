@@ -31,7 +31,7 @@ console.log("ERROR",error)
 })
 
 const persistConfig = {
-    key: 'root',
+    key: 'session',
     storage,
     transforms: [encryptor]
   }

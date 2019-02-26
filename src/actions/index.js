@@ -12,13 +12,6 @@ export const removeCartItem = (item) => {
     }
 }
 
-export const setFnCode = (code) => {
-    return {
-        type: "CODE_SET",
-        payload: code
-    }
-}
-
 export const loginFunction = (data, action) => {
     switch(action){
         case 'login':
@@ -29,6 +22,22 @@ export const loginFunction = (data, action) => {
         case 'logout':
         return {
             type: "USR_LOGOUT"
+        }
+        break;
+        }
+}
+
+export const updateCartInfo = (data, action) => {
+    switch(action){
+        case 'add':
+        return {
+            type: "UPDATE_CART_ADD",
+            payload: data
+        }
+        case 'remove':
+        return {
+            type: "UPDATE_CART_REMOVE",
+            payload: data
         }
         break;
         }

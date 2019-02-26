@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {addCartItem} from '../actions/index';
+import {addCartItem, updateCartInfo} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import '../Mycss.css';
 import '../games.css';
@@ -28,8 +28,9 @@ class MerchShop extends Component {
         });
     
     addItemToArray(item){
+        const uniqueId = item.id+`${this.state.size}`
         let object = {
-            id: item.id,
+            id: uniqueId,
             Name: item.Name,
             price: item.price,
             img: item.img,
@@ -40,6 +41,14 @@ class MerchShop extends Component {
          this.props.addCartItem(object)
     }
 
+    updateInfo (data){
+        let object = {
+            price: data.price,
+            items: 1
+         }
+        this.props.updateCartInfo(object, 'add')
+    }
+
     createListItems(){
 
         return this.props.shop.map((item) =>{
@@ -48,8 +57,8 @@ class MerchShop extends Component {
             return (
                 <div class="col-md-6 col-md-6" key={item.id} >
                 <div class ={rarity}>
-                    <img class="FortShop"
-                    onClick={() => {this.addItemToArray(item), this.notify(item.Name)}}
+                    <img class="merchShop"
+                    onClick={() => {this.addItemToArray(item), this.notify(item.Name), this.updateInfo(item)}}
                     src={item.img}  style={{cursor: 'pointer'}} alt={item.id}/>
                    <div class="card-image-overlay">
                     <div id ="merchInfo" class="card-body">
@@ -109,8 +118,16 @@ function mapStateToProps(state){
     }
 }
 
-function matchDispatchToProps(dispatch){
-    return bindActionCreators({addCartItem: addCartItem}, dispatch)
-}
+// function matchDispatchToProps(dispatch){
+//     return bindActionCreators({addCartItem: addCartItem}, dispatch)
+// }
+
+const matchDispatchToProps = dispatch => bindActionCreators(
+    {
+      addCartItem,
+      updateCartInfo
+    },
+    dispatch,
+  )
 
 export default connect(mapStateToProps, matchDispatchToProps)(MerchShop);

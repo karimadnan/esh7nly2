@@ -7,8 +7,6 @@ import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import {setFnCode} from '../actions/index';
-import {bindActionCreators} from 'redux';
 import { ToastContainer, toast } from 'react-toastify';
 
 class Admindashboard extends Component {
@@ -323,20 +321,20 @@ renderPage() {
       </div>
   )
   }
-  else if (this.state.operation === "Cc"){
-    return(
-      <div class="container">
-            {this.header()}
-            <div class="form-group">
-              <label style={{color: "white"}} for="title">Creator Code:</label>
-              <input onChange={e => this.updateInput("creatorCode", e.target.value)} type="text" class="form-control" id="title"></input>
-            </div>
-            <div class="form-group col-md-12 col-lg-12 col-xs-12">
-                <button onClick={() => {this.props.setCcode(this.state.creatorCode), this.notify(this.state.operation), this.updateInput("operation", '')}} class="btn btn-primary btn-block">Apply</button> 
-            </div>	
-      </div>
-  )
-  }
+  // else if (this.state.operation === "Cc"){
+  //   return(
+  //     <div class="container">
+  //           {this.header()}
+  //           <div class="form-group">
+  //             <label style={{color: "white"}} for="title">Creator Code:</label>
+  //             <input onChange={e => this.updateInput("creatorCode", e.target.value)} type="text" class="form-control" id="title"></input>
+  //           </div>
+  //           <div class="form-group col-md-12 col-lg-12 col-xs-12">
+  //               <button onClick={() => {this.props.setCcode(this.state.creatorCode), this.notify(this.state.operation), this.updateInput("operation", '')}} class="btn btn-primary btn-block">Apply</button> 
+  //           </div>	
+  //     </div>
+  // )
+  // }
   else if (this.state.operation === "orders"){
     return (
     <div class="container">
@@ -411,8 +409,4 @@ function mapStateToProps(state){
   }
 }
 
-function matchDispatchToProps(dispatch){
-  return bindActionCreators({setCcode: setFnCode}, dispatch)
-}
-
-export default connect(mapStateToProps, matchDispatchToProps)(Admindashboard);
+export default connect(mapStateToProps)(Admindashboard);

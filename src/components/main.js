@@ -124,12 +124,11 @@ render(){
   return(
     <div>
       <div className="bg-image">
-      <Getlogin page={"Main"}/>
-      {this.renderPage()}
-      <br/>
-      <Footer />
+        <Getlogin page={"Main"}/>
+        {this.renderPage()}
+        <br/>
+        <Footer />
       </div>
-
     </div>
   )
 }

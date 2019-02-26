@@ -7,8 +7,18 @@ import '../Respcss.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {loginFunction} from '../actions/index';
+import { ToastContainer, toast } from 'react-toastify';
 
 class Getlogin extends Component {
+
+    notifyLogin = (msg) => toast.info(` welcome back ${msg}!`, {
+      position: "top-center",
+      autoClose: 3500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true
+    });
 
     state = {
       ErrorModal: false,
@@ -77,6 +87,7 @@ login() {
             axios.post(that.state.Url+"login", Data, {headers: headers})
             .then(function (response) {
               console.log(response)
+              that.notifyLogin(response.data.data.Name)
               that.props.loginCall(response.data.data, 'login')
             })
             .catch(function (error) {
@@ -116,6 +127,17 @@ render() {
 return (
 
     <div className="container">
+        <ToastContainer
+          position="top-center"
+          autoClose={3500}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
         <Modal          
         open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
         styles={customStyles}>

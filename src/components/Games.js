@@ -162,7 +162,7 @@ else if (this.state.Type === "Merch"){
   <div class="col-xs-12 col-md-2 col-lg-2">
     <div onClick={()=>{this.updateInput("Type", "Cart")}} class="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
       <ReactTooltip place="bottom" type="dark" effect="solid"/>
-      <p style={{textAlign: "center", fontSize: 25, paddingBottom: 7}}> <span className="glyphicon glyphicon-shopping-cart">: <span class="label label-default">{this.props.cart.length}</span></span> </p>
+      <p style={{textAlign: "center", fontSize: 25, paddingBottom: 7}}> <span className="glyphicon glyphicon-shopping-cart">: <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span> </p>
     </div>
   </div>
 </div>
@@ -1211,7 +1211,8 @@ function mapStateToProps(state){
   return {
       cart: state.cartItems.cart,
       loginData: state.loginSession,
-      server: state.server
+      server: state.server,
+      cartInfo: state.updateCartInfo
   }
 }
 

@@ -2,21 +2,43 @@ const initialState = {
     cart: []
 }
 
+const quantityForItem = (list, newItem) => {
+    const item = list.find(item => item.id === newItem.id)
+    return item && item.quantity || 0
+  }
+
+const updateQuantity = (list, newItem, variation) =>
+  list.map(item => {
+    if ( item.id !== newItem.id ) return item
+    return { ...item, quantity: item.quantity + variation }
+  })
+
+const add = (list, newItem) =>
+  list.concat(newItem)
+
+const remove = (list, itemToRemove) =>
+  list.filter(item => item.id !== itemToRemove.id)
 
 export default function(state = initialState, action){
     
     switch(action.type){
-        case 'CART_ADDITEM':
-        return { 
-            ...state,
-            cart: [...state.cart, action.payload]
-        }
+            case 'CART_ADDITEM': {
+            const { cart } = state
+            const newItem = action.payload
+                if ( quantityForItem(cart, newItem) !== 0 ) {
+                    return { cart: updateQuantity(cart, newItem, +1) }
+                }
+                return { cart: add(cart, newItem) }
+            }
 
-        case 'CART_REMOVEITEM':
-        return {
-            ...state,
-            cart: state.cart.filter(item => item !== action.payload)
-        }
+            case 'CART_REMOVEITEM': {
+            const { cart } = state
+            const itemToRemove = action.payload
+                if ( quantityForItem(cart, itemToRemove) > 1 ) {
+                    return { cart: updateQuantity(cart, itemToRemove, -1) }
+                }
+                return { cart: remove(cart, itemToRemove) }
+            }
         break;
         }
     return state;

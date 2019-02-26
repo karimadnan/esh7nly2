@@ -182,9 +182,6 @@ class FortniteShop extends Component {
       return( 
     <div class="container">
     <br/>          <br/>               <br/>   
-        <div class="col-md-12 col-md-12">
-          <h1 class="badge badge-dark">Today's creator we support:&nbsp;&nbsp;<span class="label label-primary">{this.props.fnCode.Ccode}</span></h1>
-        </div>
         <div class="col-md-6 col-md-6">
           <h1 class="badge badge-dark">Current Shop Rotation: {moment(this.state.shopDate).format('MMMM Do YYYY')}</h1>
         </div>

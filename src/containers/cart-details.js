@@ -4,7 +4,7 @@ import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
 import Getlogin from '../components/navbar';
-import {removeCartItem} from '../actions/index';
+import {removeCartItem, updateCartInfo} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import {bindActionCreators} from 'redux';
 
@@ -18,11 +18,19 @@ class cartDetails extends Component {
         draggable: false,
         });
         
+    updateInfo (data){
+        let object = {
+            price: data.price,
+            items: 1
+            }
+        this.props.updateCartInfo(object, 'remove')
+    }
+
     createListItems(){
         return (
 
                 <div class="table-responsive" style={{color: "black", fontSize: 20}}>
-                    <table style={{backgroundColor: "white"}} class="table table-striped table-dark">
+                    <table style={{backgroundColor: "white"}} class="table table-striped">
                     <thead>
                     <tr>
                         <th scope="col">Name</th>
@@ -44,7 +52,7 @@ class cartDetails extends Component {
                             <th ><img src={item.img} style={{width: 100, height: 100}} alt={item.id}/> </th>
                             <th ><span class="label label-primary">{item.size}</span></th>
                             <th ><span class="label label-primary">{item.quantity}</span></th>
-                            <th ><span style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name)}} class="glyphicon glyphicon-remove"></span></th>
+                            <th ><span style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}} class="glyphicon glyphicon-remove"></span></th>
                             </tr>
                         )
                     })}
@@ -52,16 +60,6 @@ class cartDetails extends Component {
                     </table>
                 </div>
             )
-    }
-
-    totalPrice() {
-        var total = 0
-            if(this.props.cart.length >= 1){
-                this.props.cart.map((item) =>{ 
-                total = total+item.price
-            })
-            }
-        return total
     }
 
     render() {
@@ -89,10 +87,10 @@ class cartDetails extends Component {
                 pauseOnHover={false}
                     />
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h1 style={{fontSize: 25}}>Total items: <span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span class="label label-warning">{this.props.cart.length}</span></h1>
+                    <h1 style={{fontSize: 25}}>Total items: <span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span class="label label-warning">{this.props.cartInfo.totalItems}</span></h1>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h1 style={{fontSize: 25}}>Price: <span className="glyphicon glyphicon-euro"></span>&nbsp;&nbsp;<span class="label label-primary">{this.totalPrice()} EGP</span></h1>
+                    <h1 style={{fontSize: 25}}>Price: <span className="glyphicon glyphicon-euro"></span>&nbsp;&nbsp;<span class="label label-primary">{this.props.cartInfo.totalPrice} EGP</span></h1>
                 </div>
                 <br/>
                 <div class="bordersep col-xs-12 col-md-12 col-lg-12">  
@@ -110,12 +108,17 @@ class cartDetails extends Component {
 
 function mapStateToProps(state){
     return {
-        cart: state.cartItems.cart
+        cart: state.cartItems.cart,
+        cartInfo: state.updateCartInfo
     }
 }
 
-function matchDispatchToProps(dispatch){
-    return bindActionCreators({removeCartItem: removeCartItem}, dispatch)
-}
+const matchDispatchToProps = dispatch => bindActionCreators(
+    {
+      removeCartItem,
+      updateCartInfo
+    },
+    dispatch,
+  )
 
 export default connect(mapStateToProps, matchDispatchToProps)(cartDetails);
