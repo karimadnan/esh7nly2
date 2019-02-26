@@ -48,16 +48,6 @@ class MerchShop extends Component {
             return (
                 <div class="col-md-6 col-md-6" key={item.id} >
                 <div class ={rarity}>
-                <ToastContainer
-                    position="top-right"
-                    hideProgressBar={false}
-                    newestOnTop
-                    closeOnClick
-                    rtl={false}
-                    pauseOnVisibilityChange={false}
-                    draggable={false}
-                    pauseOnHover={false}
-                    />
                     <img class="FortShop"
                     onClick={() => {this.addItemToArray(item), this.notify(item.Name)}}
                     src={item.img}  style={{cursor: 'pointer'}} alt={item.id}/>
@@ -83,6 +73,16 @@ class MerchShop extends Component {
     render(){
         return (
             <div>
+            <ToastContainer
+                position="top-right"
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnVisibilityChange={false}
+                draggable={false}
+                pauseOnHover={false}
+              />
               <div class="container">
                 <div style={{fontSize: 20, padding: 10}} class="badge-dark col-xs-12 col-md-4 col-lg-4">
                     <span style={{fontWeight: "bold"}}>Size: </span>

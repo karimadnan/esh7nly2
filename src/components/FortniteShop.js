@@ -5,7 +5,7 @@ import axios from 'axios';
 import Getlogin from './navbar';
 import moment from 'moment';
 import ReactRouter from 'flux-react-router';
-import Footer from './footer';
+import {connect} from 'react-redux';
 
 class FortniteShop extends Component {
 
@@ -181,23 +181,18 @@ class FortniteShop extends Component {
 
       return( 
     <div class="container">
-
-    <br/>    
-          <br/>    
-          <br/>
-          <br/>    
-
-    <div class="col-md-6 col-md-6">
-    <h1 class="badge badge-dark">Current Shop Rotation: {moment(this.state.shopDate).format('MMMM Do YYYY')}</h1>
+    <br/>          <br/>               <br/>   
+        <div class="col-md-12 col-md-12">
+          <h1 class="badge badge-dark">Today's creator we support:&nbsp;&nbsp;<span class="label label-primary">{this.props.fnCode.Ccode}</span></h1>
+        </div>
+        <div class="col-md-6 col-md-6">
+          <h1 class="badge badge-dark">Current Shop Rotation: {moment(this.state.shopDate).format('MMMM Do YYYY')}</h1>
+        </div>
+        <div class="col-md-6 col-md-6">
+        <h1 class="badge2 badge-dark">New Items In {moment(this.state.timeLeft).format("HH")}Hour(s) - {moment(this.state.timeLeft).format("mm")}Minute(s) - {moment(this.state.timeLeft).format("ss")}Second(s) </h1>
+        </div>
+        {images}
     </div>
-    <div class="col-md-6 col-md-6">
-    <h1 class="badge2 badge-dark">New Items In {moment(this.state.timeLeft).format("HH")}Hour(s) - {moment(this.state.timeLeft).format("mm")}Minute(s) - {moment(this.state.timeLeft).format("ss")}Second(s) </h1>
-    </div>
-
-    {images}
-
-    </div>
-    
     )
     }
     else if(this.state.ShopChose === true){
@@ -282,4 +277,11 @@ class FortniteShop extends Component {
     );
   }
 }
-export default FortniteShop;
+
+function mapStateToProps(state){
+  return {
+      fnCode: state.fnCode
+  }
+}
+
+export default connect(mapStateToProps)(FortniteShop);

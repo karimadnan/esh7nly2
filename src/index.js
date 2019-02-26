@@ -66,7 +66,6 @@ Flux.createRoute('/',function(){
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Getlogin /></PersistGate></Provider>,document.getElementById('root'));
 })
 
-
 Flux.createRoute('/payment',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Payment /></PersistGate></Provider>,document.getElementById('root'));

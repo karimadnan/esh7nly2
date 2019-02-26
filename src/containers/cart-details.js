@@ -22,16 +22,6 @@ class cartDetails extends Component {
         return (
 
                 <div class="table-responsive" style={{color: "black", fontSize: 20}}>
-                <ToastContainer
-                          position="top-right"
-                          hideProgressBar={false}
-                          newestOnTop
-                          closeOnClick
-                          rtl={false}
-                          pauseOnVisibilityChange={false}
-                          draggable={false}
-                          pauseOnHover={false}
-                    />
                     <table style={{backgroundColor: "white"}} class="table table-striped table-dark">
                     <thead>
                     <tr>
@@ -64,6 +54,16 @@ class cartDetails extends Component {
             )
     }
 
+    totalPrice() {
+        var total = 0
+            if(this.props.cart.length >= 1){
+                this.props.cart.map((item) =>{ 
+                total = total+item.price
+            })
+            }
+        return total
+    }
+
     render() {
         if(this.props.cart.length < 1){
             return (
@@ -77,14 +77,31 @@ class cartDetails extends Component {
             )          
         }
         return (
-
             <div class="container">
-                <h1>Total items <span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span class="label label-warning">{this.props.cart.length}</span></h1>
+                <ToastContainer
+                position="top-right"
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnVisibilityChange={false}
+                draggable={false}
+                pauseOnHover={false}
+                    />
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <h1 style={{fontSize: 25}}>Total items: <span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span class="label label-warning">{this.props.cart.length}</span></h1>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-6">
+                    <h1 style={{fontSize: 25}}>Price: <span className="glyphicon glyphicon-euro"></span>&nbsp;&nbsp;<span class="label label-primary">{this.totalPrice()} EGP</span></h1>
+                </div>
+                <br/>
+                <div class="bordersep col-xs-12 col-md-12 col-lg-12">  
                     <br/>
-                    <div class="bordersep"/>
-                    <br/>
+                </div>
+                <div class="col-xs-12 col-md-12 col-lg-12">
                     {this.createListItems()}
-                    <Getlogin />
+                </div>
+                <Getlogin />
             </div>
         );
     }

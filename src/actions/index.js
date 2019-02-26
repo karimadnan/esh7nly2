@@ -12,6 +12,13 @@ export const removeCartItem = (item) => {
     }
 }
 
+export const setFnCode = (code) => {
+    return {
+        type: "CODE_SET",
+        payload: code
+    }
+}
+
 export const loginFunction = (data, action) => {
     switch(action){
         case 'login':

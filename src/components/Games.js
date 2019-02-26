@@ -177,9 +177,16 @@ else if (this.state.Type === "Cart"){
       <br/><br/><br/>
       &nbsp;&nbsp;
     <div class="container">
-    <button class="btn btn-danger" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "Merch")}}>
-      Back to shop
-    </button>
+    <div class="col-xs-12 col-md-6 col-lg-6">
+      <button class="btn btn-danger" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "Merch")}}>
+        Back to shop
+      </button>
+    </div>
+ { this.props.cart.length > 0 && <div class="col-xs-12 col-md-6 col-lg-6">
+      <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "Merch")}}>
+        Checkout
+      </button>
+    </div> } 
     </div>
     <br/>
     <div class="bordersep"/>
@@ -1152,7 +1159,6 @@ createOrder() {
   else {
     this.setState({ErrorModal: true, ErrorMsg: "Make sure to enter the 12 transaction id number correctly"})
   }
-  console.log(this.state.transId)
 }
 
 

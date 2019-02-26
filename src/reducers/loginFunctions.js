@@ -1,5 +1,5 @@
 const initialState = {
-    loggedState: '',
+    loggedState: false,
     userName: '',
     token: '',
     session: ''

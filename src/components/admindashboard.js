@@ -7,8 +7,20 @@ import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 import moment from 'moment';
 import {connect} from 'react-redux';
+import {setFnCode} from '../actions/index';
+import {bindActionCreators} from 'redux';
+import { ToastContainer, toast } from 'react-toastify';
 
 class Admindashboard extends Component {
+
+notify = (id) => toast.info(`${id} action excuted!`, {
+  position: "top-right",
+  autoClose: 3500,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: false,
+  draggable: false,
+});
 
 state = {
 headers: {
@@ -18,7 +30,8 @@ operation: "",
 Url: this.props.server.main,
 ordersData: [],
 ordersHistory: [],
-ordersCheck: ''
+ordersCheck: '',
+creatorCode: ''
 }
 
 updateInput(key, value) {
@@ -267,17 +280,25 @@ tableLeads() {
   }
   }
 
-renderPage() {
+header(){
+  return (
+    <div class="container">
+      <br/>      <br/>
+      <div class="newsBody col-md-12 col-lg-12 col-xs-12">
+        <h3 style={{fontFamily: "impact", color: "white", textAlign: "center"}}> <img style ={{width: 150, height: 130}} src={adminicon} alt=""></img> Admin Dashboard </h3>
+      </div>
+      <div class="col-md-12 col-lg-12 col-xs-12">
+        <h3 onClick={()=>{this.updateInput("operation", "")}} class="adminBody" style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-chevron-left"></span> Back to menu </h3>
+      </div>
+    </div>
+    )
+}
 
+renderPage() {
   if (this.state.operation === "strikes"){
     return(
       <div class="container">
-            <div class="newsBody col-md-12 col-lg-12 col-xs-12">
-              <h3 style={{fontFamily: "impact", color: "white", textAlign: "center"}}> <img style ={{width: 150, height: 130}} src={adminicon} alt=""></img> Admin Dashboard </h3>
-            </div>
-            <div class="col-md-12 col-lg-12 col-xs-12">
-              <h3 onClick={()=>{this.updateInput("operation", "")}} class="adminBody" style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-chevron-left"></span> Back to menu </h3>
-            </div>
+            {this.header()}
             <div class="form-group">
               <label style={{color: "white"}} for="title">User Name:</label>
               <input type="text" class="form-control" id="title"></input>
@@ -291,18 +312,27 @@ renderPage() {
   else if (this.state.operation === "checkuser"){
     return(
       <div class="container">
-            <div class="newsBody col-md-12 col-lg-12 col-xs-12">
-              <h3 style={{fontFamily: "impact", color: "white", textAlign: "center"}}> <img style ={{width: 150, height: 130}} src={adminicon} alt=""></img> Admin Dashboard </h3>
-            </div>
-            <div class="col-md-12 col-lg-12 col-xs-12">
-              <h3 onClick={()=>{this.updateInput("operation", "")}} class="adminBody" style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-chevron-left"></span> Back to menu </h3>
-            </div>
+            {this.header()}
             <div class="form-group">
               <label style={{color: "white"}} for="title">User Name:</label>
               <input type="text" class="form-control" id="title"></input>
             </div>
             <div class="form-group col-md-12 col-lg-12 col-xs-12">
                 <button class="btn btn-primary btn-block">Check</button> 
+            </div>	
+      </div>
+  )
+  }
+  else if (this.state.operation === "Cc"){
+    return(
+      <div class="container">
+            {this.header()}
+            <div class="form-group">
+              <label style={{color: "white"}} for="title">Creator Code:</label>
+              <input onChange={e => this.updateInput("creatorCode", e.target.value)} type="text" class="form-control" id="title"></input>
+            </div>
+            <div class="form-group col-md-12 col-lg-12 col-xs-12">
+                <button onClick={() => {this.props.setCcode(this.state.creatorCode), this.notify(this.state.operation), this.updateInput("operation", '')}} class="btn btn-primary btn-block">Apply</button> 
             </div>	
       </div>
   )
@@ -330,7 +360,7 @@ renderPage() {
 
               {/* Tickets */}
               <div class="col-md-12 col-lg-12 col-xs-12">
-                <h3 class="adminBody" onClick={()=>{this.updateInput("operation", "tickets")}} style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-envelope"></span> - Check Tickets</h3>
+                <h3 class="adminBody" onClick={()=>{this.updateInput("operation", "Cc")}} style={{textAlign: "center", cursor: 'pointer'}}><span class="glyphicon glyphicon-pencil"></span> - Set Creator Code</h3>
               </div>
               {/* Orders */}
               <div class="col-md-12 col-lg-12 col-xs-12">
@@ -357,6 +387,16 @@ renderPage() {
 render(){
   return (
     <div className="admin-bg">
+      <ToastContainer
+            position="top-right"
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange={false}
+            draggable={false}
+            pauseOnHover={false}
+      />
       <Getlogin page={"Admin"}/>
       {this.renderPage()}
     </div>
@@ -371,4 +411,8 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(Admindashboard);
+function matchDispatchToProps(dispatch){
+  return bindActionCreators({setCcode: setFnCode}, dispatch)
+}
+
+export default connect(mapStateToProps, matchDispatchToProps)(Admindashboard);
