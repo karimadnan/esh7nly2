@@ -8,12 +8,12 @@ import ReCAPTCHA from "react-google-recaptcha";
 import Modal from 'react-responsive-modal';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
-import Footer from './footer';
+import {connect} from 'react-redux';
 
 class SignUp extends Component {
 
   state = {
-    Url: localStorage.getItem('Server'),
+    Url: this.props.server.main,
     name: '',
     phone: '',
     email: '',
@@ -258,5 +258,10 @@ render() {
 }
 
 
+function mapStateToProps(state){
+  return {
+      server: state.server
+  }
+}
 
-export default SignUp;
+export default connect(mapStateToProps)(SignUp);

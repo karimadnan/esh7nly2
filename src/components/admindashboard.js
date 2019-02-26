@@ -15,7 +15,7 @@ headers: {
   'Content-Type': 'application/json',
   'authorization': this.props.loginData.token},
 operation: "",
-Url: localStorage.getItem('Server'),
+Url: this.props.server.main,
 ordersData: [],
 ordersHistory: [],
 ordersCheck: ''
@@ -366,7 +366,8 @@ render(){
 
 function mapStateToProps(state){
   return {
-      loginData: state.loginSession
+      loginData: state.loginSession,
+      server: state.server
   }
 }
 

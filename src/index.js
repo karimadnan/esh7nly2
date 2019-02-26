@@ -7,7 +7,6 @@ import Main from './components/main';
 import SignUp from './components/SignUp';
 import Market from './components/Games';
 import Payment from './components/PaymentTutorial';
-import Cart from './containers/cart-details';
 import FortniteShop from './components/FortniteShop';
 import Getlogin from './components/navbar';
 import Admindashboard from './components/admindashboard';
@@ -41,9 +40,6 @@ const persistedReducer = persistReducer(persistConfig, allReducers)
 
 const store = createStore(persistedReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 let persistor = persistStore(store)
-
-// localStorage.setItem("Server","http://192.168.1.7:4000/server/")
-localStorage.setItem("Server"," https://esh7ntest.herokuapp.com/server/")
 
 Flux.createRoute('/',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
@@ -95,17 +91,6 @@ Flux.createRoute('/privacy',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Privacy /></PersistGate></Provider>,document.getElementById('root'));
 })
-
-// ReactDOM.render(   
-// <Provider store={store} >
-//     <Main />    
-// </Provider>, document.getElementById('root'));
-
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-
 
 registerServiceWorker.unregister();
 

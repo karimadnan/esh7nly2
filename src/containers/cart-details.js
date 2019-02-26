@@ -20,8 +20,9 @@ class cartDetails extends Component {
         
     createListItems(){
         return (
-            <div style={{color: "black", fontSize: 20}} class="col-md-12 col-md-12">
-                    <ToastContainer
+
+                <div class="table-responsive" style={{color: "black", fontSize: 20}}>
+                <ToastContainer
                           position="top-right"
                           hideProgressBar={false}
                           newestOnTop
@@ -31,7 +32,6 @@ class cartDetails extends Component {
                           draggable={false}
                           pauseOnHover={false}
                     />
-                <div class="table-responsive">
                     <table style={{backgroundColor: "white"}} class="table table-striped table-dark">
                     <thead>
                     <tr>
@@ -60,8 +60,7 @@ class cartDetails extends Component {
                     })}
                     </tbody>
                     </table>
-                    </div>
-            </div>
+                </div>
             )
     }
 
@@ -75,20 +74,18 @@ class cartDetails extends Component {
                 <div class="bordersep"/>
                 <Getlogin />
                 </div>
-            )
+            )          
         }
         return (
-            <div class ="PrivacyBG">
+
             <div class="container">
-                <h1>Total items <span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span class="badge">{this.props.cart.length}</span></h1>
+                <h1>Total items <span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span class="label label-warning">{this.props.cart.length}</span></h1>
+                    <br/>
                     <div class="bordersep"/>
                     <br/>
-                <ul>
                     {this.createListItems()}
-                </ul>
+                    <Getlogin />
             </div>
-            <Getlogin />
-        </div>
         );
     }
 

@@ -13,7 +13,7 @@ class Getlogin extends Component {
     state = {
       ErrorModal: false,
       ErrorMsg: '',
-      Url: localStorage.getItem('Server'),
+      Url: this.props.server.main,
       Phone: "",
       Password: "",
       page: this.props.page,
@@ -43,13 +43,11 @@ componentWillMount(){
       // console.log(error)
       that.setState({
         ErrorModal:true,
-        ErrorMsg: "You're logged out",
+        ErrorMsg: "Login session expired, Please re-login",
       })
+      that.props.loginCall(null, 'logout')
     })
 }
-else{
-  this.props.loginCall(null, 'logout')
-} 
 }
 }
 
@@ -146,9 +144,9 @@ return (
         {/* Logged in noSignup*/}
       {   this.props.loginData.loggedState && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="glyphicon glyphicon-user"></span> {this.props.loginData.userName} <span className="caret"></span></a>
             <ul className="dropdown-menu">
-              <li><a href="#"><span className="glyphicon glyphicon-euro"></span> Your Orders</a></li>
         {/* Admin Dashboard */}
-              {   this.props.loginData.session > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> }  
+              {   this.props.loginData.session > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> } 
+              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-euro"></span> Your orders</a></li> }   
               {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li> }  
             </ul>
           </li>}
@@ -184,7 +182,8 @@ return (
 }
 function mapStateToProps(state){
   return {
-      loginData: state.loginSession
+      loginData: state.loginSession,
+      server: state.server
   }
 }
 

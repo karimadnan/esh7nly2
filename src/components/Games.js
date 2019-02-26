@@ -55,7 +55,7 @@ class Market extends Component {
       PaymentModal: false,
       ErrorMsg: '',
       ExtraData:{},
-      Url: localStorage.getItem('Server'),
+      Url: this.props.server.main,
       Type: '',
       OffersOps: [],
       SelectedOff: '',
@@ -1204,7 +1204,8 @@ return (
 function mapStateToProps(state){
   return {
       cart: state.cartItems.cart,
-      loginData: state.loginSession
+      loginData: state.loginSession,
+      server: state.server
   }
 }
 
