@@ -11,7 +11,8 @@ class MerchShop extends Component {
 
     state = {
         size: 'S',
-        color: 'b'
+        color: 'b',
+        quantity: 1
     }
 
     updateInput(key, value) {
@@ -36,7 +37,7 @@ class MerchShop extends Component {
             img: item.img,
             rarity: item.rarity,
             size: this.state.size,
-            quantity: 1
+            quantity: this.state.quantity
          }
          this.props.addCartItem(object)
     }
@@ -44,7 +45,7 @@ class MerchShop extends Component {
     updateInfo (data){
         let object = {
             price: data.price,
-            items: 1
+            items: data.quantity
          }
         this.props.updateCartInfo(object, 'add')
     }

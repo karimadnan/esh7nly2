@@ -24,7 +24,7 @@ const images = [
     original: tshirts,
     thumbnail: tshirts,
     originalTitle: "Gaming Merch",
-    description: "High quality tshirts for your favorite games."
+    description: "High quality tshirts of your favorite games."
   },
   {
     original: league,
