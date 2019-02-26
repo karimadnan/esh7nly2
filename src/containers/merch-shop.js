@@ -45,7 +45,7 @@ class MerchShop extends Component {
     updateInfo (data){
         let object = {
             price: data.price,
-            items: data.quantity
+            items: this.state.quantity
          }
         this.props.updateCartInfo(object, 'add')
     }
