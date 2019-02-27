@@ -4,7 +4,6 @@ import VodafoneCashLogo from '../Images/Vodacash.png';
 import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 import MerchShop from '../containers/merch-shop';
-import CartDetails from '../containers/cart-details';
 import {connect} from 'react-redux';
 
 import '../Mycss.css';
@@ -147,52 +146,6 @@ if (this.state.Type === ""){
       </div>
 </div>
 )
-}
-else if (this.state.Type === "Merch"){
-  return (
-<div class="container">
-  <br/><br/> <br/><br/>
-
-<div class="col-xs-12 col-md-12 col-lg-12">
-  <div class="col-xs-12 col-md-6 col-lg-6">
-    <button class="btn btn-danger" style={{color : "white", width: 270, marginBottom: 10}} onClick={()=>{this.updateInput("Type", "")}}>
-      Back To List
-    </button>
-  </div>
-  <div class="col-xs-12 col-md-2 col-lg-2">
-    <div onClick={()=>{this.updateInput("Type", "Cart")}} class="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
-      <ReactTooltip place="bottom" type="dark" effect="solid"/>
-      <p style={{textAlign: "center", fontSize: 25, paddingBottom: 7}}> <span className="glyphicon glyphicon-shopping-cart">: <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span> </p>
-    </div>
-  </div>
-</div>
-  <br/><br/><br/><br/>
-    <MerchShop/>
-  </div>
-  )
-}
-else if (this.state.Type === "Cart"){
-  return (
-    <div class ="PrivacyBG">
-      <br/><br/><br/>
-      &nbsp;&nbsp;
-    <div class="container">
-    <div class="col-xs-12 col-md-6 col-lg-6">
-      <button class="btn btn-danger" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "Merch")}}>
-        Back to shop
-      </button>
-    </div>
- { this.props.cart.length > 0 && <div class="col-xs-12 col-md-6 col-lg-6">
-      <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "Merch")}}>
-        Checkout
-      </button>
-    </div> } 
-    </div>
-    <br/>
-    <div class="bordersep"/>
-      <CartDetails/>
-    </div>
-  )
 }
 else if(this.state.Type === "Games" && this.state.GameType === ''){
 return (
@@ -1184,7 +1137,17 @@ render() {
       borderRadius: '10px',
     },
   }
-
+   if (this.state.Type === "Merch"){
+    return (
+    <div className="bg-image"> 
+      <br/><br/><br/>
+      <div class="container">
+        <MerchShop/>
+      </div>
+      <Getlogin page={"Offers"}/>
+    </div>
+    )
+  }
 return (
 <div className="bg-image"> 
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center

@@ -1,22 +1,45 @@
-import t001 from '../Images/tshirts/001.png';
-import t002 from '../Images/tshirts/002.png';
-import t003 from '../Images/tshirts/003.png';
-import t004 from '../Images/tshirts/004.png';
-import t005 from '../Images/tshirts/005.png';
-import t006 from '../Images/tshirts/006.png';
-import t007 from '../Images/tshirts/007.png';
-import t008 from '../Images/tshirts/008.png';
-import t009 from '../Images/tshirts/009.png';
-import t010 from '../Images/tshirts/010.png';
-import t011 from '../Images/tshirts/011.png';
-import t012 from '../Images/tshirts/012.png';
-import t014 from '../Images/tshirts/014.png';
-import t013 from '../Images/tshirts/013.png';
-import t015 from '../Images/tshirts/015.png';
-import t016 from '../Images/tshirts/016.png';
-import t017 from '../Images/tshirts/017.png';
-import t018 from '../Images/tshirts/018.png';
-import t019 from '../Images/tshirts/019.png';
+import t001b from '../Images/tshirts/t001b.png';
+import t001w from '../Images/tshirts/t001w.png';
+import t001pur from '../Images/tshirts/t001pur.png';
+import t001p from '../Images/tshirts/t001p.png';
+
+import t002b from '../Images/tshirts/t002b.png';
+import t002w from '../Images/tshirts/t002w.png';
+import t002pur from '../Images/tshirts/t002pur.png';
+import t002p from '../Images/tshirts/t002p.png';
+
+import t003b from '../Images/tshirts/t003b.png';
+import t003w from '../Images/tshirts/t003w.png';
+import t003pur from '../Images/tshirts/t003pur.png';
+import t003p from '../Images/tshirts/t003p.png';
+
+import t004b from '../Images/tshirts/t004b.png';
+import t004pur from '../Images/tshirts/t004pur.png';
+import t004p from '../Images/tshirts/t004p.png';
+
+import t005b from '../Images/tshirts/t005b.png';
+import t005pur from '../Images/tshirts/t005pur.png';
+import t005p from '../Images/tshirts/t005p.png';
+
+import t006b from '../Images/tshirts/t006b.png';
+import t006w from '../Images/tshirts/t006w.png';
+import t006pur from '../Images/tshirts/t006pur.png';
+import t006p from '../Images/tshirts/t006p.png';
+
+import t007b from '../Images/tshirts/t007b.png';
+import t007w from '../Images/tshirts/t007w.png';
+import t007pur from '../Images/tshirts/t007pur.png';
+import t007p from '../Images/tshirts/t007p.png';
+
+import t008b from '../Images/tshirts/t008b.png';
+import t008w from '../Images/tshirts/t008w.png';
+import t008pur from '../Images/tshirts/t008pur.png';
+import t008p from '../Images/tshirts/t008p.png';
+
+import t009b from '../Images/tshirts/t009b.png';
+import t009w from '../Images/tshirts/t009w.png';
+import t009pur from '../Images/tshirts/t009pur.png';
+import t009p from '../Images/tshirts/t009p.png';
 
 export default function() {
     return [
@@ -24,134 +47,82 @@ export default function() {
           id: "001",
           Name: "Dab on them",
           price: 100,
-          img: t001,
-          rarity: "rare"
+          rarity: "rare",
+          defaultColor: "black",
+          defaultSize: "small",
+          img: {black: t001b, white: t001w, purple: t001pur, petro: t001p}
         },
         {
           id: "002",
-          Name: "Draaaaaaaven",
+          Name: "Spitfire",
           price: 100,
-          img: t002,
-          rarity: "epic"
-        },   
+          rarity: "legendary",
+          defaultColor: "black",
+          defaultSize: "small",
+          img: {black: t002b, white: t002w, purple: t002pur, petro: t002p}
+        },
         {
           id: "003",
-          Name: "Gamer X-Ray",
+          Name: "LLamaaaa",
           price: 100,
-          img: t003,
-          rarity: "legendary"
-        }, 
+          rarity: "epic",
+          defaultColor: "black",
+          defaultSize: "small",
+          img: {black: t003b, white: t003w, purple: t003pur, petro: t003p}
+        },
         {
           id: "004",
-          Name: "Try to survive",
+          Name: "Chicken Dinner",
           price: 100,
-          img: t004,
-          rarity: "rare"
+          rarity: "legendary",
+          defaultColor: "black",
+          defaultSize: "small",
+          img: {black: t004b, purple: t004pur, petro: t004p}
         },
         {
           id: "005",
-          Name: "Winner winner chicken dinner",
+          Name: "Sanhok",
           price: 100,
-          img: t005,
-          rarity: "legendary"
+          rarity: "rare",
+          defaultColor: "black",
+          defaultSize: "small",
+          img: {black: t005b, purple: t005pur, petro: t005p}
         },
         {
           id: "006",
-          Name: "Atarri Monster",
+          Name: "Draaaaaaven",
           price: 100,
-          img: t006,
-          rarity: "epic"
+          rarity: "epic",
+          defaultColor: "black",
+          defaultSize: "small",
+          img: {black: t006b, white: t006w, purple: t006pur, petro: t006p}
         },
         {
           id: "007",
-          Name: "Clash of the old gods",
+          Name: "Iron Tryhard",
           price: 100,
-          img: t007,
-          rarity: "legendary"
+          rarity: "uncommon",
+          defaultColor: "black",
+          defaultSize: "small",
+          img: {black: t007b, white: t007w, purple: t007pur, petro: t007p}
         },
         {
           id: "008",
-          Name: "Defender",
+          Name: "Challenger",
           price: 100,
-          img: t008,
-          rarity: "rare"
+          rarity: "legendary",
+          defaultColor: "black",
+          defaultSize: "small",
+          img: {black: t008b, white: t008w, purple: t008pur, petro: t008p}
         },
         {
           id: "009",
-          Name: "Fight the evil within",
+          Name: "Bronze Noob",
           price: 100,
-          img: t009,
-          rarity: "epic"
-        },
-        {
-          id: "010",
-          Name: "The Ram",
-          price: 100,
-          img: t010,
-          rarity: "epic"
-        },
-        {
-          id: "011",
-          Name: "Bloody Drill",
-          price: 100,
-          img: t011,
-          rarity: "legendary"
-        },
-        {
-          id: "012",
-          Name: "Challenger",
-          price: 100,
-          img: t012,
-          rarity: "rare"
-        },
-        {
-          id: "013",
-          Name: "Dark Wizard",
-          price: 100,
-          img: t013,
-          rarity: "rare"
-        },
-        {
-          id: "014",
-          Name: "Get over here",
-          price: 100,
-          img: t014,
-          rarity: "epic"
-        },
-        {
-          id: "015",
-          Name: "Rapture",
-          price: 100,
-          img: t015,
-          rarity: "epic"
-        },
-        {
-          id: "016",
-          Name: "The viking",
-          price: 100,
-          img: t016,
-          rarity: "uncommon"
-        },
-        {
-          id: "017",
-          Name: "Crypts",
-          price: 100,
-          img: t017,
-          rarity: "rare"
-        },
-        {
-          id: "018",
-          Name: "Bronze noob",
-          price: 100,
-          img: t018,
-          rarity: "legendary"
-        },
-        {
-          id: "019",
-          Name: "Sanhok",
-          price: 100,
-          img: t019,
-          rarity: "epic"
+          rarity: "rare",
+          defaultColor: "black",
+          defaultSize: "small",
+          img: {black: t009b, white: t009w, purple: t009pur, petro: t009p}
         },
       ]
 }

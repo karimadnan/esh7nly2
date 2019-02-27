@@ -1,5 +1,6 @@
 const initialState = {
-    cart: []
+    cart: [],
+    itemPrev: {}
 }
 
 const quantityForItem = (list, newItem) => {
@@ -26,20 +27,43 @@ export default function(state = initialState, action){
             const { cart } = state
             const newItem = action.payload
                 if ( quantityForItem(cart, newItem) !== 0 ) {
-                    return { cart: updateQuantity(cart, newItem, +1) }
+                    return { ...state, cart: updateQuantity(cart, newItem, +1) }
                 }
-                return { cart: add(cart, newItem) }
+                return { ...state, cart: add(cart, newItem) }
             }
 
             case 'CART_REMOVEITEM': {
             const { cart } = state
             const itemToRemove = action.payload
                 if ( quantityForItem(cart, itemToRemove) > 1 ) {
-                    return { cart: updateQuantity(cart, itemToRemove, -1) }
+                    return { ...state, cart: updateQuantity(cart, itemToRemove, -1) }
                 }
-                return { cart: remove(cart, itemToRemove) }
+                return { ...state, cart: remove(cart, itemToRemove) }
             }
-        break;
+
+            case 'ADD_PREV': {
+                return Object.assign({}, state, {
+                    itemPrev: action.payload
+                  })
+                }
+            case 'UPDATE_SIZE': {
+                return {
+                    ...state,
+                    itemPrev: {
+                      ...state.itemPrev,
+                      size: action.payload
+                    }
+                  }
+                }
+            case 'UPDATE_COLOR': {
+                return {
+                    ...state,
+                    itemPrev: {
+                        ...state.itemPrev,
+                        color: action.payload
+                    }
+                    }
+                }
         }
     return state;
 }

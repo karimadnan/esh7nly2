@@ -15,16 +15,16 @@ import TypedJs from './Typer';
 
 const images = [
   {
-    original: fortnite,
-    thumbnail: fortnite,
-    originalTitle: "Fortnite",
-    description: "Purchase the cheapest v-bucks out there.."
-  },
-  {
     original: tshirts,
     thumbnail: tshirts,
     originalTitle: "Gaming Merch",
     description: "High quality tshirts of your favorite games."
+  },
+  {
+    original: fortnite,
+    thumbnail: fortnite,
+    originalTitle: "Fortnite",
+    description: "Purchase the cheapest v-bucks out there.."
   },
   {
     original: league,
@@ -110,7 +110,7 @@ class Main extends Component {
                                   showPlayButton={true}
                                   showBullets={true}
                                   showThumbnails={false}
-                                  slideInterval={4000}/>
+                                  slideInterval={6000}/>
             </div>
             
             <br/>  

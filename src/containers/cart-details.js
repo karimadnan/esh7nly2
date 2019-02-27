@@ -65,17 +65,15 @@ class cartDetails extends Component {
     render() {
         if(this.props.cart.length < 1){
             return (
-                <div class ="PrivacyBG">
-                <div class="container">
-                    <h1>Your cart is empty<span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;</h1>
-                </div>
+                <div >
+                    <h1>&nbsp;Your cart is empty<span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;</h1>
                 <div class="bordersep"/>
                 <Getlogin />
                 </div>
             )          
         }
         return (
-            <div class="container">
+            <div >
                 <ToastContainer
                 position="top-right"
                 hideProgressBar={false}

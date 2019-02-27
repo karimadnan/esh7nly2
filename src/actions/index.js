@@ -12,6 +12,29 @@ export const removeCartItem = (item) => {
     }
 }
 
+export const addPrev = (data) => {
+    return {
+        type: "ADD_PREV",
+        payload: data
+    }
+}
+
+export const updatePrev = (thing, action) => {
+    switch(action){
+        case 'size':
+        return {
+            type: "UPDATE_SIZE",
+            payload: thing
+        }
+        case 'color':
+        return {
+            type: "UPDATE_COLOR",
+            payload: thing
+        }
+        break;
+        }
+}
+
 export const loginFunction = (data, action) => {
     switch(action){
         case 'login':
