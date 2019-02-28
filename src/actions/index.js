@@ -31,9 +31,16 @@ export const updatePrev = (thing, action) => {
             type: "UPDATE_COLOR",
             payload: thing
         }
-        break;
         }
 }
+
+export const updateLang = (lang) => {
+    return {
+        type: "UPDATE_LANG",
+        payload: lang
+    }
+}
+
 
 export const loginFunction = (data, action) => {
     switch(action){
@@ -46,7 +53,6 @@ export const loginFunction = (data, action) => {
         return {
             type: "USR_LOGOUT"
         }
-        break;
         }
 }
 
@@ -62,6 +68,5 @@ export const updateCartInfo = (data, action) => {
             type: "UPDATE_CART_REMOVE",
             payload: data
         }
-        break;
         }
 }

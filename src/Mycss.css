@@ -22,7 +22,7 @@
   }
 
   #circleBactive {
-    border: 3px solid #0099ff;
+    border: 2px solid #0099ff;
     width: 30px;
     height: 30px;
     -webkit-border-radius: 15px;
@@ -32,7 +32,7 @@
   }
 
   #circleWactive {
-    border: 3px solid #0099ff;
+    border: 2px solid #0099ff;
     width: 30px;
     height: 30px;
     -webkit-border-radius: 15px;
@@ -42,7 +42,7 @@
   }
 
   #circlePactive {
-    border: 3px solid #0099ff;
+    border: 2px solid #0099ff;
     width: 30px;
     height: 30px;
     -webkit-border-radius: 15px;
@@ -52,7 +52,7 @@
   }
 
   #circleGactive {
-    border: 3px solid #0099ff;
+    border: 2px solid #0099ff;
     width: 30px;
     height: 30px;
     -webkit-border-radius: 15px;
@@ -170,7 +170,7 @@
   text-size-adjust: 100%;
   position: relative;
   padding: 1.25em 1.5em 3.5em;
-  height: 290px;
+  height: 309px;
   z-index: 10;
   border-top: 1px solid;
   border-color: #333!important;

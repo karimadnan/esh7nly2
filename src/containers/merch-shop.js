@@ -85,7 +85,7 @@ class MerchShop extends Component {
     
     render(){
         if (this.state.view === 'shop'){
-            return this.props.shop.map((item) =>{
+            return this.props.shop.tshirts.map((item) =>{
                 var rarity = "card splash-cardTees FortHover rarity-"+item.rarity
     
                 return (

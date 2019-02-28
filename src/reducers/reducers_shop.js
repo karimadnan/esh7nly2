@@ -41,8 +41,10 @@ import t009w from '../Images/tshirts/t009w.png';
 import t009pur from '../Images/tshirts/t009pur.png';
 import t009p from '../Images/tshirts/t009p.png';
 
+
 export default function() {
-    return [
+    return {
+      tshirts: [
         {
           id: "001",
           Name: "Dab on them",
@@ -124,5 +126,6 @@ export default function() {
           defaultSize: "small",
           img: {black: t009b, white: t009w, purple: t009pur, petro: t009p}
         },
-      ]
+        ]
+  }
 }

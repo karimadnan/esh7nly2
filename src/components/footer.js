@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import ReactRouter from 'flux-react-router';
+import VodafoneCashLogo from '../Images/Vodacash.png';
+import EtisalatCashLogo from '../Images/Etiscash.png';
+import FawryLogo from '../Images/fawrypaymenttest.png';
 import '../Mycss.css';
 import '../Respcss.css';
 import { FacebookProvider, Page, CustomChat } from 'react-facebook';
@@ -25,7 +28,18 @@ render() {
         <div class="col-md-12 col-lg-12 col-xs-12 ">
         <br />  
         <div class="bordersep"/>
-        <h6 style={{textAlign: "center", fontWeight: "bold"}}> © 2019, Eshe7nly.com - <a  onClick={()=>{ReactRouter.goTo("/privacy")}} style={{cursor: 'pointer'}}>Privacy Policy  <span className="glyphicon glyphicon-briefcase"></span> </a> </h6>
+            <div class="col-md-6 col-lg-6 col-xs-6 ">
+                <h6 style={{textAlign: "center", fontWeight: "bold"}}> © 2019, Eshe7nly.com - <a  onClick={()=>{ReactRouter.goTo("/privacy")}} style={{cursor: 'pointer'}}>Privacy Policy  <span className="glyphicon glyphicon-briefcase"></span> </a> </h6>
+            </div>
+            <div class="col-md-1 col-lg-1 col-xs-2">
+                <img style ={{width: 50, height: 50, marginTop: 5}} src={VodafoneCashLogo} alt=""/>
+            </div>
+            <div class="col-md-1 col-lg-1 col-xs-2">
+                <img style ={{width: 50, height: 50, marginTop: 5}} src={EtisalatCashLogo} alt=""/>
+            </div>    
+            <div class="col-md-1 col-lg-1 col-xs-2">
+                <img style ={{width: 50, height: 50, marginTop: 5}} src={FawryLogo} alt=""/>
+            </div>
         </div>
     </footer>
     );

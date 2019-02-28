@@ -6,8 +6,10 @@ import Modal from 'react-responsive-modal';
 import '../Respcss.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {loginFunction} from '../actions/index';
+import {loginFunction, updateLang} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
+import '../flag-icon.css'
+import ReactTooltip from 'react-tooltip'
 
 class Getlogin extends Component {
 
@@ -55,7 +57,7 @@ componentWillMount(){
         ErrorModal:true,
         ErrorMsg: "Login session expired, Please re-login",
       })
-      that.props.loginCall(null, 'logout')
+      that.props.loginFunction(null, 'logout')
     })
 }
 }
@@ -66,7 +68,7 @@ updateInput(key, value) {
 }
 
 logout =() =>{
-  this.props.loginCall(null, 'logout')
+  this.props.loginFunction(null, 'logout')
   window.location.reload();
 }
 
@@ -88,7 +90,7 @@ login() {
             .then(function (response) {
               console.log(response)
               that.notifyLogin(response.data.data.Name)
-              that.props.loginCall(response.data.data, 'login')
+              that.props.loginFunction(response.data.data, 'login')
             })
             .catch(function (error) {
               if (error.response.data.message){
@@ -106,7 +108,7 @@ login() {
       }
   
     } 
-  
+
 render() {
 
   const customStyles = {
@@ -127,6 +129,7 @@ render() {
 return (
 
     <div className="container">
+        <ReactTooltip place="bottom" type="dark" effect="solid"/>
         <ToastContainer
           position="top-center"
           autoClose={3500}
@@ -155,25 +158,27 @@ return (
     </div>
     <div className="collapse navbar-collapse" id="myNavbar">
         <ul className="nav navbar-nav">
-          <li class={this.state.page ==="Main" && "activeNav"}><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-home"></span> Home</a></li>
-          <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="glyphicon glyphicon-tag"></span> How To Buy / ازاى تشترى</a>
+          <li class={this.state.page ==="Main" && "activeNav"}><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-home"></span> {this.props.lang.lang === "EN" ? "Home" : "الرئيسية"}</a></li>
+          <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="glyphicon glyphicon-tag"></span> {this.props.lang.lang === "EN" ? "How To Buy" : "ازاى تشترى"}</a>
           </li>
-          <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/market")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-shopping-cart"></span> Market</a></li>
-          <li class={this.state.page ==="FortniteShop" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/fortniteshop")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-star"></span> Fortnite Today's Shop</a></li>
-          <li class={this.state.page ==="ContactUs" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="	glyphicon glyphicon-earphone"></span> Contact Us / كلمنا</a></li>
+          <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/market")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-shopping-cart"></span> {this.props.lang.lang === "EN" ? "Market" : "المتجر"}</a></li>
+          <li class={this.state.page ==="FortniteShop" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/fortniteshop")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-star"></span> {this.props.lang.lang === "EN" ? "Fortnite Today's Shop" : "فورت نايت شوب" }</a></li>
+          <li class={this.state.page ==="ContactUs" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="	glyphicon glyphicon-earphone"></span> {this.props.lang.lang === "EN" ? "Contact Us" : "كلمنا"}</a></li>
         </ul>
         <ul className="nav navbar-nav navbar-right">
+        <li><div id ="logodesc" data-tip="عربى"><span onClick={()=>{this.props.updateLang("AR")}} style={{cursor: 'pointer'}} class="flag-icon flag-icon-eg"></span>&nbsp;&nbsp;</div></li>
+        <li><div id ="logodesc" data-tip="English"><span onClick={()=>{this.props.updateLang("EN")}} style={{cursor: 'pointer'}} class="flag-icon flag-icon-gb"></span>&nbsp;&nbsp;</div></li>
         {/* Logged in noSignup*/}
       {   this.props.loginData.loggedState && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="glyphicon glyphicon-user"></span> {this.props.loginData.userName} <span className="caret"></span></a>
             <ul className="dropdown-menu">
         {/* Admin Dashboard */}
               {   this.props.loginData.session > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> } 
-              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-euro"></span> Your orders</a></li> }   
-              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> Logout</a></li> }  
+              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-euro"></span> {this.props.lang.lang === "EN" ? "Your Orders" : " الاوردارات" }</a></li> }   
+              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
             </ul>
           </li>}
           { ! this.props.loginData.loggedState &&    <li className="dropdown"> 
-      { ! this.props.loginData.loggedState &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="glyphicon glyphicon-cog"></span> <b>Login</b> <span className="caret"></span></a> }
+      { ! this.props.loginData.loggedState &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="glyphicon glyphicon-cog"></span> <b>{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</b> <span className="caret"></span></a> }
               <ul id="login-dp"  className="dropdown-menu">
               <li>
               <div className="form-group col col-xs-6">
@@ -185,10 +190,10 @@ return (
                            <input type="password" onKeyPress={this.keyClicked.bind(this)} className="form-control" value={this.state.Password} onChange={e => this.updateInput("Password", e.target.value)} id="exampleInputPassword2" placeholder="Password" required></input>
                         </div>
                         <div className="form-group col col-xs-6">
-                           <button onClick={this.login} disabled={!this.state.Phone.length || !this.state.Password.length} className="btn btn-primary btn-block">Log in</button> 
+                           <button onClick={this.login} disabled={!this.state.Phone.length || !this.state.Password.length} className="btn btn-primary btn-block">{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</button> 
                         </div>	
                         <div className="col col-xs-6">
-                         <a onClick={()=>{ReactRouter.goTo("/signup")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-user"></span> Sign Up</a>
+                         <a onClick={()=>{ReactRouter.goTo("/signup")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-user"></span> {this.props.lang.lang === "EN" ? "Sign Up" : " التسجيل" }</a>
                         </div>
                 </li>
               </ul> 
@@ -205,13 +210,18 @@ return (
 function mapStateToProps(state){
   return {
       loginData: state.loginSession,
-      server: state.server
+      server: state.server,
+      lang: state.lang
   }
 }
 
-function matchDispatchToProps(dispatch){
-  return bindActionCreators({loginCall: loginFunction}, dispatch)
-}
+const matchDispatchToProps = dispatch => bindActionCreators(
+    {
+      loginFunction,
+      updateLang
+    },
+    dispatch,
+  )
 
 export default connect(mapStateToProps, matchDispatchToProps)(Getlogin);
 

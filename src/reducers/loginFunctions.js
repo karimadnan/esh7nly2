@@ -23,7 +23,6 @@ export default function(state = initialState, action){
             token: null,
             session: null
         }
-        break;
         }
     return state;
 }
