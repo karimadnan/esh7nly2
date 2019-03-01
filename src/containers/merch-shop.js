@@ -33,6 +33,7 @@ class MerchShop extends Component {
     addItemToArray(item){
         const uniqueId = item.id+`-${this.props.cart.itemPrev.size}`+`-${this.props.cart.itemPrev.color}`
         var productImg;
+        var discounted = item.discount / 100 * item.price
 
         switch(this.props.cart.itemPrev.color) {
             case "black":
@@ -53,7 +54,7 @@ class MerchShop extends Component {
         let object = {
             id: uniqueId,
             Name: item.Name,
-            price: item.price,
+            price: item.discount > 0 ? item.price - discounted : item.price,
             img: productImg,
             rarity: item.rarity,
             color: this.props.cart.itemPrev.color,
@@ -70,14 +71,17 @@ class MerchShop extends Component {
             price: item.price,
             color: item.defaultColor,
             size: item.defaultSize,
+            desc: item.desc,
+            discount: item.discount,
             img: item.img
          }
          this.props.addPrev(object)
     }
 
     updateInfo (data){
+        var discounted = data.discount / 100 * data.price
         let object = {
-            price: data.price,
+            price: data.discount > 0 ? data.price - discounted : data.price,
             items: this.state.quantity
          }
         this.props.updateCartInfo(object, 'add')
@@ -85,7 +89,8 @@ class MerchShop extends Component {
     
     render(){
         if (this.state.view === 'shop'){
-            return this.props.shop.tshirts.map((item) =>{
+            let shop =  this.props.shop.tshirts.map((item) =>{
+                var discounted = item.discount / 100 * item.price
                 var rarity = "card splash-cardTees FortHover rarity-"+item.rarity
     
                 return (
@@ -102,21 +107,26 @@ class MerchShop extends Component {
                         </div>
                        </div>
                        <div id ="merchPrice" class="card-body">
-                          <p style = {{color: "white", fontSize: 15, fontWeight: 300, fontFamily: "impact", lineHeight: 2.8}}>Price: {item.price} EGP</p>
+                            <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-default">{item.discount > 0 ? "" : item.price} {item.discount > 0 ? item.price - discounted : ""} EGP</span>
                        </div>
-                       <div id ="merchiDesc" class="card-body">
-                          <p style = {{color: "white", fontSize: 15, fontWeight: 300, fontFamily: "impact", lineHeight: 2.8}}>ID: #{item.id}</p>
-                       </div>
+                       {item.discount > 0 && <div id ="merchDiscount" class="card-body">
+                            <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{item.discount}% off</span>
+                       </div> }
                     </div>
                 </div>
                 )
             })
+            return (
+                <div>
+                    {shop}
+                </div>
+            )
         }
         else if (this.state.view === 'item'){
             var prev = this.props.cart.itemPrev
-
+            var discounted = prev.discount / 100 * prev.price
             return (
-                <div class="merchBg">
+                <div class="merchBg2">
                 <div class="col-xs-12 col-md-12 col-lg-12">
                      <br/>
                    {prev.size !== 'n/f' && <div class="col-xs-12 col-md-5 col-lg-5">
@@ -161,19 +171,22 @@ class MerchShop extends Component {
                        {prev.color === 'purple' && <img class="merchShop" src={prev.img.purple} alt={prev.id}/>}
                        {prev.color === 'petroleum' && <img class="merchShop" src={prev.img.petro} alt={prev.id}/>}
                        {prev.color === 'n/f' && <img class="merchShop" src={prev.img} alt={prev.id}/>}
+                       <div id ="merchInfo" class="card-body">
+                            <h4 class ="card-title itemname" style = {{color: "white", fontSize: 25, fontWeight: 300, fontFamily: "impact", lineHeight: 0.5}}>
+                              <span>{prev.Name}</span>
+                            </h4>
+                        </div>
+                       {prev.discount > 0 && <div id ="merchDiscount" class="card-body">
+                            <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{prev.discount}% off</span>
+                       </div> }
                     </div>
                  </div>
-                 <div style={{fontWeight: "bold", color: "white", fontSize: 15}} class="col-xs-12 col-md-6 col-lg-6">
-                       <h1>Name:&nbsp;<span class="label label-primary">{prev.Name}</span></h1>
+                 <div style={{color: "white", fontSize: 15}} class="col-xs-12 col-md-6 col-lg-6">
+                       <h1><span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} EGP</span></h1>{prev.discount > 0 ? <h1><span class="label label-primary">{prev.price - discounted} EGP</span></h1> : <p/>}
+                       <h2><strong style={{textDecoration: "underline"}}>Free shipping</strong> on orders over 300 EGP</h2>
                        <br/>
                        <div class="bordersep"/>
-                       <h1>Size:&nbsp;<span class="label label-primary">{prev.size}</span></h1>
-                       <br/>
-                       <div class="bordersep"/>
-                       <h1>Color:&nbsp;<span class="label label-primary">{prev.color}</span></h1>
-                       <br/>
-                       <div class="bordersep"/>
-                       <h1>Product details:</h1><p>• printed on 'Heavy Cotton'<br/>• 80% Cotton/20% Polyester {prev.color} T-shirt</p>
+                       <h1>Product details:</h1><p>• {prev.desc}</p><p>• Color: {prev.color.toUpperCase()}</p><p>• Size: {prev.size.toUpperCase()}</p>
                        <br/>
                        <div class="bordersep"/>
                        <br/>

@@ -52,6 +52,8 @@ export default function() {
           rarity: "rare",
           defaultColor: "black",
           defaultSize: "small",
+          discount: 50,
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t001b, white: t001w, purple: t001pur, petro: t001p}
         },
         {
@@ -61,6 +63,8 @@ export default function() {
           rarity: "legendary",
           defaultColor: "black",
           defaultSize: "small",
+          discount: 10,
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t002b, white: t002w, purple: t002pur, petro: t002p}
         },
         {
@@ -70,6 +74,7 @@ export default function() {
           rarity: "epic",
           defaultColor: "black",
           defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t003b, white: t003w, purple: t003pur, petro: t003p}
         },
         {
@@ -79,6 +84,7 @@ export default function() {
           rarity: "legendary",
           defaultColor: "black",
           defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t004b, purple: t004pur, petro: t004p}
         },
         {
@@ -88,6 +94,7 @@ export default function() {
           rarity: "rare",
           defaultColor: "black",
           defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t005b, purple: t005pur, petro: t005p}
         },
         {
@@ -97,6 +104,7 @@ export default function() {
           rarity: "epic",
           defaultColor: "black",
           defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t006b, white: t006w, purple: t006pur, petro: t006p}
         },
         {
@@ -106,6 +114,7 @@ export default function() {
           rarity: "uncommon",
           defaultColor: "black",
           defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t007b, white: t007w, purple: t007pur, petro: t007p}
         },
         {
@@ -115,6 +124,7 @@ export default function() {
           rarity: "legendary",
           defaultColor: "black",
           defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t008b, white: t008w, purple: t008pur, petro: t008p}
         },
         {
@@ -124,6 +134,7 @@ export default function() {
           rarity: "rare",
           defaultColor: "black",
           defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t009b, white: t009w, purple: t009pur, petro: t009p}
         },
         ]
