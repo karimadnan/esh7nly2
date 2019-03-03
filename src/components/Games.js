@@ -133,14 +133,12 @@ if (this.state.Type === ""){
     <div class="col-xs-12 col-md-12">
         <div class="Games" onClick={()=>{this.updateInput("Type", "Games")}}>
           <div id ="logodesc" data-tip="Games">
-            <ReactTooltip place="bottom" type="dark" effect="solid"/>
           </div>
         </div> 
     </div>
       <div class="col-xs-12 col-md-12" style={{marginTop: 20}}>
         <div class="Tshirts" onClick={()=>{this.updateInput("Type", "Merch")}}>
           <div id ="logodesc" data-tip="Merch">
-              <ReactTooltip place="bottom" type="dark" effect="solid"/>
             </div>
         </div> 
       </div>
@@ -152,18 +150,16 @@ return (
   <div class="container">
     <br/> <br/>    <br/> 
     <div class="col-xs-12 col-md-12 col-lg-12">
-      <div class="col-xs-12 col-md-6 col-lg-6">
-        <div class="badge-dark">
-          <h1>Choose your game from the list</h1>
+      <div style={{padding: 10}} class="badge-dark col-xs-12 col-md-6 col-lg-6">
+          <div class="col-xs-3 col-md-3 col-lg-3">
+              <span style={{fontSize: 35, cursor: "pointer"}} onClick={()=>{this.updateInput("Type", "")}} data-tip="Back" class="glyphicon glyphicon-triangle-left"></span>
+          </div> 
+          <div class="col-xs-6 col-md-6 col-lg-6">
+              <span style={{fontSize: 25}}>Choose your game</span>
+          </div> 
         </div>
     </div>
-    <div class="col-xs-12 col-md-6 col-lg-6">
-      <button class="btn btn-danger" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{this.updateInput("Type", "")}}>
-        Back To List
-      </button>
-     </div>
-    </div>
-
+    <br/><br/><br/><br/>
     <div class="col-xs-12 col-md-4">
       <div class="league" onClick={()=>{this.getGameDetails("league")}}></div> 
     </div>
@@ -1150,6 +1146,7 @@ render() {
   }
 return (
 <div className="bg-image"> 
+      <ReactTooltip place="bottom" type="dark" effect="solid"/>
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
           styles={SuccessStyle}>
           <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>

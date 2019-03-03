@@ -41,6 +41,34 @@ import t009w from '../Images/tshirts/t009w.png';
 import t009pur from '../Images/tshirts/t009pur.png';
 import t009p from '../Images/tshirts/t009p.png';
 
+import t010b from '../Images/tshirts/t010b.png';
+import t010w from '../Images/tshirts/t010w.png';
+import t010pur from '../Images/tshirts/t010pur.png';
+import t010p from '../Images/tshirts/t010p.png';
+
+import t011b from '../Images/tshirts/t011b.png';
+import t011pur from '../Images/tshirts/t011pur.png';
+import t011p from '../Images/tshirts/t011p.png';
+
+import t012b from '../Images/tshirts/t012b.png';
+import t012w from '../Images/tshirts/t012w.png';
+import t012pur from '../Images/tshirts/t012pur.png';
+import t012p from '../Images/tshirts/t012p.png';
+
+import t013b from '../Images/tshirts/t013b.png';
+import t013w from '../Images/tshirts/t013w.png';
+import t013pur from '../Images/tshirts/t013pur.png';
+import t013p from '../Images/tshirts/t013p.png';
+
+import t014b from '../Images/tshirts/t014b.png';
+import t014w from '../Images/tshirts/t014w.png';
+import t014pur from '../Images/tshirts/t014pur.png';
+import t014p from '../Images/tshirts/t014p.png';
+
+import t015b from '../Images/tshirts/t015b.png';
+import t015w from '../Images/tshirts/t015w.png';
+import t015pur from '../Images/tshirts/t015pur.png';
+import t015p from '../Images/tshirts/t015p.png';
 
 export default function() {
     return {
@@ -99,7 +127,7 @@ export default function() {
         },
         {
           id: "006",
-          Name: "Draaaaaaven",
+          Name: "Draaaaaaaaaaaven",
           price: 100,
           rarity: "epic",
           defaultColor: "black",
@@ -136,6 +164,66 @@ export default function() {
           defaultSize: "small",
           desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
           img: {black: t009b, white: t009w, purple: t009pur, petro: t009p}
+        },
+        {
+          id: "010",
+          Name: "Take the L",
+          price: 100,
+          rarity: "legendary",
+          defaultColor: "black",
+          defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
+          img: {black: t010b, white: t010w, purple: t010pur, petro: t010p}
+        },
+        {
+          id: "011",
+          Name: "Waterworks",
+          price: 100,
+          rarity: "rare",
+          defaultColor: "black",
+          defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
+          img: {black: t011b, purple: t011pur, petro: t011p}
+        },
+        {
+          id: "012",
+          Name: "Winner Winner v2",
+          price: 100,
+          rarity: "rare",
+          defaultColor: "black",
+          defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
+          img: {black: t012b, white: t012w, purple: t012pur, petro: t012p}
+        },
+        {
+          id: "013",
+          Name: "#Rip",
+          price: 100,
+          rarity: "epic",
+          defaultColor: "black",
+          defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
+          img: {black: t013b, white: t013w, purple: t013pur, petro: t013p}
+        },
+        {
+          id: "014",
+          Name: "Pubg Warrior",
+          price: 100,
+          rarity: "epic",
+          defaultColor: "black",
+          defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
+          img: {black: t014b, white: t014w, purple: t014pur, petro: t014p}
+        },
+        {
+          id: "015",
+          Name: "Love Ranger",
+          price: 100,
+          rarity: "legendary",
+          defaultColor: "black",
+          defaultSize: "small",
+          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
+          img: {black: t015b, white: t015w, purple: t015pur, petro: t015p}
         },
         ]
   }

@@ -66,6 +66,16 @@ class cartDetails extends Component {
         if(this.props.cart.length < 1){
             return (
                 <div >
+                <ToastContainer
+                position="top-right"
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnVisibilityChange={false}
+                draggable={false}
+                pauseOnHover={false}
+                    />
                     <h1>&nbsp;Your cart is empty<span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;</h1>
                 <div class="bordersep"/>
                 <Getlogin />

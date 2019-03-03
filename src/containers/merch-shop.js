@@ -5,22 +5,46 @@ import {addCartItem, updateCartInfo, addPrev, updatePrev} from '../actions/index
 import { ToastContainer, toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip'
 import CartDetails from '../containers/cart-details';
+import Select from 'react-select';
+import ReactRouter from 'flux-react-router';
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
+
+const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: '1px dotted black',
+      color: state.isSelected ? 'red' : 'blue',
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+  
+      return { ...provided, opacity, transition };
+    }
+  }
 
 class MerchShop extends Component {
 
     state = {
         quantity: 1,
         view: 'shop',
-        category: 'tshirts'
+        category: 'tshirts',
+        selectedCategory: '',
+        categoryOps: [
+        {value: "tshirts", label: "Tshirts"},
+        {value: "Hoodies", label: "Hoodies"}
+        ],
     }
 
     updateInput(key, value) {
         this.setState({ [key]: value });
     }
-
+    handleChange(type, value) {
+        this.setState({[type]: value}, () =>{
+        });
+      }
     notify = (id) => toast.success(`${id} added to cart!`, {
         position: "top-right",
         autoClose: 2500,
@@ -28,7 +52,7 @@ class MerchShop extends Component {
         closeOnClick: true,
         pauseOnHover: false,
         draggable: false,
-        });
+    });
     
     addItemToArray(item){
         const uniqueId = item.id+`-${this.props.cart.itemPrev.size}`+`-${this.props.cart.itemPrev.color}`
@@ -86,7 +110,7 @@ class MerchShop extends Component {
          }
         this.props.updateCartInfo(object, 'add')
     }
-    
+
     render(){
         if (this.state.view === 'shop'){
             let shop =  this.props.shop.tshirts.map((item) =>{
@@ -94,23 +118,23 @@ class MerchShop extends Component {
                 var rarity = "card splash-cardTees FortHover rarity-"+item.rarity
     
                 return (
-                    <div class="col-md-6 col-md-6" key={item.id} >
+                    <div class="col-md-4 col-md-4" key={item.id} >
                     <div class ={rarity}>
                         <img class="merchShop"
                         onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}
                         src={item.img.black}  style={{cursor: 'pointer'}} alt={item.id}/>
                        <div class="card-image-overlay">
                         <div id ="merchInfo" class="card-body">
-                            <h4 class ="card-title itemname" style = {{color: "white", fontSize: 15, fontWeight: 300, fontFamily: "impact", lineHeight: 0.5}}>
-                              <span>"{item.Name}"</span>
+                            <h4 class ="card-title itemname" style = {{color: "white", fontSize: 25, fontFamily: "impact", lineHeight: 0.3}}>
+                              <span>• {item.Name} •</span>
                             </h4>
                         </div>
                        </div>
                        <div id ="merchPrice" class="card-body">
-                            <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-default">{item.discount > 0 ? "" : item.price} {item.discount > 0 ? item.price - discounted : ""} EGP</span>
+                            <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-default">{item.discount > 0 ? "" : item.price} {item.discount > 0 ? item.price - discounted : ""} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span>
                        </div>
                        {item.discount > 0 && <div id ="merchDiscount" class="card-body">
-                            <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{item.discount}% off</span>
+                            <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{item.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
                        </div> }
                     </div>
                 </div>
@@ -118,7 +142,24 @@ class MerchShop extends Component {
             })
             return (
                 <div>
+                <br/>
+                <div style={{padding: 10}} class="badge-dark col-xs-12 col-md-6 col-lg-6">
+                    <div class="col-xs-3 col-md-3 col-lg-3">
+                        <span style={{fontSize: 35, cursor: "pointer"}} onClick={()=>{ReactRouter.goTo("/market")}} data-tip="Back" class="glyphicon glyphicon-triangle-left"></span>
+                    </div> 
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                    <Select
+                        styles={customStyles}
+                        value={this.state.selectedCategory}
+                        onChange={this.handleChange.bind(this, 'selectedCategory')}
+                        options={this.state.categoryOps} placeholder='Choose Category'
+                        />
+                    </div>
+                </div>
+                <br/> <br/> <br/> <br/>
+                <div class="col-xs-12 col-md-12 col-lg-12">
                     {shop}
+                </div>
                 </div>
             )
         }
@@ -165,7 +206,7 @@ class MerchShop extends Component {
                     </div>
                  </div>
                  <div class="col-xs-12 col-md-6 col-lg-6">
-                    <div class ="cardItemPrev splash-cardTees">
+                    <div class ="cardItemPrev splash-cardTeesView">
                        {prev.color === 'black' && <img class="merchShop" src={prev.img.black} alt={prev.id}/>}
                        {prev.color === 'white' && <img class="merchShop" src={prev.img.white} alt={prev.id}/>}
                        {prev.color === 'purple' && <img class="merchShop" src={prev.img.purple} alt={prev.id}/>}
@@ -177,13 +218,16 @@ class MerchShop extends Component {
                             </h4>
                         </div>
                        {prev.discount > 0 && <div id ="merchDiscount" class="card-body">
-                            <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{prev.discount}% off</span>
+                            <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{prev.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
                        </div> }
                     </div>
                  </div>
                  <div style={{color: "white", fontSize: 15}} class="col-xs-12 col-md-6 col-lg-6">
-                       <h1><span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} EGP</span></h1>{prev.discount > 0 ? <h1><span class="label label-primary">{prev.price - discounted} EGP</span></h1> : <p/>}
-                       <h2><strong style={{textDecoration: "underline"}}>Free shipping</strong> on orders over 300 EGP</h2>
+                       <h1><span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h1>{prev.discount > 0 ? <h1><span class="label label-primary">{prev.price - discounted} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h1> : <p/>}
+                     {this.props.lang.lang === "EN" ?  
+                         <h2><strong style={{textDecoration: "underline"}}>Free shipping</strong> on orders over 300 EGP</h2>
+                      :  <h2 style={{textAlign: "right"}}><strong style={{textDecoration: "underline"}}>شحن مجانى</strong> على الطلبات 300 جنيه و اكثر</h2>
+                     }
                        <br/>
                        <div class="bordersep"/>
                        <h1>Product details:</h1><p>• {prev.desc}</p><p>• Color: {prev.color.toUpperCase()}</p><p>• Size: {prev.size.toUpperCase()}</p>
@@ -244,7 +288,8 @@ function mapStateToProps(state){
     return {
         shop: state.shop,
         cart: state.cartItems,
-        cartInfo: state.updateCartInfo
+        cartInfo: state.updateCartInfo,
+        lang: state.lang
     }
 }
 
