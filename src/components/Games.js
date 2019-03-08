@@ -132,10 +132,22 @@ if (this.state.Type === ""){
 <br/> <br/>     <br/>     <br/>    
     <div class="col-xs-12 col-md-12">
         <div class="Games" onClick={()=>{this.updateInput("Type", "Games")}}>
+            <div class="card-image-overlay">
+            <div id ="marketDesc" class="card-body">
+              <span style = {{color: "white", fontSize: 18, fontFamily: "arial", textAlign: "left", lineHeight: 2}}>&nbsp;&nbsp;Games</span>
+              <p style = {{color: "grey", fontSize: 15, fontFamily: "arial", textAlign: "left", lineHeight: 0.5}}>&nbsp;&nbsp;Purchase any amount of virtual currency in any game</p>
+            </div>
+            </div>
         </div> 
     </div>
       <div class="col-xs-12 col-md-12" style={{marginTop: 20}}>
         <div class="Tshirts" onClick={()=>{this.updateInput("Type", "Merch")}}>
+        <div class="card-image-overlay">
+            <div id ="marketDesc" class="card-body">
+              <span style = {{color: "white", fontSize: 18, fontFamily: "arial", textAlign: "left", lineHeight: 2}}>&nbsp;&nbsp;Merchandise</span>
+              <p style = {{color: "grey", fontSize: 15, fontFamily: "arial", textAlign: "left", lineHeight: 0.5}}>&nbsp;&nbsp;Get Tshirts/accessories of your favorite games </p>
+            </div>
+            </div>
         </div> 
       </div>
 </div>

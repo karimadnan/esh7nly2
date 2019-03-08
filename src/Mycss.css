@@ -433,6 +433,14 @@ background-color: #0ddb06;
   bottom: 0;
 }
 
+#marketDesc {
+  background: rgb(31, 30, 30);
+  position: absolute;
+  height: 25%;
+  width: 65%;
+  bottom: 0;
+}
+
 #merchInfo {
   background: rgba(0, 0, 0, 0.712);
   position: absolute;
