@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../Mycss.css';
+import '../svg.css';
 import axios from 'axios';
 import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
@@ -154,16 +155,16 @@ return (
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>                        
       </button>
-      <a className="navbar-brand" onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><b>E<span className="glyphicon glyphicon-usd"></span>h7nly</b></a>
+      <a className="navbar-brand" onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><b>E<span className="glyphicon glyphicon-usd"></span>h7en</b></a>
     </div>
     <div className="collapse navbar-collapse" id="myNavbar">
         <ul className="nav navbar-nav">
-          <li class={this.state.page ==="Main" && "activeNav"}><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-home"></span> {this.props.lang.lang === "EN" ? "Home" : "الرئيسية"}</a></li>
-          <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="glyphicon glyphicon-tag"></span> {this.props.lang.lang === "EN" ? "How To Buy" : "ازاى تشترى"}</a>
+          <li class={this.state.page ==="Main" && "activeNav"}><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-home"></span> {this.props.lang.lang === "EN" ? "Home" : "الرئيسية"}</a></li>
+          <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="svg-icon svg-icon-priceTag"></span> {this.props.lang.lang === "EN" ? "How To Buy" : "ازاى تشترى"}</a>
           </li>
-          <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/market")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-shopping-cart"></span> {this.props.lang.lang === "EN" ? "Market" : "المتجر"}</a></li>
-          <li class={this.state.page ==="FortniteShop" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/fortniteshop")}} style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-star"></span> {this.props.lang.lang === "EN" ? "Fortnite Today's Shop" : "فورت نايت شوب" }</a></li>
-          <li class={this.state.page ==="ContactUs" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="	glyphicon glyphicon-earphone"></span> {this.props.lang.lang === "EN" ? "Contact Us" : "كلمنا"}</a></li>
+          <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/market")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-shoppingCart"></span> {this.props.lang.lang === "EN" ? "Market" : "المتجر"}</a></li>
+          <li class={this.state.page ==="FortniteShop" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/fortniteshop")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-thompson"></span>{this.props.lang.lang === "EN" ? "Fortnite Today's Shop" : "فورت نايت شوب" }</a></li>
+          <li class={this.state.page ==="ContactUs" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-phone"></span> {this.props.lang.lang === "EN" ? "Contact Us" : "كلمنا"}</a></li>
         </ul>
         <ul className="nav navbar-nav navbar-right">
         <li><div id ="logodesc" data-tip="عربى"><span onClick={()=>{this.props.updateLang("AR")}} style={{cursor: 'pointer'}} class="flag-icon flag-icon-eg"></span>&nbsp;&nbsp;</div></li>
@@ -178,7 +179,7 @@ return (
             </ul>
           </li>}
           { ! this.props.loginData.loggedState &&    <li className="dropdown"> 
-      { ! this.props.loginData.loggedState &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="glyphicon glyphicon-cog"></span> <b>{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</b> <span className="caret"></span></a> }
+      { ! this.props.loginData.loggedState &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="svg-icon svg-icon-idCard"></span> <b>{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</b> <span className="caret"></span></a> }
               <ul id="login-dp"  className="dropdown-menu">
               <li>
               <div className="form-group col col-xs-6">

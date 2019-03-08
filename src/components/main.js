@@ -14,7 +14,6 @@ import "../image-gallery.css";
 import TypedJs from './Typer';
 import {connect} from 'react-redux';
 
-
 class Main extends Component {
 
   state = {
@@ -73,7 +72,7 @@ render(){
         <div class="container" >
             <br/>    <br/>     <br/>  
             <TypedJs  
-              start={lang === "EN" ? "Why Eshe7nly?" : "ليه اشحنلى؟"}
+              start={lang === "EN" ? "Why Esh7en?" : "ليه اشحين؟"}
               strings=
               {lang === "EN" ?
                 [
@@ -103,8 +102,8 @@ render(){
                 </div>     
         </div>
         <br/>
-        <Footer />
       </div>
+      <Footer />
     </div>
   )
 }

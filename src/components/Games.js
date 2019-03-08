@@ -5,6 +5,7 @@ import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 import MerchShop from '../containers/merch-shop';
 import {connect} from 'react-redux';
+import Footer from './footer';
 
 import '../Mycss.css';
 import '../games.css';
@@ -17,7 +18,6 @@ import Vbucks from '../Images/fortnite-vbucks-icon.png';
 import Rp from '../Images/rp.png';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
-import ReactTooltip from 'react-tooltip'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -132,14 +132,10 @@ if (this.state.Type === ""){
 <br/> <br/>     <br/>     <br/>    
     <div class="col-xs-12 col-md-12">
         <div class="Games" onClick={()=>{this.updateInput("Type", "Games")}}>
-          <div id ="logodesc" data-tip="Games">
-          </div>
         </div> 
     </div>
       <div class="col-xs-12 col-md-12" style={{marginTop: 20}}>
         <div class="Tshirts" onClick={()=>{this.updateInput("Type", "Merch")}}>
-          <div id ="logodesc" data-tip="Merch">
-            </div>
         </div> 
       </div>
 </div>
@@ -1145,8 +1141,8 @@ render() {
     )
   }
 return (
+  <div>
 <div className="bg-image"> 
-      <ReactTooltip place="bottom" type="dark" effect="solid"/>
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
           styles={SuccessStyle}>
           <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
@@ -1161,7 +1157,9 @@ return (
         {this.MarketRender()}
         {this.SingleGame()}
         {this.paymentRender()}
-        <Getlogin page={"Offers"}/>
+    </div>
+    <Getlogin page={"Offers"}/>
+    <Footer />
   </div>
       );
   }

@@ -8,6 +8,7 @@ import FawryLogo from '../Images/fawrypaymenttest.png';
 import moment from 'moment';
 import {connect} from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
+import Modal from 'react-responsive-modal';
 
 class Admindashboard extends Component {
 
@@ -29,13 +30,20 @@ Url: this.props.server.main,
 ordersData: [],
 ordersHistory: [],
 ordersCheck: '',
-creatorCode: ''
+creatorCode: '',
+InfoModal: false
 }
 
 updateInput(key, value) {
   this.setState({ [key]: value });
 }
+onOpenModal = (type) => {
+  this.setState({[type]: true });
+};
 
+onCloseModal = (type) => {
+  this.setState({[type]: false });
+};
 
 getOrdersHistory() {
   var that = this
@@ -262,7 +270,10 @@ tableLeads() {
               <td>{row.status === "pending" ? <span class="label label-default">Pending</span> : <span class="label label-primary">InProgress</span>}</td>
               <td>{row.paymentMethod === "VodafoneCash" ? <img style ={{width: 40, height: 40}} src={VodafoneCashLogo} alt=""/> : 
                   row.paymentMethod === "EtisalatCash" ? <img style ={{width: 40, height: 40}} src={EtisalatCashLogo} alt=""/> : <img style ={{width: 40, height: 40}} src={FawryLogo} alt=""/>}</td>
-              <td ><span style={{cursor: 'pointer'}} className="glyphicon glyphicon-eye-open"></span></td>
+              <td ><span style={{cursor: 'pointer'}} onClick={() => {this.updateInput("InfoModal", "true")}} className="glyphicon glyphicon-eye-open"></span></td>
+              <Modal open={this.state.InfoModal} onClose={this.onCloseModal.bind(this,'InfoModal')} center>
+                  <h3 class="col-xs-6">{row.transId}</h3>
+              </Modal>
               <td> {row.status === "pending" ? <button  onClick={this.viewOrder.bind(this, row.orderID)} class="btn btn-primary"> Check </button> : <div>
                 <button  style={{marginRight: 5}} onClick={this.endOrder.bind(this, row.orderID)} class="btn btn-success"> done </button>
                 <button  onClick={this.endOrder.bind(this, row.orderID)} class="btn btn-danger"> cancel </button> </div>} </td>

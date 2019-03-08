@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-
-import '../Mycss.css';
-import '../Respcss.css';
 import Getlogin from './navbar';
 import Footer from './footer';
+import '../Mycss.css';
+import '../Respcss.css';
 
 class Payment extends Component {
 
@@ -173,14 +172,14 @@ state = {
        }
     }
 render() {
-    return (
-
-  <div>
-    <div className="bg-image"> 
-    <Getlogin page={"HowTo"}/>
-    {this.PaymentRender()}
-    {this.SinglePayment()}
-    </div>
+  return (
+    <div>
+      <div className="bg-image"> 
+        <Getlogin page={"HowTo"}/>
+        {this.PaymentRender()}
+        {this.SinglePayment()}
+      </div>
+      <Footer />
     </div>
     );
   }

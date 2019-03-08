@@ -1,5 +1,11 @@
 @media screen and (max-width: 700px) {
 
+  .splash-cardTeesView {
+    border-radius: 0;
+    height: 300px;
+    width: 300px;
+  }
+
   .splash-cardTees {
     border-radius: 0;
     height: 300px;
@@ -353,6 +359,7 @@
   
 
   @media screen and (max-width: 325px) {
+
     .badge {
       display: inline-block;
       padding: 0.05em 1.9em;

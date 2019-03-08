@@ -5,25 +5,10 @@ import {addCartItem, updateCartInfo, addPrev, updatePrev} from '../actions/index
 import { ToastContainer, toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip'
 import CartDetails from '../containers/cart-details';
-import Select from 'react-select';
 import ReactRouter from 'flux-react-router';
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
-
-const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      borderBottom: '1px dotted black',
-      color: state.isSelected ? 'red' : 'blue',
-    }),
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
-  
-      return { ...provided, opacity, transition };
-    }
-  }
 
 class MerchShop extends Component {
 
@@ -32,6 +17,7 @@ class MerchShop extends Component {
         view: 'shop',
         category: 'tshirts',
         selectedCategory: '',
+        cartDirect: '',
         categoryOps: [
         {value: "tshirts", label: "Tshirts"},
         {value: "Hoodies", label: "Hoodies"}
@@ -143,23 +129,25 @@ class MerchShop extends Component {
             return (
                 <div>
                 <br/>
-                <div style={{padding: 10}} class="badge-dark col-xs-12 col-md-6 col-lg-6">
-                    <div class="col-xs-3 col-md-3 col-lg-3">
+                <div style={{padding: 5}} class="badge-dark col-xs-12 col-md-7 col-lg-7">
+                    <div class="col-xs-1 col-md-1 col-lg-1">
                         <span style={{fontSize: 35, cursor: "pointer"}} onClick={()=>{ReactRouter.goTo("/market")}} data-tip="Back" class="glyphicon glyphicon-triangle-left"></span>
                     </div> 
-                    <div class="col-xs-6 col-md-6 col-lg-6">
-                    <Select
-                        styles={customStyles}
-                        value={this.state.selectedCategory}
-                        onChange={this.handleChange.bind(this, 'selectedCategory')}
-                        options={this.state.categoryOps} placeholder='Choose Category'
-                        />
+                    <div class="col-xs-4 col-md-2 col-lg-2">
+                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}} class={this.state.category === "tshirts" ? "menuLabel-success" : "menuLabel-primary"}>T-shirts</span>
+                    </div>
+                    <div class="col-xs-4 col-md-2 col-lg-2">
+                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}} data-tip="Soon" class="menuLabel-primary">Accessories</span>
+                    </div>
+                    <div class="col-xs-4 col-md-offset-2 col-lg-offset-2">
+                         <span style={{fontSize: 20, lineHeight: 1.6, cursor: "pointer"}} onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "shop")}} className="glyphicon glyphicon-shopping-cart"> <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span>
                     </div>
                 </div>
                 <br/> <br/> <br/> <br/>
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     {shop}
                 </div>
+                <ReactTooltip place="bottom" type="dark" effect="solid"/>
                 </div>
             )
         }
@@ -199,8 +187,7 @@ class MerchShop extends Component {
                         <br/>
                     </div>}
                     <div class="col-xs-12 col-md-2 col-lg-2">
-                        <div onClick={()=>{this.updateInput("view", "Cart")}} class="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
-                        <ReactTooltip place="bottom" type="dark" effect="solid"/>
+                        <div onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "prev")}} class="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
                         <p style={{textAlign: "center", fontSize: 25, paddingBottom: 7}}> <span className="glyphicon glyphicon-shopping-cart">: <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span> </p>
                         </div>
                     </div>
@@ -246,15 +233,16 @@ class MerchShop extends Component {
                         </div>
                  </div>
                  <ToastContainer
-                position="top-right"
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                rtl={false}
-                pauseOnVisibilityChange={false}
-                draggable={false}
-                pauseOnHover={false}
+                    position="top-right"
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange={false}
+                    draggable={false}
+                    pauseOnHover={false}
                     />
+                <ReactTooltip place="bottom" type="dark" effect="solid"/>
               </div>
             )
         }
@@ -265,7 +253,14 @@ class MerchShop extends Component {
                 &nbsp;&nbsp;
               <div class="container">
               <div class="col-xs-12 col-md-6 col-lg-6">
-                <button class="btn btn-danger" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("view", "item")}}>
+                <button class="btn btn-danger" style={{color : "white", width: 270}} onClick={()=>
+                    {
+                        this.state.cartDirect === 'prev' ? 
+                        this.updateInput("view", "item")
+                        :
+                        this.updateInput("view", "shop")
+                    }
+                    }>
                   Back
                 </button>
               </div>

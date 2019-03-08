@@ -20,15 +20,15 @@
 }
 
 .flag-icon-eg {
-  background-image: url(./Images/eg4.svg);
+  background-image: url(./Images/svg/eg4.svg);
 }
 .flag-icon-eg.flag-icon-squared {
-  background-image: url(./Images/eg.svg);
+  background-image: url(./Images/svg/eg.svg);
 }
 
 .flag-icon-gb {
-  background-image: url(./Images/gb4.svg);
+  background-image: url(./Images/svg/gb4.svg);
 }
 .flag-icon-gb.flag-icon-squared {
-  background-image: url(./Images/gb.svg);
+  background-image: url(./Images/svg/gb.svg);
 }
