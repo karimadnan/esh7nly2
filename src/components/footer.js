@@ -14,13 +14,13 @@ render() {
 
     <footer id="page-footer">
         <div class="col-md-6 col-lg-6 col-xs-12 ">
-            <h3 style={{fontWeight: "bold"}}> Like us on facebook </h3>
+            <h3 style={{fontWeight: "bold"}}> Like us on facebook<span className="svg-icon svg-icon-facebook"></span> </h3>
             <FacebookProvider key="1" appId="1984023341904164">
                 <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
             </FacebookProvider> 
         </div>
         <div class="col-md-6 col-lg-6 col-xs-12 ">
-        <h3 style={{fontWeight: "bold"}}> About Us</h3>
+        <h3 style={{fontWeight: "bold"}}> About Us<span className="svg-icon svg-icon-sphinx"></span></h3>
         <p> Esh7en.com was created to help you make online transactions and track your orders with our system and get real-time detailed information on your order status without using a credit card and to those who were scammed by non-legit online resellers.
         <br/>You can contact us by emailing to contact@esh7en.com for more ways to contact us visit - <a  onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}>Contact Us <span className="glyphicon glyphicon-earphone"></span> </a></p>
         <p>We are not affiliated Epic Games/Riot Games/Blue hole or endorsed by them in any way and all the graphics/images are fan art.</p>

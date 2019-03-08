@@ -3,7 +3,7 @@
 }
 
 .svg-icon {
-  background-size: 25px;
+  background-size: 27px;
   background-position: 90%;
   background-repeat: no-repeat;
   position: relative;
@@ -34,4 +34,44 @@
 
 .svg-icon-idCard {
   background-image: url(./Images/svg/id-card.svg);
+}
+
+.svg-icon-cog {
+  background-image: url(./Images/svg/cog.svg);
+}
+
+.svg-icon-globe {
+  background-image: url(./Images/svg/wireframe-globe.svg);
+}
+
+.svg-icon-pharoah {
+  background-image: url(./Images/svg/pharoah.svg);
+}
+
+.svg-icon-nfertiti {
+  background-image: url(./Images/svg/nefertiti.svg);
+}
+
+.svg-icon-anubis {
+  background-image: url(./Images/svg/anubis.svg);
+}
+
+.svg-icon-sphinx {
+  background-image: url(./Images/svg/egyptian-sphinx.svg);
+}
+
+.svg-icon-egyProf {
+  background-image: url(./Images/svg/egyptian-profile.svg);
+}
+
+.svg-icon-egyWalk {
+  background-image: url(./Images/svg/egyptian-walk.svg);
+}
+
+.svg-icon-egyEye {
+  background-image: url(./Images/svg/eye-of-horus.svg);
+}
+
+.svg-icon-facebook {
+  background-image: url(./Images/svg/facebook.svg);
 }

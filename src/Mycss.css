@@ -6,6 +6,9 @@
     -webkit-animation: typedjsBlink 0.7s infinite;
     animation: typedjsBlink 0.7s infinite;
   }
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    }
 
   @keyframes typedjsBlink{
     50% { opacity: 0.0; }
