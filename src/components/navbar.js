@@ -197,7 +197,7 @@ return (
                            <input type="password" onKeyPress={this.keyClicked.bind(this)} className="form-control" value={this.state.Password} onChange={e => this.updateInput("Password", e.target.value)} id="exampleInputPassword2" placeholder="Password" required></input>
                         </div>
                         <div className="form-group col col-xs-6">
-                           <button onClick={this.login} disabled={!this.state.Phone.length || !this.state.Password.length} className="btn btn-primary btn-block">{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</button> 
+                           <button onClick={()=>{this.login()}} disabled={!this.state.Phone.length || !this.state.Password.length} className="btn btn-primary btn-block">{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</button> 
                         </div>	
                         <div className="col col-xs-6">
                          <button onClick={()=>{ReactRouter.goTo("/signup")}} style={{cursor: 'pointer'}} className="btn btn-success btn-block"><span className="svg-icon svg-icon-sphinx"></span> {this.props.lang.lang === "EN" ? "Sign Up" : " التسجيل" }</button>
