@@ -155,7 +155,7 @@ return (
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>                        
       </button>
-      <a className="navbar-brand" onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><b>GG</b></a>
+      <a className="navbar-brand" onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="svg-icon-logo svg-icon-logo"></span></a>
     </div>
     <div className="collapse navbar-collapse" id="myNavbar">
         <ul className="nav navbar-nav">

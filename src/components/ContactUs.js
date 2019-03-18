@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../Mycss.css';
 import '../Respcss.css';
 import Getlogin from './navbar';
-import { FacebookProvider, Page, CustomChat } from 'react-facebook';
+import { FacebookProvider, Page, MessageUs, CustomChat } from 'react-facebook';
 import Footer from './footer';
 import isInt from 'validator/lib/isInt';
 import isEmail from 'validator/lib/isEmail';
@@ -56,10 +56,10 @@ render() {
         <br/><br/><br/>
         <div class="container">
             <div class="ProfileBG">
-                <h1>Contact us by facebook</h1>
-                    <FacebookProvider key="1" appId="1984023341904164">
-                        <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
-                    </FacebookProvider> 
+                <h1>Message us on facebook</h1>
+                    <FacebookProvider appId="1984023341904164">
+                        <MessageUs messengerAppId="297486070967464" pageId="297486070967464"/>
+                    </FacebookProvider>    
                     <br/><br/>
                 <div class="bordersep"/>
                 <h1>Email us directly</h1>

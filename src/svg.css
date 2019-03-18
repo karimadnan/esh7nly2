@@ -6,6 +6,14 @@
   content: "\00a0";
 }
 
+.svg-icon-logo:before {
+  content: "\00a0";
+}
+
+.svg-icon-logoBig:before {
+  content: "\00a0";
+}
+
 .svg-icon {
   background-size: 27px;
   background-position: 90%;
@@ -14,6 +22,26 @@
   display: inline-block;
   width: 2em;
   line-height: 1.5em;
+}
+
+.svg-icon-logo {
+  background-size: 70px;
+  background-position: 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  display: inline-block;
+  width: 4em;
+  line-height: 1.9em;
+}
+
+.svg-icon-logoBig {
+  background-size: 100px;
+  background-position: 100%;
+  background-repeat: no-repeat;
+  position: relative;
+  display: inline-block;
+  width: 5em;
+  line-height: 2.0em;
 }
 
 .svg-icon-big {
@@ -124,4 +152,8 @@
 
 .svg-icon-checkOutCart {
   background-image: url(./Images/svg/checkoutCart.svg);
+}
+
+.svg-icon-logo {
+  background-image: url(./Images/logo.svg);
 }

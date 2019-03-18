@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactRouter from 'flux-react-router';
-import VodafoneCashLogo from '../Images/Vodacash.png';
-import EtisalatCashLogo from '../Images/Etiscash.png';
+import VodafoneCashLogo from '../Images/vodacashfooter.png';
+import EtisalatCashLogo from '../Images/etisalatfooter.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 import '../Mycss.css';
 import '../Respcss.css';
@@ -20,7 +20,7 @@ render() {
             </FacebookProvider> 
         </div>
         <div class="col-md-6 col-lg-6 col-xs-12 ">
-        <h3 style={{fontWeight: "bold"}}> About Us<span className="svg-icon svg-icon-sphinx"></span></h3>
+        <h3 style={{fontWeight: "bold"}}> About Us<span className="svg-icon-logo svg-icon-logoBig"></span></h3>
         <p> GGegypt.com was developed to help you make online transactions and track your orders with our system and get real-time detailed information on your order status without using a credit card and to those who were scammed by non-legit online resellers.
         <br/><br/>
         You can contact us by emailing to contact@ggegypt.com for more ways to contact us visit - <a  onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}>Contact Us <span className="glyphicon glyphicon-earphone"></span> </a></p>
