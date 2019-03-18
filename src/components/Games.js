@@ -4,6 +4,7 @@ import VodafoneCashLogo from '../Images/Vodacash.png';
 import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 import MerchShop from '../containers/merch-shop';
+import GameShop from '../containers/gaming-shop';
 import {connect} from 'react-redux';
 import Footer from './footer';
 
@@ -134,8 +135,8 @@ if (this.state.Type === ""){
         <div class="Games" onClick={()=>{this.updateInput("Type", "Games")}}>
             <div class="card-image-overlay">
             <div id ="marketDesc" class="card-body">
-              <span style = {{color: "white", fontSize: 18, fontFamily: "arial", textAlign: "left", lineHeight: 2}}>&nbsp;&nbsp;Games</span>
-              <p style = {{color: "grey", fontSize: 15, fontFamily: "arial", textAlign: "left", lineHeight: 0.5}}>&nbsp;&nbsp;Purchase any amount of virtual currency in any game</p>
+              <span style = {{color: "white", fontSize: 18, fontFamily: "arial", textAlign: "left", lineHeight: 2}}>&nbsp;&nbsp;{this.props.lang === "EN" ? "Games" : "الالعاب"}</span>
+              <p style = {{color: "grey", fontSize: 15, fontFamily: "arial", textAlign: "left", lineHeight: 0.5}}>&nbsp;&nbsp;{this.props.lang === "EN" ? "Purchase any amount of virtual currency in any game" : "شحن العاب اونلاين بأى كمية"}</p>
             </div>
             </div>
         </div> 
@@ -144,8 +145,18 @@ if (this.state.Type === ""){
         <div class="Tshirts" onClick={()=>{this.updateInput("Type", "Merch")}}>
         <div class="card-image-overlay">
             <div id ="marketDesc" class="card-body">
-              <span style = {{color: "white", fontSize: 18, fontFamily: "arial", textAlign: "left", lineHeight: 2}}>&nbsp;&nbsp;Merchandise</span>
-              <p style = {{color: "grey", fontSize: 15, fontFamily: "arial", textAlign: "left", lineHeight: 0.5}}>&nbsp;&nbsp;Get Tshirts/accessories of your favorite games </p>
+              <span style = {{color: "white", fontSize: 18, fontFamily: "arial", textAlign: "left", lineHeight: 2}}>&nbsp;&nbsp;{this.props.lang === "EN" ? "Merchandise" : "المتجر"}</span>
+              <p style = {{color: "grey", fontSize: 15, fontFamily: "arial", textAlign: "left", lineHeight: 0.5}}>&nbsp;&nbsp;{this.props.lang === "EN" ? "Get Tshirts/accessories of your favorite games" : "تشيرتس و اكسيسورى الالعاب"}</p>
+            </div>
+            </div>
+        </div> 
+      </div>
+      <div class="col-xs-12 col-md-12" style={{marginTop: 20}}>
+        <div class="GamingStuff" onClick={()=>{this.updateInput("Type", "Gaming")}}>
+        <div class="card-image-overlay">
+            <div id ="marketDesc" class="card-body">
+              <span style = {{color: "white", fontSize: 18, fontFamily: "arial", textAlign: "left", lineHeight: 2}}>&nbsp;&nbsp;Gaming Shop</span>
+              <p style = {{color: "grey", fontSize: 15, fontFamily: "arial", textAlign: "left", lineHeight: 0.5}}>&nbsp;&nbsp;{this.props.lang === "EN" ? "Gaming keyboards/mouses/headsets best quality and price" : "تشيرتس و اكسيسورى الالعاب"}</p>
             </div>
             </div>
         </div> 
@@ -156,14 +167,14 @@ if (this.state.Type === ""){
 else if(this.state.Type === "Games" && this.state.GameType === ''){
 return (
   <div class="container">
-    <br/> <br/>    <br/> 
+    <br/> <br/>    <br/> <br/>
     <div class="col-xs-12 col-md-12 col-lg-12">
       <div style={{padding: 10}} class="badge-dark col-xs-12 col-md-6 col-lg-6">
-          <div class="col-xs-3 col-md-3 col-lg-3">
+          <div class="col-xs-1 col-md-1 col-lg-1">
               <span style={{fontSize: 35, cursor: "pointer"}} onClick={()=>{this.updateInput("Type", "")}} data-tip="Back" class="glyphicon glyphicon-triangle-left"></span>
           </div> 
-          <div class="col-xs-6 col-md-6 col-lg-6">
-              <span style={{fontSize: 25}}>Choose your game</span>
+          <div class="col-xs-10 col-md-6 col-lg-6">
+              <h1 style={{fontSize: 25, fontFamily: "impact", lineHeight: 0.1}}>&nbsp;&nbsp;{this.props.lang === "EN" ? "Choose your game" : "اختار اللعبة"}</h1>
           </div> 
         </div>
     </div>
@@ -191,11 +202,6 @@ return (
     <div class="col-xs-12  col-md-4">    
       <div class="tibia" onClick={()=>{this.getGameDetails("tibia")}}></div>
     </div>
-
-    <div class="col-xs-12  col-md-4">    
-      <div class="netflix" onClick={()=>{this.getGameDetails("netflix")}}></div>
-    </div>
-
   </div>
       )
     }
@@ -824,99 +830,6 @@ return (
       
         )
         }
-        else if(this.state.Type === "Games" && this.state.GameType ==="netflix")  {
-
-          return (
-            <div className="bgr-netflix0"> 
-            <div class="container">
-            {/* Game LOGO */}
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <div className={t}>
-              </div>
-            </div>
-  
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                  <button class="backbtn badge-dark2 btn btn-primary" style={{color : "red"}}  onClick={()=> {this.refreshBack()}}>
-                    Back To List
-                  </button>
-            </div>
-        
-            {/* Offers BODY */}
-          <div class="col-xs-12 col-md-12 col-lg-12">
-            <div className="GameDesc">
-        
-                  <div class="col-xs-12 col-md-12 col-lg-12">
-                    <p/>
-                </div>   
-  
-              <div class="col-xs-6 col-md-6 col-lg-6">   
-                  <label for="ChooseOffer">1-Choose Offer:</label>
-              </div>
-                  <div class="col-xs-6 col-md-6 col-lg-6">
-                        <Select
-                        styles={customStyles}
-                        value={this.state.SelectedOff}
-                        onChange={this.handleChange.bind(this, 'SelectedOff')}
-                        options={this.state.OffersOps} placeholder='Choose Offer'
-                      />
-                  </div>
-        
-                  <div class="col-xs-12 col-md-12 col-lg-12">
-                    <p/>
-                  </div>   
-  
-            <div class="col-xs-6 col-md-6 col-lg-6">
-              <label for="netflixNumber">2-Phone Number:</label>
-            </div>
-  
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                  <input class="form-control" 
-                  style=
-                    {{
-                      marginLeft : 0,
-                      color : "black"
-                    }}
-                    onChange={e => this.updateInput("netflixNumber", e.target.value)}  type="text" placeholder="Your Mobile Number"></input>
-              </div>
-  
-              <div class="col-xs-12 col-md-12 col-lg-12">
-                  <p/>
-              </div>   
-  
-           <div class="col-xs-6 col-md-6 col-lg-6">
-              <label for="Payment">Total To Pay:</label>
-           </div>
-  
-          <div class="col-xs-6 col-md-6 col-lg-6">
-              {! this.state.SelectedOff.value && <p style={{textAlign: "center"}}>0$</p>}
-              {this.state.SelectedOff.value && <p style={{textAlign: "center"}}> {this.state.SelectedOff.value} = {this.state.SelectedOff.label}</p>}
-          </div>
-        
-          <div class="col-xs-6 col-md-6 col-lg-6">
-              <label for="CheckOut">Proceed to checkout:</label>
-          </div>
-  
-          <div class="col-xs-6 col-md-6 col-lg-6">
-                <button class="checkoutbtn btn btn-primary"      
-                  style=
-                    {{
-                      marginLeft : 0,
-                      color : "white"
-                    }}
-                    onClick={()=> {
-                    this.CheckOut()
-                  }}>
-                    Checkout
-                </button>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-        
-          )
-          }
-
       }
   }
 
@@ -1003,20 +916,6 @@ if (this.props.loginData.loggedState){
       else{
         let obj={
           "tibiaChar":this.state.tibiaChar,
-          "SelectedOff":this.state.SelectedOff.value
-        }
-          this.setState({ExtraData:obj,Payment:true})
-      }
-    }
-
-    // NETFLIX CHECKOUT
-    else if(this.state.GameType ==="netflix"){
-      if(!this.state.SelectedOff || this.state.netflixNumber ===""){
-        this.setState({ErrorModal: true, ErrorMsg: "Please Fill All Data"})
-      }
-      else{
-        let obj={
-          "Number":this.state.netflixNumber,
           "SelectedOff":this.state.SelectedOff.value
         }
           this.setState({ExtraData:obj,Payment:true})
@@ -1152,26 +1051,37 @@ render() {
     </div>
     )
   }
+  else if (this.state.Type === "Gaming"){
+    return (
+      <div className="bg-image"> 
+        <div class="container">
+          <GameShop/>
+        </div>
+        <Getlogin page={"Offers"}/>
+      </div>
+      )
+  }
 return (
   <div>
-<div className="bg-image"> 
-      <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
-          styles={SuccessStyle}>
-          <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
-          <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
-      </Modal>
-      <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
-          styles={ErrorStyle}>
-          <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
-          <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
-      </Modal>
+  <div className="bg-image"> 
+        <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
+            styles={SuccessStyle}>
+            <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
+            <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
+        </Modal>
+        <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+            styles={ErrorStyle}>
+            <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
+            <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
+        </Modal>
 
-        {this.MarketRender()}
-        {this.SingleGame()}
-        {this.paymentRender()}
+          {this.MarketRender()}
+          <br/><br/>
+          {this.SingleGame()}
+          {this.paymentRender()}
     </div>
+
     <Getlogin page={"Offers"}/>
-    <Footer />
   </div>
       );
   }
@@ -1182,7 +1092,8 @@ function mapStateToProps(state){
       cart: state.cartItems.cart,
       loginData: state.loginSession,
       server: state.server,
-      cartInfo: state.updateCartInfo
+      cartInfo: state.updateCartInfo,
+      lang: state.lang.lang
   }
 }
 

@@ -16,6 +16,7 @@
     "mongodb": "^3.1.13",
     "morgan": "^1.9.1",
     "react": "^16.7.0",
+    "react-countup": "^4.1.1",
     "react-dom": "^16.7.0",
     "react-facebook": "^6.0.15",
     "react-google-recaptcha": "^1.0.5",
@@ -34,7 +35,8 @@
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
     "redux-persist-transform-encrypt": "^2.0.1",
-    "typed.js": "^2.0.10"
+    "typed.js": "^2.0.10",
+    "validator": "^10.11.0"
   },
   "scripts": {
     "start": "node server.js",

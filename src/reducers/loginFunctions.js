@@ -19,9 +19,9 @@ export default function(state = initialState, action){
         case 'USR_LOGOUT':
         return {
             loggedState: false,
-            userName: null,
-            token: null,
-            session: null
+            userName: '',
+            token: '',
+            session: 0
         }
         }
     return state;

@@ -64,6 +64,15 @@ export default function(state = initialState, action){
                     }
                     }
                 }
+            case 'UPDATE_IMG': {
+                return {
+                    ...state,
+                    itemPrev: {
+                        ...state.itemPrev,
+                        img: action.payload
+                    }
+                    }
+                }
         }
     return state;
 }

@@ -1,7 +1,7 @@
-const {createServer} =require('http');
-const express =require('express');
+const {createServer} = require('http');
+const express = require('express');
 require('dotenv').config();
-const morgan =require('morgan');
+const morgan = require('morgan');
 const path = require('path');
 var Routers = require('./server/Routes/routes');
 var userRoutes = require('./server/Routes/userRoutes');
@@ -12,7 +12,7 @@ let DB = require('./server/Mongo');
 const normalizePort =port => parseInt(port ,10);
 const PORT = normalizePort(process.env.PORT || 4000);
 
-const app =express();
+const app = express();
 const compression = require('compression');
 app.use(compression());
 
@@ -30,10 +30,10 @@ app.use(function (req, res, next) {
     res.header("WWW-Authenticate", "xBasic realm=\"\"");
     next();
   });
-  app.use('/',userRoutes)
+  app.use('/', userRoutes)
   app.use('/server', Routers);
 
-  const server =createServer(app);
+  const server = createServer(app);
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")

@@ -70,161 +70,163 @@ import t015w from '../Images/tshirts/t015w.png';
 import t015pur from '../Images/tshirts/t015pur.png';
 import t015p from '../Images/tshirts/t015p.png';
 
+import mouse from '../Images/gear/mouse.png';
+import keyboard from '../Images/gear/keyboard.png';
+import keyboard2 from '../Images/gear/keyboard2.jpg';
+import keyboard3 from '../Images/gear/keyboard3.jpg';
+import keyboard4 from '../Images/gear/keyboard4.jpg';
+
+
 export default function() {
     return {
       tshirts: [
         {
-          id: "001",
           Name: "Dab on them",
           price: 100,
           rarity: "rare",
-          defaultColor: "black",
-          defaultSize: "small",
           discount: 50,
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t001b, white: t001w, purple: t001pur, petro: t001p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t001b, white: t001w, purple: t001pur, petro: t001p},
+          type: "tshirt",
         },
         {
-          id: "002",
           Name: "Spitfire",
           price: 100,
           rarity: "legendary",
-          defaultColor: "black",
-          defaultSize: "small",
           discount: 10,
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t002b, white: t002w, purple: t002pur, petro: t002p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t002b, white: t002w, purple: t002pur, petro: t002p},
+          type: "tshirt",
         },
         {
-          id: "003",
           Name: "LLamaaaa",
           price: 100,
           rarity: "epic",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t003b, white: t003w, purple: t003pur, petro: t003p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t003b, white: t003w, purple: t003pur, petro: t003p},
+          type: "tshirt",
         },
         {
-          id: "004",
           Name: "Chicken Dinner",
           price: 100,
           rarity: "legendary",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t004b, purple: t004pur, petro: t004p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t004b, purple: t004pur, petro: t004p},
+          type: "tshirt",
         },
         {
-          id: "005",
           Name: "Sanhok",
           price: 100,
           rarity: "rare",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t005b, purple: t005pur, petro: t005p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t005b, purple: t005pur, petro: t005p},
+          type: "tshirt",
         },
         {
-          id: "006",
           Name: "Draaaaaaaaaaaven",
           price: 100,
           rarity: "epic",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t006b, white: t006w, purple: t006pur, petro: t006p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t006b, white: t006w, purple: t006pur, petro: t006p},
+          type: "tshirt",
         },
         {
-          id: "007",
           Name: "Iron Tryhard",
           price: 100,
           rarity: "uncommon",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t007b, white: t007w, purple: t007pur, petro: t007p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t007b, white: t007w, purple: t007pur, petro: t007p},
+          type: "tshirt",
         },
         {
-          id: "008",
           Name: "Challenger",
           price: 100,
           rarity: "legendary",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t008b, white: t008w, purple: t008pur, petro: t008p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t008b, white: t008w, purple: t008pur, petro: t008p},
+          type: "tshirt",
         },
         {
-          id: "009",
           Name: "Bronze Noob",
           price: 100,
           rarity: "rare",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t009b, white: t009w, purple: t009pur, petro: t009p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t009b, white: t009w, purple: t009pur, petro: t009p},
+          type: "tshirt",
         },
         {
-          id: "010",
           Name: "Take the L",
           price: 100,
           rarity: "legendary",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t010b, white: t010w, purple: t010pur, petro: t010p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t010b, white: t010w, purple: t010pur, petro: t010p},
+          type: "tshirt",
         },
         {
-          id: "011",
           Name: "Waterworks",
           price: 100,
           rarity: "rare",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t011b, purple: t011pur, petro: t011p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t011b, purple: t011pur, petro: t011p},
+          type: "tshirt",
         },
         {
-          id: "012",
           Name: "Winner Winner v2",
           price: 100,
           rarity: "rare",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t012b, white: t012w, purple: t012pur, petro: t012p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t012b, white: t012w, purple: t012pur, petro: t012p},
+          type: "tshirt",
         },
         {
-          id: "013",
           Name: "#Rip",
           price: 100,
           rarity: "epic",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t013b, white: t013w, purple: t013pur, petro: t013p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t013b, white: t013w, purple: t013pur, petro: t013p},
+          type: "tshirt",
         },
         {
-          id: "014",
           Name: "Pubg Warrior",
           price: 100,
           rarity: "epic",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t014b, white: t014w, purple: t014pur, petro: t014p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t014b, white: t014w, purple: t014pur, petro: t014p},
+          type: "tshirt",
         },
         {
-          id: "015",
           Name: "Love Ranger",
           price: 100,
           rarity: "legendary",
-          defaultColor: "black",
-          defaultSize: "small",
-          desc: "Printed on 'Heavy Cotton' 80% Cotton/20% Polyester T-shirt",
-          img: {black: t015b, white: t015w, purple: t015pur, petro: t015p}
+          desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
+          img: {black: t015b, white: t015w, purple: t015pur, petro: t015p},
+          type: "tshirt",
         },
-        ]
+        ],
+      gGear: [
+        {
+          Name: "A4tech Bloody A60",
+          price: 550,
+          type: "mouse",
+          color: "black",
+          desc: "Sensor: AVAGO A3050 Gaming Engine., Adjustable resolution 800/1000/1200/1600/4000 CPI., Instant upgrade sniping techniques by applying 6 powerful sniping modes.",
+          defaultImage: mouse,
+          imgs: {mouse},
+          info: "Gaming Mouse",
+          rarity: "legendary"
+        },
+        {
+          Name: "Mercury MK59",
+          price: 299,
+          discount: 10,
+          type: "keyboard",
+          color: "black",
+          desc: "Connectivity : USB, Keyboard Language : English & Arabic, Model Number : MK59, Brand : Mercury, Compatible with : All",
+          defaultImage: keyboard,
+          imgs: {keyboard, keyboard2, keyboard3, keyboard4},
+          info: "Gaming Keyboard",
+          rarity: "epic"
+        }
+      ]
   }
 }

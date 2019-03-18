@@ -9,6 +9,8 @@ import Modal from 'react-responsive-modal';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
 import {connect} from 'react-redux';
+import isEmail from 'validator/lib/isEmail';
+import isInt from 'validator/lib/isInt';
 
 class SignUp extends Component {
 
@@ -44,7 +46,6 @@ onCloseModal = (type) => {
 
 onChange = (value) => {
   this.setState({captcha: value})
-  // this.googleVerify()
 }
 
 onExpired = () => {
@@ -73,16 +74,14 @@ onExpired = () => {
 createUser = () => {
   
   var headers = {
-    'Content-Type': 'application/json',
-    'authorization': localStorage.getItem("Token")
-  }
+    'Content-Type': 'application/json'
+  } 
 
   var that = this
- if (this.state.name != '' && this.state.name.length >= 6) {
+ if (this.state.name.length >= 6) {
    if (this.state.password === this.state.confirmPassword){
-    if (this.state.phone.length == 11 && /^\d+$/.test(this.state.phone)){
-      let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (re.test(this.state.email)){
+    if (this.state.phone.length == 11 && isInt(this.state.phone)){
+      if (isEmail(this.state.email)){
         if(this.state.password.length >= 7){
           if(this.state.captcha){
             let Data = {Name: this.state.name, Phone: this.state.phone, Password: this.state.password, Gender: this.state.gender, Email: this.state.email}

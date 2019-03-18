@@ -31,6 +31,11 @@ export const updatePrev = (thing, action) => {
             type: "UPDATE_COLOR",
             payload: thing
         }
+        case 'img':
+        return {
+            type: "UPDATE_IMG",
+            payload: thing
+        }
         }
 }
 

@@ -21,8 +21,9 @@ render() {
         </div>
         <div class="col-md-6 col-lg-6 col-xs-12 ">
         <h3 style={{fontWeight: "bold"}}> About Us<span className="svg-icon svg-icon-sphinx"></span></h3>
-        <p> Esh7en.com was created to help you make online transactions and track your orders with our system and get real-time detailed information on your order status without using a credit card and to those who were scammed by non-legit online resellers.
-        <br/>You can contact us by emailing to contact@esh7en.com for more ways to contact us visit - <a  onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}>Contact Us <span className="glyphicon glyphicon-earphone"></span> </a></p>
+        <p> Esh7en.com was developed to help you make online transactions and track your orders with our system and get real-time detailed information on your order status without using a credit card and to those who were scammed by non-legit online resellers.
+        <br/><br/>
+        You can contact us by emailing to contact@esh7en.com for more ways to contact us visit - <a  onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}>Contact Us <span className="glyphicon glyphicon-earphone"></span> </a></p>
         <p>We are not affiliated Epic Games/Riot Games/Blue hole or endorsed by them in any way and all the graphics/images are fan art.</p>
         </div>
         <div class="col-md-12 col-lg-12 col-xs-12 ">

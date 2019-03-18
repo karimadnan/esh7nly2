@@ -47,6 +47,8 @@ Validator.check(body,'signup').then(success=>{
     body.createdAt=Date.now();
     body['status']="active";
     body.Access=1;
+    body.VouchPoints=0;
+    body.Health=3;
     bcrypt.hash(body.Password,null,null,function (err, hash) {
     if(err){
         console.log(err)

@@ -394,6 +394,17 @@ renderPage() {
 }    
 
 render(){
+  if (this.props.loginData.session < 2){
+    return (
+    <div class ="PrivacyBG">
+        <div class="container">
+           <h1>401 (Unauthorized Access)</h1>
+           <p> You don't have permission to view this page</p>
+        </div>
+    </div>
+  )
+  }
+else {
   return (
     <div className="admin-bg">
       <ToastContainer
@@ -409,7 +420,7 @@ render(){
       <Getlogin page={"Admin"}/>
       {this.renderPage()}
     </div>
-  )
+  )}
 }
 }
 

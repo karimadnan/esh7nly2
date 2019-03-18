@@ -34,27 +34,6 @@
     background-image: url('Images/tibialogo.png');
   }
 
-  .netflixLogo{
-    width: 1100px;
-    height: 300px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: url('Images/netflixlogo1.png');
-  }
-
-  .bgr-netflix0 {
-    /* The image used */
-    background-image: url("Images/netflix-background.jpg");
-    overflow-x: hidden;
-    /* Full height */
-    height:stretch;
-  
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-
   .bgr-tibia0 {
     /* The image used */
     background-image: url("Images/tibialanding.png");
@@ -210,22 +189,6 @@
     margin-bottom: 10px;
   }
 
-  .netflix{
-    transition: background-size 0.6s ease;
-    cursor: pointer;
-    background-image: url('');
-    background-color: rgb(253, 0, 0); /* Fallback color */
-    background-color: rgba(255, 0, 0, 0.192); /* Black w/opacity/see-through */
-    border-radius: 1.95rem;
-    width: 350px;
-    height: 160px;
-    background-image: url('Images/netflixlogo.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
-    margin-bottom: 10px;
-  }
-
   .steamgames{
     transition: background-size 0.6s ease;
     background-size: 100%;
@@ -277,11 +240,27 @@
     margin: 0 auto;
   }
 
+  .Games:hover {
+    background-color: rgb(255, 255, 255); /* Fallback color */
+    background-color: rgba(255, 255, 255, 0.664); /* Black w/opacity/see-through */
+  }
+
   .Tshirts {
     transition: background-size 0.6s ease;
     background-size: 100%;
     cursor: pointer;
     background-image: url('Images/tshirts.png');
+    width: 740px;
+    height: 230px;
+    overflow:hidden;
+    margin: 0 auto;
+  }
+
+  .GamingStuff {
+    transition: background-size 0.6s ease;
+    background-size: 100%;
+    cursor: pointer;
+    background-image: url('Images/gamingstuff.png');
     width: 740px;
     height: 230px;
     overflow:hidden;
@@ -342,14 +321,6 @@
     -webkit-perspective: 500;
   } 
 
-  .netflix:hover {
-    box-shadow:0 0 25px rgb(252, 252, 252);
-    background-image: url('Images/netflixhover.png');
-    transition: all 0.5s;
-    -webkit-transition: all 0.5s;
-    -webkit-backface-visibility: hidden;
-    -webkit-perspective: 500;
-  } 
 @media screen and (max-width: 999px) {
 
   .Games {
@@ -524,17 +495,5 @@
     height: 138px;
     background-repeat: no-repeat;
   }
-  .netflix{
-    margin-top: 10px;
-    transition: background-size 0.6s ease;
-    cursor: pointer;
-    background-color: rgb(253, 0, 0); /* Fallback color */
-    background-color: rgba(255, 0, 0, 0.192); /* Black w/opacity/see-through */
-    border-radius: 1.95rem;
-    width: 300px;
-    height: 138px;
-    background-repeat: no-repeat;
-    background-image: url('Images/netflixlogo.png');
-    background-position: center;
-  }
+
 }

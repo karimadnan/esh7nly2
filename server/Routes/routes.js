@@ -12,7 +12,7 @@ const gameApis = require('../Apis/gameApis');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 res.render('index', { title: 'Express' });
-});   
+});    
 // login Apis ------------------------------------------------
 router.post('/login',loginApis.login);
 router.post('/signup',loginApis.signup); 

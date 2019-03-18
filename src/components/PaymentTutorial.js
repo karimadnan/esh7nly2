@@ -179,7 +179,7 @@ render() {
         {this.PaymentRender()}
         {this.SinglePayment()}
       </div>
-      <Footer />
+
     </div>
     );
   }

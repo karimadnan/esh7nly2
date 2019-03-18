@@ -71,6 +71,7 @@ updateInput(key, value) {
 logout =() =>{
   this.props.loginFunction(null, 'logout')
   window.location.reload();
+  ReactRouter.goTo("/main")
 }
 
 keyClicked (e) {
@@ -89,7 +90,6 @@ login() {
             let Data = {Phone: that.state.Phone, Password: that.state.Password}
             axios.post(that.state.Url+"login", Data, {headers: headers})
             .then(function (response) {
-              console.log(response)
               that.notifyLogin(response.data.data.Name)
               that.props.loginFunction(response.data.data, 'login')
             })
@@ -180,6 +180,7 @@ return (
             <ul className="dropdown-menu">
         {/* Admin Dashboard */}
               {   this.props.loginData.session > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> } 
+              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/profile")}}><span className="glyphicon glyphicon-user"></span> {this.props.lang.lang === "EN" ? "Profile" : " بروفايل" }</a></li> }   
               {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-euro"></span> {this.props.lang.lang === "EN" ? "Your Orders" : " الاوردارات" }</a></li> }   
               {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
             </ul>
