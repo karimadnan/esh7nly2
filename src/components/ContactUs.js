@@ -3,43 +3,113 @@ import React, { Component } from 'react';
 import '../Mycss.css';
 import '../Respcss.css';
 import Getlogin from './navbar';
-import tawkChat from '../Images/tawkchat.png';
 import { FacebookProvider, Page, CustomChat } from 'react-facebook';
 import Footer from './footer';
+import isInt from 'validator/lib/isInt';
+import isEmail from 'validator/lib/isEmail';
+import ReCAPTCHA from "react-google-recaptcha";
 
 class Contact extends Component {
+
+    state = {
+        name: "",
+        email: "",
+        subject: "",
+        body: "",
+        payload: ""
+    }
+
+updateInput(key, value) {
+this.setState({ [key]: value });
+}
+
+onChange = (value) => {
+this.setState({captcha: value})
+}
+
+verifier(){
+    let payload;
+    if (this.state.name.length < 3){
+        payload = "Name is required"
+    }
+    else if (!isEmail(this.state.email)){
+        payload = "Email is invaild"
+    }
+    else if (this.state.subject.length < 3){
+        payload = "Email subject is required"
+    }
+    else if (this.state.body.length < 10){
+        payload = "You need to write something to email"
+    }
+    else {
+        payload = "Sent"
+    }
+return this.setState({payload: payload})
+}
 
 render() {
 
     return (
   <div>
-    <div className="bg-image"> 
+    <div className="PrivacyBG"> 
     <Getlogin page={"ContactUs"}/>
-    <div class="col-xs-12 col-md-12 col-lg-12">
+        <br/><br/><br/>
+        <div class="container">
+            <div class="ProfileBG">
+                <h1>Contact us by facebook</h1>
+                    <FacebookProvider key="1" appId="1984023341904164">
+                        <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
+                    </FacebookProvider> 
+                    <br/><br/>
+                <div class="bordersep"/>
+                <h1>Email us directly</h1>
+                    <br/><br/>
+                    <div class="form-group has-feedback">
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <label style={{color: this.state.name.length > 2 ? "green" : "red"}}>{this.state.name.length > 2 ? "":'*'} Your name</label>
+                            <input class="form-control" type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="Your name" required></input>
+                            <br/>
+                        </div>
 
-            <div style={{marginTop: 70}} class="ContactUs1 badge-dark">
-                <h4> Your game is missing? no problem just contact us</h4>
-                <h4> لعبتك مش موجودة؟ مش مشكلة كلمنا  </h4>
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <label style={{color: isEmail(this.state.email) ? "green" : "red"}}>{isEmail(this.state.email) ? "":'*'} Email</label>
+                            <input class="form-control" type="text" onChange={e => this.updateInput("email", e.target.value)} placeholder="Your email address" required></input>
+                            <br/>
+                        </div>
+
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <label style={{color: this.state.subject.length >= 3 ? "green" : "red"}}>{this.state.subject.length >= 3 ? "":'*'} Subject</label>
+                            <input class="form-control" type="text" onChange={e => this.updateInput("subject", e.target.value)} placeholder="Subject" required></input>
+                            <br/>
+                        </div>
+
+                        <div class="col-xs-12 col-md-12 col-lg-12">
+                            <label style={{color: this.state.body.length >= 10 ? "green" : "red"}}>{this.state.body.length >= 10 ? "":'*'} Your question</label>
+                            <textarea class="form-control" rows="5" onChange={e => this.updateInput("body", e.target.value)} id="comment"></textarea>
+                            <br/>
+                        </div>
+                        <div class="g-recaptcha col-xs-12 col-md-6 col-lg-6">
+                            <ReCAPTCHA
+                            onExpired	={this.onExpired}
+                            sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
+                            onChange={this.onChange}
+                            />
+                        </div>
+                        <div class="col-xs-12 col-md-6 col-lg-6">
+                            <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{this.verifier()}}>
+                                <span className="icon glyphicon glyphicon glyphicon-envelope"></span>
+                                <span className="text">Send Email</span>
+                            </button>
+                        </div>
+        
+                                <strong style={{color: this.state.payload === "Sent" ? "green" : "red", float: "right"}}>{this.state.payload}</strong> 
+                    </div>
             </div>
+        </div>
+        <br/><br/>
+        <Footer />
     </div>
-    <div class="col-xs-12 col-md-12 col-lg-12">
-            <div style={{marginTop: 10}} class="ContactUs1 badge-dark3">
-                <p> 1- Message us from the integrated chat on our website</p>
-                <p> كلمنا على الشات الموجود على الصفحة  <img style={{borderRadius: 5.5}} src={tawkChat} alt=""></img></p>
-            </div>
-    </div>
-    <div class="col-xs-12 col-md-12 col-lg-12">
-            <div style={{marginTop: 10}} class="ContactUs1 badge-dark3">
-                <p> 2- Message us on facebook</p>
-                <p> كلمنا على الفيس بوك </p>
-                <FacebookProvider key="1" appId="1984023341904164">
-                      <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
-                </FacebookProvider> 
-            </div>
-    </div>
-    </div>
-    <Footer />
-    </div>
+  </div>
     );
   }
 }

@@ -72,7 +72,7 @@ render(){
         <div class="container" >
             <br/>    <br/>     <br/>  
             <TypedJs  
-              start={lang === "EN" ? "Why Esh7en?" : "ليه اشحين؟"}
+              start={lang === "EN" ? "Why GGegypt?" : "ليه تشترى؟"}
               strings=
               {lang === "EN" ?
                 [

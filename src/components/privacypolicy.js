@@ -18,7 +18,7 @@ render() {
                 <h2> Privacy policy <span className="glyphicon glyphicon-briefcase"></span> </h2>
                 <br/>
             <div style={{fontSize: 15, color:"white"}}>
-                <p>• Eshe7nly.com aims to be transparent about the data/info we collect and we respect users privacy.</p>
+                <p>• GGegypt.com aims to be transparent about the data/info we collect and we respect users privacy.</p>
                 <p>• This Policy is to explain what info will be collected/used while using Eshe7nly.com. </p>
             </div>
             <div class="bordersep"/>
@@ -42,7 +42,7 @@ render() {
                     </div>
             <div class="bordersep"/>
                 <br/><br/>
-                <p>© 2019, Eshe7nly.com - <a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}>Back to homepage  <span className="glyphicon glyphicon-home"></span> </a></p>
+                <p>© 2019, GGegypt.com - <a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}>Back to homepage  <span className="glyphicon glyphicon-home"></span> </a></p>
         </div>
             </div>
         <Getlogin />
