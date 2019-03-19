@@ -96,13 +96,12 @@ render() {
                             />
                         </div>
                         <div class="col-xs-12 col-md-6 col-lg-6">
-                            <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{this.verifier()}}>
-                                <span className="icon glyphicon glyphicon glyphicon-envelope"></span>
+                            <button class="btn btn-success btn-block" style={{color : "white"}} onClick={()=>{this.verifier()}}>
+                                <span className="icon glyphicon glyphicon-envelope"></span>
                                 <span className="text">Send Email</span>
                             </button>
                         </div>
-        
-                                <strong style={{color: this.state.payload === "Sent" ? "green" : "red", float: "right"}}>{this.state.payload}</strong> 
+                            <strong style={{color: this.state.payload === "Sent" ? "green" : "red", float: "right"}}>{this.state.payload}</strong> 
                     </div>
             </div>
         </div>

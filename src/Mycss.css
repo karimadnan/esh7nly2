@@ -113,6 +113,7 @@ button:hover .text { display: none; }
 }
 
 .ProfileBG {
+  border-radius: 1.95rem;
   color: rgb(182, 180, 180);
   padding: 1.25em 1.5em 3.5em;
   height: fit-content;
@@ -220,31 +221,13 @@ button:hover .text { display: none; }
 .footer { 
   clear: both; }
 
-.SignUpBOX {
-  border: 20px solid transparent;
-  background-image: url('Images/newsbg.png');
-  border-image-source: url('Images/borders.png');
-  border-image-slice: 20;
-  border-image-repeat: round;
-  color: #fff;
-  text-align: center;
-  max-width: 700px;
-  height: 400px;
-  margin: 0 auto;
-}
-
-.signUpLogo{
-  border: 20px solid transparent;
-  background-image: url('Images/newsbg.png');
-  border-image-source: url('Images/borders.png');
-  border-image-slice: 20;
-  border-image-repeat: round;
-  width: 339px;
-  height: 190px;
-  margin: 0 auto;
-  background-position: center;
-  background-repeat: no-repeat;
+.SignUpLogo {
   background-image: url('Images/signuplogo.png');
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ContactUs1{

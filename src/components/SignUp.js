@@ -11,6 +11,9 @@ import fortniteDab from '../Images/fortnitedab.png';
 import {connect} from 'react-redux';
 import isEmail from 'validator/lib/isEmail';
 import isInt from 'validator/lib/isInt';
+import Footer from './footer';
+import LOGO from '../Images/signuplogo.png';
+
 
 class SignUp extends Component {
 
@@ -125,109 +128,6 @@ else {
 }
 }
 
-renderPage () {
-
-if (!this.state.SuccessModal){
-  const ErrorStyle = {
-    overlay: {
-      background: "transparent"
-    },
-    modal: {
-      backgroundColor: 'rgba(219, 105, 105, 0.9)',
-      color: "white",
-      borderRadius: '10px',
-    },
-  }
-  
-  return (
-
-
-  <div >
-  <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
-          styles={ErrorStyle}>
-        <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
-        <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img>
-  </Modal>
-    <br/>
-    <br/>
-    <br/>
-
-    <div style={{marginBottom: 5}}class="col-xs-12 col-md-12 col-lg-12">
-                <div className="signUpLogo"> 
-            </div>
-    </div>
-
-<div class="col-xs-12 col-md-12 col-lg-12">
-  <div class="SignUpBOX">
-
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                  <p >Your Name:</p>
-              </div>
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                  <input class="Login" type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="First and second name" required></input>
-              </div>
-<br/>
-<br/>
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                   <p >Mobile Number:</p>
-              </div>
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                   <input class="Login" type="text"  onChange={e => this.updateInput("phone", e.target.value)} placeholder="Mobile Number"  required></input>
-              </div>
-
-<br/>
-<br/>
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                  <p >Email:</p>
-              </div>
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                  <input class="Login" type="email" onChange={e => this.updateInput("email", e.target.value)} placeholder="example@gmail.com" required></input>
-              </div>
-
-<br/>
-<br/>
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                  <p >Password:</p>
-              </div>
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                  <input class="Login" type="password" onChange={e => this.updateInput("password", e.target.value)} id="user_password" placeholder="Password"  required></input>
-              </div>
-<br/>
-<br/>
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                  <p>Confirm Password:</p>
-              </div>
-              <div class="col-xs-6 col-md-6 col-lg-6">
-                  <input class="Login" type="password" onChange={e => this.updateInput("confirmPassword", e.target.value)} id="user_Cpassword" placeholder="Confirm Password" required></input>
-              </div>
-
-<br/>
-<br/>
-
-            <div class="g-recaptcha col-xs-12 col-md-offset-6 col-lg-offset-6">
-                <ReCAPTCHA
-                  onExpired	={this.onExpired}
-                  sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
-                  onChange={this.onChange}
-                />
-            </div>
-
-<br/>
-<br/>
-<br/>
-<br/>
-            <button type="button" onClick={()=>{this.createUser()}} class="btn btn-primary col-xs-12 col-md-12 col-lg-12">Sign up</button> 
-
-        </div>
-      </div>
-</div>
-  
-
-  
-    )
-}
-}
-
 render() {
   const SuccessStyle = {
     overlay: {
@@ -239,19 +139,84 @@ render() {
       borderRadius: '10px',
     },
   }
+  const ErrorStyle = {
+    overlay: {
+      background: "transparent"
+    },
+    modal: {
+      backgroundColor: 'rgba(219, 105, 105, 0.9)',
+      color: "white",
+      borderRadius: '10px',
+    },
+  }
   return(
-    <div>
-        <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
-          styles={SuccessStyle}>
-          <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
-          <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
-        </Modal>
-      <Getlogin page={"SignUp"}/>
-      <div className="bg-image">
-      {this.renderPage()}
+    
+<div class="PrivacyBG">
+      <br/><br/><br/>
+      <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
+            styles={SuccessStyle}>
+            <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
+            <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
+      </Modal>
+      <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+              styles={ErrorStyle}>
+            <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
+            <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img>
+      </Modal>
+        <div class="container">
+              <div class="ProfileBG">
 
-      </div>
-    </div>
+                <img src={LOGO} alt="Sign UP" class="SignUpLogo" width="500" height="200"/>
+
+                  <div class="bordersep"/>
+                      <br/>
+                      <div class="form-group has-feedback">
+                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: this.state.name.length >= 6 ? "green" : "red"}}>{this.state.name.length >= 6 ? "":'*'} Your name</label>
+                                <input class="form-control" type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="Your name" required></input>
+                                <br/>
+                          </div>
+                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: this.state.phone.length == 11 && isInt(this.state.phone) ? "green" : "red"}}>{this.state.phone.length == 11 && isInt(this.state.phone) ? "":'*'} Phone number</label>
+                                <input class="form-control" type="text" onChange={e => this.updateInput("phone", e.target.value)} placeholder="Phone number" required></input>
+                                <br/>
+                          </div>
+                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: isEmail(this.state.email) ? "green" : "red"}}>{isEmail(this.state.email) ? "":'*'} Email address</label>
+                                <input class="form-control" type="text" onChange={e => this.updateInput("email", e.target.value)} placeholder="Your email ex:example@gmail.com" required></input>
+                                <br/>
+                          </div>
+                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: this.state.password.length >= 7 ? "green" : "red"}}>{this.state.password.length >= 7 ? "":'*'} Password</label>
+                                <input class="form-control" type="password" onChange={e => this.updateInput("password", e.target.value)} placeholder="Password" required></input>
+                                <br/>
+                          </div>
+                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "green" : "red"}}>{this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "":'*'} Confirm password</label>
+                                <input class="form-control" type="password" onChange={e => this.updateInput("confirmPassword", e.target.value)} placeholder="Confirm password" required></input>
+                                <br/>
+                          </div>
+                          <div class="g-recaptcha col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                            <ReCAPTCHA
+                            onExpired	={this.onExpired}
+                            sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
+                            onChange={this.onChange}
+                            />
+                            <br/>
+                        </div>
+                        <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                            <button class="btn btn-success btn-block" style={{color : "white"}} onClick={()=>{this.createUser()}}>
+                                <span className="icon glyphicon glyphicon-ok"></span>
+                                <span className="text">Sign up</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+              <br/><br/>
+        </div>
+        <Getlogin page={"SignUp"}/>
+        <Footer/>
+</div>
   )
 }
 }

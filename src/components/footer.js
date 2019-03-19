@@ -29,16 +29,16 @@ render() {
         <div class="col-md-12 col-lg-12 col-xs-12 ">
         <br />  
         <div class="bordersep"/>
-            <div class="col-md-6 col-lg-6 col-xs-6 ">
+            <div class="col-md-6 col-lg-6 col-xs-3 ">
                 <h6 style={{textAlign: "center", fontWeight: "bold"}}> © 2019, GGegypt.com - <a  onClick={()=>{ReactRouter.goTo("/privacy")}} style={{cursor: 'pointer'}}>Privacy Policy  <span className="glyphicon glyphicon-briefcase"></span> </a> </h6>
             </div>
-            <div class="col-md-1 col-lg-1 col-xs-2">
+            <div class="col-md-1 col-lg-1 col-xs-3">
                 <img style ={{width: 70, height: 70, marginTop: 10}} src={VodafoneCashLogo} alt=""/>
             </div>
-            <div class="col-md-1 col-lg-1 col-xs-2">
+            <div class="col-md-1 col-lg-1 col-xs-3">
                 <img style ={{width: 70, height: 70, marginTop: 10}} src={EtisalatCashLogo} alt=""/>
             </div>    
-            <div class="col-md-1 col-lg-1 col-xs-2">
+            <div class="col-md-1 col-lg-1 col-xs-3">
                 <img style ={{width: 70, height: 70, marginTop: 10}} src={FawryLogo} alt=""/>
             </div>
         </div>
