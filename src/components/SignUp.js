@@ -48,31 +48,33 @@ onCloseModal = (type) => {
 };
 
 onChange = (value) => {
-  this.setState({captcha: value})
+  this.googleVerify();
 }
 
 onExpired = () => {
   this.setState({captcha: false})
 }
 
-// googleVerify = () =>{
-//   var headers = {
-//     'Content-Type': 'application/json'
-//   }
-//   axios.post(
-//     'https://www.google.com/recaptcha/api/siteverify',
-//     {
-//         secret: '6LdZBo0UAAAAAM4oSlDVO7GKo18i8ChWD7LF9hge',
-//         response: this.state.captcha
-//     }
-//   )
-//   .then(function (response) {
-//     console.log("Rres",response)
-//   })
-//   .catch(function (error) {
-//     console.log("ERROR",error)
-// })
-// }
+googleVerify = () =>{
+  var headers = {
+    'Content-Type': 'application/json'
+  }
+  axios.post(
+    'https://www.google.com/recaptcha/api/siteverify',
+    {
+        secret: '6LdZBo0UAAAAAM4oSlDVO7GKo18i8ChWD7LF9hge',
+        response: this.state.captcha
+    }
+  )
+  .then(function (response) {
+    console.log("Rres",response)
+    this.setState({captcha: true})
+  })
+  .catch(function (error) {
+    console.log("ERROR",error)
+    this.setState({captcha: false})
+})
+}
 
 createUser = () => {
   

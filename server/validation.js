@@ -78,7 +78,7 @@ let Validator =  {
         });
 	},
 	isAdmin:function (req,res,next) {
-        if(req.token.access && req.token.access == 2){
+        if(req.token.isAdmin){
 			return next();     
         }
 	    return res.status(401).send({ message: 'unAuthorized Action' });

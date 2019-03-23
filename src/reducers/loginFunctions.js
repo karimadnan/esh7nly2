@@ -13,7 +13,8 @@ export default function(state = initialState, action){
             loggedState: true,
             userName: action.payload.Name,
             token: action.payload._token,
-            session: action.payload.Access
+            session: action.payload.Access,
+            isAdmin: action.payload.isAdmin
         }
 
         case 'USR_LOGOUT':

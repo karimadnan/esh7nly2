@@ -1,14 +1,27 @@
-let DB = require('../Mongo');
+const DB = require('../Mongo');
 const Validator =require('../validation');
-var ObjectId = require('mongodb').ObjectID;
+const ObjectId = require('mongodb').ObjectID;
 
 
 const orderApis = {
     createOrder:function(req, res, next) {
         var body =req.body;
-        Validator.check(body,'NewOrder').then((success)=>{ 
+        Validator.check(body,'NewOrder').then(async (success)=>{ 
         const collection = DB.dbo.collection('orders');
-        body.user= new ObjectId(req.token.userId);
+        let user;
+        try{
+           user = await DB.dbo.collection('users').findOne({_id:new ObjectId(req.token.userId)}) 
+        }catch(err){
+            return res.status(500).send({message:"Unexpected Error"})
+        }
+        if(!user){
+            return res.status(400).send({message:"Invalid User"})
+        }
+        else if(user.status !="active"){
+            return res.status(400).send({message:"Banned users can't create orders"})
+        }else{
+            body.user= new ObjectId(req.token.userId);  
+        }
         body.createdAt=Date.now();
         body['status']="pending";
         collection.insertOne(body,(err,result)=>{
@@ -46,6 +59,226 @@ const orderApis = {
     return res.status(200).send({ message: 'all orders',data:docs});
     });  
     },
+    getOrdersByType:function(req, res){
+        if(!req.query.status){
+            return res.status(400).send({message: "Missing Status"})
+        }
+        const collection = DB.dbo.collection('orders');
+        collection.aggregate([
+        {$match: {status: req.query.status}},
+        {
+        $lookup:
+        {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user"
+        }
+        },
+        { $unwind:"$user" },{$project: {"user.Name": 1, 
+        "user.Phone": 1, 
+        "user._id": 1, 
+        "status": 1, 
+        "createdAt": 1,
+        "game": 1,
+        "orderType": 1,
+        "paymentMethod": 1}},
+        {$sort: { createdAt: -1 }}
+        ]).toArray(function(err, docs) {
+        if(err){
+        return res.status(500).send({ message: 'DB Error',error:err});
+        }
+        if(!docs[0]){
+        return res.status(202).send({ message: 'No Data',date:[]});
+        }
+        return res.status(200).send({ message: 'all orders',data:docs});
+        }); 
+    },
+    assginlead:async function(req, res, next){
+        var body= req.body;
+        if(!body.orderID){
+        return res.status(400).send({message:'Missing fields'})
+        }
+        const collection = DB.dbo.collection('orders');
+        let order;
+        try{
+            order = await collection.findOne({_id:new ObjectId(orderID)}) 
+        }catch(err){
+            return res.status(500).send({message:"Unexpected Error"})
+        }
+        if(!order){
+            return res.status(400).send({message:"Invalid orderID"})
+        }
+        else if(order.status =="ongoing"){
+            return res.status(400).send({message:"this order is taken please refresh"})
+        }else{
+        collection.updateOne({_id:new ObjectId(body.orderID)}, {$set:{"status":"ongoing","adminId":new ObjectId(req.token.userId)}}, function(err, result) {
+          if (err) {
+           console.log("failed To update ordet")
+           console.log("Error =>",err)
+           return res.status(500).send({message:"Update Failed"})
+          }
+           return res.status(200).send({message:"Order is selected"});
+        });
+        }
+    },
+    getAdminOrders:function(req, res){
+        let adminId=req.query.adminId;
+        if(!adminId){
+            adminId=req.token.userId;
+        }
+        const collection = DB.dbo.collection('orders');
+        collection.aggregate([
+        {$match: {adminId: new ObjectId(adminId)}},
+        {
+        $lookup:
+        {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user"
+        }
+        },
+        { $unwind:"$user" },{$project: {"user.Name": 1, 
+        "user.Phone": 1, 
+        "user._id": 1, 
+        "status": 1, 
+        "createdAt": 1,
+        "game": 1,
+        "orderType": 1,
+        "extra":1,
+        "transId":1,
+        "paymentMethod": 1}},
+        {$sort: { createdAt: -1 }}
+        ]).toArray(function(err, docs) {
+        if(err){
+        return res.status(500).send({ message: 'DB Error',error:err});
+        }
+        if(!docs[0]){
+        return res.status(202).send({ message: 'No Data',date:[]});
+        }
+        return res.status(200).send({ message: 'all orders',data:docs});
+        }); 
+    },
+    getUserOrders:function(req, res){
+        let userId=req.query.userId;
+        if(!userId){
+            userId=req.token.userId;
+        }
+        const collection = DB.dbo.collection('orders');
+        collection.aggregate([
+        {$match: {user: new ObjectId(userId)}},
+        {
+        $lookup:
+        {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user"
+        }
+        },
+        { $unwind:"$user" },{$project: {"user.Name": 1, 
+        "user.Phone": 1, 
+        "user._id": 1, 
+        "status": 1, 
+        "createdAt": 1,
+        "game": 1,
+        "orderType": 1,
+        "extra":1,
+        "transId":1,
+        "paymentMethod": 1,
+        "comment": 1}},
+        {$sort: { createdAt: -1 }}
+        ]).toArray(function(err, docs) {
+        if(err){
+        return res.status(500).send({ message: 'DB Error',error:err});
+        }
+        if(!docs[0]){
+        return res.status(202).send({ message: 'No Data',date:[]});
+        }
+        return res.status(200).send({ message: 'all orders',data:docs});
+        }); 
+    },
+    getAdminHistory:function(req, res){
+        let adminId=req.query.adminId;
+        if(!adminId){
+            adminId=req.token.userId;
+        }
+        const collection = DB.dbo.collection('ordersHistory');
+        collection.aggregate([
+        {$match: {adminId: new ObjectId(adminId)}},
+        {
+        $lookup:
+        {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user"
+        }
+        },
+        { $unwind:"$user" },{$project: {"user.Name": 1, 
+        "user.Phone": 1, 
+        "user._id": 1, 
+        "status": 1, 
+        "createdAt": 1,
+        "game": 1,
+        "orderType": 1,
+        "extra":1,
+        "transId":1,
+        "comment":1,
+        "endedAt":1,
+        "endedBy":1,
+        "paymentMethod": 1}}
+        ]).toArray(function(err, docs) {
+        if(err){
+        return res.status(500).send({ message: 'DB Error',error:err});
+        }
+        if(!docs[0]){
+        return res.status(202).send({ message: 'No Data',date:[]});
+        }
+        return res.status(200).send({ message: 'all orders',data:docs});
+        }); 
+    },
+    getUserHistory:function(req, res){
+        let userId=req.query.userId;
+        if(!userId){
+            userId=req.token.userId;
+        }
+        const collection = DB.dbo.collection('ordersHistory');
+        collection.aggregate([
+        {$match: {user: new ObjectId(userId)}},
+        {
+        $lookup:
+        {
+        from: "users",
+        localField: "user",
+        foreignField: "_id",
+        as: "user"
+        }
+        },
+        { $unwind:"$user" },{$project: {"user.Name": 1, 
+        "user.Phone": 1, 
+        "user._id": 1, 
+        "status": 1, 
+        "createdAt": 1,
+        "game": 1,
+        "orderType": 1,
+        "extra":1,
+        "transId":1,
+        "comment":1,
+        "endedAt":1,
+        "endedBy":1,
+        "paymentMethod": 1}}
+        ]).toArray(function(err, docs) {
+        if(err){
+        return res.status(500).send({ message: 'DB Error',error:err});
+        }
+        if(!docs[0]){
+        return res.status(202).send({ message: 'No Data',date:[]});
+        }
+        return res.status(200).send({ message: 'all orders',data:docs});
+        }); 
+    },
     getAllOrdersHistory:function(req, res, next) {
         const collection = DB.dbo.collection('ordersHistory');
         collection.aggregate([
@@ -71,11 +304,11 @@ const orderApis = {
     },
     viewOrder:function(req, res, next){
         var body= req.body;
-        if(!body.orderID){
+        if(!body.orderID || !body.comment ){
         return res.status(400).send({message:'Missing fields'})
         }
         const collection = DB.dbo.collection('orders');
-        collection.updateOne({_id:new ObjectId(body.orderID)}, {$set:{"status":"InProgress"}}, function(err, result) {
+        collection.updateOne({_id:new ObjectId(body.orderID)}, {$set:{"status":"InProgress","comment":body.comment}}, function(err, result) {
           if (err) {
            console.log("failed To update ordet")
            console.log("Error =>",err)
@@ -86,7 +319,7 @@ const orderApis = {
     },
     endOrder:async function(req, res, next){
     var body= req.body;
-    if(!body.orderID){
+    if(!body.orderID || !body.status){
     return res.status(400).send({message:'Missing fields'})
     }
     const collection = DB.dbo.collection('orders');
@@ -96,6 +329,43 @@ const orderApis = {
         });
     if(!doc){
     return res.status(404).send({ message: 'Wrong orderID'});
+    }
+    if(body.status == 1 ){
+        doc['status']="Passed";
+        doc['comment']="Order delivered";
+    }
+    else if (body.status == 2){
+        doc['status']="Failed";
+        doc['comment']=(body.comment)? body.comment : "Order Failed No Strikes";
+    }
+    else if (body.status == 3) {
+        doc['status']="Failed";
+        doc['comment']=(body.comment)? body.comment : "Order Failed with Strike"; 
+        let user;
+        try{
+           user = await DB.dbo.collection('users').findOne({_id:new ObjectId(doc.user)}) 
+        }catch(err){
+            return res.status(500).send({message:"Unexpected Error"})
+        }
+        if(user.health == 1){
+            try{
+            await DB.dbo.collection('users').updateOne({_id:new ObjectId(doc.user)}, {
+                $set: { 'status': 'banned' }, 
+                $inc: { 'health': -1 } 
+            }) 
+            }catch(err){
+            return res.status(500).send({message:"Unexpected Error"})
+            }
+        }else{
+            try{
+            await DB.dbo.collection('users').updateOne({_id:new ObjectId(doc.user)},{
+                $inc: { 'health': -1 } 
+            }) 
+            }catch(err){
+                return res.status(500).send({message:"Unexpected Error"})
+            } 
+        }
+
     }
     doc['endedAt']=Date.now();
     doc['endedBy']=new ObjectId(req.token.userId);

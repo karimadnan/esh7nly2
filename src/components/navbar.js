@@ -11,6 +11,7 @@ import {loginFunction, updateLang} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import '../flag-icon.css'
 import ReactTooltip from 'react-tooltip'
+import isEmail from 'validator/lib/isEmail';
 
 class Getlogin extends Component {
 
@@ -81,14 +82,26 @@ this.login();
 }
 
 login() {
-
-  var headers = {
-      'Content-Type': 'application/json'
-  }
   var that=this;
     if(this.state.Phone  || this.state.Password){
-            let Data = {Phone: that.state.Phone, Password: that.state.Password}
-            axios.post(that.state.Url+"login", Data, {headers: headers})
+
+      if(isEmail(this.state.Phone)){
+            axios.get(`${this.state.Url}adminLogin?Email=${this.state.Phone}&Password=${this.state.Password}`)
+            .then(function (response) {
+                that.notifyLogin(response.data.data.Name)
+                that.props.loginFunction(response.data.data, 'login')
+            })
+            .catch(function (error) {
+              if (error.response.data.message){
+                that.setState({
+                  ErrorModal:true,
+                  ErrorMsg:error.response.data.message
+                })
+              }
+            });
+        }
+        else{
+            axios.get(`${this.state.Url}login?Phone=${this.state.Phone}&Password=${this.state.Password}`)
             .then(function (response) {
               that.notifyLogin(response.data.data.Name)
               that.props.loginFunction(response.data.data, 'login')
@@ -100,14 +113,14 @@ login() {
                   ErrorMsg:error.response.data.message
                 })
               }
-  
+
             }); 
-        }
+          }
   
-      else{
-          this.setState({ErrorModal: true, ErrorMsg: "Please fill your info."})
-      }
-  
+    }
+    else{
+      this.setState({ErrorModal: true, ErrorMsg: "Please fill your info."})
+    }
     } 
 
 render() {
@@ -179,7 +192,7 @@ return (
       {   this.props.loginData.loggedState && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="svg-icon svg-icon-anubis"></span> {this.props.loginData.userName} <span className="caret"></span></a>
             <ul className="dropdown-menu">
         {/* Admin Dashboard */}
-              {   this.props.loginData.session > 1 &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> } 
+              {   this.props.loginData.isAdmin &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> } 
               {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/profile")}}><span className="glyphicon glyphicon-user"></span> {this.props.lang.lang === "EN" ? "Profile" : " بروفايل" }</a></li> }   
               {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-euro"></span> {this.props.lang.lang === "EN" ? "Your Orders" : " الاوردارات" }</a></li> }   
               {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
