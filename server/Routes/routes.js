@@ -18,7 +18,7 @@ res.render('index', { title: 'Express' });
 router.get('/login',loginApis.login);
 router.get('/adminLogin',loginApis.adminLogin);
 router.post('/signup',loginApis.signup); 
-router.post('/sendEmail',loginApis.sendEmail); 
+// router.post('/sendEmail',extraApis.sendEmail); 
 router.get('/checkToken',loginApis.checkToken); 
 router.post('/getUserbyId',Validator.checkJWT,Validator.isAdmin,loginApis.getUserbyId);
 // order Apis-------------------------------------------------- 
