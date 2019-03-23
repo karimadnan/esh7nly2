@@ -46,6 +46,7 @@ return res.status(400).send({ message: 'Missing fields'});
             const response = {};
             response._token = accessToken;
             response.Access=doc.Access;
+            response.status=doc.status;
             response.Name=doc.Name;
             return res.status(200).send({ message: 'success',data:response});
 
@@ -92,7 +93,7 @@ var body =req.body;
 Validator.check(body,'signup').then(success=>{ 
     const collection = DB.dbo.collection('users');
     body.createdAt=Date.now();
-    body['status']="active";
+    body['status']="pending";
     body.Access=1;
     body.VouchPoints=0;
     body.health=3;
@@ -131,6 +132,30 @@ Validator.check(body,'signup').then(success=>{
     return res.status(400).send(err);
 })
 },
+validateUser:async function(req, res){
+if(!req.query.code){
+    return res.status(400).send({ message: "Code is invaild"})
+}
+const collection = DB.dbo.collection('users');
+let user;
+try{
+    user = await collection.findOne({_id: new ObjectId(req.token.userId)})
+}
+catch(err){
+    return res.status(500).send({ message: "Error"})
+}
+if(Number(user.verifyEmail) == Number(req.query.code)){
+    collection.updateOne({_id: new ObjectId(req.token.userId)}, {$set: {status: "active"}},(err,result)=>{
+        if(err){
+            return res.status(500).send({ message: 'Failed to activate user.'});
+        }
+        return res.status(200).send({ message: 'User verified.',data:[]});
+        })
+}
+else{
+    return res.status(400).send({ message: "Invaild code"})
+}
+},
 checkToken:function(req, res, next) {
 if(!req.headers.authorization){         
 return res.status(401).send({message:'No Header'}) 
@@ -146,12 +171,35 @@ return res.status(200).send({ message: 'Valid auth'});
 },
 getUserbyId:async function(req, res, next){
 const collection = DB.dbo.collection('users');
-var doc = await collection.findOne({ _id: new ObjectId(req.body.userId) },{fields:{_id:0, Name: 1, Phone: 1,Access:1 ,Email:1}} ).catch(err =>{   
+var doc = await collection.findOne({ _id: new ObjectId(req.body.userId) },{fields:{_id:0, Name: 1, Phone: 1,Access:1 ,Email:1, health: 1, status: 1, VouchPoints: 1}} ).catch(err =>{   
 return  res.status(500).send({ message: 'server error 003'}); 
 });  
 return res.status(200).send({ message: 'User',doc});
 },
-
+getOrdersCount:async function(req, res){
+    const collection = DB.dbo.collection('orders');
+    let orders;
+     try{    orders =await collection.aggregate([
+            {$match: {"user": new ObjectId(req.token.userId)}},
+            {$group: {_id: "$status", count:{$sum:1}}}
+        ]).toArray();
+    }catch(err){
+        console.log(err,"error happened")
+        return res.status(500).send({message:"Unexpected Error"})
+    }
+    
+    const collection2 = DB.dbo.collection('ordersHistory');
+    let history;
+    try{
+        history =await collection2.aggregate([
+            {$match: {"user": new ObjectId(req.token.userId)}},
+            {$group: {_id: "$status", count:{$sum:1}}}
+        ]).toArray();
+    }catch(err){
+        return res.status(500).send({message:"Unexpected Error"})
+    }
+    return res.status(200).send({orders,history})
+    }
 };
 
 module.exports = loginApis;

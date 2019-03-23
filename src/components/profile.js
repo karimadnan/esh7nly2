@@ -115,11 +115,6 @@ class Profile extends Component {
                             </button>    
                             &nbsp;&nbsp;&nbsp;
                             <button class="btn btn-default" style={{color : "black", width: 270, fontWeight: "bold"}} onClick={()=>{this.updateInput("Type", "Merch")}}>
-                                <span className="icon glyphicon glyphicon-pencil"></span>
-                                <span className="text">Edit Phone Number</span>
-                            </button>  
-                            &nbsp;&nbsp;&nbsp;
-                            <button class="btn btn-default" style={{color : "black", width: 270, fontWeight: "bold"}} onClick={()=>{this.updateInput("Type", "Merch")}}>
                                 <span className="icon glyphicon glyphicon-off"></span>
                                 <span className="text">Logout</span>
                             </button>      

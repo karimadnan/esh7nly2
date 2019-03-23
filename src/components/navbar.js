@@ -92,12 +92,13 @@ login() {
                 that.props.loginFunction(response.data.data, 'login')
             })
             .catch(function (error) {
-              if (error.response.data.message){
-                that.setState({
-                  ErrorModal:true,
-                  ErrorMsg:error.response.data.message
-                })
-              }
+              console.log(error, "EROEROEORO")
+              // if (error.response.data.message){
+              //   that.setState({
+              //     ErrorModal:true,
+              //     ErrorMsg:error.response.data.message
+              //   })
+              // }
             });
         }
         else{

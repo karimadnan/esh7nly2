@@ -16,11 +16,14 @@ res.render('index', { title: 'Express' });
 });    
 // login Apis ------------------------------------------------
 router.get('/login',loginApis.login);
+router.get('/validateUser',Validator.checkJWT,loginApis.validateUser);
 router.get('/adminLogin',loginApis.adminLogin);
 router.post('/signup',loginApis.signup); 
 // router.post('/sendEmail',extraApis.sendEmail); 
 router.get('/checkToken',loginApis.checkToken); 
-router.post('/getUserbyId',Validator.checkJWT,Validator.isAdmin,loginApis.getUserbyId);
+// User APIS---------------------------------------------------
+router.post('/getUserbyId',Validator.checkJWT,loginApis.getUserbyId);
+router.get('/getOrdersCount',Validator.checkJWT,loginApis.getOrdersCount);
 // order Apis-------------------------------------------------- 
 router.get('/getOrdersByType',Validator.checkJWT,Validator.isAdmin,orderApis.getOrdersByType);// Not Tested
 router.get('/getAdminOrders',Validator.checkJWT,Validator.isAdmin,orderApis.getAdminOrders);// Not Tested

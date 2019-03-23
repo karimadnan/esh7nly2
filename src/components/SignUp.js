@@ -14,6 +14,8 @@ import isInt from 'validator/lib/isInt';
 import Footer from './footer';
 import LOGO from '../Images/signuplogo.png';
 
+const TEST_SITE_KEY = "6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2";
+const DELAY = 1500;
 
 class SignUp extends Component {
 
@@ -28,12 +30,32 @@ class SignUp extends Component {
     ErrorMsg: '',
     ErrorModal: false,
     gender: '',
-    captcha: false,
+    callback: "not fired",
+    value: "[empty]",
+    load: false,
+    expired: "false",
+    ref: React.createRef(),
     confirmPassword: ''
   }
   
-  componentWillMount(){
+componentWillMount(){
+    setTimeout(() => {
+      this.setState({ load: true });
+    }, DELAY);
+    console.log("didMount - reCaptcha Ref-", this._reCaptchaRef);
 }
+
+handleChange = value => {
+  console.log("Captcha value:", value);
+  this.setState({ value });
+  // if value is null recaptcha expired
+  if (value === null) this.setState({ expired: "true" });
+};
+
+asyncScriptOnLoad = () => {
+  this.setState({ callback: "called!" });
+  console.log("scriptLoad - reCaptcha Ref-", this._reCaptchaRef);
+};
 
 updateInput(key, value) {
   this.setState({ [key]: value });
@@ -48,32 +70,12 @@ onCloseModal = (type) => {
 };
 
 onChange = (value) => {
+  this.setState({captchaValue: value})
   this.googleVerify();
 }
 
 onExpired = () => {
   this.setState({captcha: false})
-}
-
-googleVerify = () =>{
-  var headers = {
-    'Content-Type': 'application/json'
-  }
-  axios.post(
-    'https://www.google.com/recaptcha/api/siteverify',
-    {
-        secret: '6LdZBo0UAAAAAM4oSlDVO7GKo18i8ChWD7LF9hge',
-        response: this.state.captcha
-    }
-  )
-  .then(function (response) {
-    console.log("Rres",response)
-    this.setState({captcha: true})
-  })
-  .catch(function (error) {
-    console.log("ERROR",error)
-    this.setState({captcha: false})
-})
 }
 
 createUser = () => {
@@ -131,6 +133,7 @@ else {
 }
 
 render() {
+  const { value, callback, load, expired } = this.state || {};
   const SuccessStyle = {
     overlay: {
       background: "transparent"
@@ -199,11 +202,16 @@ render() {
                                 <br/>
                           </div>
                           <div class="g-recaptcha col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                            <ReCAPTCHA
-                            onExpired	={this.onExpired}
-                            sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
-                            onChange={this.onChange}
-                            />
+                          {load && (
+                              <ReCAPTCHA
+                                style={{ display: "inline-block" }}
+                                ref={this.state.ref}
+                                sitekey={TEST_SITE_KEY}
+                                onChange={this.handleChange}
+                                asyncScriptOnLoad={this.asyncScriptOnLoad}
+                              />
+                            )}
+                            
                             <br/>
                         </div>
                         <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
