@@ -135,6 +135,17 @@ button:hover .text { display: none; }
   background-color: #161616;
 }
 
+.ProfileBGW {
+  border-radius: 1.95rem;
+  color: rgb(182, 180, 180);
+  padding: 1.25em 1.5em 3.5em;
+  height: fit-content;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: rgb(146, 184, 131); /* Fallback color */
+  background-color: rgb(146, 184, 131, 0.9); /* Fallback color */
+}
+
 .PrivacyBG2 {
   border-radius: 1.95rem;
   color: rgb(182, 180, 180);
@@ -149,7 +160,9 @@ button:hover .text { display: none; }
   height: stretch;
   overflow-x: hidden;
   background-size: cover;
-  background-color: #202020;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-image: url('Images/ggbg.png');
 }
 
 .PrivacyBGWhite {

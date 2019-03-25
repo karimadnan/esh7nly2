@@ -13,6 +13,7 @@ import Admindashboard from './components/admindashboard';
 import ContactUs from './components/ContactUs';
 import Privacy from './components/privacypolicy';
 import Profile from './components/profile';
+import UserOrders from './components/userOrders';
 import * as registerServiceWorker from './registerServiceWorker';
 
 import {createStore} from 'redux';
@@ -90,6 +91,11 @@ Flux.createRoute('/contactus',function(){
 Flux.createRoute('/profile',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Profile /></PersistGate></Provider>,document.getElementById('root'));
+})
+
+Flux.createRoute('/orders',function(){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><UserOrders /></PersistGate></Provider>,document.getElementById('root'));
 })
 
 Flux.createRoute('/privacy',function(){

@@ -384,7 +384,7 @@ const orderApis = {
     },
     getOrderForuser:function(req, res, next) {
     const collection = DB.dbo.collection('orders');
-    collection.find({user:new ObjectId(req.query.userId)}).toArray(function(err, docs) {
+    collection.find({user:new ObjectId(req.token.userId)}).toArray(function(err, docs) {
         if(err){
         return res.status(500).send({ message: 'DB Error',error:err});
         }

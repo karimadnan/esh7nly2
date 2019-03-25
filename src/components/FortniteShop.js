@@ -32,6 +32,7 @@ class FortniteShop extends Component {
         this.interval = setInterval(() => this.tick(), 1000);
         this.getData(); 
     }
+    
     updateState(key, value) {
       this.setState({ [key]: value });
     }
