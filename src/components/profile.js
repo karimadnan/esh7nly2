@@ -65,7 +65,7 @@ class Profile extends Component {
     
     render() {
 
-        let Data = {userId: "5c3396c24e1efafcd04747ab"}
+        let Data = {token: this.props.loginData.token}
         axios.post(this.state.Url+"getUserbyId", Data, {headers: this.state.headers})
         .then(function (response) {
             console.log(response, "SUCCESS")
