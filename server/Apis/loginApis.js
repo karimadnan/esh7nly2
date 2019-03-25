@@ -100,8 +100,8 @@ Validator.check(body,'signup').then(success=>{
     body.verifyEmail=Math.floor((Math.random() * 100000) + 1);
     bcrypt.hash(body.Password,null,null,function (err, hash) {
     if(err){
-        console.log(err)
-        return res.status(500).send(err);}
+    console.log(err)
+    return res.status(500).send(err);}
 
     body.Password = hash;
     collection.insertOne(body,(err,result)=>{
@@ -109,14 +109,14 @@ Validator.check(body,'signup').then(success=>{
         console.log('create User Error =>',err)
         return res.status(400).send({message:'User with same data exists'});
         }
- let mailOptions = {
-    from: 'contact@ggegypt.com', // sender address
-    to: "mahmoudzaher95@gmail.com", // list of receivers
-    subject: "GG-Egypt Verify", // Subject line
-    text: `Welcome to GG-Egypt ${body.Name} your code is ${body.verifyEmail} please verify your account to start ordering.`, // plain text body
-  };
+        let mailOptions = {
+            from: 'contact@ggegypt.com', // sender address
+            to: "mahmoudzaher95@gmail.com", // list of receivers
+            subject: "GG-Egypt Verify", // Subject line
+            text: `Welcome to GG-Egypt ${body.Name} your code is ${body.verifyEmail} please verify your account to start ordering.`, // plain text body
+        };
 
-  // send mail with defined transport object
+        // send mail with defined transport object
         transporter.sendMail(mailOptions).then(success => {
             console.log(success, "Email SENTTT")
             return res.status(200).send({ message: 'User Created and email sent'});

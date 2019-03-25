@@ -6,12 +6,17 @@ import Getlogin from './navbar';
 import Footer from './footer';
 import {connect} from 'react-redux';
 import CountUp from 'react-countup';
+import axios from 'axios';
 
 const icon = "svg-icon-big svg-icon-face"+ Math.floor(Math.random() * 6 + 1)
 
 class Profile extends Component {
 
     state = {
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': this.props.loginData.token},
+        Url: this.props.server.main,
         msgs: {
             EN: ["Hey", "Yo", "Howdy", "Sup"],
             AR: ["باشااا", "عامل ايه ياسطاااا", "انتا تانى"]
@@ -57,7 +62,18 @@ class Profile extends Component {
         } 
     }
 
+    
     render() {
+
+        let Data = {userId: "5c3396c24e1efafcd04747ab"}
+        axios.post(this.state.Url+"getUserbyId", Data, {headers: this.state.headers})
+        .then(function (response) {
+            console.log(response, "SUCCESS")
+        })
+        .catch(function (error) {
+            console.log(error.response.data.message, "FAIL")
+        })
+
         if (!this.props.loginData.loggedState){
             return (
             <div class ="PrivacyBG">
@@ -133,6 +149,7 @@ class Profile extends Component {
 function mapStateToProps(state){
     return {
         loginData: state.loginSession,
+        server: state.server,
         lang: state.lang.lang
     }
   }

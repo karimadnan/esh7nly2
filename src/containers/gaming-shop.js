@@ -123,22 +123,22 @@ class GamingShop extends Component {
             return (
                 <div>
                 <br/> <br/> <br/> <br/>
-                <div style={{padding: 5}} class="badge-dark col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-1 col-md-1 col-lg-1">
+                <div style={{padding: 5}} class="badge-dark col-xs-12 col-md-6 col-lg-6">
+                    <div class="col-xs-3 col-md-2 col-lg-2">
                         <span style={{fontSize: 35, cursor: "pointer"}} onClick={()=>{ReactRouter.goTo("/market")}} data-tip="Back" class="glyphicon glyphicon-triangle-left"></span>
-                    </div> 
-                    <div class="col-xs-3 col-md-2 col-lg-2">
-                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}}  class={this.state.category === "mouses" ? "menuLabel menuLabel-success" : "menuLabel menuLabel-primary"}>Mouses</span>
                     </div>
                     <div class="col-xs-3 col-md-2 col-lg-2">
-                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}}  class={this.state.category === "keyboards" ? "menuLabel menuLabel-success" : "menuLabel menuLabel-primary"}>Keyboards</span>
+                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}}  class={this.state.category === "mouses" ? "menuLabel menuLabel-success" : "menuLabel menuLabel-primary"}><span class="svg-icon svg-icon-mouse"></span></span>
                     </div>
                     <div class="col-xs-3 col-md-2 col-lg-2">
-                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}}  class={this.state.category === "headset" ? "menuLabel menuLabel-success" : "menuLabel menuLabel-primary"}>Headsets</span>
+                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}}  class={this.state.category === "keyboards" ? "menuLabel menuLabel-success" : "menuLabel menuLabel-primary"}><span class="svg-icon svg-icon-keyboard"></span></span>
                     </div>
-                    <div class="col-xs-3 col-md-offset-2 col-lg-offset-2">
-                         <span style={{fontSize: 20, lineHeight: 1.6, cursor: "pointer"}} onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "shop")}} className="glyphicon glyphicon-shopping-cart"> <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span>
+                    <div class="col-xs-3 col-md-2 col-lg-2">
+                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}}  class={this.state.category === "headset" ? "menuLabel menuLabel-success" : "menuLabel menuLabel-primary"}><span class="svg-icon svg-icon-headphones"></span></span>
                     </div>
+                </div>
+                <div style={{padding: 10, marginLeft: 10}} class="badge-dark col-xs-4 col-md-1 col-lg-1">
+                &nbsp;<span style={{fontSize: 20, lineHeight: 1, cursor: "pointer"}} onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "shop")}} className="glyphicon glyphicon-shopping-cart"> <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span>
                 </div>
                 <br/> <br/> <br/> <br/>
                 <div class="col-xs-12 col-md-12 col-lg-12">

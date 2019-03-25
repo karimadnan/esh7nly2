@@ -157,3 +157,23 @@
 .svg-icon-logo {
   background-image: url(./Images/logo.svg);
 }
+
+.svg-icon-tshirt {
+  background-image: url(./Images/svg/t-shirt.svg);
+}
+
+.svg-icon-ak47 {
+  background-image: url(./Images/svg/ak47.svg);
+}
+
+.svg-icon-mouse {
+  background-image: url(./Images/svg/mouse.svg);
+}
+
+.svg-icon-keyboard {
+  background-image: url(./Images/svg/keyboard.svg);
+}
+
+.svg-icon-headphones {
+  background-image: url(./Images/svg/headphones.svg);
+}

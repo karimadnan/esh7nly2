@@ -138,10 +138,10 @@ class MerchShop extends Component {
                         <span style={{fontSize: 35, cursor: "pointer"}} onClick={()=>{ReactRouter.goTo("/market")}} data-tip="Back" class="glyphicon glyphicon-triangle-left"></span>
                     </div> 
                     <div class="col-xs-4 col-md-2 col-lg-2">
-                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}} class={this.state.category === "tshirts" ? "menuLabel menuLabel-success" : "menuLabel menuLabel-primary"}>T-shirts</span>
+                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}} class={this.state.category === "tshirts" ? "menuLabel menuLabel-success" : "menuLabel menuLabel-primary"}><span class="svg-icon svg-icon-tshirt"></span></span>
                     </div>
                     <div class="col-xs-4 col-md-2 col-lg-2">
-                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}} data-tip="Soon" class="menuLabel menuLabel-primary">Accessories</span>
+                        <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}} data-tip="Soon" class="menuLabel menuLabel-primary"><span class="svg-icon svg-icon-ak47"></span></span>
                     </div>
                     <div class="col-xs-4 col-md-offset-2 col-lg-offset-2">
                          <span style={{fontSize: 20, lineHeight: 1.6, cursor: "pointer"}} onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "shop")}} className="glyphicon glyphicon-shopping-cart"> <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span>

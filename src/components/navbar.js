@@ -71,7 +71,6 @@ updateInput(key, value) {
 
 logout =() =>{
   this.props.loginFunction(null, 'logout')
-  window.location.reload();
   ReactRouter.goTo("/main")
 }
 
