@@ -394,14 +394,18 @@ renderPage() {
 }    
 
 render(){
-  if (this.props.loginData.session < 2){
+  if (!this.props.loginData.isAdmin){
     return (
-    <div class ="PrivacyBG">
+      <div class ="PrivacyBG">
+        <br/><br/><br/>
         <div class="container">
-           <h1>401 (Unauthorized Access)</h1>
-           <p> You don't have permission to view this page</p>
+          <div class="ProfileBGW" style={{color: "white"}}>
+            <h1>401 (Unauthorized Access)</h1>
+            <p> You don't have permission to view this page</p>
+          </div>
         </div>
-    </div>
+        <Getlogin />
+      </div>
   )
   }
 else {

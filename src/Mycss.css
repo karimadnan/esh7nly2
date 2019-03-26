@@ -136,14 +136,15 @@ button:hover .text { display: none; }
 }
 
 .ProfileBGW {
+  margin: 15px 0;
   border-radius: 1.95rem;
   color: rgb(182, 180, 180);
   padding: 1.25em 1.5em 3.5em;
   height: fit-content;
   overflow-x: hidden;
   background-size: cover;
-  background-color: rgb(146, 184, 131); /* Fallback color */
-  background-color: rgb(146, 184, 131, 0.9); /* Fallback color */
+  background-color: rgb(131, 211, 248); /* Fallback color */
+  background-color: rgb(131, 211, 248, 0.7); /* Fallback color */
 }
 
 .PrivacyBG2 {
@@ -162,7 +163,7 @@ button:hover .text { display: none; }
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-image: url('Images/ggbg.png');
+  background-image: url('Images/ggbggrey.png');
 }
 
 .PrivacyBGWhite {
@@ -192,10 +193,6 @@ button:hover .text { display: none; }
   background-size: cover;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
-}
-
-.activeNav{
-  border-bottom: 3px solid #0686db;
 }
 
 .g-recaptcha{
@@ -294,7 +291,7 @@ button:hover .text { display: none; }
 
 .activeNav {
 font-weight: bold;
-border-bottom: 2.5px solid;
+border-bottom: 2px solid;
 border-bottom-color: #0686db;
 background-color: #00000081;
 }
@@ -336,6 +333,11 @@ background-color: #0ddb06;
 .menuLabel-purple{
   border-radius: 4px;
   background-color: #542a8b;
+}
+
+.menuLabel-lightGreen{
+  border-radius: 4px;
+  background-color: #7dd67d;
 }
 
 .menuLabel-petro{

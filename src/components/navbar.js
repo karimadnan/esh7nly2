@@ -161,6 +161,7 @@ return (
             <h2>{this.state.ErrorMsg}</h2>
         </Modal>
     <nav className="navbar navbar-inverse navbar-fixed-top">
+    
     <div className="container-fluid">
         <div className="navbar-header">
         <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -194,7 +195,7 @@ return (
         {/* Admin Dashboard */}
               {   this.props.loginData.isAdmin &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> } 
               {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/profile")}}><span className="glyphicon glyphicon-user"></span> {this.props.lang.lang === "EN" ? "Profile" : " بروفايل" }</a></li> }   
-              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}}><span className="glyphicon glyphicon-euro"></span> {this.props.lang.lang === "EN" ? "Your Orders" : " الاوردارات" }</a></li> }   
+              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/orders")}}><span className="glyphicon glyphicon-euro"></span> {this.props.lang.lang === "EN" ? "Your Orders" : " الاوردارات" }</a></li> }   
               {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
             </ul>
           </li>}

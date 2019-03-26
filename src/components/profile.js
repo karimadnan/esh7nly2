@@ -15,9 +15,6 @@ const override = css`
     border-color: red;
 `;
 
-
-const icon = "svg-icon-big svg-icon-face"+ Math.floor(Math.random() * 6 + 1)
-
 class Profile extends Component {
 
     state = {
@@ -91,12 +88,16 @@ class Profile extends Component {
 
     if (!this.props.loginData.loggedState){
         return (
-        <div class ="PrivacyBG">
+            <div class ="PrivacyBG">
+            <br/><br/><br/>
             <div class="container">
-                <h1>403 (Forbidden)</h1>
-                <p> You're not logged in</p>
+              <div class="ProfileBGW" style={{color: "white"}}>
+                  <h1>403 (Forbidden)</h1>
+                  <p> You're not logged in</p>
+              </div>
             </div>
-        </div>
+            <Getlogin />
+          </div>
         )
         }
         
@@ -105,6 +106,7 @@ class Profile extends Component {
             <div class ="PrivacyBG">
                 <br/><br/><br/>
                 <div class="container">
+                    
                     {!this.state.status && 
                     <div>
                         <PacmanLoader
@@ -122,32 +124,23 @@ class Profile extends Component {
                             this.state.msgs.EN[Math.floor(Math.random() * this.state.msgs.EN.length)]
                             :
                             this.state.msgs.AR[Math.floor(Math.random() * this.state.msgs.AR.length)]}
-                            </span>, {this.props.loginData.userName}<span class={icon}/></h1>
-                            <h3 style={{fontFamily: "impact", color: "black"}}>Account Status:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: this.state.status === "active" ? "Green" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>
+                            </span>, {this.props.loginData.userName}</h1>
+                            <h3 style={{fontFamily: "impact", color: "white"}}>Account Status:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>
 
-                            <h3 style={{fontFamily: "impact", color: "black"}}>Health:{this.healthBar(this.state.health)}</h3><p style={{color: "black"}}>({this.props.lang === "EN" ? "You lose health if you provide a fake transaction id at 0 health your account will be banned" : "هتخسر هيلث لو بعت رقم عملية تحويل وهمى لو الهيلث خلص الاكونت هيتقفل"})</p>
+                            <h3 style={{fontFamily: "impact", color: "white"}}>Health:{this.healthBar(this.state.health)}</h3><p style={{color: "black"}}>({this.props.lang === "EN" ? "You lose health if you provide a fake transaction id at 0 health your account will be banned" : "هتخسر هيلث لو بعت رقم عملية تحويل وهمى لو الهيلث خلص الاكونت هيتقفل"})</p>
                         <br/>
-                            <h3 style={{fontFamily: "impact", color: "black"}}>Email:&nbsp;&nbsp;<span style={{fontFamily: "arial", textDecoration: "underline"}} class="label label-primary">{this.state.email}</span></h3>
+                            <h3 style={{fontFamily: "impact", color: "white"}}>Email:&nbsp;&nbsp;<span style={{fontFamily: "arial", textDecoration: "underline"}} class="menuLabel-small menuLabel-purple">{this.state.email}</span></h3>
                         <br/>
-                            <h3 style={{fontFamily: "impact", color: "black"}}>Phone:&nbsp;&nbsp;<span style={{fontFamily: "arial", textDecoration: "underline"}} class="label label-primary">{this.state.phone}</span></h3>
+                            <h3 style={{fontFamily: "impact", color: "white"}}>Phone:&nbsp;&nbsp;<span style={{fontFamily: "arial", textDecoration: "underline"}} class="menuLabel-small menuLabel-purple">{this.state.phone}</span></h3>
                         <br/>
-                            <h3 style={{fontFamily: "impact", color: "black"}}>Points: <span style={{fontFamily: "arial", textDecoration: "underline", color:"white"}} class="menuLabel-small menuLabel-purple"> <CountUp duration={5} end={this.state.vouchPoints}/>-Ash7enly Points</span></h3>
-                            <p style={{color: "black"}}>({this.props.lang === "EN" ? "You gain ash7enly points on every successful purchase you make, you can use them to redeem prizes" : "هتاخد اشحنلى بوينتس على كل شحنة, تقدر تبدلهم بجوايز"})</p>
+                            <h3 style={{fontFamily: "impact", color: "white"}}>Points: <span style={{fontFamily: "arial", textDecoration: "underline", color:"white"}} class="menuLabel-small menuLabel-purple"> <CountUp duration={5} end={this.state.vouchPoints}/>-GG Points</span></h3>
+                            <p style={{color: "black"}}>({this.props.lang === "EN" ? "You gain GG points on every successful purchase you make, you can use them to redeem prizes" : "هتاخد اشحنلى بوينتس على كل شحنة, تقدر تبدلهم بجوايز"})</p>
                             <br/>
-                            <button class="btn btn-default" style={{color : "black", width: 270, fontWeight: "bold"}} onClick={()=>{this.updateInput("Type", "Merch")}}>
-                                <span className="icon glyphicon glyphicon-pencil"></span>
-                                <span className="text">Change Password</span>
-                            </button>    
-                            &nbsp;&nbsp;&nbsp;
-                            <button class="btn btn-default" style={{color : "black", width: 270, fontWeight: "bold"}} onClick={()=>{this.updateInput("Type", "Merch")}}>
-                                <span className="icon glyphicon glyphicon-off"></span>
-                                <span className="text">Logout</span>
-                            </button>      
                  </div>} 
                 </div>
                 <br/>
-                <Getlogin/>
             </div>
+            <Getlogin/>
         </div>
         )
     }

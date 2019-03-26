@@ -18,12 +18,17 @@ const orderApis = {
             return res.status(400).send({message:"Invalid User"})
         }
         else if(user.status !="active"){
-            return res.status(400).send({message:"Banned users can't create orders"})
-        }else{
+            return res.status(400).send({message:"Banned users can't place orders"})      
+        }
+        else if(user.status =="pending"){
+            return res.status(400).send({message:"Confirm your account first to start ordering"})
+        }
+        else{
             body.user= new ObjectId(req.token.userId);  
         }
         body.createdAt=Date.now();
         body['status']="pending";
+        body.comment="Awaiting Agent";
         collection.insertOne(body,(err,result)=>{
         if(err){
             console.log('createOrder Error =>',err)
@@ -109,12 +114,12 @@ const orderApis = {
         if(!order){
             return res.status(400).send({message:"Invalid orderID"})
         }
-        else if(order.status =="ongoing"){
+        else if(order.status =="onGoing"){
             return res.status(400).send({message:"this order is taken please refresh"})
         }else{
-        collection.updateOne({_id:new ObjectId(body.orderID)}, {$set:{"status":"ongoing","adminId":new ObjectId(req.token.userId)}}, function(err, result) {
+        collection.updateOne({_id:new ObjectId(body.orderID)}, {$set:{"status":"onGoing","adminId":new ObjectId(req.token.userId), "comment": "Order viewed by agent"}}, function(err, result) {
           if (err) {
-           console.log("failed To update ordet")
+           console.log("failed To update order")
            console.log("Error =>",err)
            return res.status(500).send({message:"Update Failed"})
           }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import '../Mycss.css';
 import '../Respcss.css';
 import Getlogin from './navbar';
@@ -55,36 +54,36 @@ render() {
     <Getlogin page={"ContactUs"}/>
         <br/><br/><br/>
         <div class="container">
-            <div class="ProfileBG">
-                <h1>Message us on facebook</h1>
+            <div class="ProfileBGW">
+                <h1 style={{color: "black"}}>Message us on facebook</h1>
                     <FacebookProvider appId="1984023341904164">
                         <MessageUs messengerAppId="297486070967464" pageId="297486070967464"/>
                     </FacebookProvider>    
                     <br/><br/>
                 <div class="bordersep"/>
-                <h1>Email us directly</h1>
+                <h1 style={{color: "black"}}>Email us directly</h1>
                     <br/><br/>
                     <div class="form-group has-feedback">
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <label style={{color: this.state.name.length > 2 ? "green" : "red"}}>{this.state.name.length > 2 ? "":'*'} Your name</label>
+                            <label style={{color: this.state.name.length > 2 ? "green" : "purple"}}>{this.state.name.length > 2 ? "":'*'} Your name</label>
                             <input class="form-control" type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="Your name" required></input>
                             <br/>
                         </div>
 
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <label style={{color: isEmail(this.state.email) ? "green" : "red"}}>{isEmail(this.state.email) ? "":'*'} Email</label>
+                            <label style={{color: isEmail(this.state.email) ? "green" : "purple"}}>{isEmail(this.state.email) ? "":'*'} Email</label>
                             <input class="form-control" type="text" onChange={e => this.updateInput("email", e.target.value)} placeholder="Your email address" required></input>
                             <br/>
                         </div>
 
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <label style={{color: this.state.subject.length >= 3 ? "green" : "red"}}>{this.state.subject.length >= 3 ? "":'*'} Subject</label>
+                            <label style={{color: this.state.subject.length >= 3 ? "green" : "purple"}}>{this.state.subject.length >= 3 ? "":'*'} Subject</label>
                             <input class="form-control" type="text" onChange={e => this.updateInput("subject", e.target.value)} placeholder="Subject" required></input>
                             <br/>
                         </div>
 
                         <div class="col-xs-12 col-md-12 col-lg-12">
-                            <label style={{color: this.state.body.length >= 10 ? "green" : "red"}}>{this.state.body.length >= 10 ? "":'*'} Your question</label>
+                            <label style={{color: this.state.body.length >= 10 ? "green" : "purple"}}>{this.state.body.length >= 10 ? "":'*'} Your question</label>
                             <textarea class="form-control" rows="5" onChange={e => this.updateInput("body", e.target.value)} id="comment"></textarea>
                             <br/>
                         </div>
