@@ -842,9 +842,9 @@ if (this.props.loginData.loggedState){
   }
   else{
     let obj={
-      "summonerName":this.state.leagName,
-      "SelectedOff":this.state.SelectedOff.value,
-      "SelectedServer":this.state.SelectedServer.value
+      "Info":this.state.leagName,
+      "Price":this.state.SelectedOff.value,
+      "ExtraInfo":this.state.SelectedServer.value
     }
       this.setState({ExtraData: obj, Payment: true})
   }
@@ -857,9 +857,9 @@ if (this.props.loginData.loggedState){
     }
     else{
       let obj={
-        "SelectedPlat":this.state.SelectedPlat,
-        "PhoneNumber":this.state.fortPhone,
-        "SelectedOff":this.state.SelectedOff.value
+        "Info":this.state.SelectedPlat,
+        "ExtraInfo":this.state.fortPhone,
+        "Price":this.state.SelectedOff.value
       }
         this.setState({ExtraData:obj,Payment:true})
     }
@@ -872,9 +872,9 @@ if (this.props.loginData.loggedState){
       }
       else{
         let obj={
-          "SelectedPlat":this.state.SelectedPlat,
-          "pubgName":this.state.pubgName,
-          "SelectedOff":this.state.SelectedOff.value
+          "Info":this.state.SelectedPlat,
+          "ExtraInfo":this.state.pubgName,
+          "Price":this.state.SelectedOff.value
         }
           this.setState({ExtraData:obj,Payment:true})
       }
@@ -887,8 +887,8 @@ if (this.props.loginData.loggedState){
       }
       else{
         let obj={
-          "crossfireName":this.state.crossfireName,
-          "SelectedOff":this.state.SelectedOff.value
+          "Info":this.state.crossfireName,
+          "Price":this.state.SelectedOff.value
         }
           this.setState({ExtraData:obj,Payment:true})
       }
@@ -901,8 +901,8 @@ if (this.props.loginData.loggedState){
       }
       else{
         let obj={
-          "steamEmail":this.state.steamEmail,
-          "SelectedOff":this.state.SelectedOff.value
+          "Info":this.state.steamEmail,
+          "Price":this.state.SelectedOff.value
         }
           this.setState({ExtraData:obj,Payment:true})
       }
@@ -915,8 +915,8 @@ if (this.props.loginData.loggedState){
       }
       else{
         let obj={
-          "tibiaChar":this.state.tibiaChar,
-          "SelectedOff":this.state.SelectedOff.value
+          "Info":this.state.tibiaChar,
+          "Price":this.state.SelectedOff.value
         }
           this.setState({ExtraData:obj,Payment:true})
       }

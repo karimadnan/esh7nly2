@@ -176,6 +176,17 @@ return  res.status(500).send({ message: 'server error 003'});
 });  
 return res.status(200).send({ message: 'User',doc});
 },
+getAdminbyId:async function(req, res, next){
+    let adminId=req.query.adminId;
+    if(!adminId){
+        adminId=req.token.userId;
+    }
+    const collection = DB.dbo.collection('admins');
+    var doc = await collection.findOne({ _id: new ObjectId(adminId) },{fields:{_id:0, Name: 1, Phone: 1,Access:1 ,Email:1, status: 1}} ).catch(err =>{   
+    return  res.status(500).send({ message: 'server error 003'}); 
+    });  
+    return res.status(200).send({ message: 'Admin', doc});
+    },
 getOrdersCount:async function(req, res){
     const collection = DB.dbo.collection('orders');
     let orders;

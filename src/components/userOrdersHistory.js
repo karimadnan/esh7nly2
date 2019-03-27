@@ -26,7 +26,7 @@ render(){
 
   if (!this.state.loaded){
     var that = this
-    axios.get(`${this.state.Url}getOrderForuser`, {headers: this.state.headers})
+    axios.get(`${this.state.Url}getUserHistory`, {headers: this.state.headers})
     .then(function (response) {
       that.setState({ordersData: response.data.data, loaded: true})
     })
@@ -38,16 +38,16 @@ render(){
   if(this.state.loaded){
     if (this.state.ordersData.length > 0){
         let counter = 0
-        var pending = 0
-        var onGoing = 0
+        var failed = 0
+        var passed = 0
     
     
         this.state.ordersData.map(row => {
-            if (row.status === "pending"){
-                pending ++;
+            if (row.status === "Failed"){
+                failed ++;
             }
             else {
-                onGoing ++;
+                passed ++;
             }
           })
 
@@ -57,10 +57,10 @@ render(){
                         <span class="label label-info" style={{fontSize: 15, lineHeight: 2.5}}>Total: {this.state.ordersData.length}</span>
                     </div>
                     <div class="col-xs-4 col-md-2 col-lg-2">
-                        <span class="label label-warning" style={{fontSize: 15, lineHeight: 2.5}}>Pending: {pending}</span>
+                        <span class="label label-danger" style={{fontSize: 15, lineHeight: 2.5}}>Failed: {failed}</span>
                     </div>
                     <div class="col-xs-4 col-md-2 col-lg-2">
-                        <span class="label label-primary" style={{fontSize: 15, lineHeight: 2.5}}>onGoing: {onGoing}</span>
+                        <span class="label label-success" style={{fontSize: 15, lineHeight: 2.5}}>Passed: {passed}</span>
                     </div>
                     <div class="col-xs-12 col-md-6 col-lg-6">
                       <div class="input-group">
@@ -95,9 +95,9 @@ render(){
                                   <td ><span class="label label-default">{moment(row.createdAt).format('LLL')}</span></td>
                                   <td ><span class="label label-info">{row.orderType}</span></td>
                                   <td  style={{fontWeight: "bold", textTransform: 'uppercase', color: "black"}}>{row.game}</td>
-                                  <td ><span class={row.status === "pending" ? "label label-warning" : "label label-primary"}>{row.status}</span></td>
+                                  <td ><span class={row.status === "failed" ? "label label-danger" : "label label-success"} style={{color: "white"}}>{row.status}</span></td>
                                   <td ><span class="menuLabel menuLabel-purple" style={{color: "white"}}>{row.extra.SelectedOff}</span></td>
-                                  <td ><span class={row.status === "pending" ? "menuLabel menuLabel-lightGreen" : "menuLabel menuLabel-babyBlue"} style={{color: "black"}}>{row.status}</span></td>
+                                  <td ><span class={row.status === "failed" ? "label label-danger" : "label label-success"} style={{color: "white"}}>{row.comment}</span></td>
                                 </tr>
                               )
                           })}
@@ -111,8 +111,8 @@ render(){
   else{
     return(
         <div style={{color: "black"}}>
-              <h1>You have no orders</h1>
-              <p>Place an order and it will appear here</p>
+              <h1>You have no finished orders</h1>
+              <p>When an order is finished with success/failure it will appear here</p>
         </div>
     )
   }

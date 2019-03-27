@@ -82,7 +82,7 @@ this.login();
 
 login() {
   var that=this;
-    if(this.state.Phone  || this.state.Password){
+    if(this.state.Phone  && this.state.Password){
 
       if(isEmail(this.state.Phone)){
             axios.get(`${this.state.Url}adminLogin?Email=${this.state.Phone}&Password=${this.state.Password}`)
@@ -193,9 +193,9 @@ return (
       {   this.props.loginData.loggedState && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="svg-icon svg-icon-anubis"></span> {this.props.loginData.userName} <span className="caret"></span></a>
             <ul className="dropdown-menu">
         {/* Admin Dashboard */}
-              {   this.props.loginData.isAdmin &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> } 
-              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/profile")}}><span className="glyphicon glyphicon-user"></span> {this.props.lang.lang === "EN" ? "Profile" : " بروفايل" }</a></li> }   
-              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/orders")}}><span className="glyphicon glyphicon-euro"></span> {this.props.lang.lang === "EN" ? "Your Orders" : " الاوردارات" }</a></li> }   
+              {   this.props.loginData.isAdmin && this.props.loginData.session === 1 && <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/agentdashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Agent Dashboard</a></li> } 
+              {   this.props.loginData.isAdmin && this.props.loginData.session === 2 && <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> } 
+              {   this.props.loginData.loggedState &&  !this.props.loginData.isAdmin && <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/account")}}><span className="glyphicon glyphicon-user"></span> {this.props.lang.lang === "EN" ? "Account" : " الاكونت" }</a></li> }    
               {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
             </ul>
           </li>}

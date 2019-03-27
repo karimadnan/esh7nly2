@@ -12,8 +12,8 @@ import Getlogin from './components/navbar';
 import Admindashboard from './components/admindashboard';
 import ContactUs from './components/ContactUs';
 import Privacy from './components/privacypolicy';
-import Profile from './components/profile';
-import UserOrders from './components/userOrders';
+import Account from './components/account';
+import AgentDashboard from './components/agentDashboard';
 import * as registerServiceWorker from './registerServiceWorker';
 
 import {createStore} from 'redux';
@@ -88,19 +88,19 @@ Flux.createRoute('/contactus',function(){
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><ContactUs /></PersistGate></Provider>,document.getElementById('root'));
 })
 
-Flux.createRoute('/profile',function(){
+Flux.createRoute('/account',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Profile /></PersistGate></Provider>,document.getElementById('root'));
-})
-
-Flux.createRoute('/orders',function(){
-    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><UserOrders /></PersistGate></Provider>,document.getElementById('root'));
+    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Account /></PersistGate></Provider>,document.getElementById('root'));
 })
 
 Flux.createRoute('/privacy',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Privacy /></PersistGate></Provider>,document.getElementById('root'));
+})
+
+Flux.createRoute('/agentdashboard',function(){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><AgentDashboard /></PersistGate></Provider>,document.getElementById('root'));
 })
 
 registerServiceWorker.unregister();

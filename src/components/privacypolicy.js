@@ -18,7 +18,7 @@ render() {
                 <br/>
             <div style={{fontSize: 15, color:"white"}}>
                 <p>• GGegypt.com aims to be transparent about the data/info we collect and we respect users privacy.</p>
-                <p>• This Policy is to explain what info will be collected/used while using Eshe7nly.com. </p>
+                <p>• This Policy is to explain what info will be collected/used while using GGegypt.com. </p>
             </div>
             <div class="bordersep"/>
                 <h2 style={{color: "black"}}> User information <span className="glyphicon glyphicon-user"></span> </h2>

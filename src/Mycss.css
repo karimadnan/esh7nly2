@@ -15,6 +15,8 @@ button:hover .text { display: none; }
   display: block;
 }
 
+
+
 /* Adding CSS manually is only necessary in JSFiddle,
    where CSS can't be inserted into the <head> */
    .typed-cursor{
@@ -135,16 +137,49 @@ button:hover .text { display: none; }
   background-color: #161616;
 }
 
+.profileNav{
+  height: 50px;
+  background-color: #542a8b;
+}
+
+.profileNavItem:hover{
+  cursor: pointer;
+  color: rgb(255, 255, 255)
+}
+
+.profileNavActive{
+  height: 50px;
+  color: rgb(243, 204, 255);
+  cursor: pointer;
+  font-weight: bold;
+  border-bottom: 5px solid;
+  border-bottom-color: #ffbb00;
+}
+
 .ProfileBGW {
+  border-bottom-right-radius: 1.95rem;
+  border-bottom-left-radius: 1.95rem;
   margin: 15px 0;
-  border-radius: 1.95rem;
   color: rgb(182, 180, 180);
   padding: 1.25em 1.5em 3.5em;
   height: fit-content;
   overflow-x: hidden;
   background-size: cover;
-  background-color: rgb(131, 211, 248); /* Fallback color */
-  background-color: rgb(131, 211, 248, 0.7); /* Fallback color */
+  background-color: rgb(255, 255, 255); 
+  background-color: rgba(255, 255, 255, 1);
+  /* background-color: rgb(131, 211, 248); 
+  background-color: rgb(131, 211, 248, 0.8); */
+}
+
+.errorBG{
+  border-radius: 1.95rem;
+  margin: 15px 0;
+  padding: 1.25em 1.5em 3.5em;
+  height: fit-content;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: rgb(131, 211, 248); 
+  background-color: rgb(131, 211, 248, 0.8); 
 }
 
 .PrivacyBG2 {
@@ -338,6 +373,11 @@ background-color: #0ddb06;
 .menuLabel-lightGreen{
   border-radius: 4px;
   background-color: #7dd67d;
+}
+
+.menuLabel-babyBlue{
+  border-radius: 4px;
+  background-color: #46fcfc;
 }
 
 .menuLabel-petro{
