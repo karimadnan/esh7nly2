@@ -137,9 +137,28 @@ button:hover .text { display: none; }
   background-color: #161616;
 }
 
+.leadsBG{
+  border-radius: 1.95rem;
+  background-color: #424242;
+  border-bottom: 2px solid;
+  border-bottom-color: #020202;
+}
+
+.leadsTitleBG{
+  border-radius: 1.95rem;
+  background-color: #020202;
+  border-bottom: 2px solid;
+  border-bottom-color: #5a5a5a;
+}
+
 .profileNav{
   height: 50px;
   background-color: #542a8b;
+}
+
+.agentNav{
+  height: 50px;
+  background-color: #8b2a4f;
 }
 
 .profileNavItem:hover{
@@ -363,6 +382,11 @@ background-color: #0ddb06;
 .menuLabel-primary:hover{
   border-radius: 4px;
   background-color: #19ac14;
+}
+
+.menuLabel-babyRed{
+  border-radius: 4px;
+  background-color: #8b2a4f;
 }
 
 .menuLabel-purple{

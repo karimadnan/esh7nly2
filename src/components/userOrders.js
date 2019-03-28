@@ -11,7 +11,7 @@ const override = css`
     border-color: red;
 `;
 
-class userOrders extends Component {
+class UserOrders extends Component {
 
 state = {
 headers: {
@@ -142,4 +142,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(userOrders);
+export default connect(mapStateToProps)(UserOrders);

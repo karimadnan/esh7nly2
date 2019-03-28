@@ -21,7 +21,7 @@ const override = css`
     border-color: red;
 `;
 
-class Profile extends Component {
+class Account extends Component {
 
     state = {
         headers: {
@@ -242,4 +242,4 @@ function mapStateToProps(state){
     }
   }
   
-  export default connect(mapStateToProps)(Profile);
+  export default connect(mapStateToProps)(Account);

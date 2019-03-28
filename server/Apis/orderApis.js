@@ -100,7 +100,7 @@ const orderApis = {
         }); 
     },
     assginlead:async function(req, res, next){
-        var body= req.body;
+        var body= req.query;
         if(!body.orderID){
         return res.status(400).send({message:'Missing fields'})
         }
