@@ -11,6 +11,7 @@ import steam from '../Images/slider/steam.jpg';
 import tshirts from '../Images/slider/tshirts.png';
 import Footer from './footer';
 import "../image-gallery.css";
+import landingLogo from '../Images/landinglogo.png';
 import TypedJs from './Typer';
 import {connect} from 'react-redux';
 
@@ -70,7 +71,8 @@ render(){
       <div className="bg-image">
         <Getlogin page={"Main"}/>
         <div class="container" >
-            <br/>    <br/>     <br/>  
+            <br/>    <br/>     <br/>   <br/> 
+            <div class="badge-logo"/>
             <TypedJs  
               start={lang === "EN" ? "Why GGegypt?" : "ليه تشترى؟"}
               strings=

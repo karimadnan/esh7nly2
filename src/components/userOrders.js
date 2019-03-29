@@ -97,7 +97,7 @@ render(){
                                   <td  style={{fontWeight: "bold", textTransform: 'uppercase', color: "black"}}>{row.game}</td>
                                   <td ><span class={row.status === "pending" ? "label label-warning" : "label label-primary"}>{row.status}</span></td>
                                   <td ><span class="menuLabel menuLabel-purple" style={{color: "white"}}>{row.extra.SelectedOff}</span></td>
-                                  <td ><span class={row.status === "pending" ? "menuLabel menuLabel-lightGreen" : "menuLabel menuLabel-babyBlue"} style={{color: "black"}}>{row.status}</span></td>
+                                  <td ><span class={row.status === "pending" ? "menuLabel menuLabel-lightGreen" : "menuLabel menuLabel-babyBlue"} style={{color: "black"}}>{row.comment}</span></td>
                                 </tr>
                               )
                           })}

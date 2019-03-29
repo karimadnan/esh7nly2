@@ -9,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import {bindActionCreators} from 'redux';
 import rightMark from '../Images/rightmark.png';
 import xMark from '../Images/xmark.png';
+import ReactRouter from 'flux-react-router';
 
 class cartDetails extends Component {
     notify = (id) => toast.error(`${id} removed from cart!`, {
@@ -33,7 +34,7 @@ class cartDetails extends Component {
         let CART = this.props.cart.map(item => {
             return (
                 <div class="col-md-12 col-lg-12" key={item} style={{backgroundColor: "white", fontFamily: "arial", borderRadius: 3.9}}>
-                    <div class="col-md-3 col-lg-3">
+                    <div class="col-md-4 col-lg-4">
                         <img src={item.img} style={{width: 150, height: 100, marginTop: 20}} alt={item.id}/>
                     </div>
                     <div class="col-md-4 col-lg-4" style={{color: "black"}}>
@@ -100,14 +101,14 @@ class cartDetails extends Component {
                 <div class="col-xs-12 col-md-6 col-lg-6">
                     <h1 style={{fontSize: 25}}>Total:&nbsp;&nbsp;<span class="label label-primary">{this.props.cartInfo.totalPrice} EGP</span></h1>
                 </div>
-                {this.props.cartInfo.totalPrice > 300 ? 
+                {this.props.cartInfo.totalPrice > 400 ? 
                     <div class="col-xs-12 col-md-6 col-lg-6">
-                        <h3 style={{color: "white", fontFamily: "arial"}}>FREE SHIPPING&nbsp;&nbsp;<img src={rightMark}/></h3>
+                        <h3 style={{fontFamily: "arial"}}>FREE SHIPPING&nbsp;&nbsp;<img src={rightMark}/></h3>
                     </div>
                      :
                      <div class="col-xs-12 col-md-6 col-lg-6">
-                        <h3 style={{color: "white", fontFamily: "arial"}}>FREE SHIPPING&nbsp;&nbsp;<img src={xMark}/></h3>
-                        <p>(FREE shipping for orders +300 EGP)</p>
+                        <h3 style={{fontFamily: "arial"}}>FREE SHIPPING&nbsp;&nbsp;<img src={xMark}/></h3>
+                        <p>(FREE shipping for orders +400 EGP)</p>
                      </div>
                     }
                 <br/>
@@ -118,10 +119,10 @@ class cartDetails extends Component {
                     {this.createListItems()}
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h1 style={{fontSize: 25, color: "white"}}>Total:&nbsp;&nbsp;({this.props.cartInfo.totalItems} {this.props.cartInfo.totalItems > 1 ? "items" : "item"})&nbsp;&nbsp;<span class="label label-primary">{this.props.cartInfo.totalPrice} EGP</span></h1>
+                    <h1 style={{fontSize: 25}}>Total:&nbsp;&nbsp;({this.props.cartInfo.totalItems} {this.props.cartInfo.totalItems > 1 ? "items" : "item"})&nbsp;&nbsp;<span class="label label-primary">{this.props.cartInfo.totalPrice} EGP</span></h1>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{this.updateInput("Type", "Merch")}}>
+                <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{ReactRouter.goTo("/checkout")}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
                     <span className="text">Proceed to checkout</span>
                 </button>

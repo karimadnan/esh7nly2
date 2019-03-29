@@ -217,7 +217,7 @@ export default function() {
         },
         {
           Name: "Mercury MK59",
-          price: 299,
+          price: 300,
           discount: 10,
           type: "keyboard",
           color: "black",

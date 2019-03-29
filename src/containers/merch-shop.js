@@ -273,7 +273,7 @@ class MerchShop extends Component {
                 </button>
               </div>
            { this.props.cart.cart.length > 0 && <div class="col-xs-12 col-md-6 col-lg-6">
-                <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{this.updateInput("Type", "Merch")}}>
+                <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{ReactRouter.goTo("/checkout")}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
                     <span className="text">Proceed to checkout</span>
                 </button>

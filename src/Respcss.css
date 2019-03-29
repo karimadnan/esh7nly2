@@ -1,5 +1,17 @@
 @media screen and (max-width: 700px) {
 
+  .badge-logo {
+    padding: 6.15em 6.15em 6.15em;
+    margin: 0 auto;
+    background-image: url('Images/landinglogoMB.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 300px;
+    border-radius: 1.95rem;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+  }
+
   .splash-cardTeesView {
     border-radius: 0;
     height: 300px;

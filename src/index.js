@@ -14,6 +14,7 @@ import ContactUs from './components/ContactUs';
 import Privacy from './components/privacypolicy';
 import Account from './components/account';
 import AgentDashboard from './components/agentDashboard';
+import CheckOut from './components/checkout';
 import * as registerServiceWorker from './registerServiceWorker';
 
 import {createStore} from 'redux';
@@ -101,6 +102,11 @@ Flux.createRoute('/privacy',function(){
 Flux.createRoute('/agentdashboard',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><AgentDashboard /></PersistGate></Provider>,document.getElementById('root'));
+})
+
+Flux.createRoute('/checkout',function(){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><CheckOut /></PersistGate></Provider>,document.getElementById('root'));
 })
 
 registerServiceWorker.unregister();

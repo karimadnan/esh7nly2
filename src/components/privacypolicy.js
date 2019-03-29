@@ -13,7 +13,7 @@ render() {
         <div class ="PrivacyBG">
             <br/> <br/> <br/>
             <div class="container" style={{textAlign: "center"}}>
-        <div class="ProfileBGW">
+        <div class="ContactBG">
                 <h2 style={{color: "black"}}> Privacy policy <span className="glyphicon glyphicon-briefcase"></span> </h2>
                 <br/>
             <div style={{fontSize: 15, color:"white"}}>
