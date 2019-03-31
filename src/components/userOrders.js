@@ -19,6 +19,8 @@ headers: {
   'authorization': this.props.loginData.token},
 Url: this.props.server.main,
 ordersData: {},
+MyRow:'',
+showRow:false,
 loaded: false
 }
 
@@ -28,6 +30,7 @@ render(){
     var that = this
     axios.get(`${this.state.Url}getOrderForuser`, {headers: this.state.headers})
     .then(function (response) {
+      console.log(response)
       that.setState({ordersData: response.data.data, loaded: true})
     })
     .catch(function (error) {
@@ -35,78 +38,59 @@ render(){
     })
   }
   
-  if(this.state.loaded){
-    if (this.state.ordersData.length > 0){
+  if(this.state.loaded ){
+    if (this.state.ordersData.length > 0 && !this.state.showrow){
         let counter = 0
         var pending = 0
         var onGoing = 0
     
     
-        this.state.ordersData.map(row => {
+      let ORDERS =  this.state.ordersData.map(row => {
             if (row.status === "pending"){
                 pending ++;
             }
             else {
                 onGoing ++;
             }
+            return (
+              <div class="col-xs-12 col-md-12 col-lg-12" key={row._id} style={{lineHeight: 3}}>
+                  <div class="col-xs-3 col-md-3 col-lg-3">
+                      <span class="label label-primary" style={{fontSize: 17}}>{moment(row.createdAt).format('LLL')}</span>
+                  </div>
+                  <div class="col-xs-2 col-md-2 col-lg-2">
+                      <span style={{fontSize: 17}}>{row.comment}</span>
+                  </div>
+                  <div class="col-xs-2 col-md-2 col-lg-2">
+                      <span class="label label-info" style={{fontSize: 17}}>{row.status}</span>
+                  </div>
+                  <div class="col-xs-4 col-md-4 col-lg-4">
+                      <span style={{fontSize: 20, color: "purple", fontWeight: "bold", lineHeight: 0.5, cursor: "pointer"}}  onClick={ () => {this.setState({MyRow: row , showRow: true})}}> View Details <span className="glyphicon glyphicon-eye-open"/></span>
+                  </div>
+              </div>
+          )
           })
 
-        return (
-              <div>
-                    <div class="col-xs-4 col-md-2 col-lg-2">
-                        <span class="label label-info" style={{fontSize: 15, lineHeight: 2.5}}>Total: {this.state.ordersData.length}</span>
-                    </div>
-                    <div class="col-xs-4 col-md-2 col-lg-2">
-                        <span class="label label-warning" style={{fontSize: 15, lineHeight: 2.5}}>Pending: {pending}</span>
-                    </div>
-                    <div class="col-xs-4 col-md-2 col-lg-2">
-                        <span class="label label-primary" style={{fontSize: 15, lineHeight: 2.5}}>onGoing: {onGoing}</span>
-                    </div>
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search"/>
-                          <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
-                              <i class="glyphicon glyphicon-search"></i>
-                            </button>
-                          </div>
-                      </div>
-                    </div>
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <div class="table-responsive">
-                            <table style={{backgroundColor: "white"}} class="table table-striped">
-                              <thead>
-                                <tr style={{color: "black"}}>
-                                  <th scope="col">#</th>
-                                  <th class="th-sm" scope="col">Created At</th>
-                                  <th scope="col">Category</th>
-                                  <th class="th-sm" scope="col">Type</th>
-                                  <th scope="col">Status</th>
-                                  <th scope="col">Price</th>
-                                  <th scope="col">Comment</th>
-                                </tr>
-                              </thead>
-                            <tbody>
-                          {this.state.ordersData.map(row => {
-                              counter ++;
-                              return (
-                                <tr key={counter}>
-                                  <th style={{color: "black"}}>{counter}</th>
-                                  <td ><span class="label label-default">{moment(row.createdAt).format('LLL')}</span></td>
-                                  <td ><span class="label label-info">{row.orderType}</span></td>
-                                  <td  style={{fontWeight: "bold", textTransform: 'uppercase', color: "black"}}>{row.game}</td>
-                                  <td ><span class={row.status === "pending" ? "label label-warning" : "label label-primary"}>{row.status}</span></td>
-                                  <td ><span class="menuLabel menuLabel-purple" style={{color: "white"}}>{row.extra.SelectedOff}</span></td>
-                                  <td ><span class={row.status === "pending" ? "menuLabel menuLabel-lightGreen" : "menuLabel menuLabel-babyBlue"} style={{color: "black"}}>{row.comment}</span></td>
-                                </tr>
-                              )
-                          })}
-                </tbody>
-              </table>
-            </div>
+      return (
+          <div>
+                <div class="col-xs-12 col-md-12 col-lg-12 OrdersTitleBG" style={{marginBottom: 15}}>
+                  <div class="col-xs-3 col-md-3 col-lg-3">
+                      <span style={{fontSize: 20, color: "white", fontWeight: "bold"}}>Date</span>
+                  </div>
+                  <div class="col-xs-2 col-md-2 col-lg-2">
+                      <span style={{fontSize: 20, color: "white", fontWeight: "bold"}}>Comment</span>
+                  </div>
+                  <div class="col-xs-2 col-md-2 col-lg-2">
+                      <span style={{fontSize: 20, color: "white", fontWeight: "bold"}}>Status</span>
+                  </div>
+                 </div>
+                      {ORDERS}
           </div>
-        </div>
-        )
+      )
+
+  }
+  else if(this.state.showRow){
+    console.log(this.state.MyRow)
+    return(<div><img src={this.state.MyRow.img}/></div>)
   }
   else{
     return(

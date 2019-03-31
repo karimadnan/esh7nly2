@@ -23,6 +23,8 @@ router.post('/signup',loginApis.signup);
 router.get('/checkToken',loginApis.checkToken); 
 // User APIS---------------------------------------------------
 router.post('/getUserbyId',Validator.checkJWT,loginApis.getUserbyId);
+router.get('/getUserAddress',Validator.checkJWT,loginApis.getUserAddress);
+router.post('/setUserAddress',Validator.checkJWT,loginApis.setUserAddress);
 router.post('/getAdminbyId',Validator.checkJWT,Validator.isAdmin, loginApis.getAdminbyId);
 router.get('/getOrdersCount',Validator.checkJWT,loginApis.getOrdersCount);
 // order Apis-------------------------------------------------- 

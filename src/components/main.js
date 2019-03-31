@@ -11,7 +11,6 @@ import steam from '../Images/slider/steam.jpg';
 import tshirts from '../Images/slider/tshirts.png';
 import Footer from './footer';
 import "../image-gallery.css";
-import landingLogo from '../Images/landinglogo.png';
 import TypedJs from './Typer';
 import {connect} from 'react-redux';
 
@@ -88,7 +87,7 @@ render(){
                 '<font color="red">خدمة عملاء و توصيل سريع</font>']
                 }/>
             <br/>  
-            <div class="badge-dark">
+
                 <br/>  
                   <div class="LightSlider">
                         <ImageGallery items={this.state.images} 
@@ -98,7 +97,7 @@ render(){
                                       showBullets={true}
                                       showThumbnails={false}
                                       slideInterval={6000}/>
-                </div>
+
                 
                 <br/>  
                 </div>     

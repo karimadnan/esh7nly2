@@ -1,62 +1,42 @@
 const jwToken=require('./Jwt');
+const Joi =require('joi');
+
+
+
+
 let Validator =  {
-	// obje: [
-	// 	{value:'value',msg:'output'},
-	// 	{oneOfTheseIsRequired: ['x', 'y'], 
-	// 	msg: 'both are missing',
-	// 	msg2: 'both are exists'}	
-    // ],
-    NewOrder:[
-        {value:'game',msg:'No game selected'},
-        {value:'paymentMethod',msg:'No paymentMethod selected'},
-		{value:'orderType',msg:'No orderType selected'},
-		{value:'transId',msg:'Enter You transaction id'},
-		{value:'extra',msg:'No extra Date'}
-	],
-	signup:[
-		{value:'Name',msg:'Enter Your Name'},
-		{value:'Phone',msg:'Enter Your Phone'},
-		{value:'Password',msg:'Enter Your Password'},
-        {value:'Gender',msg:'No Gender selected'},
-        {value:'Email',msg:'Enter Your Email'}
-	],
+	OrderValidation:{
+		paymentMethod: Joi.string().valid(["Etisalat Cash","Vodafone Cash","Fawry", "Cash On Delivery"]).label('Payment Method').required(),
+		orderType: Joi.string().valid(["Games","Products"]).label('Order Type').required(),
+		transId:Joi.string().regex(/^[0-9]+$/, 'numbers').min(12).max(12).label('Transaction id'),
+		cart:Joi.array().min(1).required()
+	},
+	signup:{
+		Name:Joi.string().min(3).max(24).alphanum().required(),
+		Phone:Joi.string().regex(/^[0-9]+$/, 'numbers').min(11).max(11).required(),
+		Password:Joi.string().min(8).max(20).regex( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,21}$/,'must contain uppercase lowercase and number').required(),
+		Gender:Joi.string().valid(["Male","Female"]).required(),
+		Email:Joi.string().email().required()
+	},
+	ShippingData:{
+		FirstName:Joi.string().min(3).max(10).regex(/^[a-zA-Z]+$/, "must be letters only").label("First Name").required(),
+		LastName:Joi.string().min(3).max(10).regex(/^[a-zA-Z]+$/, "must be letters only").label("Last Name").required(),
+		Phone:Joi.string().regex(/^[0-9]+$/, 'numbers').min(11).max(11).required(),
+		City:Joi.string().valid(["Cairo","Giza","Helwan", "6 of october"]).label('City').required(),
+		Area:Joi.string().min(3).max(30).label('Area').required(),
+		StreetNameNo:Joi.string().min(3).max(30).label('Street Address').required(),
+		LocationType:Joi.string().valid(["Home","Business"]).label('Location Type').required(),
+		ShippingNote:Joi.string().min(3).max(50).label('Shipping Note')
+	},
+	
 	check: function (body, validateTarget) {
 		return new Promise((resolve, reject) => {
-			if (!body || typeof (body) !== 'object') {
-				reject({ message: 'Missing the body' });
-			}
-			let rejectMsg = false;
-			Validator[validateTarget].forEach(item=>{
-				if(!item.oneOfTheseIsRequired && (typeof body[item['value']] == 'undefined')){
-					reject({ message: `${item.msg} ` });
+			Joi.validate(body, Validator[validateTarget], (err, value) => {
+				if(err){
+					return reject({ message: err.details[0].message })
 				}
-				if(item.objectPropertiesAllRequired){
-					item.objectPropertiesAllRequired.forEach(required=>{
-						if(!body[item['value']][required['value']] || typeof body[item['value']][required['value']]== 'undefined'){
-							reject({ message: `${required.msg}`});
-						}
-					});
-				}
-				if(item.oneOfTheseIsRequired){
-					let count = 0;
-					item.oneOfTheseIsRequired.forEach(item2=>{
-						if(!body[item2] || typeof body[item2] == 'undefined'){
-							count++;
-						}
-					})
-					if(count == item.oneOfTheseIsRequired.length || count == 0){
-						rejectMsg = { message: item.msg };
-					}
-					if(count == 0){
-						rejectMsg = { message: item.msg2 };
-					}
-				}				
-			})
-			if(rejectMsg){
-				return reject(rejectMsg);
-			}
-
-			resolve(body);
+				resolve(body);
+			 });
 		})
 	},
 	checkJWT: function (req, res, next) {   

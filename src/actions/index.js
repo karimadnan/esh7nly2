@@ -19,6 +19,18 @@ export const addPrev = (data) => {
     }
 }
 
+export const cleanCart = () =>{
+    return {
+        type: "CLEAN_CART"
+    }
+}
+
+export const cleanCartInfo = () =>{
+    return {
+        type: "CLEAN_CART_INFO"
+    }
+}
+
 export const updatePrev = (thing, action) => {
     switch(action){
         case 'size':

@@ -157,10 +157,10 @@ class AgentDashboard extends Component {
                                     <h3 onClick={()=>{this.updateInput("nav", "leads")}} style={{lineHeight: 0.3}}>Leads</h3>
                                 </div>
                                 <div class={this.state.nav === "Orders" ? "profileNavActive col-xs-3 col-md-2 col-lg-2" : "profileNavItem col-xs-3 col-md-2 col-lg-2"}>
-                                    <h3 onClick={()=>{this.updateInput("nav", "Orders")}} style={{lineHeight: 1.8, display: "inline"}}>My Orders</h3>
+                                    <h3 onClick={()=>{this.updateInput("nav", "Orders")}} style={{lineHeight: 1.9, display: "inline"}}>My Orders</h3>
                                 </div>
-                                <div class="profileNavItem col-xs-3 col-md-1 col-lg-1">
-                                    <h3 onClick={()=>{this.updateInput("nav", "settings")}} style={{lineHeight: 0.3}}>Settings</h3>
+                                <div class={this.state.nav === "Settings" ? "profileNavActive col-xs-3 col-md-2 col-lg-2" : "profileNavItem col-xs-3 col-md-2 col-lg-2"}>
+                                    <h3 onClick={()=>{this.updateInput("nav", "Settings")}} style={{lineHeight: 0.3}}>Settings</h3>
                                 </div>
                             </div>
                         </BrowserView>
@@ -175,8 +175,8 @@ class AgentDashboard extends Component {
                                 <div class={this.state.nav === "Orders" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
                                     <h5 onClick={()=>{this.updateInput("nav", "Orders")}} style={{lineHeight: 1.7, display: "inline"}}>My Orders</h5>
                                 </div>
-                                <div class="profileNavItem col-xs-3 col-md-1 col-lg-1">
-                                    <h5 onClick={()=>{this.updateInput("nav", "settings")}} style={{lineHeight: 1.7}} style={{lineHeight: 1.7}}>Settings</h5>
+                                <div class={this.state.nav === "Settings" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
+                                    <h5 onClick={()=>{this.updateInput("nav", "Settings")}} style={{lineHeight: 1.7}} style={{lineHeight: 1.7}}>Settings</h5>
                                 </div>
                             </div>
                         </MobileView>

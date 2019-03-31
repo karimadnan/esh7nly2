@@ -10,8 +10,58 @@ import {bindActionCreators} from 'redux';
 import rightMark from '../Images/rightmark.png';
 import xMark from '../Images/xmark.png';
 import ReactRouter from 'flux-react-router';
+import amumu from '../Images/amumusad.png';
+import fortniteDab from '../Images/fortnitedab.png';
+import Modal from 'react-responsive-modal';
+
+const ErrorStyle = {
+    overlay: {
+      background: "transparent"
+    },
+    modal: {
+      backgroundColor: 'rgba(219, 105, 105, 0.9)',
+      color: "white",
+      borderRadius: '10px',
+    },
+  }
+
+  const SuccessStyle = {
+    overlay: {
+      background: "transparent"
+    },
+    modal: {
+      backgroundColor: 'rgba(124, 214, 105, 0.9)',
+      color: "white",
+      borderRadius: '10px',
+    },
+  }
 
 class cartDetails extends Component {
+
+    state = {
+        ErrorModal: false,
+        ErrorMsg: '',
+        SuccessModal: false,
+        SuccessMsg: ''
+    }
+
+    onOpenModal = (type) => {
+      this.setState({[type]: true });
+    };
+   
+    onCloseModal = (type) => {
+      this.setState({[type]: false });
+    };
+
+    goToCheckout(){
+        if(this.props.loginData.loggedState){
+            ReactRouter.goTo("/checkout")
+        }
+        else{
+            this.setState({ErrorModal: true, ErrorMsg: "Please login first to checkout"})
+        }
+    }
+
     notify = (id) => toast.error(`${id} removed from cart!`, {
         position: "top-right",
         autoClose: 2500,
@@ -63,6 +113,7 @@ class cartDetails extends Component {
         )
     }
 
+
     render() {
         if(this.props.cart.length < 1){
             return (
@@ -85,6 +136,16 @@ class cartDetails extends Component {
         }
         return (
             <div >
+                <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
+                    styles={SuccessStyle}>
+                    <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
+                    <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
+                </Modal>
+                <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+                    styles={ErrorStyle}>
+                    <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
+                    <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
+                </Modal>
                 <ToastContainer
                     position="top-right"
                     hideProgressBar={false}
@@ -122,7 +183,7 @@ class cartDetails extends Component {
                     <h1 style={{fontSize: 25}}>Total:&nbsp;&nbsp;({this.props.cartInfo.totalItems} {this.props.cartInfo.totalItems > 1 ? "items" : "item"})&nbsp;&nbsp;<span class="label label-primary">{this.props.cartInfo.totalPrice} EGP</span></h1>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{ReactRouter.goTo("/checkout")}}>
+                <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{this.goToCheckout()}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
                     <span className="text">Proceed to checkout</span>
                 </button>
@@ -137,7 +198,8 @@ class cartDetails extends Component {
 function mapStateToProps(state){
     return {
         cart: state.cartItems.cart,
-        cartInfo: state.updateCartInfo
+        cartInfo: state.updateCartInfo,
+        loginData: state.loginSession
     }
 }
 

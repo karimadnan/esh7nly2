@@ -54,7 +54,7 @@ render() {
     <Getlogin page={"ContactUs"}/>
         <br/><br/><br/>
         <div class="container">
-            <div class="ContactBG">
+            <div class="WhiteBG">
                 <h1 style={{color: "black"}}>Message us on facebook</h1>
                     <FacebookProvider appId="1984023341904164">
                         <MessageUs messengerAppId="297486070967464" pageId="297486070967464"/>

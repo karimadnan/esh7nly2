@@ -182,9 +182,11 @@
   line-height: 0;
   overflow: hidden;
   position: relative;
-  white-space: nowrap; }
+  white-space: nowrap;
+  border-radius: 1.95rem; }
 
 .image-gallery-slide {
+  border-radius: 1.95rem;
   background: #fff;
   left: 0;
   position: absolute;
@@ -193,6 +195,7 @@
   .image-gallery-slide.center {
     position: relative; }
   .image-gallery-slide img {
+    border-radius: 1.95rem;
     width: 100%; }
   .image-gallery-slide .image-gallery-description {
     background: rgba(0, 0, 0, 0.4);

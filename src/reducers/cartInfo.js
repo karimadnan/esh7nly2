@@ -19,6 +19,13 @@ export default function(state = initialState, action){
                     totalItems: state.totalItems - action.payload.items
                 }
             }
+
+            case 'CLEAN_CART_INFO':{
+                return{
+                    totalPrice: 0,
+                    totalItems: 0
+                }
+            }
         break;
         }
     return state;

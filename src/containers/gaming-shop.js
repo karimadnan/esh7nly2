@@ -6,9 +6,34 @@ import { ToastContainer, toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip'
 import CartDetails from '../containers/cart-details';
 import ReactRouter from 'flux-react-router';
+import Modal from 'react-responsive-modal';
+import amumu from '../Images/amumusad.png';
+import fortniteDab from '../Images/fortnitedab.png';
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
+
+const ErrorStyle = {
+    overlay: {
+      background: "transparent"
+    },
+    modal: {
+      backgroundColor: 'rgba(219, 105, 105, 0.9)',
+      color: "white",
+      borderRadius: '10px',
+    },
+  }
+
+  const SuccessStyle = {
+    overlay: {
+      background: "transparent"
+    },
+    modal: {
+      backgroundColor: 'rgba(124, 214, 105, 0.9)',
+      color: "white",
+      borderRadius: '10px',
+    },
+  }
 
 class GamingShop extends Component {
 
@@ -18,6 +43,10 @@ class GamingShop extends Component {
         category: 'all',
         selectedCategory: '',
         cartDirect: '',
+        ErrorModal: false,
+        ErrorMsg: '',
+        SuccessModal: false,
+        SuccessMsg: ''
     }
 
     updateInput(key, value) {
@@ -35,7 +64,15 @@ class GamingShop extends Component {
         pauseOnHover: false,
         draggable: false,
     });
-    
+
+    onOpenModal = (type) => {
+      this.setState({[type]: true });
+    };
+   
+    onCloseModal = (type) => {
+      this.setState({[type]: false });
+    };
+
     addItemToArray(item){
         const uniqueId = item.Name+`-${this.props.cart.itemPrev.color}`
         var discounted = item.discount / 100 * item.price
@@ -92,7 +129,17 @@ class GamingShop extends Component {
         return outPut
     }
 
+    goToCheckout(){
+        if(this.props.loginData.loggedState){
+            ReactRouter.goTo("/checkout")
+        }
+        else{
+            this.setState({ErrorModal: true, ErrorMsg: "Please login first to checkout"})
+        }
+    }
+
     render(){
+
         if (this.state.view === 'shop'){
             let shop =  this.props.shop.map((item) =>{
                 var discounted = item.discount / 100 * item.price
@@ -182,18 +229,16 @@ class GamingShop extends Component {
                  <div class="col-xs-12 col-md-6 col-lg-6">
                     <div class ="cardItemPrev splash-cardGamingView">
                        <img class="merchShop" src={prev.img} alt={prev.id} style={{marginTop: 20}}/>
-                       <div id ="merchInfoGaming" class="card-body">
-                            <h4 class ="card-title itemname" style = {{color: "white", fontSize: 25, fontWeight: 300, fontFamily: "impact", lineHeight: 0.5}}>
-                              <span>{prev.Name}</span>
-                            </h4>
-                        </div>
+
                        {prev.discount > 0 && <div id ="merchDiscount" class="card-body">
                             <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{prev.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
                        </div> }
                     </div>
                  </div>
+
                  <div style={{color: "white", fontSize: 15}} class="col-xs-12 col-md-6 col-lg-6">
-                       <h1><span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h1>{prev.discount > 0 ? <h1><span class="label label-primary">{prev.price - discounted} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h1> : <p/>}
+                       <h1 style={{color: "white", textAlign: "center"}}>{prev.Name}</h1>
+                       <h2><span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h2>{prev.discount > 0 ? <h2><span class="label label-primary">{prev.price - discounted} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h2> : <p/>}
                      {this.props.lang.lang === "EN" ?  
                          <h2><strong style={{textDecoration: "underline"}}>Free shipping</strong> on orders over 300 EGP</h2>
                       :  <h2 style={{textAlign: "right"}}><strong style={{textDecoration: "underline"}}>شحن مجانى</strong> على الطلبات 300 جنيه و اكثر</h2>
@@ -237,7 +282,7 @@ class GamingShop extends Component {
                 </button>
               </div>
            { this.props.cart.cart.length > 0 && <div class="col-xs-12 col-md-6 col-lg-6">
-                <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{ReactRouter.goTo("/checkout")}}>
+                <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{this.goToCheckout()}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
                     <span className="text">Proceed to checkout</span>
                 </button>
@@ -245,6 +290,16 @@ class GamingShop extends Component {
               </div>
               <br/>
               <div class="bordersep"/>
+                <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
+                    styles={SuccessStyle}>
+                    <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
+                    <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
+                </Modal>
+                <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+                    styles={ErrorStyle}>
+                    <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
+                    <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
+                </Modal>
                 <CartDetails/>
               </div>
             )
@@ -257,6 +312,7 @@ function mapStateToProps(state){
         shop: state.shop.gGear,
         cart: state.cartItems,
         cartInfo: state.updateCartInfo,
+        loginData: state.loginSession,
         lang: state.lang
     }
 }

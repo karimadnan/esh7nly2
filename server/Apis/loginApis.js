@@ -176,6 +176,34 @@ return  res.status(500).send({ message: 'server error 003'});
 });  
 return res.status(200).send({ message: 'User',doc});
 },
+getUserAddress:async function(req, res, next){
+userId = req.query.userId;
+
+if(!userId) userId = req.token.userId;
+const collection = DB.dbo.collection('users');
+let user;
+try{
+    user = await collection.findOne({_id: new ObjectId(userId)}, {fields: {Name: 1, ShippingData: 1}});
+}
+catch(err){
+return res.status(500).send({ message: "Error y3m."});
+}
+return res.status(200).send({ message: "User Shipping Data", user});
+},
+setUserAddress:async function(req, res){
+    Validator.check(req.body,'ShippingData').then(async ()=>{
+        const collection = DB.dbo.collection('users');
+
+        try{
+            await collection.updateOne({_id: new ObjectId(req.token.userId)}, {$set: {ShippingData: req.body}});
+        }
+        catch(err){
+            return res.status(500).send({ message: 'Error finding data'});
+        }
+            return res.status(200).send({ message: 'Shipping Data Updated'});
+
+    },err => {return res.status(400).send(err);});
+},
 getAdminbyId:async function(req, res, next){
     let adminId=req.query.adminId;
     if(!adminId){

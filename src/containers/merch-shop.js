@@ -9,6 +9,31 @@ import ReactRouter from 'flux-react-router';
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
+import amumu from '../Images/amumusad.png';
+import fortniteDab from '../Images/fortnitedab.png';
+import Modal from 'react-responsive-modal';
+
+const ErrorStyle = {
+overlay: {
+    background: "transparent"
+},
+modal: {
+    backgroundColor: 'rgba(219, 105, 105, 0.9)',
+    color: "white",
+    borderRadius: '10px',
+},
+}
+
+const SuccessStyle = {
+overlay: {
+    background: "transparent"
+},
+modal: {
+    backgroundColor: 'rgba(124, 214, 105, 0.9)',
+    color: "white",
+    borderRadius: '10px',
+},
+}
 
 class MerchShop extends Component {
 
@@ -22,15 +47,38 @@ class MerchShop extends Component {
         {value: "tshirts", label: "Tshirts"},
         {value: "Hoodies", label: "Hoodies"}
         ],
+        ErrorModal: false,
+        ErrorMsg: '',
+        SuccessModal: false,
+        SuccessMsg: ''
     }
 
     updateInput(key, value) {
         this.setState({ [key]: value });
     }
+
     handleChange(type, value) {
         this.setState({[type]: value}, () =>{
         });
       }
+
+    onOpenModal = (type) => {
+    this.setState({[type]: true });
+    };
+    
+    onCloseModal = (type) => {
+    this.setState({[type]: false });
+    };
+
+    goToCheckout(){
+        if(this.props.loginData.loggedState){
+            ReactRouter.goTo("/checkout")
+        }
+        else{
+            this.setState({ErrorModal: true, ErrorMsg: "Please login first to checkout"})
+        }
+    }
+  
     notify = (id) => toast.success(`${id} added to cart!`, {
         position: "top-right",
         autoClose: 2500,
@@ -108,7 +156,7 @@ class MerchShop extends Component {
                 };
                 var shopRandomize = randomImg(item.img)
                 return (
-                    <div class="col-md-4 col-md-4" key={item.id} >
+                    <div class="col-md-4 col-md-4" key={item} >
                     <div class ={rarity}>
                         <img class="merchShop"
                         onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}
@@ -164,18 +212,17 @@ class MerchShop extends Component {
                 <div class="col-xs-12 col-md-12 col-lg-12">
                      <br/>
                    {prev.size && <div class="col-xs-12 col-md-5 col-lg-5">
-                        <div style={{fontSize: 20, padding: 10}} class="badge-dark">
-                            <span style={{fontWeight: "bold"}}>Size: </span>
+                        <div style={{fontSize: 20, padding: 10}} >
                             <button type="button" onClick={()=>{this.props.updatePrev('small', 'size')}} class={prev.size === "small" ? 'btn btn-success btn-xs' : 'btn btn-primary btn-xs'}>Small</button>&nbsp;
                             <button type="button" onClick={()=>{this.props.updatePrev('medium', 'size')}} class={prev.size === "medium" ? 'btn btn-success btn-sm' : 'btn btn-primary btn-sm'}>Medium</button>&nbsp;
                             <button type="button" onClick={()=>{this.props.updatePrev('large', 'size')}} class={prev.size === "large" ? 'btn btn-success btn-md' : 'btn btn-primary btn-md'}>Large</button>&nbsp;
-                            <button type="button" onClick={()=>{this.props.updatePrev('x-large', 'size')}} class={prev.size === "x-large" ? 'btn btn-success btn-lg' : 'btn btn-primary btn-lg'}>XLarge</button>
+                            <button type="button" onClick={()=>{this.props.updatePrev('x-large', 'size')}} class={prev.size === "x-large" ? 'btn btn-success btn-md' : 'btn btn-primary btn-md'}>XLarge</button>
                         </div>
                         <br/>
                     </div>} 
-                      { prev.color !== 'n/f' && <div  style={{fontSize: 20, padding: 10, marginBottom: 10}} class="badge-dark col-xs-12 col-md-5 col-lg-5">
+                      { prev.color !== 'n/f' && <div  style={{fontSize: 20, padding: 10, marginBottom: 10}} class="col-xs-12 col-md-5 col-lg-5">
                         <div class="col-xs-3 col-md-2 col-lg-2">
-                            <span style={{fontWeight: "bold"}}>Color: </span>
+                            <span style={{fontWeight: "bold", color: "white"}}>Color: </span>
                         </div>
                       { prev.img.black &&  <div class="col-xs-2 col-md-1 col-lg-1">
                                 <div style={{cursor: "pointer"}} onClick={()=>{this.props.updatePrev('black', 'color')}} id={prev.color === "black" ? 'circleBactive' : 'circleB'}></div>
@@ -273,7 +320,7 @@ class MerchShop extends Component {
                 </button>
               </div>
            { this.props.cart.cart.length > 0 && <div class="col-xs-12 col-md-6 col-lg-6">
-                <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{ReactRouter.goTo("/checkout")}}>
+                <button class="btn btn-success" style={{color : "white", width: 270}} onClick={()=>{this.goToCheckout()}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
                     <span className="text">Proceed to checkout</span>
                 </button>
@@ -281,6 +328,16 @@ class MerchShop extends Component {
               </div>
               <br/>
               <div class="bordersep"/>
+              <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
+                    styles={SuccessStyle}>
+                    <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
+                    <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
+                </Modal>
+                <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+                    styles={ErrorStyle}>
+                    <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
+                    <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
+                </Modal>
                 <CartDetails/>
               </div>
             )
@@ -293,6 +350,7 @@ function mapStateToProps(state){
         shop: state.shop,
         cart: state.cartItems,
         cartInfo: state.updateCartInfo,
+        loginData: state.loginSession,
         lang: state.lang
     }
 }

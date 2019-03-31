@@ -21,9 +21,9 @@ render() {
         </div>
         <div class="col-md-6 col-lg-6 col-xs-12 ">
         <h3 style={{fontWeight: "bold"}}> About Us<span className="svg-icon-logo svg-icon-logoBig"></span></h3>
-        <p> GGegypt.com was developed to help you make online transactions and track your orders with our system and get real-time detailed information on your order status without using a credit card and to those who were scammed by non-legit online resellers.
+        <p> GGegypt.com is developed by gamers and for gamers we know what gamers want and we will try to fill the gap. We will try to provide everything a gamer need. We also developed a system where you can real-time track your order, Our agents will always update you with info about your order just from your account page.
         <br/><br/>
-        You can contact us by emailing to contact@ggegypt.com for more ways to contact us visit - <a  onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}>Contact Us <span className="glyphicon glyphicon-earphone"></span> </a></p>
+        You can contact us by email to contact@ggegypt.com for more ways to contact us visit - <a  onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}>Contact Us <span className="glyphicon glyphicon-earphone"></span> </a></p>
         <p>We are not affiliated Epic Games/Riot Games/Blue hole or endorsed by them in any way and all the graphics/images are fan art.</p>
         </div>
         <div class="col-md-12 col-lg-12 col-xs-12 ">

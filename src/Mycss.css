@@ -151,6 +151,20 @@ button:hover .text { display: none; }
   border-bottom-color: #5a5a5a;
 }
 
+.OrdersTitleBG{
+  border-radius: 1.95rem;
+  background-color: #424242;
+  border-bottom: 2px solid;
+  border-bottom-color: #5a5a5a;
+}
+
+.OrdersBodyBG{
+  text-align: left;
+  border-radius: 1.95rem;
+  border-bottom: 2px solid;
+  border-bottom-color: #5a5a5a;
+}
+
 .profileNav{
   height: 50px;
   background-color: #542a8b;
@@ -166,7 +180,12 @@ button:hover .text { display: none; }
   color: rgb(255, 255, 255)
 }
 
+.profileNavItem{
+  text-align: center;
+}
+
 .profileNavActive{
+  text-align: center;
   height: 50px;
   color: rgb(243, 204, 255);
   cursor: pointer;
@@ -175,20 +194,7 @@ button:hover .text { display: none; }
   border-bottom-color: #ffbb00;
 }
 
-.CheckoutBG {
-  border-radius: 1.95rem;
-  color: rgb(182, 180, 180);
-  padding: 1.25em 1.5em 3.5em;
-  height: fit-content;
-  overflow-x: hidden;
-  background-size: cover;
-  background-color: rgb(255, 255, 255); 
-  background-color: rgba(255, 255, 255, 0.9);
-  /* background-color: rgb(131, 211, 248); 
-  background-color: rgb(131, 211, 248, 0.8); */
-}
-
-.ContactBG {
+.babyBlueBG {
   border-radius: 1.95rem;
   color: rgb(182, 180, 180);
   padding: 1.25em 1.5em 3.5em;
@@ -271,6 +277,19 @@ button:hover .text { display: none; }
   background-size: cover;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+}
+
+.WhiteBG {
+  border-radius: 1.95rem;
+  color: rgb(182, 180, 180);
+  padding: 1.25em 1.5em 3.5em;
+  height: fit-content;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: rgb(255, 255, 255); 
+  background-color: rgba(255, 255, 255, 0.9);
+  /* background-color: rgb(131, 211, 248); 
+  background-color: rgb(131, 211, 248, 0.8); */
 }
 
 .g-recaptcha{
@@ -626,7 +645,7 @@ background-color: #0ddb06;
 
 #marketDesc {
   -webkit-transform: translate(0%, 0%);
-  background: rgb(31, 30, 30);
+  background: rgb(48, 47, 47);
   position: absolute;
   height: 25%;
   width: 65%;
@@ -760,15 +779,15 @@ background-color: #0ddb06;
 }
 
 .badge-logo {
+  border-radius: 1.95rem;
   padding: 7em;
   margin: 0 auto;
   background-image: url('Images/landinglogo.png');
   background-repeat: no-repeat;
   background-position: center;
-  width: 450px;
-  border-radius: 1.95rem;
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+  width: 450px;
 }
 
 .badge-dark2 {
@@ -1046,14 +1065,12 @@ background-color: #0ddb06;
 }
 
 .bg-image {
-  /* The image used */
-  background-image: url("Images/newbg.png");
+
+   background-image: url("Images/newbg.png");
   max-width: 100%;
-  max-height: 100%;
-  /* Full height */
+  max-height: 100%; 
   height: stretch;
   overflow-x: hidden;
-  /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

@@ -6,7 +6,8 @@ const ObjectId = require('mongodb').ObjectID;
 const orderApis = {
     createOrder:function(req, res, next) {
         var body =req.body;
-        Validator.check(body,'NewOrder').then(async (success)=>{ 
+        console.log(body);
+        Validator.check(body,'OrderValidation').then(async ()=>{ 
         const collection = DB.dbo.collection('orders');
         let user;
         try{
@@ -31,13 +32,12 @@ const orderApis = {
         body.comment="Awaiting Agent";
         collection.insertOne(body,(err,result)=>{
         if(err){
-            console.log('createOrder Error =>',err)
+            if(err.code == 11000){ return res.status(400).send({ message: 'Transaction id already exist'})}
             return res.status(500).send({ message: 'Data Is Wrong'});
         }
         return res.status(200).send({ message: 'Order Created',data:[]});
         });
         },err=>{
-        console.log('NewOrder validation',err)
         return res.status(400).send(err);
         })  
     },

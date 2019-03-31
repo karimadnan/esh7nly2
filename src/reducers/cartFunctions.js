@@ -73,6 +73,11 @@ export default function(state = initialState, action){
                     }
                     }
                 }
+
+            case 'CLEAN_CART': {
+                return { ...state, cart: [] }
+            }
         }
+
     return state;
 }
