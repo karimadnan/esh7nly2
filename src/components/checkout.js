@@ -268,13 +268,13 @@ class Checkout extends Component {
             </div>
 
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <button class="btn btn-danger" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({gotData: false})}}>
+                    <button class="btn btn-danger" style={{color : "white", width: 250, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({gotData: false})}}>
                         <span className="icon glyphicon glyphicon-ok"></span>
                         <span className="text" style={{fontWeight: "bold"}}>Edit</span>
                     </button>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({currentIndex: 1})}}>
+                    <button class="btn btn-success" style={{color : "white", width: 250, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({currentIndex: 1})}}>
                         <span className="icon glyphicon glyphicon-ok"></span>
                         <span className="text" style={{fontWeight: "bold"}}>Next</span>
                     </button>
@@ -351,11 +351,8 @@ class Checkout extends Component {
                                        gotData: true,
                                        loaded: true})
                     }
-                console.log(success);
             }, error => {
-                console.log(error);
             });
-            console.log("SENT")
         }
     }
 
@@ -498,9 +495,9 @@ render(){
 
                 </div>
             </div>
-            
             {/* CART */}
             <div class="col-xs-12 col-md-4 col-lg-4">
+
                 <div class="WhiteBG">
                    {!this.state.cart && this.state.currentIndex != 3 && <span style={{color: "#6F52FF", fontSize: 17, cursor: "pointer"}} onClick={()=>{this.setState({cart: true, currentIndex: 0})}} class="glyphicon glyphicon-arrow-left"> <span style={{fontFamily: "arial"}}>Edit Cart</span></span>}
                     <h3 style={{color: "black"}}>Shopping Cart <span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span class="label label-warning">{this.props.cartInfo.totalItems}</span></h3>

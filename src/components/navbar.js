@@ -7,7 +7,7 @@ import Modal from 'react-responsive-modal';
 import '../Respcss.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {loginFunction, updateLang} from '../actions/index';
+import {loginFunction, updateLang, removeCartItem, updateCartInfo} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import '../flag-icon.css'
 import ReactTooltip from 'react-tooltip'
@@ -23,6 +23,15 @@ class Getlogin extends Component {
       pauseOnHover: true,
       draggable: true
     });
+
+    notify = (id) => toast.error(`${id} removed from cart!`, {
+      position: "top-center",
+      autoClose: 2500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      });
 
     state = {
       ErrorModal: false,
@@ -40,6 +49,14 @@ class Getlogin extends Component {
     onCloseModal = (type) => {
       this.setState({[type]: false });
     };
+
+    updateInfo (data){
+      let object = {
+          price: data.price,
+          items: 1
+          }
+      this.props.updateCartInfo(object, 'remove')
+    }
 
 componentWillMount(){
   var that = this
@@ -63,6 +80,15 @@ componentWillMount(){
     })
 }
 }
+}
+
+goToCheckout(){
+  if(this.props.loginData.loggedState){
+      ReactRouter.goTo("/checkout")
+  }
+  else{
+      this.setState({ErrorModal: true, ErrorMsg: "Please login first to checkout"})
+  }
 }
 
 updateInput(key, value) {
@@ -124,7 +150,6 @@ login() {
     } 
 
 render() {
-
   const customStyles = {
     overlay: {
     },
@@ -177,17 +202,62 @@ return (
           <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="svg-icon svg-icon-priceTag"></span> {this.props.lang.lang === "EN" ? "How To Buy" : "ازاى تشترى"}</a>
           </li>
           <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/market")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-shoppingCart"></span> {this.props.lang.lang === "EN" ? "Market" : "المتجر"}</a></li>
-          <li class={this.state.page ==="FortniteShop" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/fortniteshop")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-thompson"></span>{this.props.lang.lang === "EN" ? "Fortnite Today's Shop" : "فورت نايت شوب" }</a></li>
           <li class={this.state.page ==="ContactUs" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-phone"></span> {this.props.lang.lang === "EN" ? "Contact Us" : "كلمنا"}</a></li>
         </ul>
         <ul className="nav navbar-nav navbar-right">
+
+        {/* LANG SELECTOR */}
         <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown">
+          <span className="svg-icon svg-icon-globe" style={{cursor: "pointer"}} ></span></a>
+          <ul class="dropdown-menu">
+            <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("AR")}}><span style={{cursor: 'pointer'}} class="flag-icon flag-icon-eg"></span> عربى</a></li>
+            <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("EN")}}><span style={{cursor: 'pointer'}} class="flag-icon flag-icon-gb"></span> English</a></li>
+          </ul>
+        </li>
+
+
+      {/* CART */}
+      <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown">
-        <span className="svg-icon svg-icon-globe" style={{cursor: "pointer"}} ></span></a>
+        <span className="glyphicon glyphicon-shopping-cart" style={{cursor: "pointer", fontSize: 17}} > {this.props.cart.length > 0 && `(${this.props.cart.length})`}</span></a>
         <ul class="dropdown-menu">
-          <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("AR")}}><span style={{cursor: 'pointer'}} class="flag-icon flag-icon-eg"></span> عربى</a></li>
-          <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("EN")}}><span style={{cursor: 'pointer'}} class="flag-icon flag-icon-gb"></span> English</a></li>
+            {this.props.cart.length > 0 ? 
+              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white"}}>Click on an item to remove x1</p>
+              :
+              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white"}}>Your cart is empty.</p>
+            }
+            {this.props.cart.map(item => {
+              return(
+                <li  key={item.id}>
+                    <div class="col-md-12 col-lg-12 navCart" style={{width: 300, cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
+                        <div class="col-md-4 col-lg-4">
+                            <img src={item.img} style={{width: 50, height: 45, marginTop: 5}} alt={item.id}/>
+                        </div>
+                        <div class="col-md-4 col-lg-4">
+                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 8 ? ( (item.size ? `(${item.size.charAt(0)}) ` : '') + ((item.Name).substring(0,9-3))  + '...') : item.size ? `(${item.size.charAt(0)}) ${item.Name}` : item.Name}</h4>
+                        </div>
+                        <div class="col-md-2 col-lg-2">
+                            <h4 style={{color: "green", fontWeight: "bold"}}>{item.price} EGP</h4>
+                        </div>
+                        <div class="col-md-2 col-lg-2">
+                            <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
+                        </div>
+                    </div>
+                </li>
+                )
+            })}
+
+          {!window.location.href.includes("checkout") && this.props.cart.length > 0 && 
+          <div class="col-xs-12 col-md-12 col-lg-12">
+                <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{this.goToCheckout()}}>
+                    <span className="icon glyphicon glyphicon-shopping-cart"></span>
+                    <span className="text">Proceed to checkout</span>
+                </button>
+            </div>}
+            
         </ul>
+
       </li>
         {/* Logged in noSignup*/}
       {   this.props.loginData.loggedState && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="svg-icon svg-icon-anubis"></span> {this.props.loginData.userName} <span className="caret"></span></a>
@@ -233,6 +303,7 @@ function mapStateToProps(state){
   return {
       loginData: state.loginSession,
       server: state.server,
+      cart: state.cartItems.cart,
       lang: state.lang
   }
 }
@@ -240,6 +311,8 @@ function mapStateToProps(state){
 const matchDispatchToProps = dispatch => bindActionCreators(
     {
       loginFunction,
+      removeCartItem,
+      updateCartInfo,
       updateLang
     },
     dispatch,

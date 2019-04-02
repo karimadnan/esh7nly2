@@ -2,6 +2,7 @@ button .icon { display: none; }
 button:hover .icon { display: inline; }
 button:hover .text { display: none; }
 
+
 .navbar .navbar-nav {
   display: inline-block;
   float: none;
@@ -15,6 +16,16 @@ button:hover .text { display: none; }
   display: block;
 }
 
+.navCart{
+  text-align: center;
+  padding: 0.35em;
+  margin: 0 auto;
+  background-color: #ffffff;
+}
+
+.navCart:hover{
+background-color: #cac6c6;
+}
 
 
 /* Adding CSS manually is only necessary in JSFiddle,
@@ -153,9 +164,9 @@ button:hover .text { display: none; }
 
 .OrdersTitleBG{
   border-radius: 1.95rem;
-  background-color: #424242;
+  background-color: #7f7192;
   border-bottom: 2px solid;
-  border-bottom-color: #5a5a5a;
+  border-bottom-color: #614685;
 }
 
 .OrdersBodyBG{
