@@ -44,7 +44,16 @@
     </script>
     <!--End of Tawk.to Script-->
 
+    <!-- DISABLE DEVTOOLS IN PRODUCTION -->
+    <script>
+      if (window.location.port != 3000){
+        window.__REACT_DEVTOOLS_GLOBAL_HOOK__.inject = () => {}
+      }
+    </script>
+    <!-- DISABLE DEVTOOLS IN PRODUCTION -->
+    
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
     <div id="root">
 
     </div>
