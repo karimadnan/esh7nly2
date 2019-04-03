@@ -156,7 +156,7 @@ render() {
   }
   return(
     
-<div class="PrivacyBG">
+<div class="GG-BG">
       <br/><br/><br/>
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>

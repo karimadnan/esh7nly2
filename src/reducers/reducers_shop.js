@@ -88,6 +88,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t001b, white: t001w, purple: t001pur, petro: t001p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "Spitfire",
@@ -97,6 +99,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t002b, white: t002w, purple: t002pur, petro: t002p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "LLamaaaa",
@@ -105,6 +109,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t003b, white: t003w, purple: t003pur, petro: t003p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "Chicken Dinner",
@@ -113,6 +119,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t004b, purple: t004pur, petro: t004p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "Purple", "Petroleum"]
         },
         {
           Name: "Sanhok",
@@ -121,6 +129,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t005b, purple: t005pur, petro: t005p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "Purple", "Petroleum"]
         },
         {
           Name: "Draaaaaaaaaaaven",
@@ -129,6 +139,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t006b, white: t006w, purple: t006pur, petro: t006p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "Iron Tryhard",
@@ -137,6 +149,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t007b, white: t007w, purple: t007pur, petro: t007p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "Challenger",
@@ -145,6 +159,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t008b, white: t008w, purple: t008pur, petro: t008p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "Bronze Noob",
@@ -153,6 +169,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t009b, white: t009w, purple: t009pur, petro: t009p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "Take the L",
@@ -161,6 +179,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t010b, white: t010w, purple: t010pur, petro: t010p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "Waterworks",
@@ -169,6 +189,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t011b, purple: t011pur, petro: t011p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "Purple", "Petroleum"]
         },
         {
           Name: "Winner Winner v2",
@@ -177,6 +199,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t012b, white: t012w, purple: t012pur, petro: t012p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "#Rip",
@@ -185,6 +209,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t013b, white: t013w, purple: t013pur, petro: t013p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "Pubg Warrior",
@@ -193,6 +219,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t014b, white: t014w, purple: t014pur, petro: t014p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         {
           Name: "Love Ranger",
@@ -201,6 +229,8 @@ export default function() {
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
           img: {black: t015b, white: t015w, purple: t015pur, petro: t015p},
           type: "tshirt",
+          sizes: ["Small", "Medium", "Large", "X-large"],
+          colors: ["Black", "White", "Purple", "Petroleum"]
         },
         ],
       gGear: [

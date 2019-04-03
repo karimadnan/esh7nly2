@@ -85,7 +85,7 @@ class cartDetails extends Component {
             return (
                 <div class="col-md-12 col-lg-12" key={item} style={{backgroundColor: "white", fontFamily: "arial", borderRadius: 3.9}}>
                     <div class="col-md-4 col-lg-4">
-                        <img src={item.img} style={{width: 150, height: 100, marginTop: 20}} alt={item.id}/>
+                        <img src={item.img} class="splash-card-product-view" style={{margin: 20}} alt={item.id}/>
                     </div>
                     <div class="col-md-4 col-lg-4" style={{color: "black"}}>
                         <h3 style={{fontWeight: "bold"}}>{item.Name}</h3>
@@ -95,7 +95,7 @@ class cartDetails extends Component {
                         </button>
                         <br/>                        <br/>
                         <span style={{fontSize: 15}} class="label label-primary">{item.price} EGP</span>
-                        <h4>Quantity: <span class="label label-warning">x{item.quantity}</span></h4>
+                        <h4>Quantity: <span>x{item.quantity}</span></h4>
                         {item.size ? <h4>Size: {item.size}</h4> 
                         :
                         <h4>Type: <span class="label label-primary">{item.info}</span></h4>}
@@ -135,7 +135,7 @@ class cartDetails extends Component {
             )          
         }
         return (
-            <div >
+            <div>
                 <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
                     styles={SuccessStyle}>
                     <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
@@ -157,7 +157,7 @@ class cartDetails extends Component {
                     pauseOnHover={false}
                     />
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h1 style={{fontSize: 25}}>Shopping Cart: <span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span class="label label-warning">{this.props.cartInfo.totalItems}</span></h1>
+                    <h1 style={{fontSize: 25}}>Shopping Cart: <span className="glyphicon glyphicon-shopping-cart"></span> <span class="circleRed" style={{color: "white", fontSize: 20}}> {this.props.cartInfo.totalItems}</span></h1>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
                     <h1 style={{fontSize: 25}}>Total:&nbsp;&nbsp;<span class="label label-primary">{this.props.cartInfo.totalPrice} EGP</span></h1>

@@ -138,8 +138,7 @@ class Account extends Component {
     const lang = this.props.lang
     if (!this.props.loginData.loggedState || this.props.loginData.isAdmin){
         return (
-            <div class ="PrivacyBG">
-            <br/><br/><br/>
+            <div class ="GG-BG">
             <div class="container">
               <div class="errorBG" style={{color: "white"}}>
                   <h1>403 (Forbidden)</h1>
@@ -169,11 +168,8 @@ class Account extends Component {
         }
 
         return (
-            <div>
-                <div class ="PrivacyBG">
-                    <br/><br/><br/>
+                <div class ="GG-BG">
                     <div class="container">
-                        
                         {!this.state.status && 
                         <div>
                             <PacmanLoader
@@ -226,9 +222,8 @@ class Account extends Component {
                      </div>} 
                     </div>
                     <br/>
+                    <Getlogin page={"Account"}/>
                 </div>
-                <Getlogin/>
-            </div>
             )
     }
     }

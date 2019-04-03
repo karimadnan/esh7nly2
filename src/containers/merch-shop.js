@@ -6,6 +6,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import ReactTooltip from 'react-tooltip'
 import CartDetails from '../containers/cart-details';
 import ReactRouter from 'flux-react-router';
+import {
+    BrowserView,
+    MobileView,
+  } from "react-device-detect";
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
@@ -94,16 +98,16 @@ class MerchShop extends Component {
         var discounted = item.discount / 100 * item.price
 
         switch(this.props.cart.itemPrev.color) {
-            case "black":
+            case "Black":
               productImg = item.img.black
               break;
-            case "white":
+            case "White":
             productImg = item.img.white
               break;
-            case "purple":
+            case "Purple":
             productImg = item.img.purple
               break;
-            case "petroleum":
+            case "Petroleum":
             productImg = item.img.petro
               break;
             default:
@@ -127,11 +131,13 @@ class MerchShop extends Component {
             id: item.id,
             Name: item.Name,
             price: item.price,
-            color: "black",
-            size: "small",
+            color: "Black",
+            size: "Small",
             desc: item.desc,
             discount: item.discount,
-            img: item.img
+            img: item.img,
+            sizes: item.sizes,
+            colors: item.colors
          }
          this.props.addPrev(object)
     }
@@ -158,12 +164,12 @@ class MerchShop extends Component {
                 return (
                     <div class="col-md-4 col-md-4" key={item} >
                     <div class ={rarity}>
-                        <img class="merchShop"
+                        <img class="splash-card-product-view"
                         onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}
-                        src={item.img.black}  style={{cursor: 'pointer'}} alt={item.id}/>
+                        src={item.img.black} style={{cursor: 'pointer'}} alt={item.id}/>
                        <div class="card-image-overlay">
                         <div id ="merchInfo" class="card-body">
-                            <h4 class ="card-title itemname" style = {{color: "white", fontSize: 25, fontFamily: "impact", lineHeight: 0.3}}>
+                            <h4 class ="itemname" style = {{color: "white", fontSize: 20, fontFamily: "arial", fontWeight: "bold", lineHeight: 0.3}}>
                               <span>• {item.Name} •</span>
                             </h4>
                         </div>
@@ -191,9 +197,6 @@ class MerchShop extends Component {
                     <div class="col-xs-4 col-md-2 col-lg-2">
                         <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}} data-tip="Soon" class="menuLabel menuLabel-primary"><span class="svg-icon svg-icon-ak47"></span></span>
                     </div>
-                    <div class="col-xs-4 col-md-offset-2 col-lg-offset-2">
-                         <span style={{fontSize: 20, lineHeight: 1.6, cursor: "pointer"}} onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "shop")}} className="glyphicon glyphicon-shopping-cart"> <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span>
-                    </div>
                 </div>
 
                 <br/> <br/> <br/> <br/>
@@ -208,83 +211,88 @@ class MerchShop extends Component {
             var prev = this.props.cart.itemPrev
             var discounted = prev.discount / 100 * prev.price
             return (
-                <div class="merchBg2">
+                <div class="BlackBG">
+
+
+                {/* Product Options */}
                 <div class="col-xs-12 col-md-12 col-lg-12">
                      <br/>
-                   {prev.size && <div class="col-xs-12 col-md-5 col-lg-5">
-                        <div style={{fontSize: 20, padding: 10}} >
-                            <button type="button" onClick={()=>{this.props.updatePrev('small', 'size')}} class={prev.size === "small" ? 'btn btn-success btn-xs' : 'btn btn-primary btn-xs'}>Small</button>&nbsp;
-                            <button type="button" onClick={()=>{this.props.updatePrev('medium', 'size')}} class={prev.size === "medium" ? 'btn btn-success btn-sm' : 'btn btn-primary btn-sm'}>Medium</button>&nbsp;
-                            <button type="button" onClick={()=>{this.props.updatePrev('large', 'size')}} class={prev.size === "large" ? 'btn btn-success btn-md' : 'btn btn-primary btn-md'}>Large</button>&nbsp;
-                            <button type="button" onClick={()=>{this.props.updatePrev('x-large', 'size')}} class={prev.size === "x-large" ? 'btn btn-success btn-md' : 'btn btn-primary btn-md'}>XLarge</button>
-                        </div>
+                   {prev.sizes && 
+                    <div class="col-xs-6 col-md-3 col-lg-3">
+                        <select class="form-control" id="size" style={{color: "blue", fontWeight: "bold"}} value={prev.size} onChange={e => this.props.updatePrev(e.target.value, 'size')}>
+                            {prev.sizes.map((sizes) =>{
+                                    return(
+                                        <option>
+                                            {sizes}
+                                        </option>
+                                        )
+                                })}
+                        </select>
                         <br/>
                     </div>} 
-                      { prev.color !== 'n/f' && <div  style={{fontSize: 20, padding: 10, marginBottom: 10}} class="col-xs-12 col-md-5 col-lg-5">
-                        <div class="col-xs-3 col-md-2 col-lg-2">
-                            <span style={{fontWeight: "bold", color: "white"}}>Color: </span>
-                        </div>
-                      { prev.img.black &&  <div class="col-xs-2 col-md-1 col-lg-1">
-                                <div style={{cursor: "pointer"}} onClick={()=>{this.props.updatePrev('black', 'color')}} id={prev.color === "black" ? 'circleBactive' : 'circleB'}></div>
-                        </div> }
-                      { prev.img.white &&   <div class="col-xs-2 col-md-1 col-lg-1">       
-                                <div style={{cursor: "pointer"}} onClick={()=>{this.props.updatePrev('white', 'color')}} id={prev.color === "white" ? 'circleWactive' : 'circleW'}></div>
-                        </div>}
-                      { prev.img.purple &&    <div class="col-xs-2 col-md-1 col-lg-1">          
-                                <div style={{cursor: "pointer"}} onClick={()=>{this.props.updatePrev('purple', 'color')}} id={prev.color === "purple" ? 'circlePactive' : 'circleP'}></div>
-                        </div> }
-                      { prev.img.petro &&   <div class="col-xs-2 col-md-1 col-lg-1">
-                                <div style={{cursor: "pointer"}} onClick={()=>{this.props.updatePrev('petroleum', 'color')}}id={prev.color === "petroleum" ? 'circleGactive' : 'circleG'}></div>
-                        </div> }
+
+                    {prev.colors && 
+                    <div class="col-xs-6 col-md-3 col-lg-3">
+                        <select class="form-control" id="color" style={{color: "blue", fontWeight: "bold"}} value={prev.color} onChange={e => this.props.updatePrev(e.target.value, 'color')}>
+                            {prev.colors.map((colors) =>{
+                                    return(
+                                        <option>
+                                            {colors}
+                                        </option>
+                                        )
+                                })}
+                        </select>
                         <br/>
-                    </div>}
-                    <div class="col-xs-12 col-md-2 col-lg-2">
-                        <div onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "prev")}} class="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
-                        <p style={{textAlign: "center", fontSize: 25, paddingBottom: 7}}> <span className="glyphicon glyphicon-shopping-cart">: <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span> </p>
+                    </div>} 
+
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="badge-dark" onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "prev")}} data-tip="Click to view your cart" style={{cursor: "pointer"}}>
+                        <p style={{textAlign: "center", fontSize: 25, paddingBottom: 7, color: "white"}}> <span className="glyphicon glyphicon-shopping-cart"> <span class="circleRed" style={{color: "white", fontSize: 20}}> {this.props.cartInfo.totalItems}</span></span> </p>
                         </div>
                     </div>
                  </div>
+                {/* Product Options END */}
+
                  <div class="col-xs-12 col-md-6 col-lg-6">
-                    <div class ="cardItemPrev splash-cardTeesView">
-                       {prev.color === 'black' && <img class="merchShop" src={prev.img.black} alt={prev.id}/>}
-                       {prev.color === 'white' && <img class="merchShop" src={prev.img.white} alt={prev.id}/>}
-                       {prev.color === 'purple' && <img class="merchShop" src={prev.img.purple} alt={prev.id}/>}
-                       {prev.color === 'petroleum' && <img class="merchShop" src={prev.img.petro} alt={prev.id}/>}
-                       {prev.color === 'n/f' && <img class="merchShop" src={prev.img} alt={prev.id}/>}
-                       <div id ="merchInfo" class="card-body">
-                            <h4 class ="card-title itemname" style = {{color: "white", fontSize: 25, fontWeight: 300, fontFamily: "impact", lineHeight: 0.5}}>
-                              <span>{prev.Name}</span>
-                            </h4>
-                        </div>
+
+                    <div class ="cardItemPrev">
+
+                       {prev.color === 'Black' && <img class="splash-card-product-view" src={prev.img.black} alt={prev.id}/>}
+                       {prev.color === 'White' && <img class="splash-card-product-view" src={prev.img.white} alt={prev.id}/>}
+                       {prev.color === 'Purple' && <img class="splash-card-product-view" src={prev.img.purple} alt={prev.id}/>}
+                       {prev.color === 'Petroleum' && <img class="splash-card-product-view" src={prev.img.petro} alt={prev.id}/>}
+                       {prev.color === 'n/f' && <img class="splash-card-product-view" src={prev.img} alt={prev.id}/>}
                        {prev.discount > 0 && <div id ="merchDiscount" class="card-body">
                             <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{prev.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
                        </div> }
                     </div>
                  </div>
+
+                <div class="col-xs-6 col-md-3 col-lg-3">
+                    <button class="btn btn-danger btn-block" style={{color : "white"}} onClick={()=>{this.updateInput("view", "shop")}}>
+                        <span className="icon glyphicon glyphicon-arrow-left"></span>
+                        <span className="text">Back to shop</span>
+                    </button>
+                </div>
+                <div class="col-xs-6 col-md-3 col-lg-3">
+                    <button class="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.addItemToArray(prev), this.notify(prev.Name), this.updateInfo(prev), console.log(this.props.cart.cart)}}>
+                        <span className="icon glyphicon glyphicon-shopping-cart"></span>
+                        <span className="text">Add to cart</span>
+                    </button>
+                </div>
+
                  <div style={{color: "white", fontSize: 15}} class="col-xs-12 col-md-6 col-lg-6">
+                       <h1 style={{color: "white", textAlign: "center"}}>• {prev.Name} •</h1>
                        <h1><span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h1>{prev.discount > 0 ? <h1><span class="label label-primary">{prev.price - discounted} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h1> : <p/>}
-                     {this.props.lang.lang === "EN" ?  
-                         <h2><strong style={{textDecoration: "underline"}}>Free shipping</strong> on orders over 300 EGP</h2>
-                      :  <h2 style={{textAlign: "right"}}><strong style={{textDecoration: "underline"}}>شحن مجانى</strong> على الطلبات 300 جنيه و اكثر</h2>
-                     }
+                {this.props.lang.lang === "EN" ?  
+                        <h2><strong style={{textDecoration: "underline"}}>Free shipping</strong> on orders over 300 EGP</h2>
+                    :  
+                        <h2 style={{textAlign: "right"}}><strong style={{textDecoration: "underline"}}>شحن مجانى</strong> على الطلبات 300 جنيه و اكثر</h2>
+                }
                        <br/>
                        <div class="bordersep"/>
                        <h1>Product details:</h1>{prev.desc.split(",").map(place => <p> • {place} </p>)}<p>• Color: {prev.color.toUpperCase()} .</p> <p>• Size: {prev.size.toUpperCase()} .</p>
-                       <br/>
-                       <div class="bordersep"/>
-                       <br/>
-                       <div class="col-xs-12 col-md-6 col-lg-6">
-                            <button class="btn btn-danger" style={{color : "white", width: 250}} onClick={()=>{this.updateInput("view", "shop")}}>
-                                <span className="icon glyphicon glyphicon-arrow-left"></span>
-                                <span className="text">Back to shop</span>
-                            </button>
-                        </div>
-                        <div class="col-xs-12 col-md-6 col-lg-6">
-                            <button class="btn btn-success" style={{color : "white", width: 250}} onClick={()=>{this.addItemToArray(prev), this.notify(prev.Name), this.updateInfo(prev), console.log(this.props.cart.cart)}}>
-                                <span className="icon glyphicon glyphicon-shopping-cart"></span>
-                                <span className="text">Add to cart</span>
-                            </button>
-                        </div>
+
                  </div>
                  <ToastContainer
                     position="top-right"
@@ -302,9 +310,7 @@ class MerchShop extends Component {
         }
         else if (this.state.view === "Cart"){
             return (
-              <div class ="merchBg">
-                <br/>
-                &nbsp;&nbsp;
+              <div class ="BlackBG">
               <div class="container">
               <div class="col-xs-12 col-md-6 col-lg-6">
                 <button class="btn btn-danger" style={{color : "white", width: 270}} onClick={()=>

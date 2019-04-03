@@ -396,7 +396,7 @@ renderPage() {
 render(){
   if (!this.props.loginData.isAdmin){
     return (
-      <div class ="PrivacyBG">
+      <div class ="GG-BG">
         <br/><br/><br/>
         <div class="container">
           <div class="ProfileBGW" style={{color: "white"}}>

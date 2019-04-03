@@ -121,8 +121,8 @@ class GamingShop extends Component {
         const ConvertedIMGS = Object.values(prev.imgs)
         for (const img of ConvertedIMGS) {
             outPut.push( <div key={img} class="col-xs-3 col-md-2 col-lg-2">
-                <div class ="cardItemPrevSmall splash-cardGamingViewSmall">
-                    <img onClick={()=>{this.props.updatePrev(img, 'img')}} class="merchShop" src={img} style={{height: 50, width: 50, cursor: "pointer"}}/>
+                <div class ="cardItemPrevSmall">
+                    <img onClick={()=>{this.props.updatePrev(img, 'img')}} class="splash-card-product-view" src={img} style={{cursor: "pointer"}}/>
                 </div>
             </div>)
     }
@@ -143,16 +143,16 @@ class GamingShop extends Component {
         if (this.state.view === 'shop'){
             let shop =  this.props.shop.map((item) =>{
                 var discounted = item.discount / 100 * item.price
-                var rarity = "card splash-cardGaming FortHover rarity-"+item.rarity
+                var rarity = "card FortHover rarity-"+item.rarity
                 return (
                     <div class="col-md-4 col-md-4" key={item.id} >
                     <div class ={rarity}>
-                        <img class="merchShop"
+                        <img class="splash-card-product-view-constant"
                         onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}
                         src={item.defaultImage}  style={{cursor: 'pointer'}} alt={item.id}/>
                        <div class="card-image-overlay">
                         <div id ="merchInfoGaming" class="card-body">
-                            <h4 class ="card-title itemname" style = {{color: "white", fontSize: 25, fontFamily: "impact"}}>
+                            <h4 class ="card-title itemname" style = {{color: "white", fontSize: 20, fontFamily: "arial", fontWeight: "bold"}}>
                               <span>• {item.Name} •</span>
                             </h4>
                         </div>
@@ -169,8 +169,7 @@ class GamingShop extends Component {
             })
             return (
                 <div>
-                <br/> <br/> <br/> <br/>
-                <div style={{padding: 5}} class="badge-dark col-xs-12 col-md-6 col-lg-6">
+                <div style={{padding: 5, margin: 10}} class="badge-dark col-xs-12 col-md-6 col-lg-6">
                     <div class="col-xs-3 col-md-2 col-lg-2">
                         <span style={{fontSize: 35, cursor: "pointer"}} onClick={()=>{ReactRouter.goTo("/market")}} data-tip="Back" class="glyphicon glyphicon-triangle-left"></span>
                     </div>
@@ -184,10 +183,6 @@ class GamingShop extends Component {
                         <span style={{fontSize: 15, lineHeight: 2.6, cursor: "pointer"}}  class={this.state.category === "headset" ? "menuLabel menuLabel-success" : "menuLabel menuLabel-primary"}><span class="svg-icon svg-icon-headphones"></span></span>
                     </div>
                 </div>
-                <div style={{padding: 10, marginLeft: 10}} class="badge-dark col-xs-4 col-md-1 col-lg-1">
-                &nbsp;<span style={{fontSize: 20, lineHeight: 1, cursor: "pointer"}} onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "shop")}} className="glyphicon glyphicon-shopping-cart"> <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span>
-                </div>
-                <br/> <br/> <br/> <br/>
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     {shop}
                 </div>
@@ -201,41 +196,39 @@ class GamingShop extends Component {
 
 
             return (
-                <div class="merchBg2">
-                <br/><br/><br/>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <br/>
-                    <div class="col-xs-12 col-md-5 col-lg-5">
-                            <button class="btn btn-danger" style={{color : "white", width: 250}} onClick={()=>{this.updateInput("view", "shop")}}>
-                                <span className="icon glyphicon glyphicon-arrow-left"></span>
-                                <span className="text">Back to shop</span>
-                            </button>
-                        </div>
-                    <div class="col-xs-12 col-md-5 col-lg-5">
-                        <button class="btn btn-success" style={{color : "white", width: 250}} onClick={()=>{this.addItemToArray(prev), this.notify(prev.Name), this.updateInfo(prev), console.log(this.props.cart.cart)}}>
-                            <span className="icon glyphicon glyphicon-shopping-cart"></span>
-                            <span className="text">Add to cart</span>
-                        </button>
-                    </div>
-                    <div class="col-xs-12 col-md-2 col-lg-2">
-                        <div onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "prev")}} class="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
-                            <p style={{textAlign: "center", fontSize: 25, paddingBottom: 7}}> <span className="glyphicon glyphicon-shopping-cart">: <span class="label label-warning">{this.props.cartInfo.totalItems}</span></span> </p>
-                        </div>
-                    </div>
-                 </div>
+                <div class="BlackBG">
+
                  <div class="col-xs-12 col-md-8 col-lg-8">
-                            {this.LoopIMGS()}
+                    {this.LoopIMGS()}
                 </div>
+                
+                <div class="col-xs-12 col-md-2 col-lg-2">
+                        <div onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "prev")}} class="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
+                            <p style={{textAlign: "center", fontSize: 25, paddingBottom: 7}}> <span className="glyphicon glyphicon-shopping-cart"> <span class="circleRed" style={{color: "white", fontSize: 20}}> {this.props.cartInfo.totalItems}</span></span> </p>
+                        </div>
+                </div>
+
                  <div class="col-xs-12 col-md-6 col-lg-6">
-                    <div class ="cardItemPrev splash-cardGamingView">
-                       <img class="merchShop" src={prev.img} alt={prev.id} style={{marginTop: 20}}/>
+                    <div class ="cardItemPrev">
+                       <img class="splash-card-product-view" src={prev.img} alt={prev.id}/>
 
                        {prev.discount > 0 && <div id ="merchDiscount" class="card-body">
                             <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{prev.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
                        </div> }
                     </div>
                  </div>
-
+                 <div class="col-xs-6 col-md-3 col-lg-3">
+                            <button class="btn btn-danger btn-block" style={{color : "white"}} onClick={()=>{this.updateInput("view", "shop")}}>
+                                <span className="icon glyphicon glyphicon-arrow-left"></span>
+                                <span className="text">Back to shop</span>
+                            </button>
+                        </div>
+                    <div class="col-xs-6 col-md-3 col-lg-3">
+                        <button class="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.addItemToArray(prev), this.notify(prev.Name), this.updateInfo(prev), console.log(this.props.cart.cart)}}>
+                            <span className="icon glyphicon glyphicon-shopping-cart"></span>
+                            <span className="text">Add to cart</span>
+                        </button>
+                    </div>
                  <div style={{color: "white", fontSize: 15}} class="col-xs-12 col-md-6 col-lg-6">
                        <h1 style={{color: "white", textAlign: "center"}}>{prev.Name}</h1>
                        <h2><span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h2>{prev.discount > 0 ? <h2><span class="label label-primary">{prev.price - discounted} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h2> : <p/>}
@@ -264,9 +257,7 @@ class GamingShop extends Component {
         }
         else if (this.state.view === "Cart"){
             return (
-              <div class ="merchBg2">
-                <br/><br/><br/>
-                &nbsp;&nbsp;
+              <div class ="BlackBG">
               <div class="container">
               <div class="col-xs-12 col-md-6 col-lg-6">
                 <button class="btn btn-danger" style={{color : "white", width: 270}} onClick={()=>

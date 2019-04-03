@@ -220,7 +220,7 @@ return (
       {/* CART */}
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown">
-        <span className="glyphicon glyphicon-shopping-cart" style={{cursor: "pointer", fontSize: 17}} > {this.props.cart.length > 0 && `(${this.props.cart.length})`}</span></a>
+        <span className="glyphicon glyphicon-shopping-cart" style={{cursor: "pointer", fontSize: 17}} ></span> <span class="circleRed" style={{color: "white", fontSize: 14, fontWeight: "bold"}}> {this.props.cart.length}</span></a>
         <ul class="dropdown-menu">
             {this.props.cart.length > 0 ? 
               <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white"}}>Click on an item to remove x1</p>
@@ -235,7 +235,7 @@ return (
                             <img src={item.img} style={{width: 50, height: 45, marginTop: 5}} alt={item.id}/>
                         </div>
                         <div class="col-md-4 col-lg-4">
-                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 8 ? ( (item.size ? `(${item.size.charAt(0)}) ` : '') + ((item.Name).substring(0,9-3))  + '...') : item.size ? `(${item.size.charAt(0)}) ${item.Name}` : item.Name}</h4>
+                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 8 ? ( (item.size ? `(${item.size.charAt(0).toUpperCase()}) ` : '') + ((item.Name).substring(0,9-3))  + '...') : item.size ? `(${item.size.charAt(0).toUpperCase()}) ${item.Name}` : item.Name}</h4>
                         </div>
                         <div class="col-md-2 col-lg-2">
                             <h4 style={{color: "green", fontWeight: "bold"}}>{item.price} EGP</h4>
@@ -259,16 +259,21 @@ return (
         </ul>
 
       </li>
-        {/* Logged in noSignup*/}
-      {   this.props.loginData.loggedState && <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#"><span className="svg-icon svg-icon-anubis"></span> {this.props.loginData.userName} <span className="caret"></span></a>
-            <ul className="dropdown-menu">
-        {/* Admin Dashboard */}
-              {   this.props.loginData.isAdmin && this.props.loginData.session === 1 && <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/agentdashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Agent Dashboard</a></li> } 
-              {   this.props.loginData.isAdmin && this.props.loginData.session === 2 && <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/admindashboard")}}><span className="glyphicon glyphicon-briefcase"></span> Admin Dashboard</a></li> } 
-              {   this.props.loginData.loggedState &&  !this.props.loginData.isAdmin && <li><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/account")}}><span className="glyphicon glyphicon-user"></span> {this.props.lang.lang === "EN" ? "Account" : " الاكونت" }</a></li> }    
-              {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-log-out"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
-            </ul>
-          </li>}
+
+          {   this.props.loginData.loggedState &&  <li class={this.state.page ==="Account" && "activeNav"}><a style={{cursor: 'pointer'}} onClick={()=>{{
+            !this.props.loginData.isAdmin ? 
+                ReactRouter.goTo("/account") 
+            : this.props.loginData.isAdmin && this.props.loginData.session === 1 ?  
+                ReactRouter.goTo("/agentdashboard") 
+            : this.props.loginData.isAdmin && this.props.loginData.session === 2 ? 
+                ReactRouter.goTo("/admindashboard") 
+            : null}}}>
+            <span className="svg-icon svg-icon-anubis"></span> {this.props.loginData.userName}
+            </a>
+          </li>  }  
+
+          {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-off"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
+
           { ! this.props.loginData.loggedState &&    <li className="dropdown"> 
       { ! this.props.loginData.loggedState &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="svg-icon svg-icon-pharoah"></span> <b>{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</b> <span className="caret"></span></a> }
               <ul id="login-dp"  className="dropdown-menu">

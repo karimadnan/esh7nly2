@@ -466,8 +466,7 @@ class Checkout extends Component {
 
 render(){
     return(
-    <div class="PrivacyBG">
-        <br/><br/><br/><br/>
+    <div class="GG-BG">
         <div class="container">
         <div class="col-xs-12 col-md-8 col-lg-8">
             <div class="WhiteBG">
@@ -500,7 +499,7 @@ render(){
 
                 <div class="WhiteBG">
                    {!this.state.cart && this.state.currentIndex != 3 && <span style={{color: "#6F52FF", fontSize: 17, cursor: "pointer"}} onClick={()=>{this.setState({cart: true, currentIndex: 0})}} class="glyphicon glyphicon-arrow-left"> <span style={{fontFamily: "arial"}}>Edit Cart</span></span>}
-                    <h3 style={{color: "black"}}>Shopping Cart <span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;<span class="label label-warning">{this.props.cartInfo.totalItems}</span></h3>
+                    <h3 style={{color: "black"}}>Shopping Cart <span className="glyphicon glyphicon-shopping-cart"></span> <span class="circleRed" style={{color: "white", fontSize: 20}}> {this.props.cartInfo.totalItems}</span></h3>
 
 
                         {this.createCart()}

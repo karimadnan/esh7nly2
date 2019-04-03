@@ -50,9 +50,8 @@ render() {
 
     return (
   <div>
-    <div className="PrivacyBG"> 
+    <div className="GG-BG"> 
     <Getlogin page={"ContactUs"}/>
-        <br/><br/><br/>
         <div class="container">
             <div class="WhiteBG">
                 <h1 style={{color: "black"}}>Message us on facebook</h1>

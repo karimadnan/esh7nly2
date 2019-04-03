@@ -6,7 +6,6 @@ import FawryLogo from '../Images/fawrypaymenttest.png';
 import MerchShop from '../containers/merch-shop';
 import GameShop from '../containers/gaming-shop';
 import {connect} from 'react-redux';
-import Footer from './footer';
 
 import '../Mycss.css';
 import '../games.css';
@@ -130,7 +129,6 @@ MarketRender = () => {
 if (this.state.Type === ""){
   return (
 <div class="container">
-<br/> <br/>     <br/>     <br/>    
     <div class="col-xs-12 col-md-12">
         <div class="Games" onClick={()=>{this.updateInput("Type", "Games")}}>
             <div class="card-image-overlay">
@@ -167,9 +165,9 @@ if (this.state.Type === ""){
 else if(this.state.Type === "Games" && this.state.GameType === ''){
 return (
   <div class="container">
-    <br/> <br/>    <br/> <br/>
-    <div class="col-xs-12 col-md-12 col-lg-12">
-      <div style={{padding: 10}} class="badge-dark col-xs-12 col-md-6 col-lg-6">
+    <br/>
+    <div class="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
+      <div class="badge-dark col-xs-12 col-md-6 col-lg-6">
           <div class="col-xs-1 col-md-1 col-lg-1">
               <span style={{fontSize: 35, cursor: "pointer"}} onClick={()=>{this.updateInput("Type", "")}} data-tip="Back" class="glyphicon glyphicon-triangle-left"></span>
           </div> 
@@ -178,7 +176,6 @@ return (
           </div> 
         </div>
     </div>
-    <br/><br/><br/><br/>
     <div class="col-xs-12 col-md-4">
       <div class="league" onClick={()=>{this.getGameDetails("league")}}></div> 
     </div>
@@ -1043,7 +1040,6 @@ render() {
    if (this.state.Type === "Merch"){
     return (
     <div className="bg-image"> 
-      <br/><br/><br/>
       <div class="container">
         <MerchShop/>
       </div>
@@ -1062,7 +1058,7 @@ render() {
       )
   }
 return (
-  <div>
+
   <div className="bg-image"> 
         <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
@@ -1076,13 +1072,12 @@ return (
         </Modal>
 
           {this.MarketRender()}
-          <br/><br/>
           {this.SingleGame()}
           {this.paymentRender()}
+          <Getlogin page={"Offers"}/>
     </div>
 
-    <Getlogin page={"Offers"}/>
-  </div>
+
       );
   }
 }

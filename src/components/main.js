@@ -70,7 +70,6 @@ render(){
       <div className="bg-image">
         <Getlogin page={"Main"}/>
         <div class="container" >
-            <br/>    <br/>     <br/>   <br/> 
             <div class="badge-logo"/>
             <TypedJs  
               start={lang === "EN" ? "Why GGegypt?" : "ليه تشترى؟"}

@@ -1,4 +1,7 @@
 @media screen and (max-width: 700px) {
+    body { 
+      padding-top: 52px; 
+    }
 
   .badge-logo {
     padding: 6.15em 6.15em 6.15em;
@@ -8,33 +11,6 @@
     background-position: center;
     width: 300px;
     border-radius: 1.95rem;
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
-  }
-
-  .splash-cardTeesView {
-    border-radius: 0;
-    height: 300px;
-    width: 300px;
-  }
-
-  .splash-cardGamingView {
-    margin-bottom: 20px;
-    border-radius: 0;
-    height: 250px;
-    width: 330px;
-  }
-
-  .splash-cardTees {
-    border-radius: 0;
-    height: 300px;
-    width: 300px;
-  }
-
-  .merchBg2 {
-    border-radius: 1.95rem;
-    color: rgb(182, 180, 180);
-    height: 1200px;
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
   }
@@ -302,14 +278,7 @@
   }
 
   @media screen and (max-width: 400px) {
-
-    .splash-cardTees {
-      margin-bottom: 20px;
-      border-radius: 0;
-      height: 300px;
-      width: 300px;
-    }
-
+    
   .badge {
     display: inline-block;
     padding: 0.05em 1.9em;

@@ -90,8 +90,7 @@ class AgentDashboard extends Component {
     render() {
     if (!this.props.loginData.loggedState || !this.props.loginData.isAdmin){
         return (
-            <div class ="PrivacyBG">
-            <br/><br/><br/>
+            <div class ="GG-BG">
             <div class="container">
               <div class="errorBG" style={{color: "white"}}>
                   <h1>403 (Forbidden)</h1>
@@ -129,9 +128,7 @@ class AgentDashboard extends Component {
             
         }
         return (
-            <div>
-                <div class ="PrivacyBG">
-                    <br/><br/><br/>
+                <div class ="GG-BG">
                     <div class="container">
                         
                         {!this.state.status && 
@@ -185,10 +182,8 @@ class AgentDashboard extends Component {
                      </div>
                      </div>} 
                     </div>
-                    <br/>
+                    <Getlogin/>
                 </div>
-                <Getlogin/>
-            </div>
             )
     }
     }
