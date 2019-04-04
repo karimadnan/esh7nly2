@@ -217,33 +217,7 @@ class MerchShop extends Component {
                 {/* Product Options */}
                 <div class="col-xs-12 col-md-12 col-lg-12">
                      <br/>
-                   {prev.sizes && 
-                    <div class="col-xs-6 col-md-3 col-lg-3">
-                        <select class="form-control" id="size" style={{color: "blue", fontWeight: "bold"}} value={prev.size} onChange={e => this.props.updatePrev(e.target.value, 'size')}>
-                            {prev.sizes.map((sizes) =>{
-                                    return(
-                                        <option>
-                                            {sizes}
-                                        </option>
-                                        )
-                                })}
-                        </select>
-                        <br/>
-                    </div>} 
 
-                    {prev.colors && 
-                    <div class="col-xs-6 col-md-3 col-lg-3">
-                        <select class="form-control" id="color" style={{color: "blue", fontWeight: "bold"}} value={prev.color} onChange={e => this.props.updatePrev(e.target.value, 'color')}>
-                            {prev.colors.map((colors) =>{
-                                    return(
-                                        <option>
-                                            {colors}
-                                        </option>
-                                        )
-                                })}
-                        </select>
-                        <br/>
-                    </div>} 
 
                     <div class="col-xs-12 col-md-6 col-lg-6">
                         <div class="badge-dark" onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "prev")}} data-tip="Click to view your cart" style={{cursor: "pointer"}}>
@@ -282,8 +256,38 @@ class MerchShop extends Component {
                 </div>
 
                  <div style={{color: "white", fontSize: 15}} class="col-xs-12 col-md-6 col-lg-6">
-                       <h1 style={{color: "white", textAlign: "center"}}>• {prev.Name} •</h1>
+                       <h1 style={{color: "white", textAlign: "center"}}> {prev.Name} </h1>
                        <h1><span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h1>{prev.discount > 0 ? <h1><span class="label label-primary">{prev.price - discounted} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h1> : <p/>}
+                        
+                <br/>
+                {prev.sizes && 
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        <select class="form-control" id="size" style={{color: "blue", fontWeight: "bold"}} value={prev.size} onChange={e => this.props.updatePrev(e.target.value, 'size')}>
+                            {prev.sizes.map((sizes) =>{
+                                    return(
+                                        <option>
+                                            {sizes}
+                                        </option>
+                                        )
+                                })}
+                        </select>
+                        <br/>
+                    </div>} 
+
+                {prev.colors && 
+                    <div class="col-xs-6 col-md-6 col-lg-6">
+                        <select class="form-control" id="color" style={{color: "blue", fontWeight: "bold"}} value={prev.color} onChange={e => this.props.updatePrev(e.target.value, 'color')}>
+                            {prev.colors.map((colors) =>{
+                                    return(
+                                        <option>
+                                            {colors}
+                                        </option>
+                                        )
+                                })}
+                        </select>
+                        <br/>
+                    </div>} 
+
                 {this.props.lang.lang === "EN" ?  
                         <h2><strong style={{textDecoration: "underline"}}>Free shipping</strong> on orders over 300 EGP</h2>
                     :  
@@ -291,7 +295,7 @@ class MerchShop extends Component {
                 }
                        <br/>
                        <div class="bordersep"/>
-                       <h1>Product details:</h1>{prev.desc.split(",").map(place => <p> • {place} </p>)}<p>• Color: {prev.color.toUpperCase()} .</p> <p>• Size: {prev.size.toUpperCase()} .</p>
+                       <h1 style={{textAlign: "center"}}>Product details</h1>{prev.desc.split(",").map(place => <p> • {place} </p>)}<p>• Color: {prev.color.toUpperCase()} .</p> <p>• Size: {prev.size.toUpperCase()} .</p>
 
                  </div>
                  <ToastContainer

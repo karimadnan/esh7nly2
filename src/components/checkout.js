@@ -218,7 +218,7 @@ class Checkout extends Component {
                     </div>
                 </div>
                     <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
-                        <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.updateShipping()}}>
+                        <button class="btn btn-primary btn-block" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.updateShipping()}}>
                             <span className="icon glyphicon glyphicon-ok"></span>
                             <span className="text" style={{fontWeight: "bold"}}>Save</span>
                         </button>
@@ -274,7 +274,7 @@ class Checkout extends Component {
                     </button>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <button class="btn btn-success" style={{color : "white", width: 250, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({currentIndex: 1})}}>
+                    <button class="btn btn-primary btn-block" style={{color : "white", width: 250, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({currentIndex: 1})}}>
                         <span className="icon glyphicon glyphicon-ok"></span>
                         <span className="text" style={{fontWeight: "bold"}}>Next</span>
                     </button>
@@ -315,7 +315,7 @@ class Checkout extends Component {
                     </div>
                 </div> : null}
                 <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
-                    <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.PaymentNext()}}>
+                    <button class="btn btn-primary btn-block" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.PaymentNext()}}>
                         <span className="icon glyphicon glyphicon-ok"></span>
                         <span className="text" style={{fontWeight: "bold"}}>Next</span>
                     </button>
@@ -391,7 +391,7 @@ class Checkout extends Component {
                             <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? (((item.Name).substring(0,15-3)) + '...') : item.Name}</h4>
                         </div>
 
-                            <h4 style={{color: "green", fontWeight: "bold"}}>{item.price} EGP</h4>
+                            <h4 style={{color: "purple", fontWeight: "bold"}}>{item.price} EGP</h4>
                             <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
 
                     </div>
@@ -454,7 +454,7 @@ class Checkout extends Component {
                 <label style={{color: "green"}}><span style={{color: "black"}}></span>Paid by {this.state.paymentMethod}</label>
             </div>
             <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
-                <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.createOrder()}}>
+                <button class="btn btn-primary btn-block" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.createOrder()}}>
                     <span className="icon glyphicon glyphicon-ok"></span>
                     <span className="text" style={{fontWeight: "bold"}}>Submit</span>
                 </button>

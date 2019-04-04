@@ -183,7 +183,7 @@ class cartDetails extends Component {
                     <h1 style={{fontSize: 25}}>Total:&nbsp;&nbsp;({this.props.cartInfo.totalItems} {this.props.cartInfo.totalItems > 1 ? "items" : "item"})&nbsp;&nbsp;<span class="label label-primary">{this.props.cartInfo.totalPrice} EGP</span></h1>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{this.goToCheckout()}}>
+                <button class="btn btn-primary btn-block" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{this.goToCheckout()}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
                     <span className="text">Proceed to checkout</span>
                 </button>

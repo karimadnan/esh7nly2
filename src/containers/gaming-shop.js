@@ -238,7 +238,7 @@ class GamingShop extends Component {
                      }
                        <br/>
                        <div class="bordersep"/>
-                       <h1>Product details:</h1> { prev.desc.split(",").map(place => <p> • {place} </p>)} {prev.color ? <p>• Color: {prev.color.toUpperCase()}</p> : "" }
+                       <h1 style={{textAlign: "center"}}>Product details</h1> { prev.desc.split(",").map(place => <p> • {place} </p>)} {prev.color ? <p>• Color: {prev.color.toUpperCase()}</p> : "" }
                        <br/>
                  </div>
                  <ToastContainer

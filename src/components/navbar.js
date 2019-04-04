@@ -12,6 +12,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import '../flag-icon.css'
 import ReactTooltip from 'react-tooltip'
 import isEmail from 'validator/lib/isEmail';
+import Drawer from 'react-motion-drawer';
+import {isMobile} from 'react-device-detect';
+
+const sideDrawer = {
+    backgroundColor: "white"
+  }
 
 class Getlogin extends Component {
 
@@ -40,6 +46,7 @@ class Getlogin extends Component {
       Phone: "",
       Password: "",
       page: this.props.page,
+      sideBar: false
     }
 
     onOpenModal = (type) => {
@@ -117,13 +124,6 @@ login() {
                 that.props.loginFunction(response.data.data, 'login')
             })
             .catch(function (error) {
-              console.log(error, "EROEROEORO")
-              // if (error.response.data.message){
-              //   that.setState({
-              //     ErrorModal:true,
-              //     ErrorMsg:error.response.data.message
-              //   })
-              // }
             });
         }
         else{
@@ -155,7 +155,6 @@ render() {
     },
     modal: {
       top: '-10%',
-      marginLeft: '80%',
       left: "0px",
       right: "0px",
       bottom: 'auto',
@@ -218,47 +217,69 @@ return (
 
 
       {/* CART */}
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown">
-        <span className="glyphicon glyphicon-shopping-cart" style={{cursor: "pointer", fontSize: 17}} ></span> <span class="circleRed" style={{color: "white", fontSize: 14, fontWeight: "bold"}}> {this.props.cart.length}</span></a>
-        <ul class="dropdown-menu">
-            {this.props.cart.length > 0 ? 
-              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white"}}>Click on an item to remove x1</p>
+
+       <li>
+          <a onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}}>
+            <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 17}} ></span> <span class="circleRed" style={{color: "white", fontSize: 14, fontWeight: "bold"}}> {this.props.cart.length}</span>
+          </a>
+      </li>
+
+
+        <Drawer open={this.state.sideBar} 
+                onChange={()=> this.setState({ sideBar: true })}
+                drawerStyle={sideDrawer}
+                noTouchClose={true}
+                width={isMobile ? 200 : 500}
+                noTouchOpen={true}>
+
+        <div style={{padding: 20}}>
+          {this.props.cart.length > 0 ? 
+              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>Click on an item to remove x1</p>
               :
-              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white"}}>Your cart is empty.</p>
+              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>Your cart is empty.</p>
             }
             {this.props.cart.map(item => {
               return(
-                <li  key={item.id}>
-                    <div class="col-md-12 col-lg-12 navCart" style={{width: 300, cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
+                <li key={item.id}>
+                    <div class="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
                         <div class="col-md-4 col-lg-4">
-                            <img src={item.img} style={{width: 50, height: 45, marginTop: 5}} alt={item.id}/>
+                            <img src={item.img} class="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
                         </div>
                         <div class="col-md-4 col-lg-4">
-                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 8 ? ( (item.size ? `(${item.size.charAt(0).toUpperCase()}) ` : '') + ((item.Name).substring(0,9-3))  + '...') : item.size ? `(${item.size.charAt(0).toUpperCase()}) ${item.Name}` : item.Name}</h4>
+                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? ( (item.size ? `(${item.size.charAt(0).toUpperCase()}) ` : '') + ((item.Name).substring(0,15-3))  + '...') : item.size ? `(${item.size.charAt(0).toUpperCase()}) ${item.Name}` : item.Name}</h4>
                         </div>
                         <div class="col-md-2 col-lg-2">
-                            <h4 style={{color: "green", fontWeight: "bold"}}>{item.price} EGP</h4>
+                            <h4 style={{color: "purple", fontWeight: "bold"}}>{item.price} EGP</h4>
                         </div>
                         <div class="col-md-2 col-lg-2">
                             <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
                         </div>
+                        <div style={{borderBottom: "1px dashed grey"}}/>
                     </div>
                 </li>
                 )
             })}
 
+
+
+          {this.props.cart.length > 0 && 
+          <div style={{color: "black"}}>
+            <div class="col-xs-6 col-md-6 col-lg-6">
+              <span style={{textAlign: "left", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>Subtotal: </span>
+            </div>
+            <div class="col-xs-6 col-md-6 col-lg-6">
+              <span style={{textAlign: "right", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>EGP {this.props.cartInfo.totalPrice} </span>
+            </div>
+          </div>}
           {!window.location.href.includes("checkout") && this.props.cart.length > 0 && 
           <div class="col-xs-12 col-md-12 col-lg-12">
-                <button class="btn btn-success" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{this.goToCheckout()}}>
+                <button class="btn btn-primary btn-block" style={{color : "white", margin: 10}} onClick={()=>{this.goToCheckout()}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
-                    <span className="text">Proceed to checkout</span>
+                    <span className="text">Checkout</span>
                 </button>
             </div>}
-            
-        </ul>
-
-      </li>
+          </div>
+          </Drawer>
 
           {   this.props.loginData.loggedState &&  <li class={this.state.page ==="Account" && "activeNav"}><a style={{cursor: 'pointer'}} onClick={()=>{{
             !this.props.loginData.isAdmin ? 
@@ -275,7 +296,7 @@ return (
           {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-off"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
 
           { ! this.props.loginData.loggedState &&    <li className="dropdown"> 
-      { ! this.props.loginData.loggedState &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="svg-icon svg-icon-pharoah"></span> <b>{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</b> <span className="caret"></span></a> }
+          { ! this.props.loginData.loggedState &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="svg-icon svg-icon-pharoah"></span> <b>{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</b> <span className="caret"></span></a> }
               <ul id="login-dp"  className="dropdown-menu">
               <li>
               <div className="form-group col col-xs-6">
@@ -309,6 +330,7 @@ function mapStateToProps(state){
       loginData: state.loginSession,
       server: state.server,
       cart: state.cartItems.cart,
+      cartInfo: state.updateCartInfo,
       lang: state.lang
   }
 }

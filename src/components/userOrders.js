@@ -67,7 +67,9 @@ render(){
                   <div class="col-xs-4 col-md-4 col-lg-4">
                       {row.cart.map(imgs => {
                           return(
-                            <img src={imgs.img} style={{width: 60, height: 40, margin: 5}}/>
+                            <div class="col-xs-4 col-md-4 col-lg-4">
+                                <img src={imgs.img} class="splash-card-product-view" style={{margin: 10}}/>
+                            </div>
                           )
                       })}
                   </div>
@@ -90,7 +92,7 @@ render(){
                     <div class="col-xs-4 col-md-4 col-lg-4">
                         {row.cart.map(imgs => {
                             return(
-                              <img src={imgs.img} style={{width: 60, height: 40, margin: 5}}/>
+                              <img src={imgs.img} class="splash-card-product-view" style={{margin: 5}}/>
                             )
                         })}
                     </div>
@@ -165,14 +167,14 @@ render(){
             <span style={{color: "orange", fontSize: 17, cursor: "pointer"}} onClick={()=>{this.setState({showRow: false})}} class="glyphicon glyphicon-arrow-left"> <span style={{fontFamily: "arial"}}>Back</span></span>
         </div>
         <div class="col-xs-6 col-md-6 col-lg-6">
-            <h1 style={{color: "black"}}>Total Price: <span style={{color: "purple", fontSize: 25}}>{totalPrice} EGP {totalPrice < 400 ? `+ Shipping: 30 EGP = ${totalPrice+30}  EGP` : ""}</span>
+            <h1 style={{color: "black", textAlign: "center"}}>•Total Price•  <br/> <span style={{color: "purple", fontSize: 25}}>{totalPrice} EGP {totalPrice < 400 ? `+ Shipping: 30 EGP = ${totalPrice+30}  EGP` : ""}</span>
             </h1>
         </div>
         <div class="col-xs-6 col-md-6 col-lg-6">
-            <h1 style={{color: "black"}}>Order Status: <span style={{color: "purple", fontSize: 25}}>{this.state.MyRow.status}</span></h1>
+            <h1 style={{color: "black", textAlign: "center"}}>•Order Status• <br/><span style={{color: "purple", fontSize: 25}}>{this.state.MyRow.status}</span></h1>
         </div>
         <div class="col-xs-6 col-md-6 col-lg-6">
-            <h1 style={{color: "black"}}>Agent Comment: <span style={{color: "purple", fontSize: 25}}>{this.state.MyRow.comment}</span></h1>
+            <h1 style={{color: "black", textAlign: "center"}}>•Agent Comment• <br/><span style={{color: "purple", fontSize: 25, wordWrap: "break-word"}}>{this.state.MyRow.comment}</span></h1>
         </div>
         {this.state.MyRow.cart.map(row => {
             rowbg++;
@@ -180,7 +182,7 @@ render(){
               <div class="col-xs-12 col-md-12 col-lg-12" style={{color: "white", fontFamily: "arial", backgroundColor: rowbg % 2 === 0 ? "#7f7192" : "#595163"}}>
                 <BrowserView>
                   <div class="col-xs-6 col-md-3 col-lg-3">
-                      <img src={row.img} style={{width:150, height: 100, margin: 10}}/>
+                      <img src={row.img} class="splash-card-product-view" style={{margin: 10}}/>
                   </div>
                   <div class="col-xs-6 col-md-3 col-lg-3" style={{color: "white"}}>
                   <h3 style={{fontWeight: "bold"}}>{row.Name}</h3>
