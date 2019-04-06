@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../Mycss.css';
 import '../Respcss.css';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import { FacebookProvider, Page, MessageUs, CustomChat } from 'react-facebook';
 import Footer from './footer';
 import isInt from 'validator/lib/isInt';
@@ -51,7 +51,7 @@ render() {
     return (
   <div>
     <div className="GG-BG"> 
-    <Getlogin page={"ContactUs"}/>
+    <Navbar page={"ContactUs"}/>
         <div class="container">
             <div class="WhiteBG">
                 <h1 style={{color: "black"}}>Message us on facebook</h1>

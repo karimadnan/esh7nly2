@@ -19,16 +19,7 @@ const sideDrawer = {
     backgroundColor: "white"
   }
 
-class Getlogin extends Component {
-
-    notifyLogin = (msg) => toast.info(` welcome back ${msg}!`, {
-      position: "top-center",
-      autoClose: 3500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true
-    });
+class Navbar extends Component {
 
     notify = (id) => toast.error(`${id} removed from cart!`, {
       position: "top-center",
@@ -43,8 +34,6 @@ class Getlogin extends Component {
       ErrorModal: false,
       ErrorMsg: '',
       Url: this.props.server.main,
-      Phone: "",
-      Password: "",
       page: this.props.page,
       sideBar: false
     }
@@ -106,48 +95,6 @@ logout =() =>{
   this.props.loginFunction(null, 'logout')
   ReactRouter.goTo("/main")
 }
-
-keyClicked (e) {
-if (e.key === "Enter"){
-this.login();
-}
-}
-
-login() {
-  var that=this;
-    if(this.state.Phone  && this.state.Password){
-
-      if(isEmail(this.state.Phone)){
-            axios.get(`${this.state.Url}adminLogin?Email=${this.state.Phone}&Password=${this.state.Password}`)
-            .then(function (response) {
-                that.notifyLogin(response.data.data.Name)
-                that.props.loginFunction(response.data.data, 'login')
-            })
-            .catch(function (error) {
-            });
-        }
-        else{
-            axios.get(`${this.state.Url}login?Phone=${this.state.Phone}&Password=${this.state.Password}`)
-            .then(function (response) {
-              that.notifyLogin(response.data.data.Name)
-              that.props.loginFunction(response.data.data, 'login')
-            })
-            .catch(function (error) {
-              if (error.response.data.message){
-                that.setState({
-                  ErrorModal:true,
-                  ErrorMsg:error.response.data.message
-                })
-              }
-
-            }); 
-          }
-  
-    }
-    else{
-      this.setState({ErrorModal: true, ErrorMsg: "Please fill your info."})
-    }
-    } 
 
 render() {
   const customStyles = {
@@ -295,27 +242,7 @@ return (
 
           {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-off"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
 
-          { ! this.props.loginData.loggedState &&    <li className="dropdown"> 
-          { ! this.props.loginData.loggedState &&  <a   className="dropdown-toggle" style={{cursor: 'pointer'}} data-toggle="dropdown"><span className="svg-icon svg-icon-pharoah"></span> <b>{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</b> <span className="caret"></span></a> }
-              <ul id="login-dp"  className="dropdown-menu">
-              <li>
-              <div className="form-group col col-xs-6">
-                 <label className="sr-only" for="exampleInputEmail2">Phone</label>
-                 <input type="text" onKeyPress={this.keyClicked.bind(this)} className="form-control" value={this.state.Phone} onChange={e => this.updateInput("Phone", e.target.value)} id="exampleInputEmail2" placeholder="Phone Number" required></input>
-              </div>	
-              <div className="form-group col col-xs-6">
-                           <label className="sr-only" for="exampleInputPassword2">Password</label>
-                           <input type="password" onKeyPress={this.keyClicked.bind(this)} className="form-control" value={this.state.Password} onChange={e => this.updateInput("Password", e.target.value)} id="exampleInputPassword2" placeholder="Password" required></input>
-                        </div>
-                        <div className="form-group col col-xs-6">
-                           <button onClick={()=>{this.login()}} disabled={!this.state.Phone.length || !this.state.Password.length} className="btn btn-primary btn-block">{this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</button> 
-                        </div>	
-                        <div className="col col-xs-6">
-                         <button onClick={()=>{ReactRouter.goTo("/signup")}} style={{cursor: 'pointer'}} className="btn btn-success btn-block"><span className="svg-icon svg-icon-sphinx"></span> {this.props.lang.lang === "EN" ? "Sign Up" : " التسجيل" }</button>
-                        </div>
-                </li>
-              </ul> 
-        </li>}
+          {   !this.props.loginData.loggedState &&  <li class={this.state.page ==="Login" && "activeNav"}><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/login")}}><span className="svg-icon svg-icon-pharoah"></span> {this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</a></li> }  
 
         </ul>
       </div>
@@ -337,15 +264,15 @@ function mapStateToProps(state){
 
 const matchDispatchToProps = dispatch => bindActionCreators(
     {
-      loginFunction,
       removeCartItem,
       updateCartInfo,
+      loginFunction,
       updateLang
     },
     dispatch,
   )
 
-export default connect(mapStateToProps, matchDispatchToProps)(Getlogin);
+export default connect(mapStateToProps, matchDispatchToProps)(Navbar);
 
 
 

@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import axios from 'axios';
 import Modal from 'react-responsive-modal';
 import Select from 'react-select';
@@ -1043,7 +1043,7 @@ render() {
       <div class="container">
         <MerchShop/>
       </div>
-      <Getlogin page={"Offers"}/>
+      <Navbar page={"Offers"}/>
     </div>
     )
   }
@@ -1053,7 +1053,7 @@ render() {
         <div class="container">
           <GameShop/>
         </div>
-        <Getlogin page={"Offers"}/>
+        <Navbar page={"Offers"}/>
       </div>
       )
   }
@@ -1074,7 +1074,7 @@ return (
           {this.MarketRender()}
           {this.SingleGame()}
           {this.paymentRender()}
-          <Getlogin page={"Offers"}/>
+          <Navbar page={"Offers"}/>
     </div>
 
 

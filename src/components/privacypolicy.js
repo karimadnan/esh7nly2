@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import '../Mycss.css';
 import '../Respcss.css';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import ReactRouter from 'flux-react-router';
 import Footer from './footer';
 
@@ -43,7 +43,7 @@ render() {
                 <p style={{color: "black", fontWeight: "bold"}}>© 2019, GGegypt.com - <a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer', color: "purple", fontWeight: "bold"}}>Back to homepage  <span className="glyphicon glyphicon-home"></span> </a></p>
         </div>
             </div>
-        <Getlogin />
+        <Navbar />
         </div>
 
     );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import axios from 'axios';
 import adminicon from '../Images/adminicon.png';
 import VodafoneCashLogo from '../Images/Vodacash.png';
@@ -404,7 +404,7 @@ render(){
             <p> You don't have permission to view this page</p>
           </div>
         </div>
-        <Getlogin />
+        <Navbar />
       </div>
   )
   }
@@ -421,7 +421,7 @@ else {
             draggable={false}
             pauseOnHover={false}
       />
-      <Getlogin page={"Admin"}/>
+      <Navbar page={"Admin"}/>
       {this.renderPage()}
     </div>
   )}

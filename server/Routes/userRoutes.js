@@ -31,4 +31,13 @@ router.get('/privacy', function(req, res, next) {
 router.get('/contactus', function(req, res, next) {
     return res.sendFile(path.resolve(Front, 'index.html'))
 }); 
+router.get('/login', function(req, res, next) {
+    return res.sendFile(path.resolve(Front, 'index.html'))
+}); 
+router.get('/checkout', function(req, res, next) {
+    return res.sendFile(path.resolve(Front, 'index.html'))
+}); 
+router.get('/account', function(req, res, next) {
+    return res.sendFile(path.resolve(Front, 'index.html'))
+}); 
 module.exports = router;

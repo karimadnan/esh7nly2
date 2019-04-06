@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import Footer from './footer';
 import '../Mycss.css';
 import '../Respcss.css';
@@ -175,7 +175,7 @@ render() {
   return (
     <div>
       <div className="bg-image"> 
-        <Getlogin page={"HowTo"}/>
+        <Navbar page={"HowTo"}/>
         {this.PaymentRender()}
         {this.SinglePayment()}
       </div>

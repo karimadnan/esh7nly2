@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../Mycss.css';
 import '../Respcss.css';
 import axios from 'axios';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import moment from 'moment';
 import ReactRouter from 'flux-react-router';
 import {connect} from 'react-redux';
@@ -268,7 +268,7 @@ class FortniteShop extends Component {
 
 
 {this.RenderPage()}
-<Getlogin page={"FortniteShop"}/>
+<Navbar page={"FortniteShop"}/>
 
 </div>
 

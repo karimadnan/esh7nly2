@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../Mycss.css';
 import '../Respcss.css';
 import axios from 'axios';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import moment from 'moment';
 
 class FortniteShop extends Component {
@@ -169,7 +169,7 @@ Back To Shop
 
 
 <div>
-<Getlogin />
+<Navbar />
 
 
 {this.RenderPage()}

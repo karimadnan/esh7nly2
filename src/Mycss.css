@@ -2,6 +2,26 @@ button .icon { display: none; }
 button:hover .icon { display: inline; }
 button:hover .text { display: none; }
 
+.loginBox {
+  /* Add shadows to create the "card" effect */
+
+
+
+  text-align: center;
+  border-radius: 1.85rem;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.9);
+  transition: 0.3s;
+  height: stretch;
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
 body { 
   padding-top: 59px; 
 }

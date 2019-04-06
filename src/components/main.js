@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../Mycss.css';
 import '../Respcss.css';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import ImageGallery from 'react-image-gallery';
 import fortnite from '../Images/slider/fort.png';
 import pubg from '../Images/slider/pubg.jpg';
@@ -68,7 +68,7 @@ render(){
   return(
     <div>
       <div className="bg-image">
-        <Getlogin page={"Main"}/>
+        <Navbar page={"Main"}/>
         <div class="container" >
             <div class="badge-logo"/>
             <TypedJs  

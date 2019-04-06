@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import '../Mycss.css';
 import '../Respcss.css';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import Leads from './leads';
@@ -97,7 +97,7 @@ class AgentDashboard extends Component {
                   <p> Ooops Something Went Wrong.</p>
               </div>
             </div>
-            <Getlogin />
+            <Navbar />
           </div>
         )
         }
@@ -182,7 +182,7 @@ class AgentDashboard extends Component {
                      </div>
                      </div>} 
                     </div>
-                    <Getlogin/>
+                    <Navbar page={"Account"}/>
                 </div>
             )
     }

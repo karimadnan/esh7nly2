@@ -8,13 +8,13 @@ import SignUp from './components/SignUp';
 import Market from './components/Games';
 import Payment from './components/PaymentTutorial';
 import FortniteShop from './components/FortniteShop';
-import Getlogin from './components/navbar';
 import Admindashboard from './components/admindashboard';
 import ContactUs from './components/ContactUs';
 import Privacy from './components/privacypolicy';
 import Account from './components/account';
 import AgentDashboard from './components/agentDashboard';
 import CheckOut from './components/checkout';
+import Login from './components/login';
 import * as registerServiceWorker from './registerServiceWorker';
 
 import {createStore} from 'redux';
@@ -64,11 +64,6 @@ Flux.createRoute('/market',function(){
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Market /></PersistGate></Provider>,document.getElementById('root'));
 })
 
-Flux.createRoute('/',function(){
-    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Getlogin /></PersistGate></Provider>,document.getElementById('root'));
-})
-
 Flux.createRoute('/payment',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Payment /></PersistGate></Provider>,document.getElementById('root'));
@@ -108,6 +103,12 @@ Flux.createRoute('/checkout',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><CheckOut /></PersistGate></Provider>,document.getElementById('root'));
 })
+
+Flux.createRoute('/login',function(){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Login /></PersistGate></Provider>,document.getElementById('root'));
+})
+
 
 registerServiceWorker.unregister();
 

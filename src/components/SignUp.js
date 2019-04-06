@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import '../Mycss.css';
 import '../Respcss.css';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import axios from 'axios';
 import ReCAPTCHA from "react-google-recaptcha";
 import Modal from 'react-responsive-modal';
@@ -215,7 +215,7 @@ render() {
                             <br/>
                         </div>
                         <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                            <button class="btn btn-success btn-block" style={{color : "white"}} onClick={()=>{this.createUser()}}>
+                            <button class="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.createUser()}}>
                                 <span className="icon glyphicon glyphicon-ok"></span>
                                 <span className="text">Sign up</span>
                             </button>
@@ -224,7 +224,7 @@ render() {
                 </div>
               <br/><br/>
         </div>
-        <Getlogin page={"SignUp"}/>
+        <Navbar page={"SignUp"}/>
         <Footer/>
 </div>
   )

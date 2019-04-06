@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import '../Mycss.css';
 import '../Respcss.css';
-import Getlogin from './navbar';
+import Navbar from './navbar';
 import {connect} from 'react-redux';
 import CountUp from 'react-countup';
 import axios from 'axios';
@@ -145,7 +145,7 @@ class Account extends Component {
                   <p> Ooops Something Went Wrong.</p>
               </div>
             </div>
-            <Getlogin />
+            <Navbar />
           </div>
         )
         }
@@ -222,7 +222,7 @@ class Account extends Component {
                      </div>} 
                     </div>
                     <br/>
-                    <Getlogin page={"Account"}/>
+                    <Navbar page={"Account"}/>
                 </div>
             )
     }

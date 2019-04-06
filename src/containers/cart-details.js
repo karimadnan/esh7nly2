@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import '../Mycss.css';
 import '../games.css';
 import '../Respcss.css';
-import Getlogin from '../components/navbar';
+import Navbar from '../components/navbar';
 import {removeCartItem, updateCartInfo} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import {bindActionCreators} from 'redux';
@@ -130,7 +130,7 @@ class cartDetails extends Component {
                     />
                     <h1>&nbsp;Your cart is empty<span className="glyphicon glyphicon-shopping-cart"></span>&nbsp;&nbsp;</h1>
                 <div class="bordersep"/>
-                    <Getlogin />
+                    <Navbar />
                 </div>
             )          
         }
@@ -188,7 +188,7 @@ class cartDetails extends Component {
                     <span className="text">Proceed to checkout</span>
                 </button>
                 </div>
-                <Getlogin />
+                <Navbar />
             </div>
         );
     }
