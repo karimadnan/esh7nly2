@@ -6,7 +6,6 @@ import './index.css'
 import Main from './components/main';
 import SignUp from './components/SignUp';
 import Market from './components/market';
-import Payment from './components/PaymentTutorial';
 import FortniteShop from './components/FortniteShop';
 import Admindashboard from './components/admindashboard';
 import ContactUs from './components/ContactUs';
@@ -62,11 +61,6 @@ Flux.createRoute('/signup',function(){
 Flux.createRoute('/market',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Market /></PersistGate></Provider>,document.getElementById('root'));
-})
-
-Flux.createRoute('/payment',function(){
-    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Payment /></PersistGate></Provider>,document.getElementById('root'));
 })
 
 Flux.createRoute('/fortniteshop',function(){

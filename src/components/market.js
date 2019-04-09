@@ -164,11 +164,11 @@ if (this.state.view === "shop"){
     )
     }
 }
+
 ViewProduct(){
 
 if (this.state.view === "item"){
     var prev = this.props.cart.itemPrev
-    console.log(prev)
     var discounted = prev.discount / 100 * prev.price
 
 
