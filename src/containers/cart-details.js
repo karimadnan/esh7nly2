@@ -83,9 +83,9 @@ class cartDetails extends Component {
 
         let CART = this.props.cart.map(item => {
             return (
-                <div class="col-md-12 col-lg-12" key={item} style={{backgroundColor: "white", fontFamily: "arial", borderRadius: 3.9}}>
+                <div class="col-md-12 col-lg-12" key={item} style={{backgroundColor: "white", fontFamily: "arial", textAlign: "center"}}>
                     <div class="col-md-4 col-lg-4">
-                        <img src={item.img} class="splash-card-product-view" style={{margin: 20}} alt={item.id}/>
+                        <img src={item.defaultImage} class="splash-card-product-view" style={{margin: 20}} alt={item.id}/>
                     </div>
                     <div class="col-md-4 col-lg-4" style={{color: "black"}}>
                         <h3 style={{fontWeight: "bold"}}>{item.Name}</h3>

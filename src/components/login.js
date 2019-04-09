@@ -104,7 +104,7 @@ render() {
         return(
             <div class ="GG-BG">
                 <div class="container">
-                        <div class="loginBox">
+                        <div class="WhiteBG" style={{color: "black", textAlign: "center"}}>
                             <div class="badge-logo"/>
                                 <h1>Hey, {this.props.loginData.userName}</h1>
                                 <h4>You're already logged in wana go to your <span style={{color: "purple", cursor: "pointer"}} onClick={()=>{!this.props.loginData.isAdmin ? 
@@ -124,7 +124,7 @@ render() {
     return (
         <div class ="GG-BG">
             <div class="container">
-                    <div class="loginBox">
+                    <div class="WhiteBG">
                         <div class="badge-logo"/>
                             <div class="form-group has-feedback">
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
@@ -147,6 +147,9 @@ render() {
                                     <br/>
                                 </div>
 
+                                <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                    <h4 style={{color: "black"}}>New to GG-egypt.com? Create an account. </h4>
+                                </div>
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                     <button class="btn btn-success btn-block" style={{color : "white"}} onClick={()=>{ReactRouter.goTo("/signup")}}>
                                         <span className="svg-icon svg-icon-sphinx"></span> {this.props.lang.lang === "EN" ? "Sign Up" : " التسجيل" }

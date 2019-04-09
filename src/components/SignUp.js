@@ -157,7 +157,6 @@ render() {
   return(
     
 <div class="GG-BG">
-      <br/><br/><br/>
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
             <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
@@ -169,12 +168,7 @@ render() {
             <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img>
       </Modal>
         <div class="container">
-              <div class="ProfileBG">
-
-                <img src={LOGO} alt="Sign UP" class="SignUpLogo" width="500" height="200"/>
-
-                  <div class="bordersep"/>
-                      <br/>
+              <div class="loginBox">
                       <div class="form-group has-feedback">
                           <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                 <label style={{color: this.state.name.length >= 6 ? "green" : "red"}}>{this.state.name.length >= 6 ? "":'*'} Your name</label>

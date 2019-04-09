@@ -9,9 +9,9 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {loginFunction, updateLang, removeCartItem, updateCartInfo} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css' 
 import '../flag-icon.css'
 import ReactTooltip from 'react-tooltip'
-import isEmail from 'validator/lib/isEmail';
 import Drawer from 'react-motion-drawer';
 import {isMobile} from 'react-device-detect';
 
@@ -99,16 +99,13 @@ logout =() =>{
 render() {
   const customStyles = {
     overlay: {
+      background: "transparent"
     },
     modal: {
-      top: '-10%',
-      left: "0px",
-      right: "0px",
-      bottom: 'auto',
-      width: '25%',
+      backgroundColor: 'rgba(219, 105, 105, 0.7)',
+      color: "white",
       borderRadius: '10px',
-      padding: "10px"
-    },
+    }
   }
 
 return (
@@ -145,8 +142,8 @@ return (
     <div className="collapse navbar-collapse" id="myNavbar">
         <ul className="nav navbar-nav">
           <li class={this.state.page ==="Main" && "activeNav"}><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-home"></span> {this.props.lang.lang === "EN" ? "Home" : "الرئيسية"}</a></li>
-          <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="svg-icon svg-icon-priceTag"></span> {this.props.lang.lang === "EN" ? "How To Buy" : "ازاى تشترى"}</a>
-          </li>
+          {/* <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="svg-icon svg-icon-priceTag"></span> {this.props.lang.lang === "EN" ? "How To Buy" : "ازاى تشترى"}</a>
+          </li> */}
           <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/market")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-shoppingCart"></span> {this.props.lang.lang === "EN" ? "Market" : "المتجر"}</a></li>
           <li class={this.state.page ==="ContactUs" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-phone"></span> {this.props.lang.lang === "EN" ? "Contact Us" : "كلمنا"}</a></li>
         </ul>
@@ -167,7 +164,7 @@ return (
 
        <li>
           <a onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}}>
-            <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 17}} ></span> <span class="circleRed" style={{color: "white", fontSize: 14, fontWeight: "bold"}}> {this.props.cart.length}</span>
+            <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 17}} ></span> <span class="circleRed" style={{color: "white", fontSize: 14, fontWeight: "bold"}}> {this.props.cartInfo.totalItems}</span>
           </a>
       </li>
 

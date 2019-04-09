@@ -69,7 +69,7 @@ export default function(state = initialState, action){
                     ...state,
                     itemPrev: {
                         ...state.itemPrev,
-                        img: action.payload
+                        defaultImage: action.payload
                     }
                     }
                 }

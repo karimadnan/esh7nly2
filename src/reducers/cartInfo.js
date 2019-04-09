@@ -26,7 +26,7 @@ export default function(state = initialState, action){
                     totalItems: 0
                 }
             }
-        break;
+
         }
     return state;
 }

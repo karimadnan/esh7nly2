@@ -470,7 +470,7 @@ render(){
         <div class="container">
         <div class="col-xs-12 col-md-8 col-lg-8">
             <div class="WhiteBG">
-                       {!this.state.loaded && <div>
+                       {!this.state.loaded && this.props.loginData.loggedState && <div>
                             <PacmanLoader
                                 css={override}
                                 sizeUnit={"px"}

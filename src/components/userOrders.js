@@ -48,7 +48,7 @@ render(){
         var counter = 0
         var pending = 0
         var onGoing = 0
-    
+
         this.state.ordersData.map(row => {
           if (row.status === "pending"){
               pending ++;
@@ -66,12 +66,15 @@ render(){
               <div class="row" key={row._id} style={{lineHeight: 3, color: "white", fontFamily: "arial", backgroundColor: counter % 2 === 0 ? "#7f7192" : "#595163"}}>
                   <div class="col-xs-4 col-md-4 col-lg-4">
                       {row.cart.map(imgs => {
+
                           return(
                             <div class="col-xs-4 col-md-4 col-lg-4">
                                 <img src={imgs.img} class="splash-card-product-view" style={{margin: 10}}/>
                             </div>
                           )
+                        
                       })}
+                            {row.cart.length > 3 &&<h2>...</h2>}
                   </div>
                   <div class="col-xs-3 col-md-3 col-lg-3">
                       <span  style={{fontSize: 17}}>{moment(row.createdAt).format('LLL')}</span>

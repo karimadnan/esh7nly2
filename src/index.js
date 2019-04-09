@@ -5,7 +5,7 @@ import './index.css'
 
 import Main from './components/main';
 import SignUp from './components/SignUp';
-import Market from './components/Games';
+import Market from './components/market';
 import Payment from './components/PaymentTutorial';
 import FortniteShop from './components/FortniteShop';
 import Admindashboard from './components/admindashboard';
