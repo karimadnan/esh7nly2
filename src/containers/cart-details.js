@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import '../Mycss.css';
-import '../games.css';
 import '../Respcss.css';
 import Navbar from '../components/navbar';
 import {removeCartItem, updateCartInfo} from '../actions/index';

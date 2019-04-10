@@ -7,7 +7,6 @@ import Main from './components/main';
 import SignUp from './components/SignUp';
 import Market from './components/market';
 import FortniteShop from './components/FortniteShop';
-import Admindashboard from './components/admindashboard';
 import ContactUs from './components/ContactUs';
 import Privacy from './components/privacypolicy';
 import Account from './components/account';
@@ -66,11 +65,6 @@ Flux.createRoute('/market',function(){
 Flux.createRoute('/fortniteshop',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><FortniteShop /></PersistGate></Provider>,document.getElementById('root'));
-})
-
-Flux.createRoute('/admindashboard',function(){
-    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Admindashboard /></PersistGate></Provider>,document.getElementById('root'));
 })
 
 Flux.createRoute('/contactus',function(){

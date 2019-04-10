@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css' 
 import ReactTooltip from 'react-tooltip'
 import '../Mycss.css';
-import '../games.css';
 import '../Respcss.css';
 import Navbar from './navbar';
 import Modal from 'react-responsive-modal';

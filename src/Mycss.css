@@ -386,23 +386,6 @@ background-color: #cac6c6;
   width: 65%;
   transition: all 1s ease;
 }
-.ipad{
-  background-image: url('Images/ipad.png');
-  max-width: 100%;
-  height: 500px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.SignUpLogo {
-  background-image: url('Images/signuplogo.png');
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
 
 .ContactUs1{
   display: block;
@@ -511,20 +494,6 @@ background-color: #0ddb06;
   
 .adminBody {
   color: white;
-}
-
-.admin-bg {
-  /* The image used */
-  background-image: url('Images/adminboardbg2.png');
-
-  /* Full height */
-  height: stretch;
-  overflow-x: hidden;
-  /* Center and scale the image nicely */
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  /* Full height */
 }
 
 .Signup {

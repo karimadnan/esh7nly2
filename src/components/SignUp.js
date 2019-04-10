@@ -12,7 +12,6 @@ import {connect} from 'react-redux';
 import isEmail from 'validator/lib/isEmail';
 import isInt from 'validator/lib/isInt';
 import Footer from './footer';
-import LOGO from '../Images/signuplogo.png';
 
 const TEST_SITE_KEY = "6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2";
 const DELAY = 1500;
