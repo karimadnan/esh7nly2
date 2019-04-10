@@ -76,10 +76,46 @@ import keyboard2 from '../Images/gear/keyboard2.jpg';
 import keyboard3 from '../Images/gear/keyboard3.jpg';
 import keyboard4 from '../Images/gear/keyboard4.jpg';
 
+import LeagueRP from '../Images/rpmarket.png';
+import fortVBUCKS from '../Images/vbucksmarket.png';
+import tibiaMarket from '../Images/tibiamarket.png';
 
 export default function() {
     return {
       items: [
+        {
+          soldBy: "GG-Egypt",
+          Name: "Tibia Premium / Ingame-Cash / All Worlds",
+          price: 0,
+          options: [["310RP", 52.50], ["650RP", 105], ["1380RP", 205]],
+          defaultOpt: "310RP",
+          desc: "League of legends | Riot Points, 310RP = 52.50EGP, 650RP = 105EGP, 1380RP = 205EGP",
+          rarity: "rare",
+          img:[tibiaMarket],
+          defaultImage: tibiaMarket
+        },
+        {
+          soldBy: "GG-Egypt",
+          Name: "League of legends RP",
+          price: 0,
+          options: [["310RP", 52.50], ["650RP", 105], ["1380RP", 205]],
+          defaultOpt: "310RP",
+          desc: "League of legends | Riot Points, 310RP = 52.50EGP, 650RP = 105EGP, 1380RP = 205EGP",
+          rarity: "legendary",
+          img:[LeagueRP],
+          defaultImage: LeagueRP
+        },
+        {
+          soldBy: "GG-Egypt",
+          Name: "Fortnite V-Bucks",
+          price: 0,
+          options: [["1,000 V-Bucks", 52.50], ["2,800 V-bucks", 105], ["7,500 V-Bucks", 205]],
+          defaultOpt: "310RP",
+          desc: "Fornite | V-Bucks, 1000 V-Bucks = 52.50EGP, 2800 V-bucks = 105EGP, 7500 V-Bucks = 205EGP",
+          rarity: "epic",
+          img:[fortVBUCKS],
+          defaultImage: fortVBUCKS
+        },
         {
           soldBy: "GG-Egypt",
           Name: "A4tech Bloody A60",
@@ -112,7 +148,7 @@ export default function() {
           rarity: "rare",
           discount: 50,
           desc: "Printed on 'Heavy Cotton'., 80% Cotton/20% Polyester T-shirt.",
-          img: [t001b, t001w, t001pur,t001p],
+          img: [t001b, t001w, t001pur, t001p],
           defaultImage: t001b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],

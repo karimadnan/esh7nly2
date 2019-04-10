@@ -22,7 +22,10 @@ class Market extends Component {
 
 state = {
     category: "all",
+    condition: "new",
+    sort: "",
     view: "shop",
+    options: "",
     quantity: 1
 }
 
@@ -44,7 +47,7 @@ LoopIMGS(){
     var prev = this.props.cart.itemPrev
     const ConvertedIMGS = Object.values(prev.img)
     for (const img of ConvertedIMGS) {
-        outPut.push( <div key={img} onClick={()=>{this.props.updatePrev(img, 'img')}} style={{cursor: "pointer"}} class="col-xs-3 col-md-2 col-lg-2">
+        outPut.push( <div key={img} onClick={()=>{this.props.updatePrev(img, 'img')}} style={{cursor: "pointer", margin: 10}} class="col-xs-3 col-md-2 col-lg-2">
             <div class ={prev.defaultImage === img ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
                 <img class="splash-card-product-view" src={img} style={{cursor: "pointer", maxHeight: 53}}/>
             </div>
@@ -93,6 +96,8 @@ addItemToPrev(item){
         img: item.img,
         defaultImage: item.defaultImage,
         sizes: item.sizes,
+        options: item.options,
+        defaultOpt: item.defaultOpt,
         colors: item.colors
      }
      this.props.addPrev(object)
@@ -109,24 +114,27 @@ if (this.state.view === "shop"){
         };
         var shopRandomize = randomImg(item.img)
         return (
-            <div class="col-md-4 col-md-4" key={item} >
+            <div class="col-xs-12 col-md-4 col-md-4" key={item}>
             <div class ={rarity}>
-                <img class="splash-card-product-view-constant"  
-                src={item.img[0]} alt={item.id}/>
+                <img class="splash-card-product-view-constant" src={item.img[0]} alt={item.id}/>
+            
                 <div class="overlayHover" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}>
                     <button class="btn btn-primary btn-block" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}} style={{color : "white"}}>
                             View
                     </button>
+                   {item.price > 0 &&
+                     <div id ="merchPrice" class="card-body">
+                        <span style={{fontSize: 15, lineHeight: 2.5}} class={item.discount > 0 ? "label label-success" : "label label-default"} >{item.discount > 0 ? "" : item.price} {item.discount > 0 ? item.price - discounted : ""} {this.props.lang.lang === "EN" ? "EGP" :  "ج.م"}</span>
+                    </div>}
+                    {item.discount > 0 && 
+                    <div id ="merchDiscount" class="card-body">
+                        <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{item.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
+                    </div> 
+                    }
                 </div>
-               <div id ="merchPrice" class="card-body">
-                    <span style={{fontSize: 15, lineHeight: 2.5}} class={item.discount > 0 ? "label label-success" : "label label-default"} >{item.discount > 0 ? "" : item.price} {item.discount > 0 ? item.price - discounted : ""} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span>
-               </div>
-               {item.discount > 0 && <div id ="merchDiscount" class="card-body">
-                    <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{item.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
-               </div> }
+
             </div>
             <div class="marketInfoBox">
-
                 <p style={{fontSize: 17, fontWeight: "bold"}}>{item.Name}</p>
                 {item.price > 400 && <p style={{float: "left"}}>FREE Shipping</p>}
                 <p style={{float: "right"}}>Soldby: <span onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: "pointer", color: "purple"}}>{item.soldBy}</span></p>
@@ -137,29 +145,36 @@ if (this.state.view === "shop"){
     return (
         <div>
 
-            <div class="col-xs-12 col-md-12 col-lg-12">
+            {/* <div class="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: "#222222", borderBottom: "1px solid black"}}>
                 <div class="form-group has-feedback">
                         <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                 <input style={{margin: 10}} class="form-control" type="text" placeholder="Search Store" required></input>
                         </div>
                 </div>
+            </div> */}
+            <div class="row">
+                <div class="col-xs-12 col-md-2 col-lg-2" style={{backgroundColor: "#222222", marginTop: 10, borderRadius: 3}}>
+                    <h2 style={{color: "grey", textAlign: "center"}}>Category</h2>
+                        <h5 onClick={()=>{this.setState({category: "all"})}} style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "all" && "purple"}}>All (16)</h5>
+                        <h5 onClick={()=>{this.setState({category: "merch"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "merch" && "purple"}}><span class="svg-icon svg-icon-tshirt"></span> Merchandise (14)</h5>
+                        <h5 onClick={()=>{this.setState({category: "gaming"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "gaming" && "purple"}}><span class="svg-icon svg-icon-keyboard"></span> Gaming Accessories (2)</h5>
+                        <h5 onClick={()=>{this.setState({category: "consoles"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "consoles" && "purple"}}><span class="svg-icon svg-icon-psController"></span> Playstation (0)</h5>
+                        <h5 onClick={()=>{this.setState({category: "pc"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "pc" && "purple"}}><span class="svg-icon svg-icon-pc"></span> PC (0)</h5>
+                        <h5 onClick={()=>{this.setState({category: "laptop"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "laptop" && "purple"}}><span class="svg-icon svg-icon-laptop"></span> Laptop (0)</h5>
+                    <div style={{border: "0.5px dotted grey"}}/>
+                    <h2 style={{color: "grey", textAlign: "center"}}>Condition</h2>
+                        <h5 style={{color: "white", textAlign: "center"}}><span class="	glyphicon glyphicon-star"></span> New (16)</h5>
+                        <h5 style={{color: "white", textAlign: "center"}}><span class="	glyphicon glyphicon-repeat"></span> Used (0)</h5>
+                    <div style={{border: "0.5px dotted grey"}}/>
+                    <h2 style={{color: "grey", textAlign: "center"}}>Sort By</h2>
+                        <h5 style={{color: "white", textAlign: "center"}}><span class="glyphicon glyphicon-arrow-down"></span> Price from Low to High</h5>
+                        <h5 style={{color: "white", textAlign: "center"}}><span class="glyphicon glyphicon-arrow-up"></span> Price from High to Low</h5>
+                        <h5 style={{color: "white", textAlign: "center"}}><span class="glyphicon glyphicon-scissors"></span> Has Discount (3)</h5>
+                </div>
+
+                    {shop}
+
             </div>
-            <div class="col-md-2 col-lg-2" style={{backgroundColor: "#121212", marginTop: 10}}>
-                <h2 style={{color: "grey", textAlign: "center"}}>Category</h2>
-                    <h5 onClick={()=>{this.setState({category: "all"})}} style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "all" && "purple"}}>All (16)</h5>
-                    <h5 onClick={()=>{this.setState({category: "merch"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "merch" && "purple"}}><span class="svg-icon svg-icon-tshirt"></span> Merchandise (14)</h5>
-                    <h5 onClick={()=>{this.setState({category: "gaming"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "gaming" && "purple"}}><span class="svg-icon svg-icon-keyboard"></span> Gaming Accessories (2)</h5>
-                <br/>
-                <div style={{border: "1px solid grey"}}/>
-                <h2 style={{color: "grey", textAlign: "center"}}>Sort By</h2>
-                    <h5 style={{color: "white", textAlign: "center"}}><span class="glyphicon glyphicon-arrow-down"></span> Price from Low to High</h5>
-                    <h5 style={{color: "white", textAlign: "center"}}><span class="glyphicon glyphicon-arrow-up"></span> Price from High to Low</h5>
-                    <h5 style={{color: "white", textAlign: "center"}}><span class="glyphicon glyphicon-scissors"></span> Has Discount (3)</h5>
-            </div>
-            <div class="col-xs-12 col-md-10 col-lg-10">
-                {shop}
-            </div>
-            
         </div>
     )
     }
@@ -168,16 +183,15 @@ if (this.state.view === "shop"){
 ViewProduct(){
 
 if (this.state.view === "item"){
+
     var prev = this.props.cart.itemPrev
     var discounted = prev.discount / 100 * prev.price
-
-
     return (
     <div class="container">
         <div class="BlackBG">
         
          <div class="col-xs-12 col-md-8 col-lg-8">
-            {this.LoopIMGS()}
+            {prev.img.length > 1 && this.LoopIMGS()}
         </div>
         
         <div class="col-xs-12 col-md-2 col-lg-2">
@@ -208,7 +222,16 @@ if (this.state.view === "item"){
             </div>
          <div style={{color: "white", fontSize: 15}} class="col-xs-12 col-md-6 col-lg-6">
                <h1 style={{color: "white", textAlign: "center"}}>{prev.Name}</h1>
-               <h2><span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h2>{prev.discount > 0 ? <h2><span class="label label-primary">{prev.price - discounted} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span></h2> : <p/>}
+              {prev.price > 0 && 
+                  <h2>
+                    <span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span>
+                  </h2>
+               }
+               {prev.discount > 0 &&
+                    <h2>
+                        <span class="label label-primary">{prev.price - discounted} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span>
+                    </h2>
+                }
                <br/>
               {prev.sizes && 
                     <div>
@@ -240,6 +263,26 @@ if (this.state.view === "item"){
                                     return(
                                         <option>
                                             {colors}
+                                        </option>
+                                        )
+                                })}
+                        </select>
+                        <br/>
+                    </div>
+                </div>} 
+
+                {prev.options && 
+                <div>
+                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <h4>Options:</h4>
+                    </div>
+                    <div class="col-xs-8 col-md-8 col-lg-8">
+                            <select class="form-control" id={prev.price} style={{color: "blue", fontWeight: "bold"}} value={prev.defaultOpt} onChange={e => {this.props.updatePrev(e.target.value, 'option')}}>
+                            
+                            {prev.options.map((options) =>{
+                                    return(
+                                        <option>
+                                            {options}
                                         </option>
                                         )
                                 })}

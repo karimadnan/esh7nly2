@@ -177,3 +177,15 @@
 .svg-icon-headphones {
   background-image: url(./Images/svg/headphones.svg);
 }
+
+.svg-icon-psController {
+  background-image: url(./Images/svg/console-controller.svg);
+}
+
+.svg-icon-pc {
+  background-image: url(./Images/svg/pc.svg);
+}
+
+.svg-icon-laptop {
+  background-image: url(./Images/svg/laptop.svg);
+}

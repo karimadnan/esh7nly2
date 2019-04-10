@@ -48,6 +48,11 @@ export const updatePrev = (thing, action) => {
             type: "UPDATE_IMG",
             payload: thing
         }
+        case 'option':
+        return {
+            type: "UPDATE_OPTION",
+            payload: thing
+        }
         }
 }
 

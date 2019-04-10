@@ -73,6 +73,15 @@ export default function(state = initialState, action){
                     }
                     }
                 }
+            case 'UPDATE_OPTION': {
+                return {
+                    ...state,
+                    itemPrev: {
+                        ...state.itemPrev,
+                        defaultOpt: action.payload
+                    }
+                    }
+                }
 
             case 'CLEAN_CART': {
                 return { ...state, cart: [] }
