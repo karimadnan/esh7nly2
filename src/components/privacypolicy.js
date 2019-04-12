@@ -10,7 +10,7 @@ class Privacy extends Component {
 
 render() {
     return (
-        <div class ="GG-BG">
+        <div class ="GG-BG-INVERSE">
             <div class="container" style={{textAlign: "center"}}>
         <div class="WhiteBG">
                 <h2 style={{color: "black"}}> Privacy policy <span className="glyphicon glyphicon-briefcase"></span> </h2>

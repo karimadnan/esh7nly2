@@ -53,6 +53,11 @@ export const updatePrev = (thing, action) => {
             type: "UPDATE_OPTION",
             payload: thing
         }
+        case 'price':
+        return {
+            type: "UPDATE_PRICE",
+            payload: thing
+        }
         }
 }
 

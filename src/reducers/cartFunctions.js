@@ -82,7 +82,16 @@ export default function(state = initialState, action){
                     }
                     }
                 }
-
+    
+            case 'UPDATE_PRICE': {
+                return {
+                    ...state,
+                    itemPrev: {
+                        ...state.itemPrev,
+                        price: action.payload
+                    }
+                    }
+                }
             case 'CLEAN_CART': {
                 return { ...state, cart: [] }
             }

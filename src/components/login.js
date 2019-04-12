@@ -122,7 +122,7 @@ render() {
     }
 
     return (
-        <div class ="GG-BG">
+        <div class ="GG-BG-INVERSE">
             <div class="container">
                     <div class="WhiteBG">
                         <div class="badge-logo"/>

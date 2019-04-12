@@ -50,7 +50,7 @@ render() {
 
     return (
   <div>
-    <div className="GG-BG"> 
+    <div className="GG-BG-INVERSE"> 
     <Navbar page={"ContactUs"}/>
         <div class="container">
             <div class="WhiteBG">

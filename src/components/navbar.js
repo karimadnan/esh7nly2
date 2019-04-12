@@ -141,21 +141,19 @@ return (
     </div>
     <div className="collapse navbar-collapse" id="myNavbar">
         <ul className="nav navbar-nav">
-          <li class={this.state.page ==="Main" && "activeNav"}><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-home"></span> {this.props.lang.lang === "EN" ? "Home" : "الرئيسية"}</a></li>
-          {/* <li class={this.state.page ==="HowTo" && "activeNav"}><a  style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/payment")}}><span className="svg-icon svg-icon-priceTag"></span> {this.props.lang.lang === "EN" ? "How To Buy" : "ازاى تشترى"}</a>
-          </li> */}
-          <li class={this.state.page ==="Offers" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/market")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-shoppingCart"></span> {this.props.lang.lang === "EN" ? "Market" : "المتجر"}</a></li>
-          <li class={this.state.page ==="ContactUs" && "activeNav"}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-phone"></span> {this.props.lang.lang === "EN" ? "Contact Us" : "كلمنا"}</a></li>
+          <li className={this.state.page ==="Main" ? "activeNav": undefined}><a  onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-home"></span> {this.props.lang.lang === "EN" ? "Home" : "الرئيسية"}</a></li>
+          <li className={this.state.page ==="Offers" ? "activeNav": undefined}><a onClick={()=>{ReactRouter.goTo("/market")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-shoppingCart"></span> {this.props.lang.lang === "EN" ? "Market" : "المتجر"}</a></li>
+          <li className={this.state.page ==="ContactUs" ? "activeNav": undefined}><a onClick={()=>{ReactRouter.goTo("/contactus")}} style={{cursor: 'pointer'}}><span className="svg-icon svg-icon-phone"></span> {this.props.lang.lang === "EN" ? "Contact Us" : "كلمنا"}</a></li>
         </ul>
         <ul className="nav navbar-nav navbar-right">
 
         {/* LANG SELECTOR */}
-        <li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown">
+        <li className="dropdown">
+          <a className="dropdown-toggle" data-toggle="dropdown">
           <span className="svg-icon svg-icon-globe" style={{cursor: "pointer"}} ></span></a>
-          <ul class="dropdown-menu">
-            <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("AR")}}><span style={{cursor: 'pointer'}} class="flag-icon flag-icon-eg"></span> عربى</a></li>
-            <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("EN")}}><span style={{cursor: 'pointer'}} class="flag-icon flag-icon-gb"></span> English</a></li>
+          <ul className="dropdown-menu">
+            <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("AR")}}><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-eg"></span> عربى</a></li>
+            <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("EN")}}><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-gb"></span> English</a></li>
           </ul>
         </li>
 
@@ -164,7 +162,7 @@ return (
 
        <li>
           <a onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}}>
-            <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 17}} ></span> <span class="circleRed" style={{color: "white", fontSize: 14, fontWeight: "bold"}}> {this.props.cartInfo.totalItems}</span>
+            <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 17}} ></span> <span className="circleRed" style={{color: "white", fontSize: 14, fontWeight: "bold"}}> {this.props.cartInfo.totalItems}</span>
           </a>
       </li>
 
@@ -185,17 +183,17 @@ return (
             {this.props.cart.map(item => {
               return(
                 <li key={item.id}>
-                    <div class="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
-                        <div class="col-md-4 col-lg-4">
-                            <img src={item.defaultImage} class="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
+                    <div className="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
+                        <div className="col-md-4 col-lg-4">
+                            <img src={item.defaultImage} className="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
                         </div>
-                        <div class="col-md-4 col-lg-4">
+                        <div className="col-md-4 col-lg-4">
                             <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? ( (item.option ? `(${item.option}) ` : item.size && `(${item.size.charAt(0).toUpperCase()}) `) + ((item.Name).substring(0,15-3))  + '...') : item.size ? `(${item.size.charAt(0).toUpperCase()}) ${item.Name}` : item.Name}</h4>
                         </div>
-                        <div class="col-md-2 col-lg-2">
+                        <div className="col-md-2 col-lg-2">
                             <h4 style={{color: "purple", fontWeight: "bold"}}>{item.price} EGP</h4>
                         </div>
-                        <div class="col-md-2 col-lg-2">
+                        <div className="col-md-2 col-lg-2">
                             <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
                         </div>
                         <div style={{borderBottom: "1px dashed grey"}}/>
@@ -208,16 +206,16 @@ return (
 
           {this.props.cart.length > 0 && 
           <div style={{color: "black"}}>
-            <div class="col-xs-6 col-md-6 col-lg-6">
+            <div className="col-xs-6 col-md-6 col-lg-6">
               <span style={{textAlign: "left", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>Subtotal: </span>
             </div>
-            <div class="col-xs-6 col-md-6 col-lg-6">
+            <div className="col-xs-6 col-md-6 col-lg-6">
               <span style={{textAlign: "right", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>EGP {this.props.cartInfo.totalPrice} </span>
             </div>
           </div>}
           {!window.location.href.includes("checkout") && this.props.cart.length > 0 && 
-          <div class="col-xs-12 col-md-12 col-lg-12">
-                <button class="btn btn-primary btn-block" style={{color : "white", margin: 10}} onClick={()=>{this.goToCheckout()}}>
+          <div className="col-xs-12 col-md-12 col-lg-12">
+                <button className="btn btn-primary btn-block" style={{color : "white", margin: 10}} onClick={()=>{this.goToCheckout()}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
                     <span className="text">Checkout</span>
                 </button>
@@ -225,21 +223,25 @@ return (
           </div>
           </Drawer>
 
-          {   this.props.loginData.loggedState &&  <li class={this.state.page ==="Account" && "activeNav"}><a style={{cursor: 'pointer'}} onClick={()=>{{
+          {   this.props.loginData.loggedState ?  <li className={this.state.page ==="Account" ? "activeNav": undefined}><a style={{cursor: 'pointer'}} onClick={()=>{{
             !this.props.loginData.isAdmin ? 
                 ReactRouter.goTo("/account") 
             : this.props.loginData.isAdmin && this.props.loginData.session === 1 ?  
                 ReactRouter.goTo("/agentdashboard") 
             : this.props.loginData.isAdmin && this.props.loginData.session === 2 ? 
                 ReactRouter.goTo("/admindashboard") 
-            : null}}}>
+            : undefined}}}>
             <span className="svg-icon svg-icon-anubis"></span> {this.props.loginData.userName}
             </a>
-          </li>  }  
+          </li>: undefined}  
 
-          {   this.props.loginData.loggedState &&  <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-off"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> }  
+          {this.props.loginData.loggedState ?  
+                <li><a style={{cursor: 'pointer'}} onClick={this.logout}><span className="glyphicon glyphicon-off"></span> {this.props.lang.lang === "EN" ? "Logout" : "تسجيل الخروج" }</a></li> 
+                : undefined}  
 
-          {   !this.props.loginData.loggedState &&  <li class={this.state.page ==="Login" && "activeNav"}><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/login")}}><span className="svg-icon svg-icon-pharoah"></span> {this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</a></li> }  
+          {   !this.props.loginData.loggedState ?
+            <li className={this.state.page ==="Login" ? "activeNav": undefined}><a style={{cursor: 'pointer'}} onClick={()=>{ReactRouter.goTo("/login")}}><span className="svg-icon svg-icon-pharoah"></span> {this.props.lang.lang === "EN" ? "Login" : "تسجيل الدخول" }</a></li> 
+            : undefined}  
 
         </ul>
       </div>
