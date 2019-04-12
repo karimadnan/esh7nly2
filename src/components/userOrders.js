@@ -69,7 +69,7 @@ render(){
 
                           return(
                             <div class="col-xs-4 col-md-4 col-lg-4">
-                                <img src={imgs.img} class="splash-card-product-view" style={{margin: 10}}/>
+                                <img src={imgs.defaultImage} class="splash-card-product-view" style={{margin: 10}}/>
                             </div>
                           )
                         
@@ -95,7 +95,7 @@ render(){
                     <div class="col-xs-4 col-md-4 col-lg-4">
                         {row.cart.map(imgs => {
                             return(
-                              <img src={imgs.img} class="splash-card-product-view" style={{margin: 5}}/>
+                              <img src={imgs.defaultImage} class="splash-card-product-view" style={{margin: 5}}/>
                             )
                         })}
                     </div>
@@ -185,30 +185,30 @@ render(){
               <div class="col-xs-12 col-md-12 col-lg-12" style={{color: "white", fontFamily: "arial", backgroundColor: rowbg % 2 === 0 ? "#7f7192" : "#595163"}}>
                 <BrowserView>
                   <div class="col-xs-6 col-md-3 col-lg-3">
-                      <img src={row.img} class="splash-card-product-view" style={{margin: 10}}/>
+                      <img src={row.defaultImage} class="splash-card-product-view" style={{margin: 10}}/>
                   </div>
                   <div class="col-xs-6 col-md-3 col-lg-3" style={{color: "white"}}>
                   <h3 style={{fontWeight: "bold"}}>{row.Name}</h3>
-                          <span style={{fontSize: 15}}>{row.price} EGP</span>
-                          <h4>Quantity: <span>x{row.quantity}</span></h4>
-                          {row.size ? <h4>Size: {row.size}</h4> 
-                          :
-                          <h4>Type: <span >{row.info}</span></h4>}
-                          <h4>Color: {row.color}</h4>
+                        <span style={{fontSize: 15}}>{row.price} EGP</span>
+                        <h4>Quantity: <span>x{row.quantity}</span></h4>
+                        {row.size && <h4>Size: {row.size}</h4> }
+                        {row.info && <h4>Type: <span class="label label-primary">{row.info}</span></h4>}
+                        {row.color && <h4>Color: {row.color}</h4>}
+                        {row.option && <h4>Option: {row.option}</h4>}
                   </div>
                 </BrowserView>
                 <MobileView>
                   <div class="col-xs-6 col-md-3 col-lg-3">
-                      <img src={row.img} style={{width:120, height: 65, margin: 10}}/>
+                      <img src={row.defaultImage} class="splash-card-product-view" style={{margin: 10}}/>
                   </div>
                   <div class="col-xs-6 col-md-3 col-lg-3" style={{color: "white"}}>
                   <h3 style={{fontWeight: "bold"}}>{row.Name}</h3>
-                          <span style={{fontSize: "3vw"}}>{row.price} EGP</span>
-                          <h4>Quantity: <span>x{row.quantity}</span></h4>
-                          {row.size ? <h4>Size: {row.size}</h4> 
-                          :
-                          <h4>Type: <span >{row.info}</span></h4>}
-                          <h4>Color: {row.color}</h4>
+                        <span style={{fontSize: "3vw"}}>{row.price} EGP</span>
+                        <h4>Quantity: <span>x{row.quantity}</span></h4>
+                        {row.size && <h4>Size: {row.size}</h4> }
+                        {row.info && <h4>Type: <span class="label label-primary">{row.info}</span></h4>}
+                        {row.color && <h4>Color: {row.color}</h4>}
+                        {row.option && <h4>Option: {row.option}</h4>}
                   </div>
                 </MobileView>
             </div>)

@@ -187,10 +187,10 @@ return (
                 <li key={item.id}>
                     <div class="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
                         <div class="col-md-4 col-lg-4">
-                            <img src={item.img} class="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
+                            <img src={item.defaultImage} class="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
                         </div>
                         <div class="col-md-4 col-lg-4">
-                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? ( (item.size ? `(${item.size.charAt(0).toUpperCase()}) ` : '') + ((item.Name).substring(0,15-3))  + '...') : item.size ? `(${item.size.charAt(0).toUpperCase()}) ${item.Name}` : item.Name}</h4>
+                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? ( (item.option ? `(${item.option}) ` : item.size && `(${item.size.charAt(0).toUpperCase()}) `) + ((item.Name).substring(0,15-3))  + '...') : item.size ? `(${item.size.charAt(0).toUpperCase()}) ${item.Name}` : item.Name}</h4>
                         </div>
                         <div class="col-md-2 col-lg-2">
                             <h4 style={{color: "purple", fontWeight: "bold"}}>{item.price} EGP</h4>

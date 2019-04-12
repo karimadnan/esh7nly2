@@ -8,14 +8,14 @@ import ReactTooltip from 'react-tooltip'
 import '../Mycss.css';
 import '../Respcss.css';
 import Navbar from './navbar';
-import Modal from 'react-responsive-modal';
-import Select from 'react-select';
+import CurrencyFormat from 'react-currency-format';
 import ReactRouter from 'flux-react-router';
 import StarRatings from 'react-star-ratings';
 import {
     BrowserView,
     MobileView,
   } from "react-device-detect";
+import {isMobile} from 'react-device-detect';
 
 class Market extends Component {
 
@@ -66,20 +66,36 @@ updateInfo (data){
 
 
 addItemToArray(item){
-    const uniqueId = item.Name+`-${this.props.cart.itemPrev.color}`
+    let uniqueId = item.Name
     var discounted = item.discount / 100 * item.price
 
     let object = {
-        id: uniqueId,
         Name: item.Name,
         price: item.discount > 0 ? item.price - discounted : item.price,
-        img: item.defaultImage,
         rarity: item.rarity,
         info: item.info,
-        color: this.props.cart.itemPrev.color,
-        size: this.props.cart.itemPrev.size,
-        quantity: this.state.quantity
+        quantity: this.state.quantity,
+        defaultImage: item.defaultImage,
      }
+     if (item.defaultOpt){
+         object["option"] = item.defaultOpt;
+         uniqueId = uniqueId + `-${this.props.cart.itemPrev.defaultOpt}`
+         object["id"] = uniqueId
+     }
+     if (item.color){
+         object["color"] = item.color;
+         uniqueId = uniqueId + `-${this.props.cart.itemPrev.color}`
+         object["id"] = uniqueId
+     }
+     if (item.size){
+         object["size"] = item.size;
+         uniqueId = uniqueId + `-${this.props.cart.itemPrev.size}`
+         object["id"] = uniqueId
+     }
+     else if (!item.defaultOpt && !item.color && !item.size){
+        object["id"] = uniqueId
+     }
+
      this.props.addCartItem(object)
 }
 
@@ -103,6 +119,7 @@ addItemToPrev(item){
 }
 
 Market(){
+
 if (this.state.view === "shop"){
     let shop = this.props.shop.items.map((item) =>{
         var discounted = item.discount / 100 * item.price
@@ -112,8 +129,9 @@ if (this.state.view === "shop"){
             return obj[keys[ keys.length * Math.random() << 0]];
         };
         var shopRandomize = randomImg(item.img)
+        var priceAfterDiscount = item.price - item.discount / 100 * item.price
         return (
-            <div class="col-xs-12 col-md-4 col-md-4" key={item}>
+            <div class="col-xs-12 col-md-4 col-md-4" key={item} style={{minHeight: !isMobile ? 400 : 0}}>
             <div class ={rarity}>
                 <img class="splash-card-product-view-constant" src={item.img[0]} alt={item.id}/>
             
@@ -121,28 +139,44 @@ if (this.state.view === "shop"){
                     <button class="btn btn-primary btn-block" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}} style={{color : "white"}}>
                             View
                     </button>
-                   {item.price > 0 &&
-                     <div id ="merchPrice" class="card-body">
-                        <span style={{fontSize: 15, lineHeight: 2.5}} class={item.discount > 0 ? "label label-success" : "label label-default"} >{item.discount > 0 ? "" : item.price} {item.discount > 0 ? item.price - discounted : ""} {this.props.lang.lang === "EN" ? "EGP" :  "ج.م"}</span>
-                    </div>}
+
                     {item.discount > 0 && 
                     <div id ="merchDiscount" class="card-body">
                         <span style={{fontSize: 15, lineHeight: 2.5}} class="label label-danger">{item.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
                     </div> 
                     }
                 </div>
+                    <div class="marketInfoBox">
+                        <span class="marketCardText">
+                            <h4 class="marketCardTitle">{item.Name}</h4>
+                        </span>
+                        {item.price > 0 &&
+                        <span>
+                            {item.discount ?
+                            <div>
+                                <h4 class="marketCardTitle" style={{color: "orange"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
+                                <h5 class="marketCardTitle" style={{color: "orange", textDecoration: "line-through"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h5>
+                            </div>
+                            :
+                            <h4 class="marketCardTitle" style={{color: "orange"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>}
+                        </span>}
+                        <span>
+                           
+                            <div>
+                                {item.price > 400 && 
+                                <h5 style={{color: "white", float: "left"}}>FREE Shipping </h5>}
+                                <h5 style={{color: "white", float: "right"}}>Shop: <span style={{color: "orange"}}>{item.soldBy}</span></h5>
+                            </div>
+                        </span>
 
+                    </div>
             </div>
-            <div class="marketInfoBox">
-                <p style={{fontSize: 17, fontWeight: "bold"}}>{item.Name}</p>
-                {item.price > 400 && <p style={{float: "left"}}>FREE Shipping</p>}
-                <p style={{float: "right"}}>Soldby: <span onClick={()=>{ReactRouter.goTo("/main")}} style={{cursor: "pointer", color: "purple"}}>{item.soldBy}</span></p>
-            </div>
+
         </div>
         )
     })
     return (
-        <div>
+        <div class="container" style={{backgroundColor: "#121212", boxShadow: `1px 5px 5px #000000`}}>
 
             {/* <div class="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: "#222222", borderBottom: "1px solid black"}}>
                 <div class="form-group has-feedback">
@@ -151,10 +185,11 @@ if (this.state.view === "shop"){
                         </div>
                 </div>
             </div> */}
-            <div class="row">
-                <div class="col-xs-12 col-md-2 col-lg-2" style={{backgroundColor: "#222222", marginTop: 10, borderRadius: 3}}>
+
+                {/* <div class="col-xs-12 col-md-2 col-lg-2" style={{backgroundColor: "#222222", marginTop: 10, borderRadius: 3}}>
                     <h2 style={{color: "grey", textAlign: "center"}}>Category</h2>
                         <h5 onClick={()=>{this.setState({category: "all"})}} style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "all" && "purple"}}>All (16)</h5>
+                        <h5 onClick={()=>{this.setState({category: "merch"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "micro" && "purple"}}><span class="svg-icon svg-icon-thompson"></span> Microtransactions (3)</h5>
                         <h5 onClick={()=>{this.setState({category: "merch"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "merch" && "purple"}}><span class="svg-icon svg-icon-tshirt"></span> Merchandise (14)</h5>
                         <h5 onClick={()=>{this.setState({category: "gaming"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "gaming" && "purple"}}><span class="svg-icon svg-icon-keyboard"></span> Gaming Accessories (2)</h5>
                         <h5 onClick={()=>{this.setState({category: "consoles"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "consoles" && "purple"}}><span class="svg-icon svg-icon-psController"></span> Playstation (0)</h5>
@@ -169,11 +204,9 @@ if (this.state.view === "shop"){
                         <h5 style={{color: "white", textAlign: "center"}}><span class="glyphicon glyphicon-arrow-down"></span> Price from Low to High</h5>
                         <h5 style={{color: "white", textAlign: "center"}}><span class="glyphicon glyphicon-arrow-up"></span> Price from High to Low</h5>
                         <h5 style={{color: "white", textAlign: "center"}}><span class="glyphicon glyphicon-scissors"></span> Has Discount (3)</h5>
-                </div>
+                </div> */}
 
                     {shop}
-
-            </div>
         </div>
     )
     }
@@ -184,7 +217,8 @@ ViewProduct(){
 if (this.state.view === "item"){
 
     var prev = this.props.cart.itemPrev
-    var discounted = prev.discount / 100 * prev.price
+    var discount = prev.discount / 100 * prev.price
+    var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
     return (
     <div class="container">
         <div class="BlackBG">
@@ -221,16 +255,16 @@ if (this.state.view === "item"){
             </div>
          <div style={{color: "white", fontSize: 15}} class="col-xs-12 col-md-6 col-lg-6">
                <h1 style={{color: "white", textAlign: "center"}}>{prev.Name}</h1>
-              {prev.price > 0 && 
-                  <h2>
-                    <span style={{textDecoration: prev.discount > 0 ? "line-through" : ""}} class={prev.discount > 0 ? "label label-danger" : "label label-primary"}>{prev.price} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span>
-                  </h2>
-               }
-               {prev.discount > 0 &&
-                    <h2>
-                        <span class="label label-primary">{prev.price - discounted} {this.props.lang.lang === "EN" ? "EGP" : "ج.م"}</span>
-                    </h2>
+
+                {prev.discount > 0 ? 
+                <div>
+                    <h1 style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h1>
+                    <h2><span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span> <span>- You Save {<CurrencyFormat value={discount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h2>
+                </div>
+                :
+                    <h1><span style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h1>
                 }
+
                <br/>
               {prev.sizes && 
                     <div>
@@ -290,16 +324,18 @@ if (this.state.view === "item"){
                     </div>
                 </div>} 
 
-                <div class="col-xs-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
+
+               <div class="col-xs-12 col-md-12 col-lg-12">
+               <h1 style={{textAlign: "center"}}>Product details</h1> { prev.desc.split(",").map(place => <p> • {place} </p>)} {prev.color && <p>• Color: {prev.color.toUpperCase()}</p>} {prev.size && <p>• Size: {prev.size.toUpperCase()}</p>}
+               </div>
+               <div class="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
+               <div class="col-xs-12 col-md-12 col-lg-12">
                     {this.props.lang.lang === "EN" ?  
                         <h2><strong style={{textDecoration: "underline"}}>Free shipping</strong> on orders over 300 EGP</h2>
                     :  <h2 style={{textAlign: "right"}}><strong style={{textDecoration: "underline"}}>شحن مجانى</strong> على الطلبات 300 جنيه و اكثر</h2>
                     }
                 </div>
-               <br/>
-               <div class="col-xs-12 col-md-12 col-lg-12">
-               <h1 style={{textAlign: "center"}}>Product details</h1> { prev.desc.split(",").map(place => <p> • {place} </p>)} {prev.color && <p>• Color: {prev.color.toUpperCase()}</p>} {prev.size && <p>• Size: {prev.size.toUpperCase()}</p>}
-               </div>
                <br/>
          </div>
         <ReactTooltip place="bottom" type="dark" effect="solid"/>
@@ -311,7 +347,7 @@ if (this.state.view === "item"){
 
 render(){
     return(
-        <div class="bg-image"> 
+        <div class="GG-BG-INVERSE"> 
                 {this.Market()}
                 {this.ViewProduct()}
             <Navbar page={"Offers"}/>

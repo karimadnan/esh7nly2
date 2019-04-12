@@ -110,7 +110,7 @@ export default function() {
           Name: "Fortnite V-Bucks",
           price: 0,
           options: [["1,000 V-Bucks", 52.50], ["2,800 V-bucks", 105], ["7,500 V-Bucks", 205]],
-          defaultOpt: "310RP",
+          defaultOpt: "1000 V-Bucks",
           desc: "Fornite | V-Bucks, 1000 V-Bucks = 52.50EGP, 2800 V-bucks = 105EGP, 7500 V-Bucks = 205EGP",
           rarity: "epic",
           img:[fortVBUCKS],

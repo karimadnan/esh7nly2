@@ -385,7 +385,7 @@ class Checkout extends Component {
                 <div key={item.id}>
                     <div class="col-md-12 col-lg-12" style={{backgroundColor: "white"}}>
                         <div class="col-md-3 col-lg-3">
-                            <img src={item.img} style={{width: 50, height: 45, marginTop: 5}} alt={item.id}/>
+                            <img src={item.defaultImage} class="splash-card-product-view-constant" alt={item.id}/>
                         </div>
                         <div class="col-md-7 col-lg-7">
                             <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? (((item.Name).substring(0,15-3)) + '...') : item.Name}</h4>
@@ -482,6 +482,9 @@ render(){
                 {!this.props.loginData.loggedState && !this.state.cart ?
                     <h1 style={{color: "red"}}>Please, login first</h1>
                     : 
+                    this.props.loginData.loggedState && this.state.currentIndex != 3 && this.props.cartInfo.totalItems === 0 ?
+                         <h1 style={{color: "red"}}>Your cart is empty.</h1>  
+                    :
                     <div>
                         {this.Bar()}
                         {this.Shipping()}
@@ -498,7 +501,7 @@ render(){
             <div class="col-xs-12 col-md-4 col-lg-4">
 
                 <div class="WhiteBG">
-                   {!this.state.cart && this.state.currentIndex != 3 && <span style={{color: "#6F52FF", fontSize: 17, cursor: "pointer"}} onClick={()=>{this.setState({cart: true, currentIndex: 0})}} class="glyphicon glyphicon-arrow-left"> <span style={{fontFamily: "arial"}}>Edit Cart</span></span>}
+                   {!this.state.cart && this.state.currentIndex != 3 && this.props.cartInfo.totalItems > 0 && <span style={{color: "#6F52FF", fontSize: 17, cursor: "pointer"}} onClick={()=>{this.setState({cart: true, currentIndex: 0})}} class="glyphicon glyphicon-arrow-left"> <span style={{fontFamily: "arial"}}>Edit Cart</span></span>}
                     <h3 style={{color: "black"}}>Shopping Cart <span className="glyphicon glyphicon-shopping-cart"></span> <span class="circleRed" style={{color: "white", fontSize: 20}}> {this.props.cartInfo.totalItems}</span></h3>
 
 

@@ -78,7 +78,7 @@ class cartDetails extends Component {
         this.props.updateCartInfo(object, 'remove')
     }
 
-    createListItems(){
+    createListItems(){ 
 
         let CART = this.props.cart.map(item => {
             return (
@@ -95,10 +95,10 @@ class cartDetails extends Component {
                         <br/>                        <br/>
                         <span style={{fontSize: 15}} class="label label-primary">{item.price} EGP</span>
                         <h4>Quantity: <span>x{item.quantity}</span></h4>
-                        {item.size ? <h4>Size: {item.size}</h4> 
-                        :
-                        <h4>Type: <span class="label label-primary">{item.info}</span></h4>}
-                        <h4>Color: {item.color}</h4>
+                         {item.size && <h4>Size: {item.size}</h4> }
+                         {item.info && <h4>Type: <span class="label label-primary">{item.info}</span></h4>}
+                         {item.color && <h4>Color: {item.color}</h4>}
+                         {item.option && <h4>Option: {item.option}</h4>}
                     </div>
                     <div class="bordersep-thick"/>
                 </div>
