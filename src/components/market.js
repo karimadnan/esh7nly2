@@ -154,18 +154,18 @@ if (this.state.view === "shop"){
                         <span>
                             {item.discount ?
                             <div>
-                                <h4 class="marketCardTitle" style={{color: "orange"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
-                                <h5 class="marketCardTitle" style={{color: "orange", textDecoration: "line-through"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h5>
+                                <h4 class="marketCardTitle" style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
+                                <h5 class="marketCardTitle" style={{color: "grey", textDecoration: "line-through"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h5>
                             </div>
                             :
-                            <h4 class="marketCardTitle" style={{color: "orange"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>}
+                            <h4 class="marketCardTitle" style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>}
                         </span>}
                         <span>
                            
                             <div>
                                 {item.price > 400 && 
                                 <h5 style={{color: "white", float: "left"}}>FREE Shipping </h5>}
-                                <h5 style={{color: "white", float: "right"}}>Shop: <span style={{color: "orange"}}>{item.soldBy}</span></h5>
+                                <h6 style={{color: "white", float: "right"}}>Shop: <span style={{color: "orange"}}>{item.soldBy}</span></h6>
                             </div>
                         </span>
 
