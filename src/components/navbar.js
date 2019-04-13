@@ -15,6 +15,7 @@ import ReactTooltip from 'react-tooltip'
 import {isMobile} from 'react-device-detect';
 import Drawer from '@material-ui/core/Drawer';
 import CurrencyFormat from 'react-currency-format';
+import BadgeCart from '../containers/badgeCart';
 
 class Navbar extends Component {
 
@@ -140,10 +141,8 @@ return (
 
       {/* CART */}
 
-       <li>
-          <a onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}}>
-            <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 17}} ></span> <span className="circleRed" style={{color: "white", fontSize: 14, fontWeight: "bold"}}> {this.props.cartInfo.totalItems}</span>
-          </a>
+       <li onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}}>
+          <BadgeCart />
       </li>
 
         <Drawer
