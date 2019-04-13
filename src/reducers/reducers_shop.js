@@ -114,8 +114,9 @@ export default function() {
           soldBy: "GG-Egypt",
           Name: "Fortnite V-Bucks",
           price: 0,
+          options: [{option: "1,000 V-Bucks", price: 190}, {option: "2,800 V-bucks", price: 475}, {option: "7,500 V-Bucks", price: 1140}, {option: "13,500 V-Bucks", price: 1900}],
           defaultOpt: "",
-          desc: "Fornite | V-Bucks, 1000 V-Bucks = 52.50EGP, 2800 V-bucks = 105EGP, 7500 V-Bucks = 205EGP",
+          desc: "Fortnite | V-Bucks, PC AND MOBILE ONLY, 24-hours delivery at max, You will need to add us ingame 24 hours before your purchase for instant delivery",
           rarity: "epic",
           img:[fortVBUCKS],
           defaultImage: fortVBUCKS
@@ -156,7 +157,7 @@ export default function() {
           defaultImage: t001b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t001b}, {label: "White", value: t001w}, {label: "Purple", value: t001pur}, {label: "Petroleum", value: t001p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -169,7 +170,7 @@ export default function() {
           defaultImage: t002b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t002b}, {label: "White", value: t002w}, {label: "Purple", value: t002pur}, {label: "Petroleum", value: t002p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -181,7 +182,7 @@ export default function() {
           defaultImage: t003b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t003b}, {label: "White", value: t003w}, {label: "Purple", value: t003pur}, {label: "Petroleum", value: t003p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -193,7 +194,7 @@ export default function() {
           defaultImage: t004b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t004b}, {label: "Purple", value: t004pur}, {label: "Petroleum", value: t004p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -205,7 +206,7 @@ export default function() {
           defaultImage: t005b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t005b}, {label: "Purple", value: t005pur}, {label: "Petroleum", value: t005p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -217,7 +218,7 @@ export default function() {
           defaultImage: t006b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t006b}, {label: "White", value: t006w}, {label: "Purple", value: t006pur}, {label: "Petroleum", value: t006p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -229,7 +230,7 @@ export default function() {
           defaultImage: t007b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t007b}, {label: "White", value: t007w}, {label: "Purple", value: t007pur}, {label: "Petroleum", value: t007p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -241,7 +242,7 @@ export default function() {
           defaultImage: t008b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t008b}, {label: "White", value: t008w}, {label: "Purple", value: t008pur}, {label: "Petroleum", value: t008p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -253,7 +254,7 @@ export default function() {
           defaultImage: t009b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t009b}, {label: "White", value: t009w}, {label: "Purple", value: t009pur}, {label: "Petroleum", value: t009p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -265,7 +266,7 @@ export default function() {
           defaultImage: t010b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t010b}, {label: "White", value: t010w}, {label: "Purple", value: t010pur}, {label: "Petroleum", value: t010p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -277,7 +278,7 @@ export default function() {
           defaultImage: t011b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t011b}, {label: "Purple", value: t011pur}, {label: "Petroleum", value: t011p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -289,7 +290,7 @@ export default function() {
           defaultImage: t012b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t012b}, {label: "White", value: t012w}, {label: "Purple", value: t012pur}, {label: "Petroleum", value: t012p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -301,7 +302,7 @@ export default function() {
           defaultImage: t013b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t013b}, {label: "White", value: t013w}, {label: "Purple", value: t013pur}, {label: "Petroleum", value: t013p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -313,7 +314,7 @@ export default function() {
           defaultImage: t014b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t014b}, {label: "White", value: t014w}, {label: "Purple", value: t014pur}, {label: "Petroleum", value: t014p}]
         },
         {
           soldBy: "GG-Egypt",
@@ -325,7 +326,7 @@ export default function() {
           defaultImage: t015b,
           category: "merch",
           sizes: ["Small", "Medium", "Large", "X-large"],
-          colors: ["Black", "White", "Purple", "Petroleum"]
+          colors: [{label: "Black", value: t015b}, {label: "White", value: t015w}, {label: "Purple", value: t015pur}, {label: "Petroleum", value: t015p}]
         }
       ]
   }

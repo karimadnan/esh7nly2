@@ -75,7 +75,8 @@ body {
 }
 
 .navCart:hover{
-background-color: #cac6c6;
+transition: background 0.5s ease;
+background: rgb(131, 211, 248);
 }
 
 
@@ -386,11 +387,6 @@ background-color: #cac6c6;
 
 .bordersep {
   border-top: 1px solid;
-  border-color: #333!important;
-}
-
-.bordersep-thick {
-  border-top: 3px solid;
   border-color: #333!important;
 }
 

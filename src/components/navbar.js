@@ -12,12 +12,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css' 
 import '../flag-icon.css'
 import ReactTooltip from 'react-tooltip'
-import Drawer from 'react-motion-drawer';
 import {isMobile} from 'react-device-detect';
-
-const sideDrawer = {
-    backgroundColor: "white"
-  }
+import Drawer from '@material-ui/core/Drawer';
+import CurrencyFormat from 'react-currency-format';
 
 class Navbar extends Component {
 
@@ -111,23 +108,6 @@ render() {
 return (
 
     <div className="container">
-        <ReactTooltip place="bottom" type="dark" effect="solid"/>
-        <ToastContainer
-          position="top-center"
-          autoClose={3500}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnVisibilityChange
-          draggable
-          pauseOnHover
-        />
-        <Modal          
-        open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
-        styles={customStyles}>
-            <h2>{this.state.ErrorMsg}</h2>
-        </Modal>
     <nav className="navbar navbar-inverse navbar-fixed-top">
     
     <div className="container-fluid">
@@ -166,21 +146,31 @@ return (
           </a>
       </li>
 
-
-        <Drawer open={this.state.sideBar} 
-                onChange={()=> this.setState({ sideBar: true })}
-                drawerStyle={sideDrawer}
-                noTouchClose={true}
-                width={isMobile ? 200 : 500}
-                noTouchOpen={true}>
-
-        <div style={{padding: 20}}>
+        <Drawer
+          anchor="right"
+          open={this.state.sideBar}
+          onClose={()=>{this.setState({ sideBar: false })}}
+          onOpen={()=>{this.setState({ sideBar: true })}}
+        >
+        <div style={{padding: 20, textAlign: "center", width: isMobile ? 250 : 550}}>
           {this.props.cart.length > 0 ? 
               <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>Click on an item to remove x1</p>
               :
               <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>Your cart is empty.</p>
             }
             {this.props.cart.map(item => {
+
+                var cartName = item.Name
+                if(item.option){
+                    cartName = `(${item.option}) ` + cartName
+                }
+                if(item.size){
+                    cartName = `(${item.size.charAt(0).toUpperCase()}) `+ cartName
+                }
+                if(item.color){
+                    cartName = `(${item.color.charAt(0).toUpperCase()}) `+ cartName
+                }
+
               return(
                 <li key={item.id}>
                     <div className="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
@@ -188,10 +178,10 @@ return (
                             <img src={item.defaultImage} className="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
                         </div>
                         <div className="col-md-4 col-lg-4">
-                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? ( (item.option ? `(${item.option}) ` : item.size && `(${item.size.charAt(0).toUpperCase()}) `) + ((item.Name).substring(0,15-3))  + '...') : item.size ? `(${item.size.charAt(0).toUpperCase()}) ${item.Name}` : item.Name}</h4>
+                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 30 ? (((cartName).substring(0,40-3))  + '...' ) : cartName}</h4>
                         </div>
                         <div className="col-md-2 col-lg-2">
-                            <h4 style={{color: "purple", fontWeight: "bold"}}>{item.price} EGP</h4>
+                            <h4 style={{color: "purple", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
                         </div>
                         <div className="col-md-2 col-lg-2">
                             <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
@@ -199,6 +189,7 @@ return (
                         <div style={{borderBottom: "1px dashed grey"}}/>
                     </div>
                 </li>
+
                 )
             })}
 
@@ -210,7 +201,7 @@ return (
               <span style={{textAlign: "left", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>Subtotal: </span>
             </div>
             <div className="col-xs-6 col-md-6 col-lg-6">
-              <span style={{textAlign: "right", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>EGP {this.props.cartInfo.totalPrice} </span>
+              <span style={{textAlign: "right", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>EGP {<CurrencyFormat value={this.props.cartInfo.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} </span>
             </div>
           </div>}
           {!window.location.href.includes("checkout") && this.props.cart.length > 0 && 
@@ -222,6 +213,8 @@ return (
             </div>}
           </div>
           </Drawer>
+
+
 
           {   this.props.loginData.loggedState ?  <li className={this.state.page ==="Account" ? "activeNav": undefined}><a style={{cursor: 'pointer'}} onClick={()=>{{
             !this.props.loginData.isAdmin ? 
@@ -247,6 +240,23 @@ return (
       </div>
       </div>
     </nav>
+    <ReactTooltip place="bottom" type="dark" effect="solid"/>
+    <ToastContainer
+      position="top-center"
+      autoClose={3500}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnVisibilityChange
+      draggable
+      pauseOnHover
+    />
+    <Modal          
+    open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+    styles={customStyles}>
+        <h2>{this.state.ErrorMsg}</h2>
+    </Modal>
     </div>);
 
 }

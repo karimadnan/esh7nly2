@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {addCartItem, updateCartInfo, addPrev, updatePrev} from '../actions/index';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css' 
-import ReactTooltip from 'react-tooltip'
+import 'react-toastify/dist/ReactToastify.min.css';
+import ReactTooltip from 'react-tooltip';
 import '../Mycss.css';
 import '../Respcss.css';
 import Navbar from './navbar';
@@ -12,7 +12,6 @@ import CurrencyFormat from 'react-currency-format';
 import Select from 'react-select';
 import Modal from 'react-responsive-modal';
 import amumu from '../Images/amumusad.png';
-import ReactRouter from 'flux-react-router';
 import StarRatings from 'react-star-ratings';
 import {
     BrowserView,
@@ -53,9 +52,11 @@ state = {
     sort: "",
     view: "shop",
     options: [],
+    colors: [],
     selectedOpt: "",
+    selectedColor: "",
     ErrorModal: false,
-    ErrorMsg: '',
+    ErrorMsg: "",
     quantity: 1
 }
 
@@ -91,11 +92,22 @@ addItemToCart(item){
     }
 }
 
-handleChange(type, value) {
+handleChangeOption(type, value) {
     this.setState({[type]: value}, () =>{
         this.props.updatePrev(this.state.selectedOpt.label, 'option')
         this.props.updatePrev(this.state.selectedOpt.value, 'price')
     });
+}
+
+handleChangeColor(type, value) {
+    this.setState({[type]: value}, () =>{
+        this.props.updatePrev(this.state.selectedColor.label, 'color')
+        this.props.updatePrev(this.state.selectedColor.value, 'img')
+    });
+}
+
+colorChange(){
+
 }
 
 updateInput(key, value) {
@@ -165,7 +177,7 @@ addItemToPrev(item){
         id: item.id,
         Name: item.Name,
         price: item.price,
-        color: item.colors && item.colors[0],
+        color: item.colors && item.colors[0].label,
         size: item.sizes && item.sizes[0],
         desc: item.desc,
         discount: item.discount,
@@ -278,6 +290,7 @@ if (this.state.view === "shop"){
 ViewProduct(){
 var prev = this.props.cart.itemPrev
 if (this.state.view === "item"){
+
     if(prev.options && !this.state.options.length > 0){
         var arr = []
         prev.options.forEach(element => {
@@ -289,6 +302,17 @@ if (this.state.view === "item"){
           });
           this.setState({options: arr})  
     }
+    else if (prev.colors && !this.state.colors.length > 0){
+        var arr = []
+        prev.colors.forEach(element => {
+            let object = {
+              label: element.label,
+              value: element.value
+            }
+            arr.push(object)
+          });
+          this.setState({colors: arr})  
+    }
 
     var discount = prev.discount / 100 * prev.price
     var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
@@ -298,12 +322,6 @@ if (this.state.view === "item"){
         
          <div className="col-xs-12 col-md-8 col-lg-8">
             {prev.img.length > 1 && this.LoopIMGS()}
-        </div>
-        
-        <div className="col-xs-12 col-md-2 col-lg-2">
-                <div onClick={()=>{this.updateInput("view", "Cart"), this.updateInput("cartDirect", "prev")}} className="badge-dark" data-tip="Click to view your cart" style={{cursor: "pointer"}}>
-                    <p style={{textAlign: "center", fontSize: 25, paddingBottom: 7}}> <span>Your Cart <span className="circleRed" style={{color: "white", fontSize: 20}}> {this.props.cartInfo.totalItems}</span></span> </p>
-                </div>
         </div>
 
          <div className="col-xs-12 col-md-6 col-lg-6">
@@ -352,16 +370,13 @@ if (this.state.view === "item"){
                     <div className="col-xs-4 col-md-4 col-lg-4">
                         <h4>Color:</h4>
                     </div>
-                    <div className="col-xs-8 col-md-8 col-lg-8">
-                        <select className="form-control" id="color" style={{color: "blue", fontWeight: "bold"}} value={prev.color} onChange={e => this.props.updatePrev(e.target.value, 'color')}>
-                            {prev.colors.map((colors) =>{
-                                    return(
-                                        <option>
-                                            {colors}
-                                        </option>
-                                        )
-                                })}
-                        </select>
+                    <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>
+                            <Select
+                                styles={customStyles}
+                                value={this.state.selectedColor}
+                                onChange={this.handleChangeColor.bind(this, 'selectedColor')}
+                                options={this.state.colors} placeholder='Select Color'
+                            /> 
                         <br/>
                     </div>
                 </div>} 
@@ -375,22 +390,22 @@ if (this.state.view === "item"){
                             <Select
                                 styles={customStyles}
                                 value={this.state.selectedOpt}
-                                onChange={this.handleChange.bind(this, 'selectedOpt')}
-                                options={this.state.options} placeholder='Choose Option'
+                                onChange={this.handleChangeOption.bind(this, 'selectedOpt')}
+                                options={this.state.options} placeholder='Select Offer'
                             />     
                         <br/>
                     </div>
                 </div>} 
                 <div className="col-xs-6 col-md-6 col-lg-6">
-                    <button className="btn btn-danger btn-block" style={{color : "white"}} onClick={()=>{this.setState({view: "shop", options: [], selectedOpt: ""})}}>
-                        <span classNameName="icon glyphicon glyphicon-arrow-left"></span>
-                        <span classNameName="text">Back to shop</span>
+                    <button className="btn btn-danger btn-block" style={{color : "white"}} onClick={()=>{this.setState({view: "shop", options: [], selectedOpt: "", selectedColor: "", colors: []})}}>
+                        <span className="icon glyphicon glyphicon-arrow-left"></span>
+                        <span className="text">Back to shop</span>
                     </button>
                 </div>
                 <div className="col-xs-6 col-md-6 col-lg-6">
                     <button className="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.addItemToCart(prev)}}>
-                        <span classNameName="icon glyphicon glyphicon-shopping-cart"></span>
-                        <span classNameName="text">Add to cart</span>
+                        <span className="icon glyphicon glyphicon-shopping-cart"></span>
+                        <span className="text">Add to cart</span>
                     </button>
                     <br/>
                 </div>

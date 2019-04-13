@@ -17,6 +17,7 @@ import { css } from '@emotion/core';
 import { PacmanLoader } from 'react-spinners';
 import {bindActionCreators} from 'redux';
 import {cleanCart, cleanCartInfo} from '../actions/index';
+import CurrencyFormat from 'react-currency-format';
 
 const override = css`
     display: block;
@@ -383,15 +384,15 @@ class Checkout extends Component {
         let CART = this.props.cart.map(item => {
             return (
                 <div key={item.id}>
-                    <div class="col-md-12 col-lg-12" style={{backgroundColor: "white"}}>
+                    <div class="row" style={{backgroundColor: "white"}}>
                         <div class="col-md-3 col-lg-3">
                             <img src={item.defaultImage} class="splash-card-product-view-constant" alt={item.id}/>
                         </div>
-                        <div class="col-md-7 col-lg-7">
+                        <div class="col-md-5 col-lg-5">
                             <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? (((item.Name).substring(0,15-3)) + '...') : item.Name}</h4>
                         </div>
 
-                            <h4 style={{color: "purple", fontWeight: "bold"}}>{item.price} EGP</h4>
+                            <h4 style={{color: "purple", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
                             <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
 
                     </div>
@@ -465,9 +466,11 @@ class Checkout extends Component {
 }
 
 render(){
+    var total = this.props.cartInfo.totalPrice
+    var grandTotal = total > 400 ? total : total + 30
     return(
-    <div class="GG-BG">
-        <div class="container">
+    <div class="GG-BG-INVERSE">
+        <div class="row" style={{padding: 10}}>
         <div class="col-xs-12 col-md-8 col-lg-8">
             <div class="WhiteBG">
                        {!this.state.loaded && this.props.loginData.loggedState && <div>
@@ -509,10 +512,10 @@ render(){
 
                {this.props.cartInfo.totalItems > 0 ?   
                 <div>  
-                    <h5 style={{color: "black"}}>{this.props.cartInfo.totalItems > 1 ? "Items" : "Item"}: <span style={{color: "black"}}>{this.props.cartInfo.totalPrice} EGP</span></h5>
+                    <h5 style={{color: "black"}}>{this.props.cartInfo.totalItems > 1 ? "Items" : "Item"}: <span style={{color: "black"}}>{<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h5>
                     <h5 style={{color: "black"}}>+ Shipping: <span style={{color: "black"}}> {this.props.cartInfo.totalPrice < 400 ? "30 EGP" : "0 FREE"}  </span></h5>
-                <div class="bordersep-thick"/>
-                    <h4 style={{color: "black", fontWeight: "bold"}}>Grand Total: {this.props.cartInfo.totalPrice < 400 ? this.props.cartInfo.totalPrice + 30 : this.props.cartInfo.totalPrice} EGP</h4>
+                <div style={{border: "2px dotted black"}}/>
+                    <h4 style={{color: "black", fontWeight: "bold"}}>Grand Total: {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
                  </div>
                  :
                  <div>

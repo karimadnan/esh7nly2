@@ -12,6 +12,7 @@ import ReactRouter from 'flux-react-router';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
 import Modal from 'react-responsive-modal';
+import CurrencyFormat from 'react-currency-format';
 
 const ErrorStyle = {
     overlay: {
@@ -93,14 +94,14 @@ class cartDetails extends Component {
                             <span className="text">Remove</span>
                         </button>
                         <br/>                        <br/>
-                        <span style={{fontSize: 15}} class="label label-primary">{item.price} EGP</span>
+                        <span style={{fontSize: 15}} class="label label-primary">{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span>
                         <h4>Quantity: <span>x{item.quantity}</span></h4>
                          {item.size && <h4>Size: {item.size}</h4> }
                          {item.info && <h4>Type: <span class="label label-primary">{item.info}</span></h4>}
                          {item.color && <h4>Color: {item.color}</h4>}
                          {item.option && <h4>Option: {item.option}</h4>}
                     </div>
-                    <div class="bordersep-thick"/>
+                    <div style={{border: "1px dotted black"}}/>
                 </div>
             )
         })
@@ -179,10 +180,10 @@ class cartDetails extends Component {
                     {this.createListItems()}
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h1 style={{fontSize: 25}}>Total:&nbsp;&nbsp;({this.props.cartInfo.totalItems} {this.props.cartInfo.totalItems > 1 ? "items" : "item"})&nbsp;&nbsp;<span class="label label-primary">{this.props.cartInfo.totalPrice} EGP</span></h1>
+                    <h1 style={{fontSize: 25}}>Total:&nbsp;&nbsp;({this.props.cartInfo.totalItems} {this.props.cartInfo.totalItems > 1 ? "items" : "item"})&nbsp;&nbsp;<span class="label label-primary">{<CurrencyFormat value={this.props.cartInfo.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h1>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                <button class="btn btn-primary btn-block" style={{color : "white", width: 270, marginTop: 20}} onClick={()=>{this.goToCheckout()}}>
+                <button class="btn btn-primary btn-block" style={{color : "white", marginTop: 20}} onClick={()=>{this.goToCheckout()}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
                     <span className="text">Proceed to checkout</span>
                 </button>
