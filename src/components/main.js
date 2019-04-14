@@ -5,7 +5,7 @@ import Navbar from './navbar';
 import Footer from './footer';
 import "../image-gallery.css";
 import {connect} from 'react-redux';
-import NewProducts from '../containers/new-products';
+import ProductSlider from '../containers/product-slider';
 
 class Main extends Component {
 
@@ -22,7 +22,7 @@ render(){
         <Navbar page={"Main"}/>
         <div class="container" >
             <div class="badge-logo"/>
-                  <NewProducts />
+                  <ProductSlider />
         </div>
         <br/>
         <Footer />

@@ -3,6 +3,7 @@ import '../Mycss.css';
 import AliceCarousel from 'react-alice-carousel';
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
+import {isMobile} from 'react-device-detect';
 
 class NewProducts extends Component {
 
@@ -25,8 +26,8 @@ this.props.shop.items.map((item) =>{
                 </button>
 
                 {item.discount > 0 && 
-                <div id ="merchDiscount" className="card-body">
-                    <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{item.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
+                <div id ="merchDiscount" style={{width: isMobile && 60}}className="card-body">
+                    <span style={{fontSize: isMobile ? 10 : 15, lineHeight: 2.5}} className="label label-danger">{item.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
                 </div> 
                 }
             </div>
@@ -67,7 +68,7 @@ this.props.shop.items.map((item) =>{
 }
 
 responsive = {
-    0: { items: 1 },
+    0: { items: 3 },
     1024: { items: 3 },
 }
 
@@ -85,7 +86,6 @@ render(){
             fadeOutAnimation={true}
             mouseDragEnabled={true}
             stopAutoPlayOnHover={true}
-            showSlideInfo={true}
             dotsDisabled={true}
             buttonsDisabled={true}
             onSlideChange={this.onSlideChange}
@@ -103,7 +103,6 @@ render(){
             fadeOutAnimation={true}
             mouseDragEnabled={true}
             stopAutoPlayOnHover={true}
-            showSlideInfo={true}
             dotsDisabled={true}
             buttonsDisabled={true}
             onSlideChange={this.onSlideChange}
