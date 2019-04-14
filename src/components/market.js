@@ -313,7 +313,7 @@ if (this.state.view === "item"){
           });
           this.setState({colors: arr})  
     }
-
+    
     var discount = prev.discount / 100 * prev.price
     var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
     return (

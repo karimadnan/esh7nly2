@@ -124,17 +124,17 @@ render() {
     return (
         <div class ="GG-BG-INVERSE">
             <div class="container">
-                    <div class="WhiteBG">
+            <div class="BlackBG">
                         <div class="badge-logo"/>
                             <div class="form-group has-feedback">
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                        <label style={{color: this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "green" : "purple"}}>{this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "":'*'} Phone Number</label>
+                                        <label style={{color: this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "green" : "orange"}}>{this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "":'*'} Phone Number</label>
                                         <input class="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Phone", e.target.value)} placeholder="Your Phone Number" required></input>
                                         <br/>
                                 </div>
 
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                        <label style={{color: this.state.Password.length >= 8 ? "green" : "purple"}}>{this.state.Password.length >= 8 ? "":'*'} Password</label>
+                                        <label style={{color: this.state.Password.length >= 8 ? "green" : "orange"}}>{this.state.Password.length >= 8 ? "":'*'} Password</label>
                                         <input class="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Password", e.target.value)} placeholder="Your Password" required></input>
                                         <br/>
                                 </div>
@@ -148,7 +148,7 @@ render() {
                                 </div>
 
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                    <h4 style={{color: "black"}}>New to GG-egypt.com? Create an account. </h4>
+                                    <h4 style={{color: "grey"}}>New to GG-egypt.com? Create an account. </h4>
                                 </div>
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                     <button class="btn btn-success btn-block" style={{color : "white"}} onClick={()=>{ReactRouter.goTo("/signup")}}>

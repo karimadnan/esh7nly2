@@ -7,33 +7,20 @@ import Modal from 'react-responsive-modal';
 import '../Respcss.css';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {loginFunction, updateLang, removeCartItem, updateCartInfo} from '../actions/index';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css' 
-import '../flag-icon.css'
-import ReactTooltip from 'react-tooltip'
-import {isMobile} from 'react-device-detect';
-import Drawer from '@material-ui/core/Drawer';
-import CurrencyFormat from 'react-currency-format';
-import BadgeCart from '../containers/badgeCart';
+import {loginFunction} from '../actions/index';
+import 'react-toastify/dist/ReactToastify.min.css';
+import '../flag-icon.css';
+import GlobalCart from '../containers/global-cart';
+import LangIcon from '../containers/langIcon';
 
 class Navbar extends Component {
 
-    notify = (id) => toast.error(`${id} removed from cart!`, {
-      position: "top-center",
-      autoClose: 2500,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      });
 
     state = {
       ErrorModal: false,
       ErrorMsg: '',
       Url: this.props.server.main,
-      page: this.props.page,
-      sideBar: false
+      page: this.props.page
     }
 
     onOpenModal = (type) => {
@@ -43,14 +30,6 @@ class Navbar extends Component {
     onCloseModal = (type) => {
       this.setState({[type]: false });
     };
-
-    updateInfo (data){
-      let object = {
-          price: data.price,
-          items: 1
-          }
-      this.props.updateCartInfo(object, 'remove')
-    }
 
 componentWillMount(){
   var that = this
@@ -76,15 +55,6 @@ componentWillMount(){
 }
 }
 
-goToCheckout(){
-  if(this.props.loginData.loggedState){
-      ReactRouter.goTo("/checkout")
-  }
-  else{
-      this.setState({ErrorModal: true, ErrorMsg: "Please login first to checkout"})
-  }
-}
-
 updateInput(key, value) {
   this.setState({ [key]: value });
 }
@@ -100,7 +70,7 @@ render() {
       background: "transparent"
     },
     modal: {
-      backgroundColor: 'rgba(219, 105, 105, 0.7)',
+      backgroundColor: 'rgba(219, 105, 105, 0.9)',
       color: "white",
       borderRadius: '10px',
     }
@@ -129,93 +99,17 @@ return (
         <ul className="nav navbar-nav navbar-right">
 
         {/* LANG SELECTOR */}
-        <li className="dropdown">
-          <a className="dropdown-toggle" data-toggle="dropdown">
-          <span className="svg-icon svg-icon-globe" style={{cursor: "pointer"}} ></span></a>
-          <ul className="dropdown-menu">
-            <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("AR")}}><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-eg"></span> عربى</a></li>
-            <li><a style={{cursor: 'pointer', color: "black"}} onClick={()=>{this.props.updateLang("EN")}}><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-gb"></span> English</a></li>
-          </ul>
+        <li >
+            <LangIcon />
         </li>
 
+        {/* CART */}
 
-      {/* CART */}
+        <li>
+            <GlobalCart />
+        </li>
 
-       <li onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}}>
-          <BadgeCart />
-      </li>
-
-        <Drawer
-          anchor="right"
-          open={this.state.sideBar}
-          onClose={()=>{this.setState({ sideBar: false })}}
-          onOpen={()=>{this.setState({ sideBar: true })}}
-        >
-        <div style={{padding: 20, textAlign: "center", width: isMobile ? 250 : 550}}>
-          {this.props.cart.length > 0 ? 
-              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>Click on an item to remove x1</p>
-              :
-              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>Your cart is empty.</p>
-            }
-            {this.props.cart.map(item => {
-
-                var cartName = item.Name
-                if(item.option){
-                    cartName = `(${item.option}) ` + cartName
-                }
-                if(item.size){
-                    cartName = `(${item.size.charAt(0).toUpperCase()}) `+ cartName
-                }
-                if(item.color){
-                    cartName = `(${item.color.charAt(0).toUpperCase()}) `+ cartName
-                }
-
-              return(
-                <li key={item.id}>
-                    <div className="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
-                        <div className="col-md-4 col-lg-4">
-                            <img src={item.defaultImage} className="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
-                        </div>
-                        <div className="col-md-4 col-lg-4">
-                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 30 ? (((cartName).substring(0,40-3))  + '...' ) : cartName}</h4>
-                        </div>
-                        <div className="col-md-2 col-lg-2">
-                            <h4 style={{color: "purple", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
-                        </div>
-                        <div className="col-md-2 col-lg-2">
-                            <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
-                        </div>
-                        <div style={{borderBottom: "1px dashed grey"}}/>
-                    </div>
-                </li>
-
-                )
-            })}
-
-
-
-          {this.props.cart.length > 0 && 
-          <div style={{color: "black"}}>
-            <div className="col-xs-6 col-md-6 col-lg-6">
-              <span style={{textAlign: "left", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>Subtotal: </span>
-            </div>
-            <div className="col-xs-6 col-md-6 col-lg-6">
-              <span style={{textAlign: "right", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>EGP {<CurrencyFormat value={this.props.cartInfo.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} </span>
-            </div>
-          </div>}
-          {!window.location.href.includes("checkout") && this.props.cart.length > 0 && 
-          <div className="col-xs-12 col-md-12 col-lg-12">
-                <button className="btn btn-primary btn-block" style={{color : "white", margin: 10}} onClick={()=>{this.goToCheckout()}}>
-                    <span className="icon glyphicon glyphicon-shopping-cart"></span>
-                    <span className="text">Checkout</span>
-                </button>
-            </div>}
-          </div>
-          </Drawer>
-
-
-
-          {   this.props.loginData.loggedState ?  <li className={this.state.page ==="Account" ? "activeNav": undefined}><a style={{cursor: 'pointer'}} onClick={()=>{{
+          {this.props.loginData.loggedState ?  <li className={this.state.page ==="Account" ? "activeNav": undefined}><a style={{cursor: 'pointer'}} onClick={()=>{{
             !this.props.loginData.isAdmin ? 
                 ReactRouter.goTo("/account") 
             : this.props.loginData.isAdmin && this.props.loginData.session === 1 ?  
@@ -239,18 +133,6 @@ return (
       </div>
       </div>
     </nav>
-    <ReactTooltip place="bottom" type="dark" effect="solid"/>
-    <ToastContainer
-      position="top-center"
-      autoClose={3500}
-      hideProgressBar={false}
-      newestOnTop={false}
-      closeOnClick
-      rtl={false}
-      pauseOnVisibilityChange
-      draggable
-      pauseOnHover
-    />
     <Modal          
     open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
     styles={customStyles}>
@@ -264,18 +146,13 @@ function mapStateToProps(state){
   return {
       loginData: state.loginSession,
       server: state.server,
-      cart: state.cartItems.cart,
-      cartInfo: state.updateCartInfo,
       lang: state.lang
   }
 }
 
 const matchDispatchToProps = dispatch => bindActionCreators(
     {
-      removeCartItem,
-      updateCartInfo,
-      loginFunction,
-      updateLang
+      loginFunction
     },
     dispatch,
   )

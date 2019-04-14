@@ -155,7 +155,7 @@ render() {
   }
   return(
     
-<div class="GG-BG">
+<div class="GG-BG-INVERSE">
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
             <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
