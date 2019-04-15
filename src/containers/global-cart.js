@@ -143,7 +143,8 @@ render(){
 function mapStateToProps(state){
     return {
         cartInfo: state.updateCartInfo,
-        cart: state.cartItems.cart
+        cart: state.cartItems.cart,
+        loginData: state.loginSession
     }
   }
 
