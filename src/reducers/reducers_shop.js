@@ -90,12 +90,68 @@ import h002w from '../Images/tshirts/h002w.png';
 import h003b from '../Images/tshirts/h003b.png';
 import h003w from '../Images/tshirts/h003w.png';
 
+import h004b from '../Images/tshirts/h004b.png';
+import h004w from '../Images/tshirts/h004w.png';
+
+import h005b from '../Images/tshirts/h005b.png';
+import h005w from '../Images/tshirts/h005w.png';
+
+import h006b from '../Images/tshirts/h006b.png';
+import h006w from '../Images/tshirts/h006w.png';
+
+import h007b from '../Images/tshirts/h007b.png';
+import h007w from '../Images/tshirts/h007w.png';
+
 export default function() {
     return {
       items: [
         {
           soldBy: "GG-Egypt",
-          Name: "Llamaaa Hat",
+          Name: "Bronze",
+          price: 100,
+          rarity: "epic",
+          desc: "Material: 98% Cotton 2% Elastane., Item Type: Caps",
+          img: [h007b, h007w],
+          defaultImage: h007b,
+          category: "merch",
+          colors: [{label: "Black", value: h007b}, {label: "White", value: h007w}]
+        },
+        {
+          soldBy: "GG-Egypt",
+          Name: "Challenger",
+          price: 100,
+          rarity: "epic",
+          desc: "Material: 98% Cotton 2% Elastane., Item Type: Caps",
+          img: [h006b, h006w],
+          defaultImage: h006b,
+          category: "merch",
+          colors: [{label: "Black", value: h006b}, {label: "White", value: h006w}]
+        },
+        {
+          soldBy: "GG-Egypt",
+          Name: "Jordan Hat",
+          price: 100,
+          rarity: "epic",
+          desc: "Material: 98% Cotton 2% Elastane., Item Type: Caps",
+          img: [h005b, h005w],
+          defaultImage: h005b,
+          category: "merch",
+          colors: [{label: "Black", value: h005b}, {label: "White", value: h005w}]
+        },
+        {
+          soldBy: "GG-Egypt",
+          Name: "Feeder Level 7",
+          price: 100,
+          rarity: "epic",
+          desc: "Material: 98% Cotton 2% Elastane., Item Type: Caps",
+          img: [h004b, h004w],
+          defaultImage: h004b,
+          category: "merch",
+          colors: [{label: "Black", value: h004b}, {label: "White", value: h004w}]
+        },
+        {
+          soldBy: "GG-Egypt",
+          Name: "Llamaaa",
           price: 100,
           rarity: "epic",
           desc: "Material: 98% Cotton 2% Elastane., Item Type: Caps",
@@ -106,7 +162,7 @@ export default function() {
         },
         {
           soldBy: "GG-Egypt",
-          Name: "John Wick Hat",
+          Name: "John Wick",
           price: 100,
           rarity: "legendary",
           desc: "Material: 98% Cotton 2% Elastane., Item Type: Caps",
@@ -204,7 +260,7 @@ export default function() {
         },
         {
           soldBy: "GG-Egypt",
-          Name: "Spitfire",
+          Name: "Jordan",
           price: 100,
           rarity: "legendary",
           discount: 10,
