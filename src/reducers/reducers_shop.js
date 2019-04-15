@@ -80,9 +80,52 @@ import LeagueRP from '../Images/rpmarket.png';
 import fortVBUCKS from '../Images/vbucksmarket.png';
 import tibiaMarket from '../Images/tibiamarket.png';
 
+
+import h001b from '../Images/tshirts/h001b.png';
+import h001w from '../Images/tshirts/h001w.png';
+
+import h002b from '../Images/tshirts/h002b.png';
+import h002w from '../Images/tshirts/h002w.png';
+
+import h003b from '../Images/tshirts/h003b.png';
+import h003w from '../Images/tshirts/h003w.png';
+
 export default function() {
     return {
       items: [
+        {
+          soldBy: "GG-Egypt",
+          Name: "Llamaaa Hat",
+          price: 100,
+          rarity: "epic",
+          desc: "Material: 98% Cotton 2% Elastane., Item Type: Caps",
+          img: [h001b, h001w],
+          defaultImage: h001b,
+          category: "merch",
+          colors: [{label: "Black", value: h001b}, {label: "White", value: h001w}]
+        },
+        {
+          soldBy: "GG-Egypt",
+          Name: "John Wick Hat",
+          price: 100,
+          rarity: "legendary",
+          desc: "Material: 98% Cotton 2% Elastane., Item Type: Caps",
+          img: [h002b, h002w],
+          defaultImage: h002b,
+          category: "merch",
+          colors: [{label: "Black", value: h002b}, {label: "White", value: h002w}]
+        },
+        {
+          soldBy: "GG-Egypt",
+          Name: "Liteshow Hat",
+          price: 100,
+          rarity: "rare",
+          desc: "Material: 98% Cotton 2% Elastane., Item Type: Caps",
+          img: [h003b, h003w],
+          defaultImage: h003b,
+          category: "merch",
+          colors: [{label: "Black", value: h003b}, {label: "White", value: h003w}]
+        },
         {
           soldBy: "GG-Egypt",
           Name: "Tibia Premium / Ingame-Cash / All Worlds",
