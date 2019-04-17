@@ -11,7 +11,6 @@ class NewProducts extends Component {
 
 componentDidMount(){
 this.props.fetchShopData();
-console.log("TEST")
 }
 
 Discounted(){

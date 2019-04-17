@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {addCartItem, updateCartInfo, addPrev, updatePrev} from '../actions/index';
+import {addCartItem, updateCartInfo, addPrev, updatePrev, fetchShopData} from '../actions/index';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ReactTooltip from 'react-tooltip';
@@ -58,6 +58,10 @@ state = {
     ErrorModal: false,
     ErrorMsg: "",
     quantity: 1
+}
+
+componentDidMount(){
+this.props.fetchShopData();
 }
 
 notify = (msg) => toast.success(msg, {
@@ -464,7 +468,8 @@ const matchDispatchToProps = dispatch => bindActionCreators(
         addCartItem,
         updateCartInfo,
         addPrev,
-        updatePrev
+        updatePrev,
+        fetchShopData
     },
     dispatch,
 )

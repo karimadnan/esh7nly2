@@ -42,7 +42,7 @@ const extraApis = {
             if(err){
             return res.status(500).send({ message: 'DB Error',error:err});
             }
-            if(!docs){
+            if(!docs[0]){
             return res.status(202).send({ message: 'No Data'});
             }
         return res.status(200).send({ message: 'all products',data:docs});

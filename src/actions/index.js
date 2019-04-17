@@ -109,7 +109,7 @@ export function fetchProductsPending() {
 export function fetchProductsSuccess(products) {
     return {
         type: 'FETCH_PRODUCTS_SUCCESS',
-        products: products
+        payload: products
     }
 }
 
@@ -123,12 +123,13 @@ export function fetchProductsError(error) {
 export function fetchShopData() {
     return function(dispatch) {
       dispatch(fetchProductsPending())
-      return axios.get(`http://www.ggegypt.com/server/fetchShop`)
-       .then(({ data }) => {
-          console.log("RESPONSE", data)
+      return axios.get(`http://192.168.1.2:4000/server/fetchShop`)
+      .then(function (response) {
+          dispatch(fetchProductsSuccess(response.data.data))
       })
-      .catch(({ data }) => {
-        console.log("ERROR", data)
+      .catch(function (error) {
+        dispatch(fetchProductsError(error))
+        console.log("ERROR", error)
     });
     };
   }

@@ -10,14 +10,15 @@ export default function(state = initialState, action) {
       case 'FETCH_PRODUCTS_PENDING': 
           return {
               ...state,
-              fetching: true
+              fetching: true,
+              fetched: false
           }
       case 'FETCH_PRODUCTS_SUCCESS':
           return {
               ...state,
               fetching: false,
               fetched: true,
-              shop: action.payload
+              items: action.payload
           }
       case 'FETCH_PRODUCTS_ERROR':
           return {
