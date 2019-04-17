@@ -44,6 +44,7 @@
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
     "redux-persist-transform-encrypt": "^2.0.1",
+    "redux-thunk": "^2.3.0",
     "typed.js": "^2.0.10",
     "validator": "^10.11.0"
   },

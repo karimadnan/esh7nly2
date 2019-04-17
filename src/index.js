@@ -15,9 +15,10 @@ import CheckOut from './components/checkout';
 import Login from './components/login';
 import * as registerServiceWorker from './registerServiceWorker';
 
-import {createStore} from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import thunk from 'redux-thunk';
 import allReducers from './reducers';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
@@ -38,8 +39,8 @@ const persistConfig = {
   }
 
 const persistedReducer = persistReducer(persistConfig, allReducers)
-
-const store = createStore(persistedReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const store = createStore(persistedReducer, composeEnhancer(applyMiddleware(thunk)));
 let persistor = persistStore(store)
 
 Flux.createRoute('/',function(){

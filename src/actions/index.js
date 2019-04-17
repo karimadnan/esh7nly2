@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const addCartItem = (item) => {
     return {
         type: "CART_ADDITEM",
@@ -97,3 +99,36 @@ export const updateCartInfo = (data, action) => {
         }
         }
 }
+
+export function fetchProductsPending() {
+    return {
+        type: 'FETCH_PRODUCTS_PENDING'
+    }
+}
+
+export function fetchProductsSuccess(products) {
+    return {
+        type: 'FETCH_PRODUCTS_SUCCESS',
+        products: products
+    }
+}
+
+export function fetchProductsError(error) {
+    return {
+        type: 'FETCH_PRODUCTS_ERROR',
+        error: error
+    }
+}
+
+export function fetchShopData() {
+    return function(dispatch) {
+      dispatch(fetchProductsPending())
+      return axios.get(`http://www.ggegypt.com/server/fetchShop`)
+       .then(({ data }) => {
+          console.log("RESPONSE", data)
+      })
+      .catch(({ data }) => {
+        console.log("ERROR", data)
+    });
+    };
+  }

@@ -54,46 +54,48 @@ render() {
     <Navbar page={"ContactUs"}/>
         <div class="container">
             <div class="BlackBG">
-                <h1 style={{color: "white", fontWeight: "bold"}}>Message us on facebook</h1>
+                <h1 style={{color: "white", fontWeight: "bold", textAlign: "center"}}>Message us on facebook</h1>
+                <div class="col-xs-12 col-md-5 col-md-offset-5 col-lg-5 col-lg-offset-5">
                     <FacebookProvider appId="1984023341904164">
                         <MessageUs messengerAppId="297486070967464" pageId="297486070967464"/>
                     </FacebookProvider>    
+                </div>
                     <br/><br/>
                 <div style={{border: "1px dotted grey"}}/>
-                <h1 style={{color: "white", fontWeight: "bold"}}>Email us directly</h1>
+                <h1 style={{color: "white", fontWeight: "bold", textAlign: "center"}}>Email us directly</h1>
                     <br/><br/>
                     <div class="form-group has-feedback">
-                        <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                             <label style={{color: this.state.name.length > 2 ? "green" : "orange"}}>{this.state.name.length > 2 ? "":'*'} Your name</label>
                             <input class="form-control" type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="Your name" required></input>
                             <br/>
                         </div>
 
-                        <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                             <label style={{color: isEmail(this.state.email) ? "green" : "orange"}}>{isEmail(this.state.email) ? "":'*'} Email</label>
                             <input class="form-control" type="text" onChange={e => this.updateInput("email", e.target.value)} placeholder="Your email address" required></input>
                             <br/>
                         </div>
 
-                        <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                             <label style={{color: this.state.subject.length >= 3 ? "green" : "orange"}}>{this.state.subject.length >= 3 ? "":'*'} Subject</label>
                             <input class="form-control" type="text" onChange={e => this.updateInput("subject", e.target.value)} placeholder="Subject" required></input>
                             <br/>
                         </div>
 
-                        <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                             <label style={{color: this.state.body.length >= 10 ? "green" : "orange"}}>{this.state.body.length >= 10 ? "":'*'} Your question</label>
                             <textarea class="form-control" rows="5" onChange={e => this.updateInput("body", e.target.value)} id="comment"></textarea>
                             <br/>
                         </div>
-                        <div class="g-recaptcha col-xs-12 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                             <ReCAPTCHA
                             onExpired	={this.onExpired}
                             sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
                             onChange={this.onChange}
                             />
                         </div>
-                        <div class="col-xs-12 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                             <button class="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.verifier()}}>
                                 <span className="icon glyphicon glyphicon-envelope"></span>
                                 <span className="text">Send Email</span>

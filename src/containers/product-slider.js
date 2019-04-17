@@ -4,10 +4,18 @@ import AliceCarousel from 'react-alice-carousel';
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {isMobile} from 'react-device-detect';
+import {fetchShopData} from '../actions/index';
+import {bindActionCreators} from 'redux';
 
 class NewProducts extends Component {
 
+componentDidMount(){
+this.props.fetchShopData();
+console.log("TEST")
+}
+
 Discounted(){
+if(this.props.shop.fetched){
 let outPut = []
 this.props.shop.items.map((item) =>{
     var rarity = "card splash-cardTees rarity-"+item.rarity
@@ -37,8 +45,10 @@ this.props.shop.items.map((item) =>{
     })
     return outPut
 }
+}
 
 New(){
+if(this.props.shop.fetched){
 let outPut = []
 this.props.shop.items.map((item) =>{
     var rarity = "card splash-cardTees rarity-"+item.rarity
@@ -65,6 +75,7 @@ this.props.shop.items.map((item) =>{
         )
     })
     return outPut
+}
 }
 
 responsive = {
@@ -120,6 +131,11 @@ function mapStateToProps(state){
     }
   }
 
-  
+  const matchDispatchToProps = dispatch => bindActionCreators(
+    {
+        fetchShopData
+    },
+    dispatch,
+)
 
-  export default connect(mapStateToProps)(NewProducts);
+  export default connect(mapStateToProps, matchDispatchToProps)(NewProducts);

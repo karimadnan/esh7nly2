@@ -9,6 +9,18 @@ import {bindActionCreators} from 'redux';
 import {removeCartItem, updateCartInfo} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import ReactRouter from 'flux-react-router';
+import Modal from 'react-responsive-modal';
+
+const customStyles = {
+  overlay: {
+    background: "transparent"
+  },
+  modal: {
+    backgroundColor: 'rgba(219, 105, 105, 0.9)',
+    color: "white",
+    borderRadius: '10px',
+  }
+}
 
 const styles = theme => ({
   margin: {
@@ -20,8 +32,18 @@ const styles = theme => ({
 class GlobalCart extends Component {
 
   state = {
+    ErrorModal: false,
+    ErrorMsg: '',
     sideBar: false
   }
+
+onOpenModal = (type) => {
+  this.setState({[type]: true });
+};
+
+onCloseModal = (type) => {
+  this.setState({[type]: false });
+};
 
 updateInfo (data){
   let object = {
@@ -52,7 +74,11 @@ goToCheckout(){
 render(){
   return (
     <div>
-
+      <Modal          
+      open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+      styles={customStyles}>
+          <h2>{this.state.ErrorMsg}</h2>
+      </Modal>
       <Badge onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}} className={this.props.classes.margin} badgeContent={this.props.cartInfo.totalItems} color="primary">
         <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 22, color: "white"}} ></span>
       </Badge>

@@ -385,15 +385,18 @@ class Checkout extends Component {
             return (
                 <div key={item.id}>
                     <div class="row" style={{backgroundColor: "white"}}>
-                        <div class="col-md-3 col-lg-3">
+                        <div class="col-xs-12 col-md-3 col-lg-3">
                             <img src={item.defaultImage} class="splash-card-product-view-constant" alt={item.id}/>
                         </div>
-                        <div class="col-md-5 col-lg-5">
+                        <div class="col-xs-12 col-md-5 col-lg-5">
                             <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? (((item.Name).substring(0,15-3)) + '...') : item.Name}</h4>
                         </div>
-
+                        <div class="col-xs-6 col-md-2 col-lg-2">
                             <h4 style={{color: "purple", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
+                        </div>  
+                        <div class="col-xs-6 col-md-2 col-lg-2">
                             <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
+                        </div>  
 
                     </div>
                 </div>

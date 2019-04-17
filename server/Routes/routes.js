@@ -14,12 +14,14 @@ const extraApis = require('../Apis/extraApis');
 router.get('/', function(req, res, next) {
 res.render('index', { title: 'Express' });
 });    
+// extra APIS ------------------------------------------------
+router.get('/fetchShop', extraApis.fetchShop); 
+// router.post('/sendEmail',extraApis.sendEmail); 
 // login Apis ------------------------------------------------
 router.get('/login',loginApis.login);
 router.get('/validateUser',Validator.checkJWT,loginApis.validateUser);
 router.get('/adminLogin',loginApis.adminLogin);
 router.post('/signup',loginApis.signup); 
-// router.post('/sendEmail',extraApis.sendEmail); 
 router.get('/checkToken',loginApis.checkToken); 
 // User APIS---------------------------------------------------
 router.post('/getUserbyId',Validator.checkJWT,loginApis.getUserbyId);

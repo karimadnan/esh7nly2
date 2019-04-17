@@ -33,6 +33,20 @@ const extraApis = {
                 console.log(err, "Email failed")
                 return res.status(200).send({ message: 'Email Failed',data:[]});
             })
+    },
+    fetchShop:function(req, res){
+        const collection = DB.dbo.collection('products');
+        collection.aggregate([
+            { $sort: { power: -1 } }
+          ]).toArray(function(err, docs){
+            if(err){
+            return res.status(500).send({ message: 'DB Error',error:err});
+            }
+            if(!docs){
+            return res.status(202).send({ message: 'No Data'});
+            }
+        return res.status(200).send({ message: 'all products',data:docs});
+        });
     }
 };
 

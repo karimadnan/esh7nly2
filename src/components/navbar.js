@@ -13,6 +13,17 @@ import '../flag-icon.css';
 import GlobalCart from '../containers/global-cart';
 import LangIcon from '../containers/langIcon';
 
+const customStyles = {
+  overlay: {
+    background: "transparent"
+  },
+  modal: {
+    backgroundColor: 'rgba(219, 105, 105, 0.9)',
+    color: "white",
+    borderRadius: '10px',
+  }
+}
+
 class Navbar extends Component {
 
 
@@ -65,16 +76,6 @@ logout =() =>{
 }
 
 render() {
-  const customStyles = {
-    overlay: {
-      background: "transparent"
-    },
-    modal: {
-      backgroundColor: 'rgba(219, 105, 105, 0.9)',
-      color: "white",
-      borderRadius: '10px',
-    }
-  }
 
 return (
 
