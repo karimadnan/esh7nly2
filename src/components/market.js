@@ -12,6 +12,9 @@ import CurrencyFormat from 'react-currency-format';
 import Select from 'react-select';
 import Modal from 'react-responsive-modal';
 import amumu from '../Images/amumusad.png';
+import { css } from '@emotion/core';
+import { PacmanLoader } from 'react-spinners';
+import {Image} from 'cloudinary-react';
 import StarRatings from 'react-star-ratings';
 import {
     BrowserView,
@@ -29,6 +32,12 @@ const ErrorStyle = {
       borderRadius: '10px',
     },
 }
+
+const override = css`
+    display: block;
+    border-color: red;
+    margin: 0 auto;
+`;
 
 const customStyles = {
     option: (provided, state) => ({
@@ -125,7 +134,7 @@ LoopIMGS(){
     for (const img of ConvertedIMGS) {
         outPut.push( <div key={img} onClick={()=>{this.props.updatePrev(img, 'img')}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
             <div className ={prev.defaultImage === img ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                <img className="splash-card-product-view" src={img} style={{cursor: "pointer", maxHeight: 53}}/>
+                <Image cloudName="dols73omt" publicId={img} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
             </div>
         </div>)
 }
@@ -141,9 +150,8 @@ updateInfo (data){
     this.props.updateCartInfo(object, 'add')
 }
 
-
 addItemToArray(item){
-    let uniqueId = item.Name
+    let uniqueId = item.id
     var discounted = item.discount / 100 * item.price
 
     let object = {
@@ -178,20 +186,26 @@ addItemToArray(item){
 
 addItemToPrev(item){
     let object = {
-        id: item.id,
+        id: item._id,
         Name: item.Name,
         price: item.price,
-        color: item.colors && item.colors[0].label,
-        size: item.sizes && item.sizes[0],
         desc: item.desc,
         discount: item.discount,
-        img: item.img,
-        defaultImage: item.defaultImage,
-        sizes: item.sizes,
-        options: item.options,
-        defaultOpt: item.defaultOpt,
-        colors: item.colors
+        defaultImage: item.img[0],
+        img: item.img
      }
+     if (item.options){
+        object["defaultOpt"] = item.options[0];
+        object["options"] = item.options;
+    }
+    if (item.colors){
+        object["color"] = item.colors[0].label;
+        object["colors"] = item.colors;
+    }
+    if (item.sizes){
+        object["sizes"] = item.sizes;
+        object["size"] = item.sizes[0];
+    }
      this.props.addPrev(object)
 }
 
@@ -212,7 +226,7 @@ if (this.state.view === "shop"){
         return (
             <div className="col-xs-12 col-md-4 col-md-4" key={key} style={{minHeight: !isMobile ? 400 : 0}}>
             <div className ={rarity}>
-                <img className="splash-card-product-view-constant" src={item.img[0]} alt={item.id}/>
+                <Image cloudName="dols73omt" publicId={item.defaultImage} className="splash-card-product-view-constant" />
             
                 <div className="overlayHover" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}>
                     <button className="btn btn-primary btn-block" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}} style={{color : "white"}}>
@@ -330,7 +344,7 @@ if (this.state.view === "item"){
 
          <div className="col-xs-12 col-md-6 col-lg-6">
             <div className ="cardItemPrev">
-               <img className="splash-card-product-view" src={prev.defaultImage} alt={prev.id}/>
+               <Image cloudName="dols73omt" publicId={prev.defaultImage} className="splash-card-product-view" />
                {prev.discount > 0 && <div id ="merchDiscount" className="card-body">
                     <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{prev.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
                </div> }
@@ -435,8 +449,23 @@ if (this.state.view === "item"){
 }
 
 render(){
+    if(!this.props.shop.fetched){
+        return(
+            <div className="GG-BG-INVERSE">
+                <div className="container" style={{backgroundColor: "#121212", boxShadow: `1px 5px 5px #000000`}}>
+                    <h1 style={{color: "white", textAlign: "center"}}> Loading...</h1>
+                    <PacmanLoader
+                    css={override}
+                    sizeUnit={"px"}
+                    size={100}
+                    color={'#FFFF00'}
+                    loading={true}/>
+                </div>
+            </div>
+        )
+    }
     return(
-        <div className="GG-BG-INVERSE"> 
+        <div className="GG-BG-INVERSE">
                 {this.Market()}
                 {this.ViewProduct()}
             <Navbar page={"Offers"}/>

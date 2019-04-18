@@ -6,6 +6,14 @@ import {connect} from 'react-redux';
 import {isMobile} from 'react-device-detect';
 import {fetchShopData} from '../actions/index';
 import {bindActionCreators} from 'redux';
+import { css } from '@emotion/core';
+import { PacmanLoader } from 'react-spinners';
+
+const override = css`
+    display: block;
+    border-color: red;
+    margin: 0 auto;
+`;
 
 class NewProducts extends Component {
 
@@ -83,6 +91,21 @@ responsive = {
 }
 
 render(){
+    if(!this.props.shop.fetched){
+        return(
+            <div className="GG-BG-INVERSE">
+                <div className="container" style={{backgroundColor: "#121212", boxShadow: `1px 5px 5px #000000`}}>
+                    <h1 style={{color: "white", textAlign: "center"}}> Loading...</h1>
+                    <PacmanLoader
+                    css={override}
+                    sizeUnit={"px"}
+                    size={100}
+                    color={'#FFFF00'}
+                    loading={true}/>
+                </div>
+            </div>
+        )
+    }
     return(
     <div className="BlackBG">
         <h1 style={{color: "orange", textAlign: "center", fontWeight: "bold"}}>New Products</h1>

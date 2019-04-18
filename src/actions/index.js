@@ -123,13 +123,12 @@ export function fetchProductsError(error) {
 export function fetchShopData() {
     return function(dispatch) {
       dispatch(fetchProductsPending())
-      return axios.get(`http://192.168.1.2:4000/server/fetchShop`)
+      return axios.get(`http://www.ggegypt.com:4000/server/fetchShop`)
       .then(function (response) {
           dispatch(fetchProductsSuccess(response.data.data))
       })
       .catch(function (error) {
         dispatch(fetchProductsError(error))
-        console.log("ERROR", error)
     });
     };
   }
