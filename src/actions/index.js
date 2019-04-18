@@ -123,7 +123,7 @@ export function fetchProductsError(error) {
 export function fetchShopData() {
     return function(dispatch) {
       dispatch(fetchProductsPending())
-      return axios.get(`http://www.ggegypt.com:4000/server/fetchShop`)
+      return axios.get(`http://www.ggegypt.com/server/fetchShop`)
       .then(function (response) {
           dispatch(fetchProductsSuccess(response.data.data))
       })
