@@ -461,6 +461,7 @@ render(){
                     color={'#FFFF00'}
                     loading={true}/>
                 </div>
+                <Navbar page={"Offers"}/>
             </div>
         )
     }
