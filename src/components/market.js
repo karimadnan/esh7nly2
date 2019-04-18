@@ -452,7 +452,7 @@ render(){
     if(!this.props.shop.fetched){
         return(
             <div className="GG-BG-INVERSE">
-                <div className="container" style={{backgroundColor: "#121212", boxShadow: `1px 5px 5px #000000`}}>
+                <div className="container" style={{backgroundColor: "#121212", boxShadow: `1px 5px 5px #000000`, height: 300}}>
                     <h1 style={{color: "white", textAlign: "center"}}> Loading...</h1>
                     <PacmanLoader
                     css={override}

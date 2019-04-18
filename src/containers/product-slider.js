@@ -93,15 +93,15 @@ responsive = {
 render(){
     if(!this.props.shop.fetched){
         return(
-                <div>
+            <div className="BlackBG" style={{height: 200}}>
                     <h1 style={{color: "white", textAlign: "center"}}> Loading...</h1>
                     <PacmanLoader
                     css={override}
                     sizeUnit={"px"}
-                    size={100}
+                    size={50}
                     color={'#FFFF00'}
                     loading={true}/>
-                </div>
+            </div>
         )
     }
     return(
