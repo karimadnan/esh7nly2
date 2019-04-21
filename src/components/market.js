@@ -76,13 +76,11 @@ state = {
 
 componentWillUnmount() {
     clearInterval(this.interval);
+    this.props.removePrevOptions()
 }
 
 componentDidMount(){
-        this.props.fetchShopData();
-    if(this.props.cart.prevOptions.length > 0){
-        this.props.removePrevOptions()
-    }
+    this.props.fetchShopData();
 }
 
 notify = (msg) => toast.success(msg, {
