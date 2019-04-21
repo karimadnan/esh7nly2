@@ -49,6 +49,7 @@ const styles = theme => ({
   },
   button: {
     margin: theme.spacing.unit,
+    marginLeft: theme.spacing.unit * 4,
   },
   tabs: {
     position: 'relative',
