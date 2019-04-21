@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {addCartItem, updateCartInfo, addPrev, updatePrev, fetchShopData} from '../actions/index';
+import {addCartItem, updateCartInfo, addPrev, updatePrev, fetchShopData, addPrevOptions, removePrevOptions} from '../actions/index';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import ReactTooltip from 'react-tooltip';
@@ -14,7 +14,8 @@ import Modal from 'react-responsive-modal';
 import amumu from '../Images/amumusad.png';
 import { css } from '@emotion/core';
 import { PacmanLoader } from 'react-spinners';
-import {Image} from 'cloudinary-react';
+import axios from 'axios';
+import moment from 'moment';
 import StarRatings from 'react-star-ratings';
 import {
     BrowserView,
@@ -60,17 +61,28 @@ state = {
     condition: "new",
     sort: "",
     view: "shop",
+    timeLeft: "",
     options: [],
     colors: [],
+    sizes: [],
     selectedOpt: "",
     selectedColor: "",
+    selectedSize: "",
     ErrorModal: false,
     ErrorMsg: "",
+    optionsFetched: false,
     quantity: 1
 }
 
+componentWillUnmount() {
+    clearInterval(this.interval);
+}
+
 componentDidMount(){
-this.props.fetchShopData();
+        this.props.fetchShopData();
+    if(this.props.cart.prevOptions.length > 0){
+        this.props.removePrevOptions()
+    }
 }
 
 notify = (msg) => toast.success(msg, {
@@ -109,22 +121,39 @@ handleChangeOption(type, value) {
     this.setState({[type]: value}, () =>{
         this.props.updatePrev(this.state.selectedOpt.label, 'option')
         this.props.updatePrev(this.state.selectedOpt.value, 'price')
+        if(this.state.selectedOpt.img){
+            this.props.updatePrev(this.state.selectedOpt.img, 'img')
+        }
     });
 }
 
 handleChangeColor(type, value) {
     this.setState({[type]: value}, () =>{
         this.props.updatePrev(this.state.selectedColor.label, 'color')
-        this.props.updatePrev(this.state.selectedColor.value, 'img')
+        if(this.state.selectedColor.value){
+            this.props.updatePrev(this.state.selectedColor.value, 'img')
+        }
+        else{
+            this.props.updatePrev(this.props.cart.itemPrev.img[0], 'img')
+        }
     });
 }
 
-colorChange(){
-
+handleChangeSize(type, value) {
+    this.setState({[type]: value}, () =>{
+        this.props.updatePrev(this.state.selectedSize.label, 'size')
+    });
 }
 
 updateInput(key, value) {
     this.setState({ [key]: value });
+}
+
+tick() {
+    const currentDate = moment();
+    const future = moment("00:00 AM", ["h:mm A"]);
+    let timeCount = moment(future.diff(currentDate))
+    this.setState({timeLeft: timeCount - 1000})
 }
 
 LoopIMGS(){
@@ -134,7 +163,7 @@ LoopIMGS(){
     for (const img of ConvertedIMGS) {
         outPut.push( <div key={img} onClick={()=>{this.props.updatePrev(img, 'img')}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
             <div className ={prev.defaultImage === img ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                <Image cloudName="dols73omt" publicId={img} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
+                <img src={img} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
             </div>
         </div>)
 }
@@ -226,8 +255,7 @@ if (this.state.view === "shop"){
         return (
             <div className="col-xs-12 col-md-4 col-md-4" key={key} style={{minHeight: !isMobile ? 400 : 0}}>
             <div className ={rarity}>
-                <Image cloudName="dols73omt" publicId={item.defaultImage} className="splash-card-product-view-constant" />
-            
+                <img src={item.defaultImage} className="splash-card-product-view-constant" />
                 <div className="overlayHover" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}>
                     <button className="btn btn-primary btn-block" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}} style={{color : "white"}}>
                             View
@@ -308,30 +336,71 @@ if (this.state.view === "shop"){
 ViewProduct(){
 var prev = this.props.cart.itemPrev
 if (this.state.view === "item"){
+    if(prev.options && !this.state.optionsFetched){
+        if (prev.id === "5cb82c254e1efafcd06dc1fa") {
 
-    if(prev.options && !this.state.options.length > 0){
-        var arr = []
+            this.interval = setInterval(() => this.tick(), 1000);
+            const currentDate = moment();
+            const future = moment("00:00 AM", ["h:mm A"]);
+            let timeCount = moment(future.diff(currentDate))
+            
+        if(moment(timeCount).hour() > 3){
+            axios.get('https://fnbr.co/api/shop', 
+            {headers: { 'x-api-key': 'b4d7cae7-7047-4a17-83f6-b4e62091d328' }})
+            .then(response => {
+            response.data.data.daily.forEach(element => {
+                let object1 = {
+                label: `${element.name} - ${element.type}`,
+                value: parseFloat(element.price.replace(/,/g, ''))*0.19,
+                img: element.images.icon
+                }
+                this.props.addPrevOptions(object1)
+              });
+              response.data.data.featured.forEach(element => {
+                let object2 = {
+                label: `${element.name} - ${element.type}`,
+                value: parseFloat(element.price.replace(/,/g, ''))*0.19,
+                img: element.images.icon
+               }
+               this.props.addPrevOptions(object2)
+             });
+             })
+            }
+        }
+
         prev.options.forEach(element => {
             let object = {
-              label: element.option,
-              value: element.price
+            label: element.option,
+            value: element.price
             }
-            arr.push(object)
+            this.props.addPrevOptions(object)
           });
-          this.setState({options: arr})  
-    }
-    else if (prev.colors && !this.state.colors.length > 0){
-        var arr = []
+          this.setState({optionsFetched: true})
+        }
+
+    if(prev.colors && !this.state.colors.length > 0){
+        var colors = []
         prev.colors.forEach(element => {
             let object = {
-              label: element.label,
-              value: element.value
-            }
-            arr.push(object)
+            label: element.label,
+            value: element.value
+        }
+            colors.push(object)
           });
-          this.setState({colors: arr})  
+          this.setState({colors: colors})  
     }
-    
+
+    if(prev.sizes && !this.state.sizes.length > 0){
+        var sizes = []
+        prev.sizes.forEach(function(entry){
+            let objSize = {
+                label: entry
+            }
+            sizes.push(objSize)
+        })
+        this.setState({sizes: sizes})  
+    }
+
     var discount = prev.discount / 100 * prev.price
     var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
     return (
@@ -343,8 +412,8 @@ if (this.state.view === "item"){
         </div>
 
          <div className="col-xs-12 col-md-6 col-lg-6">
-            <div className ="cardItemPrev">
-               <Image cloudName="dols73omt" publicId={prev.defaultImage} className="splash-card-product-view" />
+            <div className="cardItemPrev">
+               <img src={prev.defaultImage} className="splash-card-product-view" />
                {prev.discount > 0 && <div id ="merchDiscount" className="card-body">
                     <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{prev.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
                </div> }
@@ -352,36 +421,46 @@ if (this.state.view === "item"){
          </div>
 
          <div style={{color: "white", fontSize: 15}} className="col-xs-12 col-md-6 col-lg-6">
-               <h1 style={{color: "white", textAlign: "center"}}>{prev.Name}</h1>
-
-                {prev.discount > 0 ? 
-                <div>
-                    <h1 style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h1>
-                    <h2><span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span> <span>- You Save {<CurrencyFormat value={discount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h2>
+            {prev.id === "5cb82c254e1efafcd06dc1fa" &&
+            <div>
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <h4 style={{color: "white", textAlign: "center"}}>Shop Rotation {moment(this.state.timeLeft).format("HH")}Hour(s) - {moment(this.state.timeLeft).format("mm")}Minute(s) - {moment(this.state.timeLeft).format("ss")}Second(s) </h4>
                 </div>
-                :
-                    <h1><span style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h1>
-                }
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <h4 style={{color: "white", textAlign: "center"}}>If 4 hours or less left you can only buy v-bucks.</h4>
+                    <div style={{borderBottom: "1px dotted grey"}}/>
+                </div>
+            </div>}
+                
+            <h1 style={{color: "white", textAlign: "center", fontWeight: "bold"}}>{prev.Name}</h1>
 
-               <br/>
-              {prev.sizes && 
-                    <div>
-                        <div className="col-xs-4 col-md-4 col-lg-4">
-                            <h4>Size:</h4>
-                        </div>
-                        <div className="col-xs-8 col-md-8 col-lg-8">
-                            <select className="form-control" id="size" style={{color: "blue", fontWeight: "bold"}} value={prev.size} onChange={e => this.props.updatePrev(e.target.value, 'size')}>
-                                {prev.sizes.map((sizes) =>{
-                                        return(
-                                            <option>
-                                                {sizes}
-                                            </option>
-                                            )
-                                    })}
-                            </select>
-                            <br/>
-                        </div>
-                    </div>} 
+            {prev.discount > 0 ? 
+            <div>
+                <h1 style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h1>
+                <h2><span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span> <span>- You Save {<CurrencyFormat value={discount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h2>
+            </div>
+            :
+                <h1><span style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h1>
+            }
+
+            <br/>
+                {prev.sizes && 
+                <div>
+                    <div className="col-xs-4 col-md-4 col-lg-4">
+                        <h4>Size:</h4>
+                    </div>
+                    <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>
+                            <Select
+                                isSearchable={false}
+                                isMulti={false}
+                                styles={customStyles}
+                                value={this.state.selectedSize}
+                                onChange={this.handleChangeSize.bind(this, 'selectedSize')}
+                                options={this.state.sizes} placeholder='Select Size'
+                            /> 
+                        <br/>
+                    </div>
+                </div>} 
 
                 {prev.colors && 
                 <div>
@@ -390,6 +469,8 @@ if (this.state.view === "item"){
                     </div>
                     <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>
                             <Select
+                                isSearchable={false}
+                                isMulti={false}
                                 styles={customStyles}
                                 value={this.state.selectedColor}
                                 onChange={this.handleChangeColor.bind(this, 'selectedColor')}
@@ -406,16 +487,22 @@ if (this.state.view === "item"){
                     </div>
                     <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>                       
                             <Select
+                                isSearchable={false}
+                                isMulti={false}
                                 styles={customStyles}
                                 value={this.state.selectedOpt}
                                 onChange={this.handleChangeOption.bind(this, 'selectedOpt')}
-                                options={this.state.options} placeholder='Select Offer'
+                                options={this.props.cart.prevOptions} placeholder='Select Offer'
                             />     
                         <br/>
                     </div>
                 </div>} 
                 <div className="col-xs-6 col-md-6 col-lg-6">
-                    <button className="btn btn-danger btn-block" style={{color : "white"}} onClick={()=>{this.setState({view: "shop", options: [], selectedOpt: "", selectedColor: "", colors: []})}}>
+                    <button className="btn btn-danger btn-block" style={{color : "white"}} onClick={()=>{
+                        this.setState({view: "shop", optionsFetched: false, selectedOpt: "", selectedColor: "", colors: [], sizes: [], selectedSize: ""}), 
+                        this.props.removePrevOptions(),
+                        this.interval > 0 &&  clearInterval(this.interval);
+                    }}>
                         <span className="icon glyphicon glyphicon-arrow-left"></span>
                         <span className="text">Back to shop</span>
                     </button>
@@ -430,7 +517,7 @@ if (this.state.view === "item"){
                 <div className="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
 
                <div className="col-xs-12 col-md-12 col-lg-12">
-               <h1 style={{textAlign: "center"}}>Product details</h1> { prev.desc.split(",").map(place => <p> • {place} </p>)} {prev.color && <p>• Color: {prev.color.toUpperCase()}</p>} {prev.size && <p>• Size: {prev.size.toUpperCase()}</p>}
+               <h1 style={{textAlign: "center"}}>Product details</h1> { prev.desc.split(",").map(place => <p key={place}> • {place} </p>)} {prev.color && <p>• Color: {prev.color.toUpperCase()}</p>} {prev.size && <p>• Size: {prev.size.toUpperCase()}</p>}
                </div>
                <div className="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
                <div className="col-xs-12 col-md-12 col-lg-12">
@@ -469,7 +556,7 @@ render(){
         <div className="GG-BG-INVERSE">
                 {this.Market()}
                 {this.ViewProduct()}
-            <Navbar page={"Offers"}/>
+            <Navbar page={1}/>
             <Modal 
                 open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
                 styles={ErrorStyle}>
@@ -489,7 +576,7 @@ function mapStateToProps(state){
         loginData: state.loginSession,
         server: state.server,
         cartInfo: state.updateCartInfo,
-        lang: state.lang
+        lang: state.extras
     }
   }
   
@@ -499,7 +586,9 @@ const matchDispatchToProps = dispatch => bindActionCreators(
         updateCartInfo,
         addPrev,
         updatePrev,
-        fetchShopData
+        fetchShopData,
+        addPrevOptions,
+        removePrevOptions
     },
     dispatch,
 )

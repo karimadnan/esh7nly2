@@ -1,5 +1,5 @@
 const initialState = {
-    lang: 'EN'
+    lang: 'EN',
 }
 
 export default function(state = initialState, action){

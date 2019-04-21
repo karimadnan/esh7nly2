@@ -38,7 +38,7 @@ render(){
 
     <div>
     <React.Fragment>
-        <Badge className={this.props.classes.margin} badgeContent={this.props.lang.lang} color="primary">
+        <Badge className={this.props.classes.margin} badgeContent={this.props.lang.lang} color="secondary">
         <span className="svg-icon svg-icon-globe" style={{cursor: "pointer"}}
           aria-owns={anchorEl ? 'simple-menu' : undefined}
           aria-haspopup="true"
@@ -68,7 +68,7 @@ langIcon.propTypes = {
 function mapStateToProps(state){
     return {
         cartInfo: state.updateCartInfo,
-        lang: state.lang
+        lang: state.extras
     }
   }
 

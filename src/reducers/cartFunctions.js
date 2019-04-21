@@ -1,6 +1,7 @@
 const initialState = {
     cart: [],
-    itemPrev: {}
+    itemPrev: {},
+    prevOptions: []
 }
 
 const quantityForItem = (list, newItem) => {
@@ -46,6 +47,17 @@ export default function(state = initialState, action){
                     itemPrev: action.payload
                   })
                 }
+
+            case 'ADD_PREV_OPTIONS': {
+                const { prevOptions } = state
+                const newItem = action.payload
+                    return { ...state, prevOptions: add(prevOptions, newItem) }
+                }
+
+            case 'CLEAN_PREV_OPTIONS': {
+                return { ...state, prevOptions: [] }
+            }
+
             case 'UPDATE_SIZE': {
                 return {
                     ...state,

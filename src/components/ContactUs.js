@@ -51,7 +51,7 @@ render() {
     return (
   <div>
     <div className="GG-BG-INVERSE"> 
-    <Navbar page={"ContactUs"}/>
+    <Navbar page={2}/>
         <div class="container">
             <div class="BlackBG">
                 <h1 style={{color: "white", fontWeight: "bold", textAlign: "center"}}>Message us on facebook</h1>

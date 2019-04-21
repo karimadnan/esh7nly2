@@ -269,7 +269,7 @@ class Checkout extends Component {
             </div>
 
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <button class="btn btn-danger" style={{color : "white", width: 250, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({gotData: false})}}>
+                    <button class="btn btn-danger btn-block" style={{color : "white", width: 250, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({gotData: false})}}>
                         <span className="icon glyphicon glyphicon-ok"></span>
                         <span className="text" style={{fontWeight: "bold"}}>Edit</span>
                     </button>
@@ -473,7 +473,7 @@ render(){
     var grandTotal = total > 400 ? total : total + 30
     return(
     <div class="GG-BG-INVERSE">
-        <div class="row" style={{padding: 10}}>
+        <div  style={{padding: 10}}>
         <div class="col-xs-12 col-md-8 col-lg-8">
             <div class="WhiteBG">
                        {!this.state.loaded && this.props.loginData.loggedState && <div>

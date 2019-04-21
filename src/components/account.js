@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
-
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import PropTypes from 'prop-types';
 import '../Mycss.css';
 import '../Respcss.css';
 import Navbar from './navbar';
@@ -21,9 +25,26 @@ const override = css`
     border-color: red;
 `;
 
+const theme = createMuiTheme({
+    palette: {
+        primary: { 500: '#4a148c' }, // custom color in hex
+        secondary: { 'A400': '#ff9800' },
+        textColor: { 500: '#fafafa' }  // custom color in hex
+    },
+});
+
+const styles = theme => ({
+    root: {
+      flexGrow: 1,
+      width: '100%',
+      backgroundColor: theme.palette.background.paper,
+    }
+});
+
 class Account extends Component {
 
     state = {
+        value: 0,
         headers: {
             'Content-Type': 'application/json',
             'authorization': this.props.loginData.token},
@@ -39,6 +60,10 @@ class Account extends Component {
         vouchPoints: '',
         nav: 'profile'
     }
+
+    handleChange = (event, value) => {
+        this.setState({ value });
+    };
 
     updateInput(key, value) {
         this.setState({ [key]: value });
@@ -78,64 +103,43 @@ class Account extends Component {
     }
 
     Current(){
-        if(this.state.nav === "profile"){
+        if(this.state.value === 0){
             return(
             <div>
-            <BrowserView>
                 <h1 style={{color: "black"}}>
                 <span style={{color: "purple"}}>{this.props.lang === "EN" ? 
                 this.state.msgs.EN[Math.floor(Math.random() * this.state.msgs.EN.length)]
                 :
                 this.state.msgs.AR[Math.floor(Math.random() * this.state.msgs.AR.length)]}
                 </span>, {this.props.loginData.userName}</h1>
-                <h3 style={{fontFamily: "impact", color: "black", textTransform: 'uppercase'}}>Account Status:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>
+                    <h3 style={{fontFamily: "impact", color: "black", textTransform: 'uppercase'}}>Account Status:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>
+                    <h3 style={{fontFamily: "impact", color: "black"}}>Health:{this.healthBar(this.state.health)}</h3><p style={{color: "black"}}>({this.props.lang === "EN" ? "You lose health if you provide a fake transaction id at 0 health your account will be banned" : "هتخسر هيلث لو بعت رقم عملية تحويل وهمى لو الهيلث خلص الاكونت هيتقفل"})</p>
+                    <h3 style={{fontFamily: "impact", color: "black"}}>Email:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-purple">{this.state.email}</span></h3>
+                    <h3 style={{fontFamily: "impact", color: "black"}}>Phone:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-purple">{this.state.phone}</span></h3>
+                    <h3 style={{fontFamily: "impact", color: "black"}}>Points: <span style={{fontFamily: "arial", color:"white"}} class="menuLabel-small menuLabel-purple"> <CountUp duration={5} end={this.state.vouchPoints}/>-GG Points</span></h3>
+                    <p style={{color: "black"}}>({this.props.lang === "EN" ? "You gain GG points on every successful purchase you make, you can use them to redeem prizes" : "هتاخد اشحنلى بوينتس على كل شحنة, تقدر تبدلهم بجوايز"})</p>
 
-                <h3 style={{fontFamily: "impact", color: "black"}}>Health:{this.healthBar(this.state.health)}</h3><p style={{color: "black"}}>({this.props.lang === "EN" ? "You lose health if you provide a fake transaction id at 0 health your account will be banned" : "هتخسر هيلث لو بعت رقم عملية تحويل وهمى لو الهيلث خلص الاكونت هيتقفل"})</p>
-            <br/>
-                <h3 style={{fontFamily: "impact", color: "black"}}>Email:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-purple">{this.state.email}</span></h3>
-            <br/>
-                <h3 style={{fontFamily: "impact", color: "black"}}>Phone:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-purple">{this.state.phone}</span></h3>
-            <br/>
-                <h3 style={{fontFamily: "impact", color: "black"}}>Points: <span style={{fontFamily: "arial", color:"white"}} class="menuLabel-small menuLabel-purple"> <CountUp duration={5} end={this.state.vouchPoints}/>-GG Points</span></h3>
-                <p style={{color: "black"}}>({this.props.lang === "EN" ? "You gain GG points on every successful purchase you make, you can use them to redeem prizes" : "هتاخد اشحنلى بوينتس على كل شحنة, تقدر تبدلهم بجوايز"})</p>
-                <br/>
-            </BrowserView>
-            <MobileView>
-                <h1 style={{color: "black", fontSize: "8vw"}}>
-                <span style={{color: "purple"}}>{this.props.lang === "EN" ? 
-                this.state.msgs.EN[Math.floor(Math.random() * this.state.msgs.EN.length)]
-                :
-                this.state.msgs.AR[Math.floor(Math.random() * this.state.msgs.AR.length)]}
-                </span>, {this.props.loginData.userName}</h1>
-                <h3 style={{fontFamily: "impact", color: "black", textTransform: 'uppercase', fontSize: "6vw"}}>Account Status:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>
-
-                <h3 style={{fontFamily: "impact", color: "black"}}>Health:{this.healthBar(this.state.health)}</h3><p style={{color: "black"}}>({this.props.lang === "EN" ? "You lose health if you provide a fake transaction id at 0 health your account will be banned" : "هتخسر هيلث لو بعت رقم عملية تحويل وهمى لو الهيلث خلص الاكونت هيتقفل"})</p>
-            <br/>
-                <h3 style={{fontFamily: "impact", color: "black", fontSize: "5vw"}}>Email:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-purple">{this.state.email}</span></h3>
-            <br/>
-                <h3 style={{fontFamily: "impact", color: "black", fontSize: "7vw"}}>Phone:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-purple">{this.state.phone}</span></h3>
-            <br/>
-                <h3 style={{fontFamily: "impact", color: "black", fontSize: "7vw"}}>Points: <span style={{fontFamily: "arial", color:"white"}} class="menuLabel-small menuLabel-purple"> <CountUp duration={5} end={this.state.vouchPoints}/>-GG Points</span></h3>
-                <p style={{color: "black"}}>({this.props.lang === "EN" ? "You gain GG points on every successful purchase you make, you can use them to redeem prizes" : "هتاخد اشحنلى بوينتس على كل شحنة, تقدر تبدلهم بجوايز"})</p>
-                <br/>
-            </MobileView>
             </div>
+
             )
         }
-      else if (this.state.nav === "orders"){
+      else if (this.state.value === 1){
           return(
+
             <Orders/>
+
         )
       }
-      else if (this.state.nav === "history"){
+      else if (this.state.value === 2){
         return(
           <OrdersHistory/>
       )
     }
     }
 
-    render() {
-    const lang = this.props.lang
+render() {
+    const { classes } = this.props;
+    const { value } = this.state;
     if (!this.props.loginData.loggedState || this.props.loginData.isAdmin){
         return (
             <div class ="GG-BG-INVERSE">
@@ -182,43 +186,27 @@ class Account extends Component {
                         </div>}
     
                       {this.state.status && 
-                      <div>
-                        <br/>
-                        <BrowserView>
-                            <div class="profileNav col-xs-12 col-md-12 col-lg-12">
-                                <div class={this.state.nav === "profile" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h3 onClick={()=>{this.updateInput("nav", "profile")}} style={{lineHeight: 0.3}}>{lang === "EN" ? "Profile" : "بروفايل"}</h3>
-                                </div>
-                                <div class={this.state.nav === "orders" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h3 onClick={()=>{this.updateInput("nav", "orders")}} style={{lineHeight: 0.3}}>{lang === "EN" ? "Orders" : "الطلبات"}</h3>
-                                </div>
-                                <div class={this.state.nav === "history" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h3 onClick={()=>{this.updateInput("nav", "history")}} style={{lineHeight: 0.3}}>{lang === "EN" ? "History" : "القديم"}</h3>
-                                </div>
-                                <div class="profileNavItem col-xs-3 col-md-1 col-lg-1">
-                                    <h3 onClick={()=>{this.updateInput("nav", "settings")}} style={{lineHeight: 0.3}}>{lang === "EN" ? "Settings" : "الإعدادات"}</h3>
-                                </div>
+                        <div className={classes.root}>
+                            <MuiThemeProvider theme={theme}>
+                                <AppBar position="static" color="primary">
+                                    <Tabs
+                                    value={value}
+                                    onChange={this.handleChange}
+                                    variant="scrollable"
+                                    scrollButtons="on"
+                                    indicatorColor="secondary"
+                                    textColor="secondary"
+                                    >
+                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 0 && "white"}}>Profile</h4>} />
+                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 1 && "white"}}>Orders</h4>} />
+                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 2 && "white"}}>History</h4>} />
+                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 3 && "white"}}>Settings</h4>} />
+                                    </Tabs>
+                                </AppBar>
+                            </MuiThemeProvider>
+                            <div class="ProfileBGW">
+                                    {this.Current()}
                             </div>
-                        </BrowserView>
-                        <MobileView>
-                            <div class="profileNav col-xs-12 col-md-12 col-lg-12">
-                                <div class={this.state.nav === "profile" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h5 onClick={()=>{this.updateInput("nav", "profile")}} style={{lineHeight: 1.7}}>{lang === "EN" ? "Profile" : "بروفايل"}</h5>
-                                </div>
-                                <div class={this.state.nav === "orders" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h5 onClick={()=>{this.updateInput("nav", "orders")}} style={{lineHeight: 1.7}}>{lang === "EN" ? "Orders" : "الطلبات"}</h5>
-                                </div>
-                                <div class={this.state.nav === "history" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h5 onClick={()=>{this.updateInput("nav", "history")}} style={{lineHeight: 0.3}} style={{lineHeight: 1.7}}>{lang === "EN" ? "History" : "القديم"}</h5>
-                                </div>
-                                <div class="profileNavItem col-xs-3 col-md-1 col-lg-1">
-                                    <h5 onClick={()=>{this.updateInput("nav", "settings")}} style={{lineHeight: 0.3}} style={{lineHeight: 1.7}}>{lang === "EN" ? "Settings" : "الإعدادات"}</h5>
-                                </div>
-                            </div>
-                        </MobileView>
-                        <div class="ProfileBGW">
-                                {this.Current()}
-                     </div>
                      </div>} 
                     </div>
                     <br/>
@@ -229,12 +217,16 @@ class Account extends Component {
     }
 }
 
+Account.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
 function mapStateToProps(state){
     return {
         loginData: state.loginSession,
         server: state.server,
-        lang: state.lang.lang
+        lang: state.extras.lang
     }
   }
   
-  export default connect(mapStateToProps)(Account);
+  export default withStyles(styles)(connect(mapStateToProps)(Account));

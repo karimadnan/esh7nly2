@@ -246,7 +246,7 @@ function mapStateToProps(state){
   return {
       loginData: state.loginSession,
       server: state.server,
-      lang: state.lang.lang
+      lang: state.extras.lang
   }
 }
 

@@ -19,7 +19,7 @@ render(){
   return(
     <div>
       <div className="bg-image">
-        <Navbar page={"Main"}/>
+        <Navbar page={0}/>
         <div class="container" >
             <div class="badge-logo"/>
                   <ProductSlider />

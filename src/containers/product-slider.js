@@ -147,7 +147,7 @@ render(){
 function mapStateToProps(state){
     return {
         shop: state.shop,
-        lang: state.lang
+        lang: state.extras
     }
   }
 

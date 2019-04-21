@@ -79,7 +79,7 @@ render(){
       styles={customStyles}>
           <h2>{this.state.ErrorMsg}</h2>
       </Modal>
-      <Badge onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}} className={this.props.classes.margin} badgeContent={this.props.cartInfo.totalItems} color="primary">
+      <Badge onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}} className={this.props.classes.margin} badgeContent={this.props.cartInfo.totalItems} color="secondary">
         <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 22, color: "white"}} ></span>
       </Badge>
 

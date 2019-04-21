@@ -600,7 +600,6 @@ background-color: #0ddb06;
 
 .cardItemPrev {
   padding: 1.25em 1.5em 4em;
-  border: 2px solid #000000;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -610,7 +609,6 @@ background-color: #0ddb06;
   -ms-flex-direction: column;
   flex-direction: column;
   word-wrap: break-word;
-  background-color: #fafafa;
   background-clip: border-box;
 }
 

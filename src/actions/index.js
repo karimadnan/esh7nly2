@@ -21,6 +21,19 @@ export const addPrev = (data) => {
     }
 }
 
+export const addPrevOptions = (data) => {
+    return {
+        type: "ADD_PREV_OPTIONS",
+        payload: data
+    }
+}
+
+export const removePrevOptions = () => {
+    return {
+        type: "CLEAN_PREV_OPTIONS"
+    }
+}
+
 export const cleanCart = () =>{
     return {
         type: "CLEAN_CART"
@@ -69,7 +82,6 @@ export const updateLang = (lang) => {
         payload: lang
     }
 }
-
 
 export const loginFunction = (data, action) => {
     switch(action){
@@ -131,4 +143,4 @@ export function fetchShopData() {
         dispatch(fetchProductsError(error))
     });
     };
-  }
+}
