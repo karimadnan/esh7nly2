@@ -11,6 +11,8 @@ import isEmail from 'validator/lib/isEmail';
 import axios from 'axios';
 import amumu from '../Images/amumusad.png';
 import Modal from 'react-responsive-modal';
+import { withNamespaces } from 'react-i18next';
+import i18next from 'i18next';
 
 const ErrorStyle = {
     overlay: {
@@ -52,7 +54,8 @@ keyClicked (e) {
 }
 
 login() {
-var that=this;
+    var that=this;
+    const { t } = this.props;
     if(this.state.Phone  && this.state.Password){
 
     if(isEmail(this.state.Phone)){
@@ -94,26 +97,26 @@ var that=this;
 
     }
     else{
-    this.setState({ErrorModal: true, ErrorMsg: "Please fill your info."})
+    this.setState({ErrorModal: true, ErrorMsg: `${t('loginEmpty')}`})
     }
 } 
 
 render() {
-
+    const { t } = this.props;
     if(this.props.loginData.loggedState){
         return(
             <div class ="GG-BG">
                 <div class="container">
                         <div class="WhiteBG" style={{color: "black", textAlign: "center"}}>
                             <div class="badge-logo"/>
-                                <h1>Hey, {this.props.loginData.userName}</h1>
-                                <h4>You're already logged in wana go to your <span style={{color: "purple", cursor: "pointer"}} onClick={()=>{!this.props.loginData.isAdmin ? 
+                                <h1>{t('welcome')}, {this.props.loginData.userName}</h1>
+                                <h4>{t('alreadyLogged')} <span style={{color: "#3F51B5", cursor: "pointer", textDecoration: "underline"}} onClick={()=>{!this.props.loginData.isAdmin ? 
                                     ReactRouter.goTo("/account") 
                                 : this.props.loginData.isAdmin && this.props.loginData.session === 1 ?  
                                     ReactRouter.goTo("/agentdashboard") 
                                 : this.props.loginData.isAdmin && this.props.loginData.session === 2 ? 
                                     ReactRouter.goTo("/admindashboard") 
-                                : null}}>account</span>?</h4>
+                                : null}}>{t('account')}</span></h4>
                         </div>
                 </div>
                 <Navbar />
@@ -126,33 +129,33 @@ render() {
             <div class="container">
             <div class="BlackBG">
                         <div class="badge-logo"/>
-                            <div class="form-group has-feedback">
+                            <div class="form-group has-feedback" style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                        <label style={{color: this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "green" : "orange"}}>{this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "":'*'} Phone Number</label>
-                                        <input class="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Phone", e.target.value)} placeholder="Your Phone Number" required></input>
+                                        <label style={{color: this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "green" : "orange"}}>{this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "":'*'} {t('phone')}</label>
+                                        <input class="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
                                         <br/>
                                 </div>
 
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                        <label style={{color: this.state.Password.length >= 8 ? "green" : "orange"}}>{this.state.Password.length >= 8 ? "":'*'} Password</label>
-                                        <input class="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Password", e.target.value)} placeholder="Your Password" required></input>
+                                        <label style={{color: this.state.Password.length >= 8 ? "green" : "orange"}}>{this.state.Password.length >= 8 ? "":'*'} {t('password')}</label>
+                                        <input class="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Password", e.target.value)} placeholder={t('password')} required></input>
                                         <br/>
                                 </div>
 
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                     <button class="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.login()}}>
                                         <span className="icon glyphicon glyphicon-ok"></span>
-                                        <span className="text">Login</span>
+                                        <span className="text">{t('login')}</span>
                                     </button>
                                     <br/>
                                 </div>
 
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                    <h4 style={{color: "grey"}}>New to GG-egypt.com? Create an account. </h4>
+                                    <h4 style={{color: "grey"}}>{t('signUpText')}</h4>
                                 </div>
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                     <button class="btn btn-success btn-block" style={{color : "white"}} onClick={()=>{ReactRouter.goTo("/signup")}}>
-                                        <span className="svg-icon svg-icon-sphinx"></span> {this.props.lang.lang === "EN" ? "Sign Up" : " التسجيل" }
+                                        <span className="svg-icon svg-icon-sphinx"></span> {t('signUp')}
                                     </button>
                                 </div>
 
@@ -185,5 +188,5 @@ function mapStateToProps(state){
       dispatch,
     )
   
-  export default connect(mapStateToProps, matchDispatchToProps)(Login);
+  export default withNamespaces()(connect(mapStateToProps, matchDispatchToProps)(Login));
   

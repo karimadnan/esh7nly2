@@ -9,12 +9,6 @@ import ProductSlider from '../containers/product-slider';
 
 class Main extends Component {
 
-  componentWillReceiveProps (newProps) {
-    if( newProps.lang.lang !== this.props.lang.lang ){
-      window.location.reload()
-    }
-  }
-
 render(){
   return(
     <div>

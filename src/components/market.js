@@ -22,6 +22,8 @@ import {
     MobileView,
   } from "react-device-detect";
 import {isMobile} from 'react-device-detect';
+import { withNamespaces } from 'react-i18next';
+import i18next from 'i18next';
 
 const ErrorStyle = {
     overlay: {
@@ -80,7 +82,22 @@ componentWillUnmount() {
 }
 
 componentDidMount(){
+    this.props.removePrevOptions()
     this.props.fetchShopData();
+}
+
+goBack(){
+    if(this.interval){
+        clearInterval(this.interval)
+    }
+    this.props.removePrevOptions()
+    this.setState({view: "shop", 
+                   optionsFetched: false, 
+                   selectedOpt: "", 
+                   selectedColor: "", 
+                   colors: [], 
+                   sizes: [], 
+                   selectedSize: ""})
 }
 
 notify = (msg) => toast.success(msg, {
@@ -101,16 +118,17 @@ onCloseModal = (type) => {
 };
 
 addItemToCart(item){
+    const { t } = this.props;
     var prev = this.props.cart.itemPrev
     if(item.price > 0){
         this.addItemToArray(prev)
         this.updateInfo(prev)
-        this.notify(`${prev.Name} added to cart`)
+        this.notify(`${prev.Name} ${t('addedToCartMsg')}`)
     }
     else{
         this.setState({
             ErrorModal: true,
-            ErrorMsg: "Oops are you sure you filled all the info?!"
+            ErrorMsg: `${t('marketOptionError')}`
           })
     }
 }
@@ -237,6 +255,7 @@ addItemToPrev(item){
 }
 
 Market(){
+const { t } = this.props;
 let counter = 0
 if (this.state.view === "shop"){
     let shop = this.props.shop.items.map((item) =>{
@@ -256,12 +275,12 @@ if (this.state.view === "shop"){
                 <img src={item.defaultImage} className="splash-card-product-view-constant" />
                 <div className="overlayHover" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}>
                     <button className="btn btn-primary btn-block" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}} style={{color : "white"}}>
-                            View
+                        {t('viewButton')}
                     </button>
 
                     {item.discount > 0 && 
                     <div id ="merchDiscount" className="card-body">
-                        <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{item.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
+                        <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{item.discount}%  {t('discount')}</span>
                     </div> 
                     }
                 </div>
@@ -273,18 +292,18 @@ if (this.state.view === "shop"){
                         <span>
                             {item.discount ?
                             <div>
-                                <h4 className="marketCardTitle" style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
-                                <h5 className="marketCardTitle" style={{color: "grey", textDecoration: "line-through"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h5>
+                                <h4 className="marketCardTitle" style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>
+                                <h5 className="marketCardTitle" style={{color: "grey", textDecoration: "line-through"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h5>
                             </div>
                             :
-                            <h4 className="marketCardTitle" style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>}
+                            <h4 className="marketCardTitle" style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>}
                         </span>}
                         <span>
                            
                             <div>
                                 {item.price > 400 && 
-                                <h5 style={{color: "white", float: "left"}}>FREE Shipping </h5>}
-                                <h6 style={{color: "white", float: "right"}}>Shop: <span style={{color: "orange"}}>{item.soldBy}</span></h6>
+                                <h5 style={{color: "white", float: "left"}}>{t('freeShip')} </h5>}
+                                <h6 style={{color: "white", float: "right"}}>{t('store')}: <span style={{color: "orange"}}>{item.soldBy}</span></h6>
                             </div>
                         </span>
 
@@ -332,6 +351,7 @@ if (this.state.view === "shop"){
 }
 
 ViewProduct(){
+const { t } = this.props;
 var prev = this.props.cart.itemPrev
 if (this.state.view === "item"){
     if(prev.options && !this.state.optionsFetched){
@@ -413,13 +433,13 @@ if (this.state.view === "item"){
             <div className="cardItemPrev">
                <img src={prev.defaultImage} className="splash-card-product-view" />
                {prev.discount > 0 && <div id ="merchDiscount" className="card-body">
-                    <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{prev.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
+                    <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{prev.discount}% {t('discount')}</span>
                </div> }
             </div>
          </div>
 
          <div style={{color: "white", fontSize: 15}} className="col-xs-12 col-md-6 col-lg-6">
-            {prev.id === "5cb82c254e1efafcd06dc1fa" &&
+            {prev.id === "5cb82c254e1efafcd06dc1fa" && this.state.timeLeft &&
             <div>
                 <div className="col-xs-12 col-md-12 col-lg-12">
                     <h4 style={{color: "white", textAlign: "center"}}>Shop Rotation {moment(this.state.timeLeft).format("HH")}Hour(s) - {moment(this.state.timeLeft).format("mm")}Minute(s) - {moment(this.state.timeLeft).format("ss")}Second(s) </h4>
@@ -434,18 +454,18 @@ if (this.state.view === "item"){
 
             {prev.discount > 0 ? 
             <div>
-                <h1 style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h1>
-                <h2><span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span> <span>- You Save {<CurrencyFormat value={discount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h2>
+                <h1 style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
+                <h2><span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}</span> <span>- {t('youSave')} {<CurrencyFormat value={discount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</span></h2>
             </div>
             :
-                <h1><span style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h1>
+                <h1><span style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</span></h1>
             }
 
             <br/>
                 {prev.sizes && 
                 <div>
                     <div className="col-xs-4 col-md-4 col-lg-4">
-                        <h4>Size:</h4>
+                        <h4>{t('size')}:</h4>
                     </div>
                     <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>
                             <Select
@@ -463,7 +483,7 @@ if (this.state.view === "item"){
                 {prev.colors && 
                 <div>
                     <div className="col-xs-4 col-md-4 col-lg-4">
-                        <h4>Color:</h4>
+                        <h4>{t('color')}:</h4>
                     </div>
                     <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>
                             <Select
@@ -481,7 +501,7 @@ if (this.state.view === "item"){
                 {prev.options && 
                 <div>
                     <div className="col-xs-4 col-md-4 col-lg-4">
-                        <h4>Options:</h4>
+                        <h4>{t('option')}:</h4>
                     </div>
                     <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>                       
                             <Select
@@ -496,33 +516,26 @@ if (this.state.view === "item"){
                     </div>
                 </div>} 
                 <div className="col-xs-6 col-md-6 col-lg-6">
-                    <button className="btn btn-danger btn-block" style={{color : "white"}} onClick={()=>{
-                        this.setState({view: "shop", optionsFetched: false, selectedOpt: "", selectedColor: "", colors: [], sizes: [], selectedSize: ""}), 
-                        this.props.removePrevOptions(),
-                        this.interval > 0 &&  clearInterval(this.interval);
-                    }}>
+                    <button className="btn btn-danger btn-block" style={{color : "white"}} onClick={()=>{this.goBack()}}>
                         <span className="icon glyphicon glyphicon-arrow-left"></span>
-                        <span className="text">Back to shop</span>
+                        <span className="text">{t('backToShop')}</span>
                     </button>
                 </div>
                 <div className="col-xs-6 col-md-6 col-lg-6">
                     <button className="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.addItemToCart(prev)}}>
                         <span className="icon glyphicon glyphicon-shopping-cart"></span>
-                        <span className="text">Add to cart</span>
+                        <span className="text">{t('addToCart')}</span>
                     </button>
                     <br/>
                 </div>
                 <div className="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
 
                <div className="col-xs-12 col-md-12 col-lg-12">
-               <h1 style={{textAlign: "center"}}>Product details</h1> { prev.desc.split(",").map(place => <p key={place}> • {place} </p>)} {prev.color && <p>• Color: {prev.color.toUpperCase()}</p>} {prev.size && <p>• Size: {prev.size.toUpperCase()}</p>}
+               <h1 style={{textAlign: "center"}}>{t('productDetails')}</h1> { prev.desc.split(",").map(place => <p key={place}> • {place} </p>)} {prev.color && <p>• {t('color')}: {prev.color.toUpperCase()}</p>} {prev.size && <p>• {t('size')}: {prev.size.toUpperCase()}</p>}
                </div>
                <div className="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
                <div className="col-xs-12 col-md-12 col-lg-12">
-                    {this.props.lang.lang === "EN" ?  
-                        <h2><strong style={{textDecoration: "underline"}}>Free shipping</strong> on orders over 300 EGP</h2>
-                    :  <h2 style={{textAlign: "right"}}><strong style={{textDecoration: "underline"}}>شحن مجانى</strong> على الطلبات 300 جنيه و اكثر</h2>
-                    }
+                        <h2>{t('freeShippingText')}</h2>
                 </div>
                <br/>
          </div>
@@ -534,11 +547,12 @@ if (this.state.view === "item"){
 }
 
 render(){
+    const { t } = this.props;
     if(!this.props.shop.fetched){
         return(
             <div className="GG-BG-INVERSE">
                 <div className="container" style={{backgroundColor: "#121212", boxShadow: `1px 5px 5px #000000`, height: 300}}>
-                    <h1 style={{color: "white", textAlign: "center"}}> Loading...</h1>
+                    <h1 style={{color: "white", textAlign: "center"}}> {t('loading')}...</h1>
                     <PacmanLoader
                     css={override}
                     sizeUnit={"px"}
@@ -591,8 +605,8 @@ const matchDispatchToProps = dispatch => bindActionCreators(
     dispatch,
 )
 
-
-  export default connect(mapStateToProps, matchDispatchToProps)(Market);
+ 
+  export default withNamespaces()(connect(mapStateToProps, matchDispatchToProps)(Market));
   
 
 

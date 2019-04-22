@@ -18,6 +18,18 @@ import {
     BrowserView,
     MobileView,
   } from "react-device-detect";
+import compose from 'recompose/compose';
+import { withNamespaces } from 'react-i18next';
+import i18next from 'i18next';
+import Person from '@material-ui/icons/Person';
+import Mood from '@material-ui/icons/Mood';
+import Email from '@material-ui/icons/Email';
+import StayPrimaryPortrait from '@material-ui/icons/StayPrimaryPortrait';
+import Whatshot from '@material-ui/icons/Whatshot';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const override = css`
     display: block;
@@ -49,10 +61,6 @@ class Account extends Component {
             'Content-Type': 'application/json',
             'authorization': this.props.loginData.token},
         Url: this.props.server.main,
-        msgs: {
-            EN: ["Hey", "Yo", "Howdy", "Sup"],
-            AR: ["باشااا", "عامل ايه ياسطاااا", "انتا تانى"]
-        },
         status: '',
         email: '',
         phone: '',
@@ -70,64 +78,57 @@ class Account extends Component {
     }
     
     healthBar(health){
-        switch(health){
-        case 3: {
-            return (
-                <span>
-                    <span class="svg-icon svg-icon-hearts"/><span class="svg-icon svg-icon-hearts"/><span class="svg-icon svg-icon-hearts"/>
-                </span>
-            )
-        }
-        case 2: {
-            return (
-                <span>
-                    <span class="svg-icon svg-icon-hearts"/><span class="svg-icon svg-icon-hearts"/><span class="svg-icon svg-icon-emptyHearts"/>
-                </span>
-            )
-        }
-        case 1: {
-            return (
-                <span>
-                    <span class="svg-icon svg-icon-hearts"/><span class="svg-icon svg-icon-emptyHearts"/><span class="svg-icon svg-icon-emptyHearts"/>
-                </span>
-            )
-        }
-        case 0: {
-            return (
-                <span>
-                    <span class="svg-icon svg-icon-emptyHearts"/><span class="svg-icon svg-icon-emptyHearts"/><span class="svg-icon svg-icon-emptyHearts"/>
-                </span>
-            )
-        }
-        } 
+        var i;
+        var hearts = []
+            for (i = 0; i < health; i++) {
+                hearts.push(<span class="svg-icon svg-icon-hearts"/>)
+            }
+            for (i = 0; i < 3-health; i++) {
+                hearts.push(<span class="svg-icon svg-icon-emptyHearts"/>)
+            }
+          return hearts
     }
 
     Current(){
+        const { t } = this.props;
         if(this.state.value === 0){
             return(
-            <div>
+            <div style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
                 <h1 style={{color: "black"}}>
-                <span style={{color: "purple"}}>{this.props.lang === "EN" ? 
-                this.state.msgs.EN[Math.floor(Math.random() * this.state.msgs.EN.length)]
-                :
-                this.state.msgs.AR[Math.floor(Math.random() * this.state.msgs.AR.length)]}
+                <span style={{color: "purple"}}>
+                {t('welcome')}
                 </span>, {this.props.loginData.userName}</h1>
-                    <h3 style={{fontFamily: "impact", color: "black", textTransform: 'uppercase'}}>Account Status:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>
-                    <h3 style={{fontFamily: "impact", color: "black"}}>Health:{this.healthBar(this.state.health)}</h3><p style={{color: "black"}}>({this.props.lang === "EN" ? "You lose health if you provide a fake transaction id at 0 health your account will be banned" : "هتخسر هيلث لو بعت رقم عملية تحويل وهمى لو الهيلث خلص الاكونت هيتقفل"})</p>
-                    <h3 style={{fontFamily: "impact", color: "black"}}>Email:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-purple">{this.state.email}</span></h3>
-                    <h3 style={{fontFamily: "impact", color: "black"}}>Phone:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-purple">{this.state.phone}</span></h3>
-                    <h3 style={{fontFamily: "impact", color: "black"}}>Points: <span style={{fontFamily: "arial", color:"white"}} class="menuLabel-small menuLabel-purple"> <CountUp duration={5} end={this.state.vouchPoints}/>-GG Points</span></h3>
-                    <p style={{color: "black"}}>({this.props.lang === "EN" ? "You gain GG points on every successful purchase you make, you can use them to redeem prizes" : "هتاخد اشحنلى بوينتس على كل شحنة, تقدر تبدلهم بجوايز"})</p>
-
+                    <ListItem button key={t('accStatus')}>
+                        <ListItemIcon>{<Person />}</ListItemIcon>
+                        <ListItemText primary={<h3>{t('accStatus')}: <span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>} />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button key={t('health')}>
+                        <ListItemIcon>{<Mood />}</ListItemIcon>
+                        <ListItemText primary={<h3>{t('health')}: {this.healthBar(this.state.health)}</h3>} />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button key={t('email')}>
+                        <ListItemIcon>{<Email />}</ListItemIcon>
+                        <ListItemText primary={<h3>{t('email')}: {this.state.email}</h3>} />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button key={t('phone')}>
+                        <ListItemIcon>{<StayPrimaryPortrait />}</ListItemIcon>
+                        <ListItemText primary={<h3>{t('phone')}: {this.state.phone}</h3>} />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button key={t('ggPoints')}>
+                        <ListItemIcon>{<Whatshot />}</ListItemIcon>
+                        <ListItemText primary={<h3>{t('ggPoints')}: <CountUp duration={5} end={this.state.vouchPoints}/></h3>} />
+                    </ListItem>
             </div>
 
             )
         }
       else if (this.state.value === 1){
           return(
-
             <Orders/>
-
         )
       }
       else if (this.state.value === 2){
@@ -138,15 +139,17 @@ class Account extends Component {
     }
 
 render() {
+    const { t } = this.props;
     const { classes } = this.props;
     const { value } = this.state;
+
     if (!this.props.loginData.loggedState || this.props.loginData.isAdmin){
         return (
             <div class ="GG-BG-INVERSE">
             <div class="container">
               <div class="errorBG" style={{color: "white"}}>
                   <h1>403 (Forbidden)</h1>
-                  <p> Ooops Something Went Wrong.</p>
+                  <p> {t('403')}.</p>
               </div>
             </div>
             <Navbar />
@@ -182,7 +185,7 @@ render() {
                                 size={100}
                                 color={'#FFFF00'}
                                 loading={true}/>
-                            <h2 style={{color: "white"}}>Loading...</h2>
+                            <h2 style={{color: "white"}}>{t('loading')}...</h2>
                         </div>}
     
                       {this.state.status && 
@@ -197,10 +200,9 @@ render() {
                                     indicatorColor="secondary"
                                     textColor="secondary"
                                     >
-                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 0 && "white"}}>Profile</h4>} />
-                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 1 && "white"}}>Orders</h4>} />
-                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 2 && "white"}}>History</h4>} />
-                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 3 && "white"}}>Settings</h4>} />
+                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 0 && "white"}}>{t('profile')}</h4>} />
+                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 1 && "white"}}>{t('orders')}</h4>} />
+                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 2 && "white"}}>{t('history')}</h4>} />
                                     </Tabs>
                                 </AppBar>
                             </MuiThemeProvider>
@@ -224,9 +226,12 @@ Account.propTypes = {
 function mapStateToProps(state){
     return {
         loginData: state.loginSession,
-        server: state.server,
-        lang: state.extras.lang
+        server: state.server
     }
   }
   
-  export default withStyles(styles)(connect(mapStateToProps)(Account));
+  export default compose(
+    withStyles(styles),
+    withNamespaces(),
+    connect(mapStateToProps),
+  )(Account);

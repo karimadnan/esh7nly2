@@ -10,6 +10,7 @@ import {removeCartItem, updateCartInfo} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const customStyles = {
   overlay: {
@@ -79,10 +80,11 @@ render(){
       styles={customStyles}>
           <h2>{this.state.ErrorMsg}</h2>
       </Modal>
-      <Badge onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}} className={this.props.classes.margin} badgeContent={this.props.cartInfo.totalItems} color="secondary">
-        <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 22, color: "white"}} ></span>
-      </Badge>
-
+      <Tooltip title={<h6>Your Cart</h6>} aria-label={<h6>Your Cart</h6>} placement="bottom">
+          <Badge onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}} className={this.props.classes.margin} badgeContent={this.props.cartInfo.totalItems} color="secondary">
+            <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 22, color: "white"}} ></span>
+          </Badge>
+      </Tooltip>
       <Drawer
           anchor="right"
           open={this.state.sideBar}

@@ -31,6 +31,8 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import compose from 'recompose/compose';
+import { withNamespaces } from 'react-i18next';
 
 const customStyles = {
   overlay: {
@@ -62,6 +64,11 @@ const styles = theme => ({
     marginRight: theme.spacing.unit * 2,
     marginLeft: 0,
     width: '100%',
+    [theme.breakpoints.up('md')]: {
+      display: 'block',
+      marginLeft: theme.spacing.unit * 15,
+      width: 'auto',
+    },
     [theme.breakpoints.up('lg')]: {
       display: 'block',
       marginLeft: theme.spacing.unit * 40,
@@ -192,7 +199,7 @@ class Navbar extends React.Component {
   render() {
     const { classes } = this.props;
     const { page } = this.props;
-
+    const { t } = this.props;
 
     const renderMobileDrawer = (
         <Drawer anchor="right" open={this.state.drawer} onClose={this.toggleDrawer('drawer', false)}>
@@ -214,7 +221,7 @@ class Navbar extends React.Component {
 
           {!this.props.loginData.loggedState ?  
           <Button onClick={()=>{ReactRouter.goTo("/login")}} variant="contained" color="secondary" className={classes.button}>
-              Login
+              <h6>{t('login')}</h6>
               <AccountCircle className={classes.rightIcon}/>
           </Button> : undefined}
 
@@ -254,9 +261,9 @@ class Navbar extends React.Component {
                 indicatorColor="secondary"
                 textColor="secondary"
               >
-              <Tab label={<h5 style={{color: "white"}}>Home</h5>} />
-              <Tab label={<h5 style={{color: "white"}}>Market</h5>} />
-              <Tab label={<h5 style={{color: "white"}}>Contact Us</h5>} />
+              <Tab label={<h5 style={{color: "white"}}>{t('home')}</h5>} />
+              <Tab label={<h5 style={{color: "white"}}>{t('market')}</h5>} />
+              <Tab label={<h5 style={{color: "white"}}>{t('contact')}</h5>} />
             </Tabs>
             </div>
             <div className={classes.grow} />
@@ -277,7 +284,7 @@ class Navbar extends React.Component {
 
                   {!this.props.loginData.loggedState ?  
                   <Button onClick={()=>{ReactRouter.goTo("/login")}} variant="contained" color="secondary" className={classes.button}>
-                      Login
+                      <h6>{t('login')}</h6>
                       <AccountCircle className={classes.rightIcon}/>
                   </Button> : undefined}  
 
@@ -323,4 +330,8 @@ const matchDispatchToProps = dispatch => bindActionCreators(
 dispatch,
 )
 
-export default withStyles(styles)(connect(mapStateToProps, matchDispatchToProps)(Navbar));
+export default compose(
+  withStyles(styles),
+  withNamespaces(),
+  connect(mapStateToProps, matchDispatchToProps),
+)(Navbar);

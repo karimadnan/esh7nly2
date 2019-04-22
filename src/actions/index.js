@@ -40,6 +40,14 @@ export const cleanCart = () =>{
     }
 }
 
+export const changeLang = (lang) =>{
+    return {
+        type: "UPDATE_LANG",
+        payload: lang 
+    }
+}
+
+
 export const cleanCartInfo = () =>{
     return {
         type: "CLEAN_CART_INFO"
@@ -74,13 +82,6 @@ export const updatePrev = (thing, action) => {
             payload: thing
         }
         }
-}
-
-export const updateLang = (lang) => {
-    return {
-        type: "UPDATE_LANG",
-        payload: lang
-    }
 }
 
 export const loginFunction = (data, action) => {

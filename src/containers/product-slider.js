@@ -90,6 +90,11 @@ responsive = {
     1024: { items: 3 },
 }
 
+responsiveDiscount = {
+    0: { items: 2 },
+    1024: { items: 2 },
+}
+
 render(){
     if(!this.props.shop.fetched){
         return(
@@ -127,7 +132,7 @@ render(){
         <h3 style={{color: "white", textAlign: "center"}}>Products that have a discount</h3>
             <AliceCarousel
             items={this.Discounted()}
-            responsive={this.responsive}
+            responsive={this.responsiveDiscount}
             autoPlayInterval={5000}
             autoPlayDirection="rtl"
             autoPlay={true}
