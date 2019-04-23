@@ -34,6 +34,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
+import Pp from '../Images/avatar.png';
+import Avatar from '@material-ui/core/Avatar';
 
 const customStyles = {
   overlay: {
@@ -231,7 +233,8 @@ class Navbar extends React.Component {
           >
           {this.props.loginData.loggedState ?
           <Chip
-              icon={<FaceIcon />}
+              color="secondary"
+              avatar={<Avatar alt="PP" src={Pp} />}
               label={<h4>{this.props.loginData.userName}</h4>}
               onClick={this.profile.bind(this)}
               className={classes.chipMobile}
@@ -302,7 +305,8 @@ class Navbar extends React.Component {
 
                   {this.props.loginData.loggedState ?
                   <Chip
-                      icon={<FaceIcon />}
+                      color="secondary"
+                      avatar={<Avatar alt="PP" src={Pp} />}
                       label={<h4>{this.props.loginData.userName}</h4>}
                       onClick={this.profile.bind(this)}
                       onDelete={this.logoutClick.bind(this)}
