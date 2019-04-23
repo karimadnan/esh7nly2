@@ -21,11 +21,11 @@ import {
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 import i18next from 'i18next';
-import Person from '@material-ui/icons/Person';
-import Mood from '@material-ui/icons/Mood';
+import Person from '@material-ui/icons/VerifiedUser';
+import Mood from '@material-ui/icons/Favorite';
 import Email from '@material-ui/icons/Email';
 import StayPrimaryPortrait from '@material-ui/icons/StayPrimaryPortrait';
-import Whatshot from '@material-ui/icons/Whatshot';
+import Whatshot from '@material-ui/icons/Redeem';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -91,6 +91,7 @@ class Account extends Component {
 
     Current(){
         const { t } = this.props;
+        const accountStatus = this.state.status
         if(this.state.value === 0){
             return(
             <div style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
@@ -100,7 +101,15 @@ class Account extends Component {
                 </span>, {this.props.loginData.userName}</h1>
                     <ListItem button key={t('accStatus')}>
                         <ListItemIcon>{<Person />}</ListItemIcon>
-                        <ListItemText primary={<h3>{t('accStatus')}: <span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>} />
+                        <ListItemText primary={<h3>{t('accStatus')}: <span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >
+                        {accountStatus === "pending" ? 
+                        t('accountPendingStatus')
+                        : accountStatus === "active" ?
+                        t('accountActiveStatus')
+                        : accountStatus === "banned" ?
+                        t('accountBannedStatus')
+                        : undefined}
+                        </span></h3>} />
                     </ListItem>
                     <Divider />
                     <ListItem button key={t('health')}>

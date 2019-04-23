@@ -11,6 +11,7 @@ import { withStyles, MuiThemeProvider, createMuiTheme  } from '@material-ui/core
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Home from '@material-ui/icons/Home';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import Phone from '@material-ui/icons/Phone';
 import Menu from '@material-ui/icons/Menu';
 import Tabs from '@material-ui/core/Tabs';
@@ -53,6 +54,22 @@ const styles = theme => ({
     margin: theme.spacing.unit,
     marginLeft: theme.spacing.unit * 4,
   },
+  paper: {
+    background: "#212121"
+  },
+  selected: {
+    backgroundColor: "#fff"
+  },
+  divider: {
+    background: "#fff"
+  },
+  textColor: {
+    color: 'white'
+  },
+  logoutButton: {
+    position: 'absolute',
+    bottom: 0
+  },
   tabs: {
     position: 'relative',
     display: 'none',
@@ -78,8 +95,11 @@ const styles = theme => ({
   rightIcon: {
     marginLeft: theme.spacing.unit,
   },
-  chip: {
+  chipMobile: {
     margin: theme.spacing.unit,
+  },
+  chipDesktop: {
+    marginTop: theme.spacing.unit * 2,
   },
   grow: {
     flexGrow: 1,
@@ -202,7 +222,7 @@ class Navbar extends React.Component {
     const { t } = this.props;
 
     const renderMobileDrawer = (
-        <Drawer anchor="right" open={this.state.drawer} onClose={this.toggleDrawer('drawer', false)}>
+        <Drawer anchor="right" classes={{ paper: classes.paper }} open={this.state.drawer} onClose={this.toggleDrawer('drawer', false)}>
           <div
             tabIndex={0}
             role="button"
@@ -214,8 +234,7 @@ class Navbar extends React.Component {
               icon={<FaceIcon />}
               label={<h4>{this.props.loginData.userName}</h4>}
               onClick={this.profile.bind(this)}
-              onDelete={this.logoutClick.bind(this)}
-              className={classes.chip}
+              className={classes.chipMobile}
           />
           : undefined}  
 
@@ -225,22 +244,31 @@ class Navbar extends React.Component {
               <AccountCircle className={classes.rightIcon}/>
           </Button> : undefined}
 
-          <Divider />
+          <Divider variant="middle" classes={{root: classes.divider}}/>
 
-          <ListItem onClick={()=>{this.handleChange(null, 0)}} button key={"Home"} selected={page === 0}>
-              <ListItemIcon>{<Home />}</ListItemIcon>
-              <ListItemText primary={"Home"} />
+          <ListItem onClick={()=>{this.handleChange(null, 0)}} button key={t('home')} selected={page === 0}>
+              <ListItemIcon className={classes.textColor}>{<Home />}</ListItemIcon>
+              <ListItemText classes={{ primary: classes.textColor }} primary={t('home')} />
           </ListItem>
 
-          <ListItem onClick={()=>{this.handleChange(null, 1)}} button key={"Market"} selected={page === 1}>
-              <ListItemIcon>{<ShoppingCart />}</ListItemIcon>
-              <ListItemText primary={"Market"} />
+          <ListItem onClick={()=>{this.handleChange(null, 1)}} button key={t('market')} selected={page === 1}>
+              <ListItemIcon className={classes.textColor}>{<ShoppingCart />}</ListItemIcon>
+              <ListItemText classes={{ primary: classes.textColor }} primary={t('market')} />
           </ListItem>
 
-          <ListItem onClick={()=>{this.handleChange(null, 2)}} button key={"Contact Us"} selected={page === 2}>
-              <ListItemIcon>{<Phone />}</ListItemIcon>
-              <ListItemText primary={"Contact Us"} />
+          <ListItem onClick={()=>{this.handleChange(null, 2)}} button key={t('contact')} selected={page === 2}>
+              <ListItemIcon className={classes.textColor}>{<Phone />}</ListItemIcon>
+              <ListItemText classes={{ primary: classes.textColor }} primary={t('contact')} />
           </ListItem>
+          
+
+          <div className={classes.logoutButton}>
+            {this.props.loginData.loggedState ?  
+            <ListItem onClick={()=>{this.logout()}} button key={t('logout')}>
+                <ListItemIcon className={classes.textColor}>{<PowerSettingsNew />}</ListItemIcon>
+                <ListItemText classes={{ primary: classes.textColor }} primary={t('logout')} />
+            </ListItem>: undefined}
+          </div>
 
           </div>
         </Drawer>
@@ -261,9 +289,9 @@ class Navbar extends React.Component {
                 indicatorColor="secondary"
                 textColor="secondary"
               >
-              <Tab label={<h5 style={{color: "white"}}>{t('home')}</h5>} />
-              <Tab label={<h5 style={{color: "white"}}>{t('market')}</h5>} />
-              <Tab label={<h5 style={{color: "white"}}>{t('contact')}</h5>} />
+              <Tab label={<h5 style={{color: "white", fontWeight: "bold"}}>{t('home')}</h5>} />
+              <Tab label={<h5 style={{color: "white", fontWeight: "bold"}}>{t('market')}</h5>} />
+              <Tab label={<h5 style={{color: "white", fontWeight: "bold"}}>{t('contact')}</h5>} />
             </Tabs>
             </div>
             <div className={classes.grow} />
@@ -278,13 +306,13 @@ class Navbar extends React.Component {
                       label={<h4>{this.props.loginData.userName}</h4>}
                       onClick={this.profile.bind(this)}
                       onDelete={this.logoutClick.bind(this)}
-                      className={classes.chip}
+                      className={classes.chipDesktop}
                   />
                   : undefined}  
 
                   {!this.props.loginData.loggedState ?  
                   <Button onClick={()=>{ReactRouter.goTo("/login")}} variant="contained" color="secondary" className={classes.button}>
-                      <h6>{t('login')}</h6>
+                      <h6 style={{fontWeight: "bold"}}>{t('login')}</h6>
                       <AccountCircle className={classes.rightIcon}/>
                   </Button> : undefined}  
 

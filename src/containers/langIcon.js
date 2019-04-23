@@ -9,6 +9,7 @@ import '../svg.css';
 import '../flag-icon.css'
 import i18n from '../i18n';
 import i18next from 'i18next';
+import Language from '@material-ui/icons/Language';
 
 const styles = theme => ({
   margin: {
@@ -17,6 +18,9 @@ const styles = theme => ({
   },
 });
 
+const changeLanguage = (lng) => {
+  i18n.changeLanguage(lng);
+}
 
 class langIcon extends Component {
 
@@ -33,22 +37,24 @@ class langIcon extends Component {
       this.setState({ anchorEl: null });
     };
     
+    setLanguage(lng){
+      this.handleClose()
+      changeLanguage(lng)
+    }
+
 render(){
     const anchorEl = this.state.anchorEl
-    const changeLanguage = (lng) => {
-      i18n.changeLanguage(lng);
-    }
+
   return (
 
     <div>
     <React.Fragment>
         <Badge className={this.props.classes.margin} badgeContent={i18next.language} color="secondary">
-        <span className="svg-icon svg-icon-globe" style={{cursor: "pointer"}}
-          aria-owns={anchorEl ? 'simple-menu' : undefined}
-          aria-haspopup="true"
-          onClick={this.handleClick}
-          >
-        </span>
+        <Language fontSize="large" style={{cursor: "pointer"}}
+                  aria-owns={anchorEl ? 'simple-menu' : undefined}
+                  aria-haspopup="true"
+                  onClick={this.handleClick}
+        />
         </Badge>
         <Menu
             id="simple-menu"
@@ -56,8 +62,9 @@ render(){
             open={Boolean(anchorEl)}
             onClose={this.handleClose}
           >
-          <MenuItem onClick={()=>{this.handleClose, changeLanguage('AR')}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-eg"></span> عربى</a></MenuItem>
-          <MenuItem onClick={()=>{this.handleClose, changeLanguage('EN')}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-gb"></span> English</a></MenuItem>
+          <MenuItem onClick={()=>{this.setLanguage('EG')}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-eg"></span> مصرى</a></MenuItem>
+          <MenuItem onClick={()=>{this.setLanguage('AR')}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-sa"></span> عربى</a></MenuItem>
+          <MenuItem onClick={()=>{this.setLanguage('EN')}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-gb"></span> English</a></MenuItem>
         </Menu>
     </React.Fragment>
     </div>

@@ -3,7 +3,6 @@ import '../Mycss.css';
 import '../Respcss.css';
 import Navbar from './navbar';
 import Footer from './footer';
-import "../image-gallery.css";
 import {connect} from 'react-redux';
 import ProductSlider from '../containers/product-slider';
 
@@ -29,7 +28,6 @@ render(){
 
 function mapStateToProps(state){
   return {
-      lang: state.lang
   }
 }
 

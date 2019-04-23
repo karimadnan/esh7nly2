@@ -549,8 +549,7 @@ function mapStateToProps(state){
         loginData: state.loginSession,
         server: state.server,
         cart: state.cartItems.cart,
-        cartInfo: state.updateCartInfo,
-        lang: state.lang.lang
+        cartInfo: state.updateCartInfo
     }
   }
   

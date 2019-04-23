@@ -11,6 +11,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
 import Tooltip from '@material-ui/core/Tooltip';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import { withNamespaces } from 'react-i18next';
+import compose from 'recompose/compose';
 
 const customStyles = {
   overlay: {
@@ -54,7 +57,7 @@ updateInfo (data){
   this.props.updateCartInfo(object, 'remove')
 }
 
-notify = (id) => toast.error(`${id} removed from cart!`, {
+notify = (msg) => toast.error(msg, {
   position: "top-center",
   autoClose: 2500,
   hideProgressBar: false,
@@ -73,16 +76,17 @@ goToCheckout(){
 }
 
 render(){
+  const { t } = this.props;
   return (
-    <div>
+    <div> 
       <Modal          
       open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
       styles={customStyles}>
           <h2>{this.state.ErrorMsg}</h2>
       </Modal>
-      <Tooltip title={<h6>Your Cart</h6>} aria-label={<h6>Your Cart</h6>} placement="bottom">
+      <Tooltip title={<h6>{t('yourCart')}</h6>} aria-label={<h6>{t('yourCart')}</h6>} placement="bottom">
           <Badge onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}} className={this.props.classes.margin} badgeContent={this.props.cartInfo.totalItems} color="secondary">
-            <span className="glyphicon glyphicon-shopping-cart" style={{fontSize: 22, color: "white"}} ></span>
+              <ShoppingCart fontSize="large" />
           </Badge>
       </Tooltip>
       <Drawer
@@ -93,9 +97,9 @@ render(){
         >
         <div style={{padding: 20, textAlign: "center", width: isMobile ? 250 : 550}}>
           {this.props.cart.length > 0 ? 
-              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>Click on an item to remove x1</p>
+              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>{t('clickToRemoveCart')}</p>
               :
-              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>Your cart is empty.</p>
+              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>{t('cartEmpty')}</p>
             }
             {this.props.cart.map(item => {
 
@@ -110,9 +114,11 @@ render(){
                     cartName = `(${item.color.toUpperCase()}) `+ cartName
                 }
 
+              const itemName = item.Name
+              const msg = t('removedFromCartMsg', {itemName})
               return(
                 <li key={item.id}>
-                    <div className="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
+                    <div className="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(msg), this.updateInfo(item)}}>
                         <div className="col-md-4 col-lg-4">
                             <img src={item.defaultImage} className="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
                         </div>
@@ -120,10 +126,10 @@ render(){
                             <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 30 ? (((cartName).substring(0,40-3))  + '...' ) : cartName}</h4>
                         </div>
                         <div className="col-md-2 col-lg-2">
-                            <h4 style={{color: "purple", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
+                            <h4 style={{color: "purple", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h4>
                         </div>
                         <div className="col-md-2 col-lg-2">
-                            <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
+                            <h5 style={{color: "black"}}>{t('quantity')}: {item.quantity}</h5>
                         </div>
                         <div style={{borderBottom: "1px dashed grey"}}/>
                     </div>
@@ -137,17 +143,17 @@ render(){
           {this.props.cart.length > 0 && 
           <div style={{color: "black"}}>
             <div className="col-xs-6 col-md-6 col-lg-6">
-              <span style={{textAlign: "left", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>Subtotal: </span>
+              <span style={{textAlign: "left", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>{t('subTotal')}: </span>
             </div>
             <div className="col-xs-6 col-md-6 col-lg-6">
-              <span style={{textAlign: "right", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>EGP {<CurrencyFormat value={this.props.cartInfo.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} </span>
+              <span style={{textAlign: "right", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>{t('currency')} {<CurrencyFormat value={this.props.cartInfo.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} </span>
             </div>
           </div>}
           {!window.location.href.includes("checkout") && this.props.cart.length > 0 && 
           <div className="col-xs-12 col-md-12 col-lg-12">
                 <button className="btn btn-primary btn-block" style={{color : "white", margin: 10}} onClick={()=>{this.goToCheckout()}}>
                     <span className="icon glyphicon glyphicon-shopping-cart"></span>
-                    <span className="text">Checkout</span>
+                    <span className="text">{t('checkout')}</span>
                 </button>
             </div>}
           </div>
@@ -185,5 +191,8 @@ const matchDispatchToProps = dispatch => bindActionCreators(
   dispatch,
 )
 
-
-export default withStyles(styles)(connect(mapStateToProps, matchDispatchToProps)(GlobalCart));
+export default compose(
+  withStyles(styles),
+  withNamespaces(),
+  connect(mapStateToProps, matchDispatchToProps),
+)(GlobalCart);

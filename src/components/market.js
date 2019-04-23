@@ -23,8 +23,8 @@ import {
   } from "react-device-detect";
 import {isMobile} from 'react-device-detect';
 import { withNamespaces } from 'react-i18next';
-import i18next from 'i18next';
 
+const freeShipPrice = 400
 const ErrorStyle = {
     overlay: {
       background: "transparent"
@@ -120,10 +120,12 @@ onCloseModal = (type) => {
 addItemToCart(item){
     const { t } = this.props;
     var prev = this.props.cart.itemPrev
+    const itemName = prev.Name
+    const msg = t('addedToCartMsg', {itemName})
     if(item.price > 0){
         this.addItemToArray(prev)
         this.updateInfo(prev)
-        this.notify(`${prev.Name} ${t('addedToCartMsg')}`)
+        this.notify(msg)
     }
     else{
         this.setState({
@@ -535,7 +537,7 @@ if (this.state.view === "item"){
                </div>
                <div className="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
                <div className="col-xs-12 col-md-12 col-lg-12">
-                        <h2>{t('freeShippingText')}</h2>
+                        <h2>{t('freeShippingText', { freeShipPrice })}</h2>
                 </div>
                <br/>
          </div>
@@ -587,8 +589,7 @@ function mapStateToProps(state){
         shop: state.shop,
         loginData: state.loginSession,
         server: state.server,
-        cartInfo: state.updateCartInfo,
-        lang: state.extras
+        cartInfo: state.updateCartInfo
     }
   }
   

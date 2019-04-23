@@ -8,6 +8,7 @@ import {fetchShopData} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import { css } from '@emotion/core';
 import { PacmanLoader } from 'react-spinners';
+import { withNamespaces } from 'react-i18next';
 
 const override = css`
     display: block;
@@ -22,6 +23,7 @@ this.props.fetchShopData();
 }
 
 Discounted(){
+const { t } = this.props;
 if(this.props.shop.fetched){
 let outPut = []
 this.props.shop.items.map((item) =>{
@@ -37,12 +39,12 @@ this.props.shop.items.map((item) =>{
         
             <div className="overlayHover" >
                 <button className="btn btn-primary btn-block" style={{color : "white"}}>
-                        View
+                    {t('viewButton')}
                 </button>
 
                 {item.discount > 0 && 
                 <div id ="merchDiscount" style={{width: isMobile && 60}}className="card-body">
-                    <span style={{fontSize: isMobile ? 10 : 15, lineHeight: 2.5}} className="label label-danger">{item.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
+                    <span style={{fontSize: isMobile ? 10 : 15, lineHeight: 2.5}} className="label label-danger">{item.discount}% {t('discount')}</span>
                 </div> 
                 }
             </div>
@@ -55,6 +57,7 @@ this.props.shop.items.map((item) =>{
 }
 
 New(){
+const { t } = this.props;
 if(this.props.shop.fetched){
 let outPut = []
 this.props.shop.items.map((item) =>{
@@ -69,12 +72,12 @@ this.props.shop.items.map((item) =>{
         
             <div className="overlayHover" >
                 <button className="btn btn-primary btn-block" style={{color : "white"}}>
-                        View
+                    {t('viewButton')}
                 </button>
 
                 {item.discount > 0 && 
                 <div id ="merchDiscount" className="card-body">
-                    <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{item.discount}% {this.props.lang.lang === "EN" ? "off" : "خصم"}</span>
+                    <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{item.discount}% {t('discount')}</span>
                 </div> 
                 }
             </div>
@@ -96,10 +99,11 @@ responsiveDiscount = {
 }
 
 render(){
+    const { t } = this.props;
     if(!this.props.shop.fetched){
         return(
             <div className="BlackBG" style={{height: 200}}>
-                    <h1 style={{color: "white", textAlign: "center"}}> Loading...</h1>
+                    <h1 style={{color: "white", textAlign: "center"}}> {t('loading')}...</h1>
                     <PacmanLoader
                     css={override}
                     sizeUnit={"px"}
@@ -111,8 +115,8 @@ render(){
     }
     return(
     <div className="BlackBG">
-        <h1 style={{color: "orange", textAlign: "center", fontWeight: "bold"}}>New Products</h1>
-        <h3 style={{color: "white", textAlign: "center"}}>Take a look at our new arrivals</h3>
+        <h1 style={{color: "orange", textAlign: "center", fontWeight: "bold"}}>{t('newProductsSlider')}</h1>
+        <h3 style={{color: "white", textAlign: "center"}}>{t('newProductsSliderText')}</h3>
             <AliceCarousel
             items={this.New()}
             responsive={this.responsive}
@@ -128,8 +132,8 @@ render(){
             onSlideChanged={this.onSlideChanged}
             />
 
-        <h1 style={{color: "orange", textAlign: "center", fontWeight: "bold"}}>Discounts</h1>
-        <h3 style={{color: "white", textAlign: "center"}}>Products that have a discount</h3>
+        <h1 style={{color: "orange", textAlign: "center", fontWeight: "bold"}}>{t('discountsProductsSlider')}</h1>
+        <h3 style={{color: "white", textAlign: "center"}}>{t('discountsProductsSliderText')}</h3>
             <AliceCarousel
             items={this.Discounted()}
             responsive={this.responsiveDiscount}
@@ -163,4 +167,4 @@ function mapStateToProps(state){
     dispatch,
 )
 
-  export default connect(mapStateToProps, matchDispatchToProps)(NewProducts);
+  export default withNamespaces()(connect(mapStateToProps, matchDispatchToProps)(NewProducts));

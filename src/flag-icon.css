@@ -32,3 +32,10 @@
 .flag-icon-gb.flag-icon-squared {
   background-image: url(./Images/svg/gb.svg);
 }
+
+.flag-icon-sa {
+  background-image: url(./Images/svg/sa4.svg);
+}
+.flag-icon-sa.flag-icon-squared {
+  background-image: url(./Images/svg/sa.svg);
+}

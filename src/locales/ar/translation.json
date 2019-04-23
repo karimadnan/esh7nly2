@@ -1,8 +1,12 @@
 {
+      "accountActiveStatus": "مفعل",
+      "accountPendingStatus": "قيد التفعيل",
+      "accountBannedStatus": "مغلق",
       "home": "الريْسية",
       "market": "المتجر",
-      "contact": "كلمنا",
+      "contact": "اتصل بنا",
       "login": "تسجيل الدخول",
+      "logout": "تسجيل الخروج",
       "welcome": "مرحبا",
       "accStatus": "حالة الحساب",
       "health": "الارواح",
@@ -32,7 +36,19 @@
       "addToCart": "اضف للعربة",
       "productDetails": "تفاصيل المنتج",
       "freeShip": "شحن مجانى",
-      "freeShippingText": "شحن مجانى على الطلبات 400جم فأكثر",
+      "freeShippingText": "شحن مجانى على الطلبات {{freeShipPrice}} جم فأكثر",
       "marketOptionError": "هل اخترت المنتج",
-      "addedToCartMsg": "اضفت الى العربة"
+      "addedToCartMsg": "اضفت الى العربة {{itemName}}", 
+      "removedFromCartMsg": "ازيلت من العربة {{itemName}}", 
+      "newProductsSlider": "المنتجات الجديدة",
+      "newProductsSliderText": "ألق نظرة على المنتجات الجديدة",   
+      "discountsProductsSlider": "التخفيضات",
+      "discountsProductsSliderText": "منتجات مخفضة",
+      "yourCart": "عربة الشراء",
+      "clickToRemoveCart": "اضغط على المنتج للأزالة",
+      "cartEmpty": "العربة فارغة",
+      "quantity": "الكمية",
+      "subTotal": "الملغ",
+      "checkout": "الدفع"
+
 }
