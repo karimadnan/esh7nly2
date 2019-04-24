@@ -67,11 +67,21 @@ const styles = theme => ({
     table: {
       minWidth: 700,
     },
+    fab: {
+        margin: theme.spacing.unit,
+      },
+      extendedIcon: {
+        marginRight: theme.spacing.unit,
+    },
+    Avatar: {
+        margin: 10,
+    },
     card: {
-        backgroundColor: fade('#4a148c', 0.225),
+        marginBottom: theme.spacing.unit,
+        backgroundColor: fade('#3F51B5', 0.225),
         maxWidth: 'auto',
         '&:hover': {
-            backgroundColor: fade('#4a148c', 0.325),
+            backgroundColor: fade('#3F51B5', 0.325),
           }
       },
       media: {
@@ -86,9 +96,9 @@ const styles = theme => ({
       },
 
     row: {
-        backgroundColor: '#595163',
+        backgroundColor: fade('#3F51B5', 0.525),
       '&:nth-of-type(odd)': {
-        backgroundColor: '#7f7192',
+        backgroundColor: fade('#3F51B5', 0.325),
       },
     },
 });
@@ -165,15 +175,15 @@ render(){
                         {row.cart.map(imgs => {
                         return(
                             <div class="col-xs-2 col-md-1 col-lg-1" key={imgs}>
-                                <Avatar alt="PP" src={imgs.defaultImage}/>
+                                <Avatar className={classes.Avatar} alt="PP" src={imgs.defaultImage}/>
                             </div>
                         )
 
                         })}
                         </CustomTableCell>
-                        <CustomTableCell align="center" style={{color: "white",  whiteSpace: "normal", wordWrap: "break-word"}}>{moment(row.createdAt).format('LL')}</CustomTableCell>
-                        <CustomTableCell align="center" style={{color: "white",  whiteSpace: "normal", wordWrap: "break-word"}}>{row.comment}</CustomTableCell>
-                        <CustomTableCell align="center" style={{color: "white"}}>{row.status}</CustomTableCell>
+                        <CustomTableCell align="center" style={{color: "white",  whiteSpace: "normal", wordWrap: "break-word", fontWeight: "bold"}}>{moment(row.createdAt).format('LL')}</CustomTableCell>
+                        <CustomTableCell align="center" style={{color: "white",  whiteSpace: "normal", wordWrap: "break-word", fontWeight: "bold"}}>{row.comment}</CustomTableCell>
+                        <CustomTableCell align="center" style={{color: "white", fontWeight: "bold"}}>{row.status}</CustomTableCell>
                         </TableRow>
                     ))}
                     </TableBody>
@@ -218,17 +228,17 @@ render(){
             </Stepper>
             :undefined}
 
-            <ListItem button key={t('totalPrice')}>
+            <ListItem>
                 <ListItemIcon>{<Euro />}</ListItemIcon>
                 <ListItemText primary={<h3>{t('totalPrice')}: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h3>} />
             </ListItem>
             <Divider/>
-            <ListItem button key={t('orderStatus')}>
+            <ListItem>
                 <ListItemIcon>{<OrderStatus />}</ListItemIcon>
                 <ListItemText primary={<h3>{t('orderStatus')}: {this.state.MyRow.status}</h3>} />
             </ListItem>
             <Divider/>
-            <ListItem button key={t('orderComment')}>
+            <ListItem>
                 <ListItemIcon>{<OrderComment />}</ListItemIcon>
                 <ListItemText primary={<h3>{t('orderComment')}: {this.state.MyRow.comment}</h3>} />
             </ListItem>

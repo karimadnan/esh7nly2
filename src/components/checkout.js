@@ -18,11 +18,45 @@ import { PacmanLoader } from 'react-spinners';
 import {bindActionCreators} from 'redux';
 import {cleanCart, cleanCartInfo} from '../actions/index';
 import CurrencyFormat from 'react-currency-format';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import compose from 'recompose/compose';
+import { withNamespaces } from 'react-i18next';
+import Avatar from '@material-ui/core/Avatar';
+import { withStyles } from '@material-ui/core/styles';
+import Fab from '@material-ui/core/Fab';
+import Badge from '@material-ui/core/Badge';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import NextIcon from '@material-ui/icons/Done';
+import EditIcon from '@material-ui/icons/BorderColor';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import BackIcon from '@material-ui/icons/SkipPrevious';
+
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const override = css`
     display: block;
     border-color: red;
 `;
+
+const styles = theme => ({
+    Avatar: {
+        margin: 10,
+        width: 80,
+        height: 80,
+      },
+    fab: {
+        margin: theme.spacing.unit,
+    },
+    extendedIcon: {
+        marginRight: theme.spacing.unit,
+    },
+    extendedIcon2: {
+        marginRight: theme.spacing.unit * 3,
+    },
+});
 
 const ErrorStyle = {
     overlay: {
@@ -53,7 +87,6 @@ class Checkout extends Component {
             'Content-Type': 'application/json',
             'authorization': this.props.loginData.token},
         Url: this.props.server.main,
-        current: ['Shipping', 'Payment', 'Review', 'Done'],
         currentN: [0, 33, 66, 100],
         currentIndex: 0,
         cart: false,
@@ -64,7 +97,7 @@ class Checkout extends Component {
         Area: '',
         StName: '',
         locationType: '',
-        paymentMethod: 'Select',
+        paymentMethod: '',
         transId: '',
         gotData: false,
         loaded: false,
@@ -80,8 +113,24 @@ class Checkout extends Component {
     }
 
     createOrder(){
+        const { t } = this.props;
         var that = this
-        var Data = {paymentMethod: this.state.paymentMethod,
+        var payment;
+        switch(this.state.paymentMethod){
+            case `${t('vodaCash')}`:
+                payment = 'Vodafone Cash'
+            break;
+            case `${t('etisCash')}`:
+                payment = 'Etisalat Cash'
+            break;
+            case `${t('fawry')}`:
+                payment = 'Fawry'
+            break;
+            case `${t('cashOnDel')}`:
+                payment = 'Cash On Delivery'
+            break;
+        }
+        var Data = {paymentMethod: payment,
                     orderType: "Products",
                     cart: this.props.cart};
         (this.state.transId) ? Data['transId']=this.state.transId : null;
@@ -98,29 +147,31 @@ class Checkout extends Component {
     }
 
     Clean(){
+        const { t } = this.props;
         if(this.state.currentIndex === 3){
                 return(
                     <div>
-                        <h1 style={{color: "green"}}>Your order is placed successfully!</h1>
-                        <p style={{color: "black"}}>Go to <span style={{color: "purple", cursor: "pointer"}} onClick={()=>{ReactRouter.goTo("/account")}}>your account to track it!<span className="glyphicon glyphicon-user"></span></span></p>
+                        <h1 style={{color: "green"}}>{t('madeOrder')}</h1>
+                        <p style={{color: "black"}}><span style={{color: "purple", cursor: "pointer"}} onClick={()=>{ReactRouter.goTo("/account")}}>{t('madeOrderText')}<span className="glyphicon glyphicon-user"></span></span></p>
                     </div>    
                 )
         }
     }
 
     PaymentNext(){
-        if(this.state.paymentMethod == 'Cash On Delivery'){
+        const { t } = this.props;
+        if(this.state.paymentMethod === `${t('cashOnDel')}`){
             this.setState({currentIndex: this.state.currentIndex + 1})
         }
-        else if(this.state.paymentMethod == 'Select'){
-            this.setState({ErrorModal: true, ErrorMsg: "Select payment method"})
+        else if(this.state.paymentMethod === `${t('select')}` || this.state.paymentMethod === ``){
+            this.setState({ErrorModal: true, ErrorMsg: `${t('noPaymentMethod')}`})
         }
-        else{
+        else if (this.state.paymentMethod !== `${t('cashOnDel')}` && this.state.paymentMethod !== `${t('select')}`){
             if(this.state.transId.length === 12 && isInt(this.state.transId)){
                 this.setState({currentIndex: this.state.currentIndex + 1})
             }
             else {
-                this.setState({ErrorModal: true, ErrorMsg: "Transaction ID must be 12 numbers"})
+                this.setState({ErrorModal: true, ErrorMsg: `${t('wrongTransId')}`})
             }
         }
     }
@@ -136,11 +187,18 @@ class Checkout extends Component {
     }
 
     Bar(){
+    const { t } = this.props;
+    const { classes } = this.props;
+    let current =  [`${t('shipping')}`, `${t('barPayment')}`, `${t('barReview')}`, `${t('barDone')}`]
     if (!this.state.cart && this.state.loaded){
         return (
         <div>
-            {this.state.currentIndex > 0 && this.state.currentIndex < 3 && <span style={{color: "red", fontSize: 17, cursor: "pointer"}} onClick={()=>{this.setState({currentIndex: this.state.currentIndex-1})}} class="glyphicon glyphicon-arrow-left"> <span style={{fontFamily: "arial"}}>Back</span></span> }
-            <h2 style={{color: "black", textAlign: "center"}}>{this.state.current[this.state.currentIndex]}</h2>
+            {this.state.currentIndex > 0 && this.state.currentIndex < 3 && 
+            <Fab variant="extended" aria-label="Back" onClick={()=>{this.setState({currentIndex: this.state.currentIndex-1})}} className={classes.fab}>
+                <BackIcon className={classes.extendedIcon} />
+                    {t('back')}
+            </Fab>}
+            <h2 style={{color: "black", textAlign: "center"}}>{current[this.state.currentIndex]}</h2>
             <div class="progress">
                 <div class={this.state.currentN[this.state.currentIndex] > 66 ? "progress-bar progress-bar-success progress-bar-striped active" : this.state.currentN[this.state.currentIndex] > 33 ? "progress-bar progress-bar-striped active" : "progress-bar progress-bar-warning progress-bar-striped active"} role="progressbar"
                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{width: `${this.state.currentN[this.state.currentIndex]}%`}}>
@@ -152,77 +210,79 @@ class Checkout extends Component {
     }
 
     Shipping(){
+    const { t } = this.props;
+    const { classes } = this.props;
     if(!this.state.cart){
         if(this.state.currentIndex === 0 && !this.state.gotData && this.state.loaded){
             return (
                 <div class="form-group has-feedback">
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: this.state.firstName.length > 2 ? "green" : "red"}}>{this.state.firstName.length > 2 ? "":'*'} First Name</label>
-                        <input class="form-control" type="text" value={this.state.firstName} onChange={e => this.updateInput("firstName", e.target.value)} placeholder="First Name" required></input>
+                        <label style={{color: this.state.firstName.length > 2 ? "green" : "red"}}>{this.state.firstName.length > 2 ? "":'*'} {t('firstName')}</label>
+                        <input class="form-control" type="text" value={this.state.firstName} onChange={e => this.updateInput("firstName", e.target.value)} placeholder={t('firstName')} required></input>
                         <br/>
                     </div>
                     <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: this.state.lastName.length > 2 ? "green" : "red"}}>{this.state.lastName.length > 2 ? "":'*'} Last Name</label>
-                        <input class="form-control" type="text" value={this.state.lastName} onChange={e => this.updateInput("lastName", e.target.value)} placeholder="Last Name" required></input>
-                        <br/>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: this.state.Phone.length === 11 ? "green" : "red"}}>{this.state.Phone.length === 11 ? "":'*'} Phone Number</label>
-                        <input class="form-control" type="text" value={this.state.Phone} onChange={e => this.updateInput("Phone", e.target.value)} placeholder="Phone Number" required></input>
+                        <label style={{color: this.state.lastName.length > 2 ? "green" : "red"}}>{this.state.lastName.length > 2 ? "":'*'} {t('lastName')}</label>
+                        <input class="form-control" type="text" value={this.state.lastName} onChange={e => this.updateInput("lastName", e.target.value)} placeholder={t('firstName')} required></input>
                         <br/>
                     </div>
                 </div>
 
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: this.state.city != '' ? "green" : "red"}}>{this.state.city != '' ? "":'*'} City</label>
+                        <label style={{color: this.state.Phone.length === 11 ? "green" : "red"}}>{this.state.Phone.length === 11 ? "":'*'} {t('phone')}</label>
+                        <input class="form-control" type="text" value={this.state.Phone} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
+                        <br/>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <label style={{color: this.state.city != '' ? "green" : "red"}}>{this.state.city != '' ? "":'*'} {t('city')}</label>
                         <select class="form-control" id="sel1" value={this.state.city} onChange={e => this.updateInput("city", e.target.value)}>
-                            <option>Select</option>
-                            <option>Cairo</option>
-                            <option>Giza</option>
-                            <option>Helwan</option>
-                            <option>6 of october</option>
+                            <option>{t('select')}</option>
+                            <option>{t('cairo')}</option>
+                            <option>{t('giza')}</option>
+                            <option>{t('helwan')}</option>
+                            <option>{t('6oct')}</option>
                         </select>
                     </div>
                     <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: this.state.Area.length > 4 ? "green" : "red"}}>{this.state.Area.length > 4 ? "":'*'} Area</label>
-                        <input class="form-control" type="text" value={this.state.Area} onChange={e => this.updateInput("Area", e.target.value)} placeholder="Your Area" required></input>
+                        <label style={{color: this.state.Area.length > 4 ? "green" : "red"}}>{this.state.Area.length > 4 ? "":'*'} {t('area')}</label>
+                        <input class="form-control" type="text" value={this.state.Area} onChange={e => this.updateInput("Area", e.target.value)} placeholder={t('area')} required></input>
                         <br/>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <label style={{color: this.state.StName.length > 6 ? "green" : "red"}}>{this.state.StName.length > 6 ? "":'*'} Street Name/No</label>
-                        <input class="form-control" type="text" value={this.state.StName} onChange={e => this.updateInput("StName", e.target.value)} placeholder="Street Name/No" required></input>
+                        <label style={{color: this.state.StName.length > 6 ? "green" : "red"}}>{this.state.StName.length > 6 ? "":'*'} {t('streetName')}</label>
+                        <input class="form-control" type="text" value={this.state.StName} onChange={e => this.updateInput("StName", e.target.value)} placeholder={t('streetName')} required></input>
                         <br/>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <label style={{color: this.state.locationType != '' ? "green" : "red"}}>{this.state.locationType != '' ? "":'*'} Location Type</label>
+                        <label style={{color: this.state.locationType != '' ? "green" : "red"}}>{this.state.locationType != '' ? "":'*'} {t('locationType')}</label>
                         <select class="form-control" id="sel1" value={this.state.locationType} onChange={e => this.updateInput("locationType", e.target.value)}>
-                            <option>Select</option>
-                            <option>Home</option>
-                            <option>Business</option>
+                            <option>{t('select')}</option>
+                            <option>{t('locationHome')}</option>
+                            <option>{t('locationBusiness')}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-md-12 col-lg-12">
                     <br/>
-                        <label style={{color: "black"}}> Shipping Note</label>
+                        <label style={{color: "black"}}> {t('shippingNote')}</label>
                         <textarea onChange={e => this.updateInput("note", e.target.value)} value={this.state.note} class="form-control" rows="2" id="comment"></textarea>
                     </div>
                 </div>
                     <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
-                        <button class="btn btn-primary btn-block" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.updateShipping()}}>
-                            <span className="icon glyphicon glyphicon-ok"></span>
-                            <span className="text" style={{fontWeight: "bold"}}>Save</span>
-                        </button>
+                            <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.updateShipping()}} className={classes.fab}>
+                                <NextIcon className={classes.extendedIcon2} />
+                                <h5>{t('save')}</h5>
+                            </Fab>
                     </div>
                 </div>
             )
@@ -230,96 +290,102 @@ class Checkout extends Component {
     else if (this.state.currentIndex === 0 && this.state.gotData && this.state.loaded){
         return (
             <div>
-            <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Shipped To:</span> {this.state.firstName} {this.state.lastName}</label>
-                    <br/>
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('shippedTo')}:</span> {this.state.firstName} {this.state.lastName}</label>
+                        <br/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Mobile Number:</span> {this.state.Phone}</label>
-                    <br/>
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('phone')}:</span> {this.state.Phone}</label>
+                        <br/>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Area:</span> {this.state.city} / {this.state.Area}</label>
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('area')}:</span> {this.state.city} / {this.state.Area}</label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Address:</span> {this.state.StName}</label>
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('streetName')}:</span> {this.state.StName}</label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Location Type:</span> {this.state.locationType}</label>
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('locationType')}:</span> {this.state.locationType}</label>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Shipping Note:</span> {this.state.note ? this.state.note : "No Shipping Note"}</label>
+                <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-md-6 col-lg-6">
+                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('shippingNote')}:</span> {this.state.note ? this.state.note : `${t('noShippingNote')}`}</label>
+                    </div>
                 </div>
-            </div>
 
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <button class="btn btn-danger btn-block" style={{color : "white", width: 250, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({gotData: false})}}>
-                        <span className="icon glyphicon glyphicon-ok"></span>
-                        <span className="text" style={{fontWeight: "bold"}}>Edit</span>
-                    </button>
+                    <Grid container justify="center" alignItems="center">
+                        <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({gotData: false})}} className={classes.fab}>
+                            <EditIcon className={classes.extendedIcon2} />
+                            <h5>{t('edit')}</h5>
+                        </Fab>
+                    </Grid>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <button class="btn btn-primary btn-block" style={{color : "white", width: 250, marginTop: 20, lineHeight: 2}} onClick={()=>{this.setState({currentIndex: 1})}}>
-                        <span className="icon glyphicon glyphicon-ok"></span>
-                        <span className="text" style={{fontWeight: "bold"}}>Next</span>
-                    </button>
+                    <Grid container justify="center" alignItems="center">
+                        <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.setState({currentIndex: 1})}} className={classes.fab}>
+                            <NextIcon className={classes.extendedIcon2} />
+                            <h5>{t('next')}</h5>
+                        </Fab>
+                    </Grid>
                 </div>
             </div>
         )
     }
 }
-}
+    }
 
     Payment(){
+        const { t } = this.props;
+        const { classes } = this.props;
         if(this.state.currentIndex === 1){
             return ( 
             <div>
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: this.state.paymentMethod != 'Select'  ? "green" : "red"}}>{this.state.paymentMethod != 'Select'  ? "":'*'} Payment Method</label>
+                        <label style={{color: this.state.paymentMethod != ``  ? "green" : "red"}}>{this.state.paymentMethod != ``  ? "":'*'} {t('paymentMethod')}</label>
                         <select class="form-control" id="sel1" value={this.state.paymentMethod} onChange={e => this.setState({paymentMethod: e.target.value, transId: ''})}>
-                            <option>Select</option>
-                            <option>Vodafone Cash</option>
-                            <option>Etisalat Cash</option>
-                            <option>Fawry</option>
-                            <option>Cash On Delivery</option>
+                            <option>{t('select')}</option>
+                            <option>{t('vodaCash')}</option>
+                            <option>{t('etisCash')}</option>
+                            <option>{t('fawry')}</option>
+                            <option>{t('cashOnDel')}</option>
                         </select>
                     </div>
                     <div class="col-xs-12 col-md-6 col-lg-6">
-                      {this.state.paymentMethod === "Vodafone Cash" && <img src={VodafoneCashLogo} style ={{width: 70, height: 70}}/> }
-                      {this.state.paymentMethod === "Etisalat Cash" && <img src={EtisalatCashLogo} style ={{width: 70, height: 70}}/> }
-                      {this.state.paymentMethod === "Fawry" && <img src={FawryLogo} style ={{width: 70, height: 70}}/> }
+                      {this.state.paymentMethod === `${t('vodaCash')}` && <img src={VodafoneCashLogo} style ={{width: 70, height: 70}}/> }
+                      {this.state.paymentMethod === `${t('etisCash')}` && <img src={EtisalatCashLogo} style ={{width: 70, height: 70}}/> }
+                      {this.state.paymentMethod === `${t('fawry')}` && <img src={FawryLogo} style ={{width: 70, height: 70}}/> }
                     </div>
                 </div>
 
-               {this.state.paymentMethod === "Vodafone Cash" || this.state.paymentMethod === "Etisalat Cash" || this.state.paymentMethod === "Fawry" ?
+               {this.state.paymentMethod === `${t('vodaCash')}` || this.state.paymentMethod === `${t('etisCash')}` || this.state.paymentMethod === `${t('fawry')}` ?
                  <div class="col-xs-12 col-md-12 col-lg-12">
                     <div class="col-xs-12 col-md-12 col-lg-12">
-                        <label style={{color: this.state.transId.length == 12 ? "green" : "red"}}>{this.state.transId.length == 12 ? "":'*'} Transaction ID</label>
-                        <input class="form-control" type="text" value={this.state.transId} onChange={e => this.updateInput("transId", e.target.value)} placeholder="Transaction ID" required></input>
+                        <label style={{color: this.state.transId.length == 12 ? "green" : "red"}}>{this.state.transId.length == 12 ? "":'*'} {t('transId')}</label>
+                        <input class="form-control" type="text" value={this.state.transId} onChange={e => this.updateInput("transId", e.target.value)} placeholder={t('transId')} required></input>
                     </div>
                 </div> : null}
                 <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
-                    <button class="btn btn-primary btn-block" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.PaymentNext()}}>
-                        <span className="icon glyphicon glyphicon-ok"></span>
-                        <span className="text" style={{fontWeight: "bold"}}>Next</span>
-                    </button>
+                    <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.PaymentNext()}} className={classes.fab}>
+                        <NextIcon className={classes.extendedIcon2} />
+                            {t('next')}
+                    </Fab>
                 </div>
             </div>
             )
@@ -381,23 +447,30 @@ class Checkout extends Component {
     }
 
     createCart(){
+        const { t } = this.props;
+        const { classes } = this.props;
         let CART = this.props.cart.map(item => {
             return (
                 <div key={item.id}>
-                    <div class="row" style={{backgroundColor: "white"}}>
+                    <div class="row">
                         <div class="col-xs-12 col-md-3 col-lg-3">
-                            <img src={item.defaultImage} class="splash-card-product-view-constant" alt={item.id}/>
+                            <Avatar alt="Product Picture" src={item.defaultImage} className={classes.Avatar} />
                         </div>
-                        <div class="col-xs-12 col-md-5 col-lg-5">
-                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 15 ? (((item.Name).substring(0,15-3)) + '...') : item.Name}</h4>
+                        <div class="col-xs-12 col-md-3 col-lg-3">
+                            <ListItem>
+                                <ListItemText primary={<h5>{item.Name.length > 20 ? (((item.Name).substring(0,10-3)) + '...') : item.Name}</h5>} />
+                            </ListItem>
                         </div>
-                        <div class="col-xs-6 col-md-2 col-lg-2">
-                            <h4 style={{color: "purple", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
+                        <div class="col-xs-6 col-md-3 col-lg-3">
+                            <ListItem>
+                                <ListItemText primary={<h5><CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />{t('currency')}</h5>}/>
+                            </ListItem>
                         </div>  
-                        <div class="col-xs-6 col-md-2 col-lg-2">
-                            <h5 style={{color: "black"}}>Qty: {item.quantity}</h5>
+                        <div class="col-xs-6 col-md-3 col-lg-3">
+                            <ListItem>
+                                    <ListItemText primary={<h5>{t('quantity')}: {item.quantity}</h5>}/>
+                            </ListItem>
                         </div>  
-
                     </div>
                 </div>
             )
@@ -411,57 +484,59 @@ class Checkout extends Component {
     }
 
     Done(){
+    const { t } = this.props;
+    const { classes } = this.props;
     if(this.state.currentIndex === 2){
         return(
         <div>
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <h1 style={{color: "black"}}>Shipping Info:</h1>
+                <h1 style={{color: "black"}}>{t('shipping')}:</h1>
                 <br/>
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Shipped To:</span> {this.state.firstName} {this.state.lastName}</label>
+                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('shippedTo')}:</span> {this.state.firstName} {this.state.lastName}</label>
                     <br/>
                 </div>
             </div>
 
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Mobile Number:</span> {this.state.Phone}</label>
+                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('phone')}:</span> {this.state.Phone}</label>
                     <br/>
                 </div>
             </div>
 
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Area:</span> {this.state.city} / {this.state.Area}</label>
+                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('area')}:</span> {this.state.city} / {this.state.Area}</label>
                 </div>
             </div>
 
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Address:</span> {this.state.StName}</label>
+                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('streetName')}:</span> {this.state.StName}</label>
                 </div>
             </div>
 
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Location Type:</span> {this.state.locationType}</label>
+                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('locationType')}:</span> {this.state.locationType}</label>
                 </div>
             </div>
 
             <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>Shipping Note:</span> {this.state.note ? this.state.note : "No Shipping Note"}</label>
+                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('shippingNote')}:</span> {this.state.note ? this.state.note : `${t('noShippingNote')}`}</label>
                 </div>
             </div>
             <div class="col-xs-12 col-md-12 col-lg-12">
-                <h1 style={{color: "black"}}>Payment Method:</h1>
-                <label style={{color: "green"}}><span style={{color: "black"}}></span>Paid by {this.state.paymentMethod}</label>
+                <h1 style={{color: "black"}}>{t('paymentMethod')}:</h1>
+                <label style={{color: "green"}}><span style={{color: "black"}}></span> {this.state.paymentMethod}</label>
             </div>
             <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
-                <button class="btn btn-primary btn-block" style={{color : "white", width: 270, marginTop: 20, lineHeight: 2}} onClick={()=>{this.createOrder()}}>
-                    <span className="icon glyphicon glyphicon-ok"></span>
-                    <span className="text" style={{fontWeight: "bold"}}>Submit</span>
-                </button>
+                <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.createOrder()}} className={classes.fab}>
+                    <NextIcon className={classes.extendedIcon2} />
+                    <h5>{t('submit')}</h5>
+                </Fab>
             </div>
         </div>
         )
@@ -469,6 +544,8 @@ class Checkout extends Component {
 }
 
 render(){
+    const { t } = this.props;
+    const { classes } = this.props;
     var total = this.props.cartInfo.totalPrice
     var grandTotal = total > 400 ? total : total + 30
     return(
@@ -483,13 +560,13 @@ render(){
                                 size={100}
                                 color={'#FFFF00'}
                                 loading={true}/>
-                            <h2 style={{color: "white"}}>Loading...</h2>
+                            <h2 style={{color: "black"}}>{t('loading')}...</h2>
                         </div> }
                 {!this.props.loginData.loggedState && !this.state.cart ?
-                    <h1 style={{color: "red"}}>Please, login first</h1>
+                    <h1 style={{color: "red"}}>{t('notLogged')}</h1>
                     : 
                     this.props.loginData.loggedState && this.state.currentIndex != 3 && this.props.cartInfo.totalItems === 0 ?
-                         <h1 style={{color: "red"}}>Your cart is empty.</h1>  
+                         <h1 style={{color: "red"}}>{t('emptyCart')}</h1>  
                     :
                     <div>
                         {this.Bar()}
@@ -506,24 +583,40 @@ render(){
             {/* CART */}
             <div class="col-xs-12 col-md-4 col-lg-4">
 
-                <div class="WhiteBG">
-                   {!this.state.cart && this.state.currentIndex != 3 && this.props.cartInfo.totalItems > 0 && <span style={{color: "#6F52FF", fontSize: 17, cursor: "pointer"}} onClick={()=>{this.setState({cart: true, currentIndex: 0})}} class="glyphicon glyphicon-arrow-left"> <span style={{fontFamily: "arial"}}>Edit Cart</span></span>}
-                    <h3 style={{color: "black"}}>Shopping Cart <span className="glyphicon glyphicon-shopping-cart"></span> <span class="circleRed" style={{color: "white", fontSize: 20}}> {this.props.cartInfo.totalItems}</span></h3>
+            <div class="WhiteBG">
+                   {!this.state.cart && this.state.currentIndex != 3 && this.props.cartInfo.totalItems > 0 && 
+                    <Fab color="primary" variant="extended" onClick={()=>{this.setState({cart: true, currentIndex: 0})}} className={classes.fab}>
+                        <Badge className={classes.extendedIcon} badgeContent={this.props.cartInfo.totalItems} color="secondary">     
+                            <ShoppingCart fontSize="large" style={{color: "#fff"}}/>
+                        </Badge>
+                            <h5>{t('editCart')}</h5>
+                    </Fab>}
 
+                    <Divider />
 
                         {this.createCart()}
 
                {this.props.cartInfo.totalItems > 0 ?   
                 <div>  
-                    <h5 style={{color: "black"}}>{this.props.cartInfo.totalItems > 1 ? "Items" : "Item"}: <span style={{color: "black"}}>{<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h5>
-                    <h5 style={{color: "black"}}>+ Shipping: <span style={{color: "black"}}> {this.props.cartInfo.totalPrice < 400 ? "30 EGP" : "0 FREE"}  </span></h5>
-                <div style={{border: "2px dotted black"}}/>
-                    <h4 style={{color: "black", fontWeight: "bold"}}>Grand Total: {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h4>
-                 </div>
+                    <Typography variant="h4" color="#212121">
+                        {t('items')} {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                    </Typography>
+                    <Typography variant="h4" color="#212121">
+                    {this.props.cartInfo.totalPrice < 400 ?
+                        `${t('shipping')}: 30${t('currency')}`
+                        :
+                        `${t('freeShip')}`
+                        }
+                    </Typography>
+                <Divider />
+                    <Typography variant="h4" color="#212121">
+                        {t('grandTotal')} {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                    </Typography>                 
+                </div>
                  :
-                 <div>
-                     <h3 style={{color: "black"}}>You have no items in your cart</h3>
-                 </div> }
+                 <Typography variant="h4" color="#212121">
+                        {t('emptyCart')}                 
+                </Typography>}
                 </div>
             </div>
         </div>
@@ -562,4 +655,8 @@ function mapStateToProps(state){
   )
 
 
-  export default connect(mapStateToProps, matchDispatchToProps)(Checkout);
+export default compose(
+    withStyles(styles),
+    withNamespaces(),
+    connect(mapStateToProps, matchDispatchToProps),
+)(Checkout);

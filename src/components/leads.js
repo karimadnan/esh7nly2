@@ -130,7 +130,7 @@ render(){
     }
     else {
         return(
-        <div class="errorBG" style={{color: "white"}}>
+        <div class="WhiteBG" style={{color: "black"}}>
             <div class="container">
                 <h1>No Leads Found</h1>
                 <p>No orders found wait till someone make an order.</p>

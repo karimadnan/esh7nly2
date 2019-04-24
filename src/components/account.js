@@ -30,6 +30,9 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import Pp from '../Images/avatar.png';
+import Avatar from '@material-ui/core/Avatar';
+import Grid from '@material-ui/core/Grid';
 
 const override = css`
     display: block;
@@ -39,7 +42,7 @@ const override = css`
 
 const theme = createMuiTheme({
     palette: {
-        primary: { 500: '#4a148c' }, // custom color in hex
+        primary: { 500: '#3F51B5' }, // custom color in hex
         secondary: { 'A400': '#ff9800' },
         textColor: { 500: '#fafafa' }  // custom color in hex
     },
@@ -53,7 +56,12 @@ const styles = theme => ({
       flexGrow: 1,
       width: '100%',
       backgroundColor: theme.palette.background.paper,
-    }
+    },
+    Avatar: {
+        margin: 10,
+        width: 150,
+        height: 150,
+      }
 });
 
 class Account extends Component {
@@ -94,15 +102,19 @@ class Account extends Component {
 
     Current(){
         const { t } = this.props;
+        const { classes } = this.props;
         const accountStatus = this.state.status
         if(this.state.value === 0){
             return(
             <div style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
+                <Grid container justify="center" alignItems="center">
+                    <Avatar alt="Profile Picture" src={Pp} className={classes.Avatar} />
+                </Grid>
                 <h1 style={{color: "black"}}>
-                <span style={{color: "purple"}}>
+                <span style={{color: "#3F51B5"}}>
                 {t('welcome')}
                 </span>, {this.props.loginData.userName}</h1>
-                    <ListItem button key={t('accStatus')}>
+                    <ListItem button>
                         <ListItemIcon>{<Person />}</ListItemIcon>
                         <ListItemText primary={<h3>{t('accStatus')}: <span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >
                         {accountStatus === "pending" ? 
@@ -115,22 +127,22 @@ class Account extends Component {
                         </span></h3>} />
                     </ListItem>
                     <Divider />
-                    <ListItem button key={t('health')}>
+                    <ListItem button>
                         <ListItemIcon>{<Mood />}</ListItemIcon>
                         <ListItemText primary={<h3>{t('health')}: {this.healthBar(this.state.health)}</h3>} />
                     </ListItem>
                     <Divider />
-                    <ListItem button key={t('email')}>
+                    <ListItem button>
                         <ListItemIcon>{<Email />}</ListItemIcon>
                         <ListItemText primary={<h3>{t('email')}: {this.state.email}</h3>} />
                     </ListItem>
                     <Divider />
-                    <ListItem button key={t('phone')}>
+                    <ListItem button>
                         <ListItemIcon>{<StayPrimaryPortrait />}</ListItemIcon>
                         <ListItemText primary={<h3>{t('phone')}: {this.state.phone}</h3>} />
                     </ListItem>
                     <Divider />
-                    <ListItem button key={t('ggPoints')}>
+                    <ListItem button>
                         <ListItemIcon>{<Whatshot />}</ListItemIcon>
                         <ListItemText primary={<h3>{t('ggPoints')}: <CountUp duration={5} end={this.state.vouchPoints}/></h3>} />
                     </ListItem>
@@ -159,7 +171,7 @@ render() {
         return (
             <div class ="GG-BG-INVERSE">
             <div class="container">
-              <div class="errorBG" style={{color: "white"}}>
+              <div class="WhiteBG" style={{color: "black"}}>
                   <h1>403 (Forbidden)</h1>
                   <p> {t('403')}.</p>
               </div>

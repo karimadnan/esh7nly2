@@ -92,7 +92,7 @@ class AgentDashboard extends Component {
         return (
             <div class ="GG-BG">
             <div class="container">
-              <div class="errorBG" style={{color: "white"}}>
+              <div class="WhiteBG" style={{color: "black"}}>
                   <h1>403 (Forbidden)</h1>
                   <p> Ooops Something Went Wrong.</p>
               </div>

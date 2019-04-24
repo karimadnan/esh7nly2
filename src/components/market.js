@@ -392,7 +392,8 @@ if (this.state.view === "item"){
             let object = {
             label: element.option,
             value: element.price
-            }
+            };
+            (element.img) ? object['img']=element.img : undefined;
             this.props.addPrevOptions(object)
           });
           this.setState({optionsFetched: true})

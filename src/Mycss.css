@@ -360,16 +360,14 @@ background: rgb(131, 211, 248);
 }
 
 .WhiteBG {
-  border-radius: 1.95rem;
+  border-radius: 0.55rem;
   color: rgb(182, 180, 180);
   padding: 1.25em 1.5em 3.5em;
   height: fit-content;
   overflow-x: hidden;
   background-size: cover;
   background-color: rgb(255, 255, 255); 
-  background-color: rgba(255, 255, 255, 0.9);
-  /* background-color: rgb(131, 211, 248); 
-  background-color: rgb(131, 211, 248, 0.8); */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.9);
 }
 
 .g-recaptcha{
