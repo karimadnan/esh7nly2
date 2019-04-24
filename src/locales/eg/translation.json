@@ -49,5 +49,18 @@
       "cartEmpty": "العربية فاضية",
       "quantity": "العدد",
       "subTotal": "كدة الحساب",
-      "checkout": "حاسب"
+      "checkout": "حاسب",
+      "image": "الصورة",
+      "date": "اليوم",
+      "comment": "التعليق",
+      "status": "الحالة",
+      "back": "ارجع",
+      "noOrdersText": "انت معملتش اوردرز",
+      "noOrdersText2": "اعمل اوردر و تابعه هنا",
+      "totalPrice": "الحساب",
+      "orderStatus": "حالة الاوردر",
+      "orderComment": "تعليق الماسك الاوردر",
+      "orderPending": "بنيص فيه",
+      "orderOnGoing": "بيتجهز",
+      "orderOnWay": "فى الطريق ليك"
 }

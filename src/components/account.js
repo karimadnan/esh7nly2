@@ -43,6 +43,9 @@ const theme = createMuiTheme({
         secondary: { 'A400': '#ff9800' },
         textColor: { 500: '#fafafa' }  // custom color in hex
     },
+    typography: {
+        useNextVariants: true,
+    },
 });
 
 const styles = theme => ({
@@ -81,10 +84,10 @@ class Account extends Component {
         var i;
         var hearts = []
             for (i = 0; i < health; i++) {
-                hearts.push(<span class="svg-icon svg-icon-hearts"/>)
+                hearts.push(<span key={i} className="svg-icon svg-icon-hearts"/>)
             }
             for (i = 0; i < 3-health; i++) {
-                hearts.push(<span class="svg-icon svg-icon-emptyHearts"/>)
+                hearts.push(<span key={i} className="svg-icon svg-icon-emptyHearts"/>)
             }
           return hearts
     }
@@ -184,8 +187,8 @@ render() {
         }
 
         return (
-                <div class ="GG-BG-INVERSE">
-                    <div class="container" style={{color: "white"}}>
+                <div className="GG-BG-INVERSE">
+                    <div className="container" style={{color: "white"}}>
                         {!this.state.status && 
                         <div>
                             <PacmanLoader
@@ -215,7 +218,7 @@ render() {
                                     </Tabs>
                                 </AppBar>
                             </MuiThemeProvider>
-                            <div class="ProfileBGW">
+                            <div className="ProfileBGW">
                                     {this.Current()}
                             </div>
                      </div>} 

@@ -8,12 +8,90 @@ import {
   BrowserView,
   MobileView,
 } from "react-device-detect";
+import { withStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
+import { withNamespaces } from 'react-i18next';
+import Avatar from '@material-ui/core/Avatar';
+import compose from 'recompose/compose';
+import Visibility from '@material-ui/icons/Visibility';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import Tooltip from '@material-ui/core/Tooltip';
+import BackIcon from '@material-ui/icons/SkipPrevious';
+import Fab from '@material-ui/core/Fab';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Euro from '@material-ui/icons/EuroSymbol';
+import OrderStatus from '@material-ui/icons/WatchLater';
+import OrderComment from '@material-ui/icons/SpeakerNotes';
+import CurrencyFormat from 'react-currency-format';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
 
 const override = css`
     display: block;
     margin: 0 auto;
     border-color: red;
 `;
+
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
+const CustomTableCell = withStyles(theme => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 16,
+    },
+}))(TableCell);
+
+const styles = theme => ({
+    root: {
+      width: '100%',
+      marginTop: theme.spacing.unit * 3,
+      overflowX: 'auto',
+    },
+    table: {
+      minWidth: 700,
+    },
+    card: {
+        backgroundColor: fade('#4a148c', 0.225),
+        maxWidth: 'auto',
+        '&:hover': {
+            backgroundColor: fade('#4a148c', 0.325),
+          }
+      },
+      media: {
+        height: 350,
+    },
+    viewOrder: {
+          color: '#fff',
+          cursor: 'pointer',
+        '&:hover': {
+          color: fade('#3F51B5', 0.53),
+        },
+      },
+
+    row: {
+        backgroundColor: '#595163',
+      '&:nth-of-type(odd)': {
+        backgroundColor: '#7f7192',
+      },
+    },
+});
 
 class UserOrders extends Component {
 
@@ -29,12 +107,13 @@ loaded: false
 }
 
 render(){
+  const { t } = this.props;
+  const { classes } = this.props;
 
   if (!this.state.loaded){
     var that = this
     axios.get(`${this.state.Url}getOrderForuser`, {headers: this.state.headers})
     .then(function (response) {
-      console.log(response)
       that.setState({ordersData: response.data.data, loaded: true})
     })
     .catch(function (error) {
@@ -57,160 +136,137 @@ render(){
               onGoing ++;
           }
         })
-
-      let ORDERS =  this.state.ordersData.map(row => {
             counter ++;
             return (
             <div>
-              <BrowserView>
-              <div class="row" key={row._id} style={{lineHeight: 3, color: "white", fontFamily: "arial", backgroundColor: counter % 2 === 0 ? "#7f7192" : "#595163"}}>
-                  <div class="col-xs-4 col-md-4 col-lg-4">
-                      {row.cart.map(imgs => {
+            <Paper className={classes.root}>
+                <Table className={classes.table}>
+                    <TableHead>
+                    <TableRow>
+                        <CustomTableCell align="center"><h4>{t('viewButton')}</h4></CustomTableCell>
+                        <CustomTableCell align="center"><h4>{t('image')}</h4></CustomTableCell>
+                        <CustomTableCell align="center"><h4>{t('date')}</h4></CustomTableCell>
+                        <CustomTableCell align="center"><h4>{t('comment')}</h4></CustomTableCell>
+                        <CustomTableCell align="center"><h4>{t('status')}</h4></CustomTableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
 
-                          return(
-                            <div class="col-xs-4 col-md-4 col-lg-4">
-                                <img src={imgs.defaultImage} class="splash-card-product-view" style={{margin: 10}}/>
-                            </div>
-                          )
+                    {this.state.ordersData.map(row => (
                         
-                      })}
-                            {row.cart.length > 3 &&<h2>...</h2>}
-                  </div>
-                  <div class="col-xs-3 col-md-3 col-lg-3">
-                      <span  style={{fontSize: 17}}>{moment(row.createdAt).format('LLL')}</span>
-                  </div>
-                  <div class="col-xs-3 col-md-3 col-lg-3" style={{wordWrap: "break-word", lineHeight: 1.9}}>
-                      <span style={{fontSize: 17}}>{row.comment}</span>
-                  </div>
-                  <div class="col-xs-1 col-md-1 col-lg-1">
-                      <span style={{fontSize: 17}}>{row.status}</span>
-                  </div>
-                  <div class="col-xs-1 col-md-1 col-lg-1">
-                      <span style={{fontSize: 18, cursor: "pointer", color: "#ffbb00"}}  onClick={ () => {this.setState({MyRow: row, showRow: true})}}> View</span>
-                  </div>
-              </div>
-              </BrowserView>
-              <MobileView>
-                <div class="row" key={row._id} style={{lineHeight: 3, backgroundColor: "white", color: "white", fontFamily: "arial", backgroundColor: counter % 2 === 0 ? "#7f7192" : "#595163"}}>
-                    <div class="col-xs-4 col-md-4 col-lg-4">
+                        <TableRow className={classes.row} key={counter}>
+                                            
+                        <CustomTableCell align="center" >
+                            <Tooltip title={<h6>{t('viewButton')}</h6>} aria-label={<h6>{t('viewButton')}</h6>} placement="bottom">
+                                <Visibility className={classes.viewOrder} onClick={ () => {this.setState({MyRow: row, showRow: true})}}/>
+                            </Tooltip>
+                        </CustomTableCell>
+                        <CustomTableCell component="th" scope="row">
                         {row.cart.map(imgs => {
-                            return(
-                              <img src={imgs.defaultImage} class="splash-card-product-view" style={{margin: 5}}/>
-                            )
+                        return(
+                            <div class="col-xs-2 col-md-1 col-lg-1" key={imgs}>
+                                <Avatar alt="PP" src={imgs.defaultImage}/>
+                            </div>
+                        )
+
                         })}
-                    </div>
-                    <div class="col-xs-4 col-md-3 col-lg-3">
-                        <span  style={{fontSize: "3vw"}}>{moment(row.createdAt).format('LLL')}</span>
-                    </div>
-                    <div class="col-xs-4 col-md-3 col-lg-3" style={{wordWrap: "break-word", lineHeight: 1.9}}>
-                        <span style={{fontSize: "3vw"}}>{row.comment}</span>
-                    </div>
-                    <div class="col-xs-2 col-md-1 col-lg-1">
-                        <span style={{fontSize: "3vw"}}>{row.status}</span>
-                    </div>
-                    <div class="col-xs-2 col-md-1 col-lg-1">
-                        <span style={{fontSize: "3vw", cursor: "pointer", color: "#ffbb00"}}  onClick={ () => {this.setState({MyRow: row, showRow: true})}}> View</span>
-                    </div>
-                </div>
-              </MobileView>
+                        </CustomTableCell>
+                        <CustomTableCell align="center" style={{color: "white",  whiteSpace: "normal", wordWrap: "break-word"}}>{moment(row.createdAt).format('LL')}</CustomTableCell>
+                        <CustomTableCell align="center" style={{color: "white",  whiteSpace: "normal", wordWrap: "break-word"}}>{row.comment}</CustomTableCell>
+                        <CustomTableCell align="center" style={{color: "white"}}>{row.status}</CustomTableCell>
+                        </TableRow>
+                    ))}
+                    </TableBody>
+                </Table>
+            </Paper>
             </div>
           )
-
-          })
-
-      return (
-          <div>
-              <BrowserView>
-                    <div class="row OrdersTitleBG" style={{marginBottom: 15}}>
-                        <div class="col-xs-4 col-md-4 col-lg-4">
-                              <span style={{fontSize: 20, color: "white", fontWeight: "bold"}}>Image</span>
-                          </div>
-                          <div class="col-xs-3 col-md-3 col-lg-3">
-                              <span style={{fontSize: 20, color: "white", fontWeight: "bold"}}>Date</span>
-                          </div>
-                          <div class="col-xs-3 col-md-3 col-lg-3">
-                              <span style={{fontSize: 20, color: "white", fontWeight: "bold"}}>Comment</span>
-                          </div>
-                          <div class="col-xs-1 col-md-1 col-lg-1">
-                              <span style={{fontSize: 20, color: "white", fontWeight: "bold"}}>Status</span>
-                          </div>
-                    </div>
-                 </BrowserView>
-                 <MobileView>
-                    <div class="row OrdersTitleBG" style={{marginBottom: 15}}>
-                        <div class="col-xs-4 col-md-4 col-lg-4">
-                              <span style={{fontSize: "3vw", color: "white", fontWeight: "bold"}}>Image</span>
-                          </div>
-                          <div class="col-xs-4 col-md-3 col-lg-3">
-                              <span style={{fontSize: "3vw", color: "white", fontWeight: "bold"}}>Date</span>
-                          </div>
-                          <div class="col-xs-2 col-md-3 col-lg-3">
-                              <span style={{fontSize: "3vw", color: "white", fontWeight: "bold"}}>Comment</span>
-                          </div>
-                          <div class="col-xs-2 col-md-1 col-lg-1">
-                              <span style={{fontSize: "3vw", color: "white", fontWeight: "bold"}}>Status</span>
-                          </div>
-                    </div>
-                 </MobileView>
-                      {ORDERS}
-          </div>
-      )
-
   }
   else if(this.state.showRow){
     var totalPrice = 0
-    var rowbg = 0
+    var steps = [`${t('orderPending')}`, `${t('orderOnGoing')}`, `${t('orderOnWay')}`];
+    var step;
+
+    switch(this.state.MyRow.status){
+        case 'pending':
+            step = 0
+        break;
+        case 'onGoing':
+            step = 1
+        break;
+        case 'Passed':
+            step = 2
+        break;
+    }
+
     this.state.MyRow.cart.map(row => {
             totalPrice = totalPrice + row.price
     })
 
     return(
     <div>
-        <div class="col-xs-6 col-md-6 col-lg-6">
-            <span style={{color: "orange", fontSize: 17, cursor: "pointer"}} onClick={()=>{this.setState({showRow: false})}} class="glyphicon glyphicon-arrow-left"> <span style={{fontFamily: "arial"}}>Back</span></span>
-        </div>
-        <div class="col-xs-6 col-md-6 col-lg-6">
-            <h1 style={{color: "black", textAlign: "center"}}>•Total Price•  <br/> <span style={{color: "purple", fontSize: 25}}>{totalPrice} EGP {totalPrice < 400 ? `+ Shipping: 30 EGP = ${totalPrice+30}  EGP` : ""}</span>
-            </h1>
-        </div>
-        <div class="col-xs-6 col-md-6 col-lg-6">
-            <h1 style={{color: "black", textAlign: "center"}}>•Order Status• <br/><span style={{color: "purple", fontSize: 25}}>{this.state.MyRow.status}</span></h1>
-        </div>
-        <div class="col-xs-6 col-md-6 col-lg-6">
-            <h1 style={{color: "black", textAlign: "center"}}>•Agent Comment• <br/><span style={{color: "purple", fontSize: 25, wordWrap: "break-word"}}>{this.state.MyRow.comment}</span></h1>
-        </div>
+            <Fab variant="extended" aria-label="Delete" onClick={()=>{this.setState({showRow: false})}} className={classes.fab}>
+                <BackIcon className={classes.extendedIcon} />
+                    {t('back')}
+            </Fab>
+            {this.state.MyRow.status !== 'Failed' ?
+            <Stepper activeStep={step} alternativeLabel>
+            {steps.map(label => (
+                <Step key={label}>
+                <StepLabel>{<h4>{label}</h4>}</StepLabel>
+                </Step>))}
+            </Stepper>
+            :undefined}
+
+            <ListItem button key={t('totalPrice')}>
+                <ListItemIcon>{<Euro />}</ListItemIcon>
+                <ListItemText primary={<h3>{t('totalPrice')}: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h3>} />
+            </ListItem>
+            <Divider/>
+            <ListItem button key={t('orderStatus')}>
+                <ListItemIcon>{<OrderStatus />}</ListItemIcon>
+                <ListItemText primary={<h3>{t('orderStatus')}: {this.state.MyRow.status}</h3>} />
+            </ListItem>
+            <Divider/>
+            <ListItem button key={t('orderComment')}>
+                <ListItemIcon>{<OrderComment />}</ListItemIcon>
+                <ListItemText primary={<h3>{t('orderComment')}: {this.state.MyRow.comment}</h3>} />
+            </ListItem>
         {this.state.MyRow.cart.map(row => {
-            rowbg++;
             return(
-              <div class="col-xs-12 col-md-12 col-lg-12" style={{color: "white", fontFamily: "arial", backgroundColor: rowbg % 2 === 0 ? "#7f7192" : "#595163"}}>
-                <BrowserView>
-                  <div class="col-xs-6 col-md-3 col-lg-3">
-                      <img src={row.defaultImage} class="splash-card-product-view" style={{margin: 10}}/>
-                  </div>
-                  <div class="col-xs-6 col-md-3 col-lg-3" style={{color: "white"}}>
-                  <h3 style={{fontWeight: "bold"}}>{row.Name}</h3>
-                        <span style={{fontSize: 15}}>{row.price} EGP</span>
-                        <h4>Quantity: <span>x{row.quantity}</span></h4>
-                        {row.size && <h4>Size: {row.size}</h4> }
-                        {row.info && <h4>Type: <span class="label label-primary">{row.info}</span></h4>}
-                        {row.color && <h4>Color: {row.color}</h4>}
-                        {row.option && <h4>Option: {row.option}</h4>}
-                  </div>
-                </BrowserView>
-                <MobileView>
-                  <div class="col-xs-6 col-md-3 col-lg-3">
-                      <img src={row.defaultImage} class="splash-card-product-view" style={{margin: 10}}/>
-                  </div>
-                  <div class="col-xs-6 col-md-3 col-lg-3" style={{color: "white"}}>
-                  <h3 style={{fontWeight: "bold"}}>{row.Name}</h3>
-                        <span style={{fontSize: "3vw"}}>{row.price} EGP</span>
-                        <h4>Quantity: <span>x{row.quantity}</span></h4>
-                        {row.size && <h4>Size: {row.size}</h4> }
-                        {row.info && <h4>Type: <span class="label label-primary">{row.info}</span></h4>}
-                        {row.color && <h4>Color: {row.color}</h4>}
-                        {row.option && <h4>Option: {row.option}</h4>}
-                  </div>
-                </MobileView>
+            <div className="col-xs-12 col-md-4 col-lg-4">
+            <Card className={classes.card}>
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    image={row.defaultImage}
+                    title={row.Name}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h3" component="h2">
+                        {row.Name}
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                        <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> {t('currency')}
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                        {t('quantity')}: x{row.quantity}
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                        {row.size && `${t('size')}: ${row.size}` }
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                        {row.info && `Type: ${row.info}`}
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                         {row.color && `${t('color')}: ${row.color}`}
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                         {row.option && `${t('option')}: ${row.option}`}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+            </Card>
             </div>)
            })}
     </div>
@@ -219,8 +275,8 @@ render(){
   else{
     return(
         <div style={{color: "black"}}>
-              <h1>You have no orders</h1>
-              <p>Place an order and it will appear here</p>
+              <h1>{t('noOrdersText')}</h1>
+              <p>{t('noOrdersText2')}</p>
         </div>
     )
   }
@@ -235,7 +291,7 @@ else{
                 size={100}
                 color={'#FFFF00'}
                 loading={true}/>
-            <h2 style={{color: "black"}}>Loading...</h2>
+            <h2 style={{color: "black"}}>{t('loading')}...</h2>
     </div>
   )
 }
@@ -250,4 +306,8 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(UserOrders);
+export default compose(
+    withStyles(styles),
+    withNamespaces(),
+    connect(mapStateToProps),
+  )(UserOrders);

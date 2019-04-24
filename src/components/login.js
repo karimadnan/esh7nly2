@@ -23,7 +23,9 @@ const ErrorStyle = {
       color: "white",
       borderRadius: '10px',
     },
-  }
+}
+
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 class Login extends Component {
 

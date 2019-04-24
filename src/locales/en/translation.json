@@ -49,5 +49,18 @@
       "cartEmpty": "Your cart is empty",
       "quantity": "Qty",
       "subTotal": "Subtotal",
-      "checkout": "Checkout"
+      "checkout": "Checkout",
+      "image": "Image",
+      "date": "Date",
+      "comment": "Comment",
+      "status": "Status",
+      "back": "Back",
+      "noOrdersText": "You have no orders made",
+      "noOrdersText2": "Place an order and track it here",
+      "totalPrice": "Total Price",
+      "orderStatus": "Order Status",
+      "orderComment": "Agent Comment",
+      "orderPending": "Pending",
+      "orderOnGoing": "onGoing",
+      "orderOnWay": "On the way"
 }

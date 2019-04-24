@@ -25,7 +25,6 @@ import GlobalCart from '../containers/global-cart';
 import LangIcon from '../containers/langIcon';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
-import FaceIcon from '@material-ui/icons/Face';
 import axios from 'axios';
 import Modal from 'react-responsive-modal';
 import Divider from '@material-ui/core/Divider';
@@ -123,6 +122,8 @@ const styles = theme => ({
     },
   },
 });
+
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const theme = createMuiTheme({
   palette: {

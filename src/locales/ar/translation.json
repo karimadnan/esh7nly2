@@ -49,6 +49,20 @@
       "cartEmpty": "العربة فارغة",
       "quantity": "الكمية",
       "subTotal": "الملغ",
-      "checkout": "الدفع"
+      "checkout": "الدفع",
+      "image": "الصورة",
+      "date": "التاريخ",
+      "comment": "التعليق",
+      "status": "الحالة",
+      "back": "الرجوع",
+      "noOrdersText": "ليس لديك طلبات فى الوقت الحالى",
+      "noOrdersText2": "اطلب و تتبع الطلب من هنا",
+      "totalPrice": "السعر",
+      "orderStatus": "حالة الطلب",
+      "orderComment": "تعليق المستلم",
+      "orderPending": "قيد الانتظار",
+      "orderOnGoing": "جاري التنفيذ",
+      "orderOnWay": "فى طريقه اليك"
+      
 
 }
