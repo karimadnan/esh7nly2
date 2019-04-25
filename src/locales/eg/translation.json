@@ -104,5 +104,10 @@
       "barDone": "كدا احنا خلصنا",
       "fbPhotoUpload": "رفع الصورة",
       "fbLogin": "دوس هنا لو عايز صورة الفيش",
-      "fbEditPhoto": "ارفع صورة جديدة"
+      "fbEditPhoto": "ارفع صورة جديدة",
+      "actKeyInfo": "الكود اتبعت ل {{email}}",
+      "actKeyLabel": "كود التفعيل",
+      "actKeyError": "اتأكد من كود التفعيل",
+      "actButtonLabel": "يلا بينا"
+
 }

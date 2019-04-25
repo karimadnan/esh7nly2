@@ -36,12 +36,26 @@ import Grid from '@material-ui/core/Grid';
 import NextIcon from '@material-ui/icons/Done';
 import Fab from '@material-ui/core/Fab';
 import UploadIcon from '@material-ui/icons/CloudUpload';
+import TextField from '@material-ui/core/TextField';
+import amumu from '../Images/amumusad.png';
+import Modal from 'react-responsive-modal';
 
 const override = css`
     display: block;
     margin: 0 auto;
     border-color: red;
 `;
+
+const ErrorStyle = {
+    overlay: {
+      background: "transparent"
+    },
+    modal: {
+      backgroundColor: 'rgba(219, 105, 105, 0.9)',
+      color: "white",
+      borderRadius: '10px',
+    },
+}
 
 const theme = createMuiTheme({
     palette: {
@@ -65,8 +79,20 @@ const styles = theme => ({
         width: 150,
         height: 150,
       },
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
     fab: {
         margin: theme.spacing.unit,
+    },
+    extendedIcon1: {
+        marginRight: theme.spacing.unit,
     },
     extendedIcon2: {
         marginRight: theme.spacing.unit * 3,
@@ -77,6 +103,8 @@ class Account extends Component {
 
     state = {
         value: 0,
+        ErrorModal: false,
+        ErrorMsg: '',
         headers: {
             'Content-Type': 'application/json',
             'authorization': this.props.loginData.token},
@@ -88,6 +116,7 @@ class Account extends Component {
         photo: '',
         fbStatus: '',
         vouchPoints: '',
+        actKey: '',
         nav: 'profile'
     }
 
@@ -95,6 +124,14 @@ class Account extends Component {
         this.loadFbApi();
         this.getUserData();
     }
+
+    onOpenModal = (type) => {
+        this.setState({[type]: true });
+        };
+        
+    onCloseModal = (type) => {
+        this.setState({[type]: false });
+    };
 
     handleChange = (event, value) => {
         this.setState({ value });
@@ -148,27 +185,6 @@ class Account extends Component {
         );
     }
 
-    getFbPhoto2 (){
-        var that = this
-        window.FB.api(
-            "/me/picture",
-            {
-                "redirect": false,
-                "height": "150",
-                "type": "normal",
-                "width": "150"
-            },
-            function (response) {
-              if (response && !response.error) {
-                  console.log(response);
-              }
-              else{
-                  console.log(response.error)
-              }
-            }
-        );
-    }
-
     fbCheckLogin(){
         var that = this
         window.FB.getLoginStatus(function(response) {
@@ -183,10 +199,34 @@ class Account extends Component {
           }, {scope: 'public_profile'});
     }
     
+    validatePendingUser(){
+        const { t } = this.props;
+        var that = this
+        if(this.state.actKey.length === 6){
+            axios.get(this.state.Url+`validateUser?code=${this.state.actKey}`, {headers: this.state.headers})
+            .then(function (response) {
+                window.location.reload();
+            })
+            .catch(function (error) {
+                that.setState({
+                    ErrorModal:true,
+                    ErrorMsg:error.response.data.message
+                })
+            })
+        }
+        else{
+            this.setState({
+                ErrorModal:true,
+                ErrorMsg: `${t('actKeyError')}`
+            })
+        }
+    }
+
     Current(){
         const { t } = this.props;
         const { classes } = this.props;
         const accountStatus = this.state.status
+        const email = this.state.email
         if(!this.state.fbStatus){
             this.fbCheckLogin();
         }
@@ -213,7 +253,7 @@ class Account extends Component {
 
                 <Grid container justify="center" alignItems="center">
                 {this.state.fbStatus === 'connected' && this.state.photo ?
-                    <Fab color="primary" variant="extended" aria-label="fbPhotoEdit" onClick={()=>{this.getFbPhoto2()}} className={classes.fab}>
+                    <Fab color="primary" variant="extended" aria-label="fbPhotoEdit" onClick={()=>{this.getFbPhoto()}} className={classes.fab}>
                         <UploadIcon className={classes.extendedIcon2} />
                         <h5>{t('fbEditPhoto')}</h5>
                     </Fab>:undefined}
@@ -223,9 +263,9 @@ class Account extends Component {
                 <span style={{color: "#3F51B5"}}>
                 {t('welcome')}
                 </span>, {this.props.loginData.userName}</h1>
-                    <ListItem button>
+                    <ListItem>
                         <ListItemIcon>{<Person />}</ListItemIcon>
-                        <ListItemText primary={<h3>{t('accStatus')}: <span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >
+                        <ListItemText primary={<h3>{t('accStatus')}: <span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : this.state.status === "pending" ? "#3F51B5" : "red", fontWeight: "bold"}} >
                         {accountStatus === "pending" ? 
                         t('accountPendingStatus')
                         : accountStatus === "active" ?
@@ -233,25 +273,42 @@ class Account extends Component {
                         : accountStatus === "banned" ?
                         t('accountBannedStatus')
                         : undefined}
-                        </span></h3>} />
+                        </span>
+                       {accountStatus === "pending" ?
+                            <form className={classes.container} noValidate autoComplete="off">
+                            <TextField
+                                id="accActivate"
+                                label={t('actKeyLabel')}
+                                type="number"
+                                className={classes.textField}
+                                helperText={<h6>{t('actKeyInfo', {email})}</h6>}
+                                margin="normal"
+                                onChange={e => this.setState({actKey: e.target.value})}
+                            />
+                            <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.validatePendingUser()}} className={classes.fab}>
+                                <NextIcon className={classes.extendedIcon2} />
+                                <h5>{t('actButtonLabel')}</h5>
+                            </Fab>
+                        </form>:undefined}
+                        </h3>} />
                     </ListItem>
                     <Divider />
-                    <ListItem button>
+                    <ListItem>
                         <ListItemIcon>{<Mood />}</ListItemIcon>
                         <ListItemText primary={<h3>{t('health')}: {this.healthBar(this.state.health)}</h3>} />
                     </ListItem>
                     <Divider />
-                    <ListItem button>
+                    <ListItem>
                         <ListItemIcon>{<Email />}</ListItemIcon>
                         <ListItemText primary={<h3>{t('email')}: {this.state.email}</h3>} />
                     </ListItem>
                     <Divider />
-                    <ListItem button>
+                    <ListItem>
                         <ListItemIcon>{<StayPrimaryPortrait />}</ListItemIcon>
                         <ListItemText primary={<h3>{t('phone')}: {this.state.phone}</h3>} />
                     </ListItem>
                     <Divider />
-                    <ListItem button>
+                    <ListItem>
                         <ListItemIcon>{<Whatshot />}</ListItemIcon>
                         <ListItemText primary={<h3>{t('ggPoints')}: <CountUp duration={5} end={this.state.vouchPoints}/></h3>} />
                     </ListItem>
@@ -366,6 +423,11 @@ render() {
                     </div>
                     <br/>
                     <Navbar page={"Account"}/>
+                    <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
+                        styles={ErrorStyle}>
+                        <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
+                        <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
+                    </Modal>
                 </div>
             )
     }

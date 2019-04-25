@@ -23,6 +23,7 @@ import {
   } from "react-device-detect";
 import {isMobile} from 'react-device-detect';
 import { withNamespaces } from 'react-i18next';
+import SwipeableViews from 'react-swipeable-views';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -72,6 +73,7 @@ state = {
     selectedSize: "",
     ErrorModal: false,
     ErrorMsg: "",
+    activeStep: 0,
     optionsFetched: false,
     quantity: 1
 }
@@ -97,7 +99,8 @@ goBack(){
                    selectedColor: "", 
                    colors: [], 
                    sizes: [], 
-                   selectedSize: ""})
+                   selectedSize: "",
+                   activeStep: 0})
 }
 
 notify = (msg) => toast.success(msg, {
@@ -147,6 +150,7 @@ handleChangeOption(type, value) {
 
 handleChangeColor(type, value) {
     this.setState({[type]: value}, () =>{
+        this.setState({activeStep: this.state.selectedColor.index})
         this.props.updatePrev(this.state.selectedColor.label, 'color')
         if(this.state.selectedColor.value){
             this.props.updatePrev(this.state.selectedColor.value, 'img')
@@ -172,20 +176,6 @@ tick() {
     const future = moment("00:00 AM", ["h:mm A"]);
     let timeCount = moment(future.diff(currentDate))
     this.setState({timeLeft: timeCount - 1000})
-}
-
-LoopIMGS(){
-    let outPut = []
-    var prev = this.props.cart.itemPrev
-    const ConvertedIMGS = Object.values(prev.img)
-    for (const img of ConvertedIMGS) {
-        outPut.push( <div key={img} onClick={()=>{this.props.updatePrev(img, 'img')}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
-            <div className ={prev.defaultImage === img ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                <img src={img} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
-            </div>
-        </div>)
-}
-    return outPut
 }
 
 updateInfo (data){
@@ -352,6 +342,10 @@ if (this.state.view === "shop"){
     }
 }
 
+handleStepChange = activeStep => {
+    this.setState({ activeStep });
+};
+
 ViewProduct(){
 const { t } = this.props;
 var prev = this.props.cart.itemPrev
@@ -404,7 +398,8 @@ if (this.state.view === "item"){
         prev.colors.forEach(element => {
             let object = {
             label: element.label,
-            value: element.value
+            value: element.value,
+            index: element.index
         }
             colors.push(object)
           });
@@ -424,17 +419,53 @@ if (this.state.view === "item"){
 
     var discount = prev.discount / 100 * prev.price
     var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
+    var imgs = []
+    
+    prev.img.forEach((img, index)=> {
+        let object = {
+            img: img,
+            index: index
+        }
+        imgs.push(object)
+    })
+
     return (
     <div className="container">
         <div className="BlackBG">
         
          <div className="col-xs-12 col-md-8 col-lg-8">
-            {prev.img.length > 1 && this.LoopIMGS()}
+            {prev.img.length > 1 && 
+                imgs.map((item) =>{
+                return(
+                    <div key={item.index} onClick={()=>{this.setState({activeStep: item.index}), this.props.updatePrev(item.img, 'img')}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
+                        <div className ={prev.defaultImage === item.img ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
+                            <img src={item.img} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
+                        </div>
+                    </div>
+                )
+            })
+            }
         </div>
 
          <div className="col-xs-12 col-md-6 col-lg-6">
             <div className="cardItemPrev">
-               <img src={prev.defaultImage} className="splash-card-product-view" />
+               {prev.img.length > 1 ?
+                    <SwipeableViews 
+                            axis={'x'}
+                            index={this.state.activeStep}
+                            onChangeIndex={this.handleStepChange}
+                            enableMouseEvents
+                            >
+                            {prev.img.map((step, index) => (
+                                <div key={index}>
+                                {Math.abs(this.state.activeStep - index) <= 2 ? (
+                                    <img src={step} className="splash-card-product-view" />
+                                ) : null}
+                                </div>
+                            ))}
+                     </SwipeableViews>
+                :
+               <img src={prev.defaultImage} className="splash-card-product-view" />}
                {prev.discount > 0 && <div id ="merchDiscount" className="card-body">
                     <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{prev.discount}% {t('discount')}</span>
                </div> }

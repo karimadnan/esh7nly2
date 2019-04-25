@@ -104,6 +104,11 @@
       "barDone": "Done",
       "fbPhotoUpload": "Click to upload photo to your profile",
       "fbLogin": "Login Facebook",
-      "fbEditPhoto": "Upload New Facebook Photo"
+      "fbEditPhoto": "Upload New Facebook Photo",
+      "actKeyInfo": "Check {{email}} inbox for activation code",
+      "actKeyLabel": "Activation Code",
+      "actKeyError": "Make sure you entered the correct code",
+      "actButtonLabel": "Activate"
+
 
 }

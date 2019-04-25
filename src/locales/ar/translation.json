@@ -104,7 +104,11 @@
       "barDone": "تمت العملية",
       "fbPhotoUpload": "استخدم صورة الفيس بوك كصورة البروفايل",
       "fbLogin": "استخدام صورة الفيس بوك",
-      "fbEditPhoto": "رفع صورة جديدة"
+      "fbEditPhoto": "رفع صورة جديدة",
+      "actKeyInfo": "رقم التفعيل تم ارساله الى {{email}}",
+      "actKeyLabel": "رقم التفعيل",
+      "actKeyError": "تأكد من رقم التفعيل",
+      "actButtonLabel": "تفعيل"
 
       
 
