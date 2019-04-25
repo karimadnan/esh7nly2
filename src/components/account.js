@@ -92,6 +92,7 @@ class Account extends Component {
     }
 
     componentDidMount(){
+        this.loadFbApi();
         this.fbCheckLogin();
         this.getUserData();
     }
@@ -247,6 +248,26 @@ class Account extends Component {
         .catch(function (error) {
             // console.log(error.response.data.message, "FAIL")
         })
+    }
+
+    loadFbApi(){
+        window.fbAsyncInit = function() {
+            FB.init({
+              appId: "1984023341904164",
+              cookie: true,
+              status: true,
+              xfbml: true,
+              version: "v3.2"
+            });
+          };
+          console.log("Loading fb api");
+          (function(d, s, id) {
+            var js, fjs=d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js=d.createElement(s); js.id=id;
+            js.src="//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, "script", "facebook-jssdk"));
     }
 
 render() {
