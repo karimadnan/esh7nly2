@@ -252,7 +252,7 @@ class Account extends Component {
 
     loadFbApi(){
         window.fbAsyncInit = function() {
-            FB.init({
+            window.FB.init({
               appId: "1984023341904164",
               cookie: true,
               status: true,
