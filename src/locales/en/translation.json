@@ -85,7 +85,7 @@
       "helwan": "Helwan",
       "6oct": "6 october",
       "locationHome": "Home",
-      "locationBuisness": "Business",
+      "locationBusiness": "Business",
       "shippedTo": "Shipped to",
       "edit": "Edit",
       "next": "Next",
@@ -101,7 +101,9 @@
       "noPaymentMethod": "Select payment method",
       "barPayment": "Payment",
       "barReview": "Review",
-      "barDone": "Done"
+      "barDone": "Done",
+      "fbPhotoUpload": "Click to upload photo to your profile",
+      "fbLogin": "Use Facebook Photo"
 
 
 }

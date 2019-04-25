@@ -40,6 +40,7 @@ return res.status(400).send({ message: 'Missing fields'});
             var payload={
             userId:doc._id,
             name:doc.Name,
+            photo:doc.Photo,
             access:doc.Access    
             }
             const accessToken = jwToken.issueShortLivingToken(payload);
@@ -47,6 +48,7 @@ return res.status(400).send({ message: 'Missing fields'});
             response._token = accessToken;
             response.Access=doc.Access;
             response.status=doc.status;
+            response.Photo=doc.Photo;
             response.Name=doc.Name;
             return res.status(200).send({ message: 'success',data:response});
 
@@ -97,6 +99,7 @@ Validator.check(body,'signup').then(success=>{
     body.Access=1;
     body.VouchPoints=0;
     body.health=3;
+    body.Photo="";
     body.verifyEmail=Math.floor((Math.random() * 100000) + 1);
     bcrypt.hash(body.Password,null,null,function (err, hash) {
     if(err){
@@ -171,7 +174,7 @@ return res.status(200).send({ message: 'Valid auth'});
 },
 getUserbyId:async function(req, res, next){
 const collection = DB.dbo.collection('users');
-var doc = await collection.findOne({ _id: new ObjectId(req.token.userId) },{fields:{_id:0, Name: 1, Phone: 1,Access:1 ,Email:1, health: 1, status: 1, VouchPoints: 1}} ).catch(err =>{   
+var doc = await collection.findOne({ _id: new ObjectId(req.token.userId) },{fields:{_id:0, Name: 1, Phone: 1,Access:1 ,Email:1, health: 1, status: 1, VouchPoints: 1, Photo: 1}} ).catch(err =>{   
 return  res.status(500).send({ message: 'server error 003'}); 
 });  
 return res.status(200).send({ message: 'User',doc});
@@ -203,6 +206,16 @@ setUserAddress:async function(req, res){
             return res.status(200).send({ message: 'Shipping Data Updated'});
 
     },err => {return res.status(400).send(err);});
+},
+setUserPhoto:async function(req, res){
+    const collection = DB.dbo.collection('users');
+    try{
+        await collection.updateOne({_id: new ObjectId(req.token.userId)}, {$set: {"Photo": req.body.photo}});
+    }
+    catch(err){
+        return res.status(500).send({ message: 'Error finding data'});
+    }
+        return res.status(200).send({ message: 'Photo Updated'});
 },
 getAdminbyId:async function(req, res, next){
     let adminId=req.query.adminId;

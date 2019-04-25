@@ -33,6 +33,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Pp from '../Images/avatar.png';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import NextIcon from '@material-ui/icons/Done';
+import Fab from '@material-ui/core/Fab';
 
 const override = css`
     display: block;
@@ -61,7 +64,13 @@ const styles = theme => ({
         margin: 10,
         width: 150,
         height: 150,
-      }
+      },
+    fab: {
+        margin: theme.spacing.unit,
+    },
+    extendedIcon2: {
+        marginRight: theme.spacing.unit * 3,
+    }
 });
 
 class Account extends Component {
@@ -76,8 +85,15 @@ class Account extends Component {
         email: '',
         phone: '',
         health: '',
+        photo: '',
+        fbStatus: '',
         vouchPoints: '',
         nav: 'profile'
+    }
+
+    componentDidMount(){
+        this.fbCheckLogin();
+        this.getUserData();
     }
 
     handleChange = (event, value) => {
@@ -100,6 +116,45 @@ class Account extends Component {
           return hearts
     }
 
+    setPhoto(photo){
+        let data = {photo: photo}
+        axios.post(this.state.Url+"setUserPhoto", data, {headers: this.state.headers})
+        .then(function (response) {
+            window.location.reload();
+        })
+        .catch(function (error) {
+            console.log(error, "ERROR")
+        })
+    }
+
+    getFbPhoto (){
+        var that = this
+        window.FB.api(
+            "/me/picture",
+            {
+                "redirect": false,
+                "height": "150",
+                "type": "normal",
+                "width": "150"
+            },
+            function (response) {
+              if (response && !response.error) {
+                  that.setPhoto(response.data.url);
+              }
+              else{
+                  console.log(response.error)
+              }
+            }
+        );
+    }
+
+    fbCheckLogin(){
+        var that = this
+        window.FB.getLoginStatus(function(response) {
+            that.setState({fbStatus: response.status})
+        });
+    }
+ 
     Current(){
         const { t } = this.props;
         const { classes } = this.props;
@@ -108,7 +163,21 @@ class Account extends Component {
             return(
             <div style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
                 <Grid container justify="center" alignItems="center">
-                    <Avatar alt="Profile Picture" src={Pp} className={classes.Avatar} />
+                    {this.state.fbStatus === 'connected' && !this.state.photo ?
+                    <Fab color="primary" variant="extended" aria-label="fbPhotoUpload" onClick={()=>{this.getFbPhoto()}} className={classes.fab}>
+                        <NextIcon className={classes.extendedIcon2} />
+                        <h5>{t('fbPhotoUpload')}</h5>
+                    </Fab>:undefined}
+
+                   {this.state.fbStatus !== 'connected'?
+                   <Fab color="primary" variant="extended" aria-label="fbPhotoUpload" onClick={()=>{}} className={classes.fab}>
+                        <NextIcon className={classes.extendedIcon2} />
+                        <h5>{t('fbLogin')}</h5>
+                    </Fab>:undefined}
+
+                </Grid>
+                <Grid container justify="center" alignItems="center">
+                    <Avatar alt="Profile Picture" src={!this.state.photo ? Pp : this.state.photo} className={classes.Avatar} />
                 </Grid>
                 <h1 style={{color: "black"}}>
                 <span style={{color: "#3F51B5"}}>
@@ -162,6 +231,24 @@ class Account extends Component {
     }
     }
 
+    getUserData(){
+        let Data = {token: this.props.loginData.token}
+        var that = this
+        axios.post(this.state.Url+"getUserbyId", Data, {headers: this.state.headers})
+        .then(function (response) {
+            const info = response.data.doc
+            that.setState({status: info.status, 
+                email: info.Email,
+                phone: info.Phone,
+                health: info.health,
+                vouchPoints: info.VouchPoints,
+                photo: info.Photo})
+        })
+        .catch(function (error) {
+            // console.log(error.response.data.message, "FAIL")
+        })
+    }
+
 render() {
     const { t } = this.props;
     const { classes } = this.props;
@@ -181,23 +268,6 @@ render() {
         )
         }
     else{
-        if(!this.state.status){
-            let Data = {token: this.props.loginData.token}
-            var that = this
-            axios.post(this.state.Url+"getUserbyId", Data, {headers: this.state.headers})
-            .then(function (response) {
-                const info = response.data.doc
-                that.setState({status: info.status, 
-                    email: info.Email,
-                    phone: info.Phone,
-                    health: info.health,
-                    vouchPoints: info.VouchPoints})
-            })
-            .catch(function (error) {
-                // console.log(error.response.data.message, "FAIL")
-            })
-        }
-
         return (
                 <div className="GG-BG-INVERSE">
                     <div className="container" style={{color: "white"}}>

@@ -85,7 +85,7 @@
       "helwan": "حلوان",
       "6oct": "٦ اكتوبر",
       "locationHome": "منزل",
-      "locationBuisness": "مكان عمل",
+      "locationBusiness": "مكان عمل",
       "shippedTo": "تشحن الى",
       "edit": "تعديل",
       "next": "التالى",
@@ -101,7 +101,9 @@
       "noPaymentMethod": "اختار طرقة الدفع",
       "barPayment": "الدفع",
       "barReview": "المراجعة",
-      "barDone": "تمت العملية"
+      "barDone": "تمت العملية",
+      "fbPhotoUpload": "استخدم صورة الفيس بوك كصورة البروفايل",
+      "fbLogin": "استخدام صورة الفيس بوك"
 
       
 

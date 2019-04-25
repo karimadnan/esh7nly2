@@ -27,6 +27,7 @@ router.get('/checkToken',loginApis.checkToken);
 router.post('/getUserbyId',Validator.checkJWT,loginApis.getUserbyId);
 router.get('/getUserAddress',Validator.checkJWT,loginApis.getUserAddress);
 router.post('/setUserAddress',Validator.checkJWT,loginApis.setUserAddress);
+router.post('/setUserPhoto',Validator.checkJWT,loginApis.setUserPhoto);
 router.post('/getAdminbyId',Validator.checkJWT,Validator.isAdmin, loginApis.getAdminbyId);
 router.get('/getOrdersCount',Validator.checkJWT,loginApis.getOrdersCount);
 // order Apis-------------------------------------------------- 

@@ -12,6 +12,7 @@ export default function(state = initialState, action){
         return { 
             loggedState: true,
             userName: action.payload.Name,
+            photo: action.payload.Photo,
             token: action.payload._token,
             session: action.payload.Access,
             isAdmin: action.payload.isAdmin
@@ -21,6 +22,7 @@ export default function(state = initialState, action){
         return {
             loggedState: false,
             userName: '',
+            photo: '',
             token: '',
             session: 0
         }

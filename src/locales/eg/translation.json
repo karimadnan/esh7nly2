@@ -85,7 +85,7 @@
       "helwan": "حلوان",
       "6oct": "6 اكتوبر",
       "locationHome": "بيت",
-      "locationBuisness": "محل",
+      "locationBusiness": "محل",
       "shippedTo": "هتتشحن ل",
       "edit": "عدل",
       "next": "الى بعده",
@@ -101,5 +101,7 @@
       "noPaymentMethod": "اختار طريقة الدفع الاول",
       "barPayment": "الدفع",
       "barReview": "راجع كدة",
-      "barDone": "كدا احنا خلصنا"
+      "barDone": "كدا احنا خلصنا",
+      "fbPhotoUpload": "رفع الصورة",
+      "fbLogin": "دوس هنا لو عايز صورة الفيش"
 }

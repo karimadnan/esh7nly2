@@ -223,7 +223,6 @@ class Navbar extends React.Component {
     const { classes } = this.props;
     const { page } = this.props;
     const { t } = this.props;
-
     const renderMobileDrawer = (
         <Drawer anchor="right" classes={{ paper: classes.paper }} open={this.state.drawer} onClose={this.toggleDrawer('drawer', false)}>
           <div
@@ -235,7 +234,7 @@ class Navbar extends React.Component {
           {this.props.loginData.loggedState ?
           <Chip
               color="secondary"
-              avatar={<Avatar alt="PP" src={Pp} />}
+              avatar={<Avatar alt="PP" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} />}
               label={<h4>{this.props.loginData.userName}</h4>}
               onClick={this.profile.bind(this)}
               className={classes.chipMobile}
@@ -307,7 +306,7 @@ class Navbar extends React.Component {
                   {this.props.loginData.loggedState ?
                   <Chip
                       color="secondary"
-                      avatar={<Avatar alt="PP" src={Pp} />}
+                      avatar={<Avatar alt="PP" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} />}
                       label={<h4>{this.props.loginData.userName}</h4>}
                       onClick={this.profile.bind(this)}
                       onDelete={this.logoutClick.bind(this)}
