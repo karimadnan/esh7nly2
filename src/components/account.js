@@ -170,7 +170,7 @@ class Account extends Component {
                         <h5>{t('fbPhotoUpload')}</h5>
                     </Fab>:undefined}
 
-                   {this.state.fbStatus !== 'connected'?
+                   {this.state.fbStatus !== 'connected' && !this.state.photo ?
                    <Fab color="primary" variant="extended" aria-label="fbPhotoUpload" onClick={()=>{}} className={classes.fab}>
                         <NextIcon className={classes.extendedIcon2} />
                         <h5>{t('fbLogin')}</h5>
