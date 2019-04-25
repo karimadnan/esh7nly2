@@ -1,6 +1,6 @@
 {
       "accountActiveStatus": "كويس",
-      "accountPendingStatus": "مش كويس",
+      "accountPendingStatus": "عايز يتفعل",
       "accountBannedStatus": "اتقفل",
       "home": "الريْسية",
       "market": "المحل",
@@ -103,7 +103,7 @@
       "barReview": "راجع كدة",
       "barDone": "كدا احنا خلصنا",
       "fbPhotoUpload": "رفع الصورة",
-      "fbLogin": "دوس هنا لو عايز صورة الفيش",
+      "fbLogin": "دوس هنا لو عايز صورة الفيس",
       "fbEditPhoto": "ارفع صورة جديدة",
       "actKeyInfo": "الكود اتبعت ل {{email}}",
       "actKeyLabel": "كود التفعيل",

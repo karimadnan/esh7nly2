@@ -23,8 +23,6 @@ render() {
                 <h2 style={{color: "black"}}> User information <span className="glyphicon glyphicon-user"></span> </h2>
                     <div style={{fontSize: 15, color:"black"}}>
                         <p>• Currently we do not collect any information about you while browsing the website. </p>
-                        <p>• If you decided to talk with us using our website chat plugin tawk.to stores your ip and your name/phone (only if you provided them) this is for communication purposes with us only and are not shared with anyone.</p>
-                        <p>• You can view tawk.to privacy policy <a href="https://www.tawk.to/privacy-policy/" style={{cursor: 'pointer', color: "purple", fontWeight: "bold"}}>Click Here</a>.</p>
                     </div>
             <div class="bordersep"/>
                 <h2 style={{color: "black"}}> User Accounts <span className="glyphicon glyphicon-cog"></span> </h2>

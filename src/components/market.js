@@ -4,7 +4,6 @@ import {bindActionCreators} from 'redux';
 import {addCartItem, updateCartInfo, addPrev, updatePrev, fetchShopData, addPrevOptions, removePrevOptions} from '../actions/index';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import ReactTooltip from 'react-tooltip';
 import '../Mycss.css';
 import '../Respcss.css';
 import Navbar from './navbar';
@@ -148,15 +147,12 @@ handleChangeOption(type, value) {
     });
 }
 
-handleChangeColor(type, value) {
-    this.setState({[type]: value}, () =>{
+handleChangeColor = selectedColor => {
+    this.setState({selectedColor}, () =>{
         this.setState({activeStep: this.state.selectedColor.index})
         this.props.updatePrev(this.state.selectedColor.label, 'color')
         if(this.state.selectedColor.value){
             this.props.updatePrev(this.state.selectedColor.value, 'img')
-        }
-        else{
-            this.props.updatePrev(this.props.cart.itemPrev.img[0], 'img')
         }
     });
 }
@@ -343,8 +339,12 @@ if (this.state.view === "shop"){
 }
 
 handleStepChange = activeStep => {
+    var prev = this.props.cart.itemPrev
     this.setState({ activeStep });
+    this.props.updatePrev(prev.img[activeStep], 'img')
+    this.props.updatePrev(this.state.colors[activeStep].label, 'color')
 };
+
 
 ViewProduct(){
 const { t } = this.props;
@@ -382,24 +382,24 @@ if (this.state.view === "item"){
             }
         }
 
-        prev.options.forEach(element => {
-            let object = {
+    prev.options.forEach(element => {
+        let object = {
             label: element.option,
             value: element.price
-            };
-            (element.img) ? object['img']=element.img : undefined;
+        };
+        (element.img) ? object['img']=element.img : undefined;
             this.props.addPrevOptions(object)
-          });
-          this.setState({optionsFetched: true})
-        }
+        });
+            this.setState({optionsFetched: true})
+    }
 
     if(prev.colors && !this.state.colors.length > 0){
         var colors = []
-        prev.colors.forEach(element => {
+        prev.colors.forEach((element, index) => {
             let object = {
             label: element.label,
             value: element.value,
-            index: element.index
+            index: index
         }
             colors.push(object)
           });
@@ -421,7 +421,7 @@ if (this.state.view === "item"){
     var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
     var imgs = []
     
-    prev.img.forEach((img, index)=> {
+    prev.img.forEach((img, index) => {
         let object = {
             img: img,
             index: index
@@ -437,7 +437,7 @@ if (this.state.view === "item"){
             {prev.img.length > 1 && 
                 imgs.map((item) =>{
                 return(
-                    <div key={item.index} onClick={()=>{this.setState({activeStep: item.index}), this.props.updatePrev(item.img, 'img')}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
+                    <div key={item.index} onClick={()=>{this.setState({activeStep: item.index}), this.props.updatePrev(item.img, 'img'), this.props.updatePrev(this.state.colors[item.index].label, 'color')}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
                         <div className ={prev.defaultImage === item.img ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
                             <img src={item.img} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
                         </div>
@@ -445,7 +445,7 @@ if (this.state.view === "item"){
                 )
             })
             }
-        </div>
+         </div>
 
          <div className="col-xs-12 col-md-6 col-lg-6">
             <div className="cardItemPrev">
@@ -525,7 +525,7 @@ if (this.state.view === "item"){
                                 isMulti={false}
                                 styles={customStyles}
                                 value={this.state.selectedColor}
-                                onChange={this.handleChangeColor.bind(this, 'selectedColor')}
+                                onChange={this.handleChangeColor}
                                 options={this.state.colors} placeholder='Select Color'
                             /> 
                         <br/>
@@ -573,7 +573,6 @@ if (this.state.view === "item"){
                 </div>
                <br/>
          </div>
-        <ReactTooltip place="bottom" type="dark" effect="solid"/>
       </div>
     </div>
     )

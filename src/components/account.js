@@ -232,7 +232,7 @@ class Account extends Component {
         }
         if(this.state.value === 0){
             return(
-            <div style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
+            <div>
                 <Grid container justify="center" alignItems="center">
                     {this.state.fbStatus === 'connected' && !this.state.photo ?
                     <Fab color="primary" variant="extended" aria-label="fbPhotoUpload" onClick={()=>{this.getFbPhoto()}} className={classes.fab}>
@@ -259,13 +259,16 @@ class Account extends Component {
                     </Fab>:undefined}
                 </Grid>
 
-                <h1 style={{color: "black"}}>
+            {i18next.language === "EN" ?
+            //  ENGLISH ALIGN
+            <div>
+               <h1 style={{color: "black"}}>
                 <span style={{color: "#3F51B5"}}>
                 {t('welcome')}
                 </span>, {this.props.loginData.userName}</h1>
                     <ListItem>
                         <ListItemIcon>{<Person />}</ListItemIcon>
-                        <ListItemText primary={<h3>{t('accStatus')}: <span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : this.state.status === "pending" ? "#3F51B5" : "red", fontWeight: "bold"}} >
+                        <ListItemText primary={<h4>{t('accStatus')}: <span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : this.state.status === "pending" ? "#3F51B5" : "red", fontWeight: "bold"}} >
                         {accountStatus === "pending" ? 
                         t('accountPendingStatus')
                         : accountStatus === "active" ?
@@ -274,7 +277,9 @@ class Account extends Component {
                         t('accountBannedStatus')
                         : undefined}
                         </span>
-                       {accountStatus === "pending" ?
+                        </h4>} 
+                        />
+                        {accountStatus === "pending" ?
                             <form className={classes.container} noValidate autoComplete="off">
                             <TextField
                                 id="accActivate"
@@ -290,28 +295,88 @@ class Account extends Component {
                                 <h5>{t('actButtonLabel')}</h5>
                             </Fab>
                         </form>:undefined}
-                        </h3>} />
                     </ListItem>
                     <Divider />
                     <ListItem>
                         <ListItemIcon>{<Mood />}</ListItemIcon>
-                        <ListItemText primary={<h3>{t('health')}: {this.healthBar(this.state.health)}</h3>} />
+                        <ListItemText primary={<h4>{t('health')}: {this.healthBar(this.state.health)}</h4>} />
                     </ListItem>
                     <Divider />
                     <ListItem>
                         <ListItemIcon>{<Email />}</ListItemIcon>
-                        <ListItemText primary={<h3>{t('email')}: {this.state.email}</h3>} />
+                        <ListItemText primary={<h4>{t('email')}: {this.state.email}</h4>} />
                     </ListItem>
                     <Divider />
                     <ListItem>
                         <ListItemIcon>{<StayPrimaryPortrait />}</ListItemIcon>
-                        <ListItemText primary={<h3>{t('phone')}: {this.state.phone}</h3>} />
+                        <ListItemText primary={<h4>{t('phone')}: {this.state.phone}</h4>} />
                     </ListItem>
                     <Divider />
                     <ListItem>
                         <ListItemIcon>{<Whatshot />}</ListItemIcon>
-                        <ListItemText primary={<h3>{t('ggPoints')}: <CountUp duration={5} end={this.state.vouchPoints}/></h3>} />
+                        <ListItemText primary={<h4>{t('ggPoints')}: <CountUp duration={5} end={this.state.vouchPoints}/></h4>} />
                     </ListItem>
+                </div>
+            :
+            // ARABIC ALIGN
+            <div>
+            <h1 style={{color: "black", textAlign: "right"}}>
+             <span style={{color: "#3F51B5"}}>
+             {t('welcome')}
+             </span>, {this.props.loginData.userName}</h1>
+                 <ListItem>
+                 {accountStatus === "pending" ?
+                         <form className={classes.container} noValidate autoComplete="off">
+                         <TextField
+                             id="accActivate"
+                             label={t('actKeyLabel')}
+                             type="number"
+                             className={classes.textField}
+                             helperText={<h6>{t('actKeyInfo', {email})}</h6>}
+                             margin="normal"
+                             onChange={e => this.setState({actKey: e.target.value})}
+                         />
+                         <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.validatePendingUser()}} className={classes.fab}>
+                             <NextIcon className={classes.extendedIcon2} />
+                             <h5>{t('actButtonLabel')}</h5>
+                         </Fab>
+                     </form>:undefined}
+                    <ListItemText style={{textAlign: "right"}} primary={<h4>{t('accStatus')}: 
+                        <span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : this.state.status === "pending" ? "#3F51B5" : "red", fontWeight: "bold"}} >
+                            {accountStatus === "pending" ? 
+                            t('accountPendingStatus')
+                            : accountStatus === "active" ?
+                            t('accountActiveStatus')
+                            : accountStatus === "banned" ?
+                            t('accountBannedStatus')
+                            : undefined}
+                        </span>
+                     </h4>} />
+
+                     <ListItemIcon>{<Person />}</ListItemIcon>
+                 </ListItem>
+                 <Divider />
+                 <ListItem>
+                    <ListItemText style={{textAlign: "right"}} primary={<h4>{this.healthBar(this.state.health)} :{t('health')}</h4>} />
+                     <ListItemIcon>{<Mood />}</ListItemIcon>
+                 </ListItem>
+                 <Divider />
+                 <ListItem>
+                     <ListItemText style={{textAlign: "right"}} primary={<h4>{this.state.email} :{t('email')}</h4>} />
+                     <ListItemIcon>{<Email />}</ListItemIcon>
+                 </ListItem>
+                 <Divider />
+                 <ListItem>
+                     <ListItemText style={{textAlign: "right"}} primary={<h4> {this.state.phone} :{t('phone')}</h4>} />
+                     <ListItemIcon>{<StayPrimaryPortrait />}</ListItemIcon>
+                 </ListItem>
+                 <Divider />
+                 <ListItem>
+                     <ListItemText style={{textAlign: "right"}} primary={<h4> <CountUp duration={5} end={this.state.vouchPoints}/> :{t('ggPoints')}</h4>} />
+                     <ListItemIcon>{<Whatshot />}</ListItemIcon>
+                 </ListItem>
+             </div>
+            }
             </div>
 
             )
