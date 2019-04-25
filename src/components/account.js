@@ -33,9 +33,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Pp from '../Images/avatar.png';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
 import NextIcon from '@material-ui/icons/Done';
 import Fab from '@material-ui/core/Fab';
+import UploadIcon from '@material-ui/icons/CloudUpload';
 
 const override = css`
     display: block;
@@ -93,7 +93,6 @@ class Account extends Component {
 
     componentDidMount(){
         this.loadFbApi();
-        this.fbCheckLogin();
         this.getUserData();
     }
 
@@ -149,17 +148,48 @@ class Account extends Component {
         );
     }
 
+    getFbPhoto2 (){
+        var that = this
+        window.FB.api(
+            "/me/picture",
+            {
+                "redirect": false,
+                "height": "150",
+                "type": "normal",
+                "width": "150"
+            },
+            function (response) {
+              if (response && !response.error) {
+                  console.log(response);
+              }
+              else{
+                  console.log(response.error)
+              }
+            }
+        );
+    }
+
     fbCheckLogin(){
         var that = this
         window.FB.getLoginStatus(function(response) {
             that.setState({fbStatus: response.status})
         });
     }
- 
+
+    authFbLogin(){
+        var that = this
+        window.FB.login(function(response) {
+              that.setState({fbStatus: response.status})
+          }, {scope: 'public_profile'});
+    }
+    
     Current(){
         const { t } = this.props;
         const { classes } = this.props;
         const accountStatus = this.state.status
+        if(!this.state.fbStatus){
+            this.fbCheckLogin();
+        }
         if(this.state.value === 0){
             return(
             <div style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
@@ -170,8 +200,8 @@ class Account extends Component {
                         <h5>{t('fbPhotoUpload')}</h5>
                     </Fab>:undefined}
 
-                   {this.state.fbStatus !== 'connected' && !this.state.photo ?
-                   <Fab color="primary" variant="extended" aria-label="fbPhotoUpload" onClick={()=>{}} className={classes.fab}>
+                   {this.state.fbStatus !== 'connected' ?
+                   <Fab color="primary" variant="extended" aria-label="fbPhotoLogin" onClick={()=>{this.authFbLogin()}} className={classes.fab}>
                         <NextIcon className={classes.extendedIcon2} />
                         <h5>{t('fbLogin')}</h5>
                     </Fab>:undefined}
@@ -180,6 +210,15 @@ class Account extends Component {
                 <Grid container justify="center" alignItems="center">
                     <Avatar alt="Profile Picture" src={!this.state.photo ? Pp : this.state.photo} className={classes.Avatar} />
                 </Grid>
+
+                <Grid container justify="center" alignItems="center">
+                {this.state.fbStatus === 'connected' && this.state.photo ?
+                    <Fab color="primary" variant="extended" aria-label="fbPhotoEdit" onClick={()=>{this.getFbPhoto2()}} className={classes.fab}>
+                        <UploadIcon className={classes.extendedIcon2} />
+                        <h5>{t('fbEditPhoto')}</h5>
+                    </Fab>:undefined}
+                </Grid>
+
                 <h1 style={{color: "black"}}>
                 <span style={{color: "#3F51B5"}}>
                 {t('welcome')}
@@ -260,7 +299,6 @@ class Account extends Component {
               version: "v3.2"
             });
           };
-          console.log("Loading fb api");
           (function(d, s, id) {
             var js, fjs=d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {return;}
