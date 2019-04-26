@@ -535,23 +535,53 @@ background-color: #0ddb06;
   overflow: hidden;
 } 
 
+.epic {
+  background: radial-gradient(#c359ff,#4b2483);
+  overflow: hidden;
+}
+
+.legendary {
+  background: radial-gradient(#ea8d23,#78371d);
+  overflow: hidden;
+}
+
+.rare {
+  background: radial-gradient(#2cc1ff,#143977);
+  overflow: hidden;
+}
+
+.uncommon {
+  background: radial-gradient(#69bb1e,#175117);
+  overflow: hidden;
+}
+
 .rarity-epic {
   background: radial-gradient(#c359ff,#4b2483);
+  border: 3px solid #e95eff;
   overflow: hidden;
 }
 
 .rarity-legendary {
   background: radial-gradient(#ea8d23,#78371d);
+  border: 3px solid #ea8d23;
   overflow: hidden;
 }
 
 .rarity-rare {
   background: radial-gradient(#2cc1ff,#143977);
+  border: 3px solid #2cc1ff;
   overflow: hidden;
 }
 
 .rarity-uncommon {
   background: radial-gradient(#69bb1e,#175117);
+  border: 3px solid #69bb1e;
+  overflow: hidden;
+}
+
+.rarity-marvel {
+  background: radial-gradient(#c53334,#761b1b);
+  border: 3px solid #ef3537;
   overflow: hidden;
 }
 
@@ -767,15 +797,24 @@ background-color: #ffffff;
 }
 
 .itemprice {
+  font-family: luckiest guy,Lato,Roboto,Calibri,Arial;
   text-transform: uppercase;
   font-size: 17px;
   text-align: center;
-  margin-top: -12px;
-  text-shadow: 0 0 10px rgba(0,0,0,.5);
+  text-shadow: 0 0 10px rgba(0,0,0,.5)
+}
+
+.card-text:last-child {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .itemname {
+  font-family: luckiest guy,Lato,Roboto,Calibri,Arial;
   text-transform: uppercase;
+  font-size: 16px;
   text-align: center;
   text-shadow: 0 0 10px rgba(0,0,0,.5);
   transform: scale(1,1.3);

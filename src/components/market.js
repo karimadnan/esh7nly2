@@ -13,8 +13,8 @@ import Modal from 'react-responsive-modal';
 import amumu from '../Images/amumusad.png';
 import { css } from '@emotion/core';
 import { PacmanLoader } from 'react-spinners';
-import axios from 'axios';
 import moment from 'moment';
+import Chip from '@material-ui/core/Chip';
 import StarRatings from 'react-star-ratings';
 import {
     BrowserView,
@@ -23,6 +23,15 @@ import {
 import {isMobile} from 'react-device-detect';
 import { withNamespaces } from 'react-i18next';
 import SwipeableViews from 'react-swipeable-views';
+import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import BackIcon from '@material-ui/icons/SkipPrevious';
+import ViewIcon from '@material-ui/icons/Pageview';
+import Timer from '@material-ui/icons/Timer';
+import { withStyles } from '@material-ui/core/styles';
+import compose from 'recompose/compose';
+import FortniteShop from './FortniteShop';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -41,6 +50,19 @@ const override = css`
     border-color: red;
     margin: 0 auto;
 `;
+
+const styles = theme => ({
+    fab: {
+        margin: theme.spacing.unit,
+    },
+    extendedIcon2: {
+        marginRight: theme.spacing.unit * 6,
+    },
+    chip: {
+        margin: theme.spacing.unit,
+    }
+});
+
 
 const customStyles = {
     option: (provided, state) => ({
@@ -74,6 +96,7 @@ state = {
     ErrorMsg: "",
     activeStep: 0,
     optionsFetched: false,
+    fortniteShop: false,
     quantity: 1
 }
 
@@ -248,7 +271,7 @@ let counter = 0
 if (this.state.view === "shop"){
     let shop = this.props.shop.items.map((item) =>{
         var discounted = item.discount / 100 * item.price
-        var rarity = "card splash-cardTees rarity-"+item.rarity
+        var rarity = "card splash-cardTees "+item.rarity
         var key = item.Name + `-${counter}`
         var randomImg = function (obj) {
             var keys = Object.keys(obj)
@@ -348,39 +371,40 @@ handleStepChange = activeStep => {
 
 ViewProduct(){
 const { t } = this.props;
+const { classes } = this.props;
 var prev = this.props.cart.itemPrev
 if (this.state.view === "item"){
     if(prev.options && !this.state.optionsFetched){
-        if (prev.id === "5cb82c254e1efafcd06dc1fa") {
+        // if (prev.id === "5cb82c254e1efafcd06dc1fa") {
 
-            this.interval = setInterval(() => this.tick(), 1000);
-            const currentDate = moment();
-            const future = moment("00:00 AM", ["h:mm A"]);
-            let timeCount = moment(future.diff(currentDate))
+        //     this.interval = setInterval(() => this.tick(), 1000);
+        //     const currentDate = moment();
+        //     const future = moment("00:00 AM", ["h:mm A"]);
+        //     let timeCount = moment(future.diff(currentDate))
             
-        if(moment(timeCount).hour() > 3){
-            axios.get('https://fnbr.co/api/shop', 
-            {headers: { 'x-api-key': 'b4d7cae7-7047-4a17-83f6-b4e62091d328' }})
-            .then(response => {
-            response.data.data.daily.forEach(element => {
-                let object1 = {
-                label: `${element.name} - ${element.type}`,
-                value: parseFloat(element.price.replace(/,/g, ''))*0.19,
-                img: element.images.icon
-                }
-                this.props.addPrevOptions(object1)
-              });
-              response.data.data.featured.forEach(element => {
-                let object2 = {
-                label: `${element.name} - ${element.type}`,
-                value: parseFloat(element.price.replace(/,/g, ''))*0.19,
-                img: element.images.icon
-               }
-               this.props.addPrevOptions(object2)
-             });
-             })
-            }
-        }
+        // if(moment(timeCount).hour() > 3){
+        //     axios.get('https://fnbr.co/api/shop', 
+        //     {headers: { 'x-api-key': 'b4d7cae7-7047-4a17-83f6-b4e62091d328' }})
+        //     .then(response => {
+        //     response.data.data.daily.forEach(element => {
+        //         let object1 = {
+        //         label: `${element.name} - ${element.type}`,
+        //         value: parseFloat(element.price.replace(/,/g, ''))*0.19,
+        //         img: element.images.icon
+        //         }
+        //         this.props.addPrevOptions(object1)
+        //       });
+        //       response.data.data.featured.forEach(element => {
+        //         let object2 = {
+        //         label: `${element.name} - ${element.type}`,
+        //         value: parseFloat(element.price.replace(/,/g, ''))*0.19,
+        //         img: element.images.icon
+        //        }
+        //        this.props.addPrevOptions(object2)
+        //      });
+        //      })
+        //     }
+        // }
 
     prev.options.forEach(element => {
         let object = {
@@ -408,9 +432,10 @@ if (this.state.view === "item"){
 
     if(prev.sizes && !this.state.sizes.length > 0){
         var sizes = []
-        prev.sizes.forEach(function(entry){
+        prev.sizes.forEach((entry, index) => {
             let objSize = {
-                label: entry
+                label: entry,
+                value: index
             }
             sizes.push(objSize)
         })
@@ -419,27 +444,19 @@ if (this.state.view === "item"){
 
     var discount = prev.discount / 100 * prev.price
     var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
-    var imgs = []
-    
-    prev.img.forEach((img, index) => {
-        let object = {
-            img: img,
-            index: index
-        }
-        imgs.push(object)
-    })
 
     return (
     <div className="container">
+       {!this.state.fortniteShop ?
         <div className="BlackBG">
         
          <div className="col-xs-12 col-md-8 col-lg-8">
-            {prev.img.length > 1 && 
-                imgs.map((item) =>{
+            {prev.colors && prev.colors.length > 1 &&
+                this.state.colors.map((item) =>{
                 return(
-                    <div key={item.index} onClick={()=>{this.setState({activeStep: item.index}), this.props.updatePrev(item.img, 'img'), this.props.updatePrev(this.state.colors[item.index].label, 'color')}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
-                        <div className ={prev.defaultImage === item.img ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                            <img src={item.img} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
+                    <div key={item.index} onClick={()=>{this.setState({activeStep: item.index})}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
+                        <div className ={this.state.activeStep === item.index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
+                            <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
                         </div>
                     </div>
                 )
@@ -473,15 +490,14 @@ if (this.state.view === "item"){
          </div>
 
          <div style={{color: "white", fontSize: 15}} className="col-xs-12 col-md-6 col-lg-6">
-            {prev.id === "5cb82c254e1efafcd06dc1fa" && this.state.timeLeft &&
+            {prev.id === "5cb82c254e1efafcd06dc1fa" &&
             <div>
-                <div className="col-xs-12 col-md-12 col-lg-12">
-                    <h4 style={{color: "white", textAlign: "center"}}>Shop Rotation {moment(this.state.timeLeft).format("HH")}Hour(s) - {moment(this.state.timeLeft).format("mm")}Minute(s) - {moment(this.state.timeLeft).format("ss")}Second(s) </h4>
-                </div>
-                <div className="col-xs-12 col-md-12 col-lg-12">
-                    <h4 style={{color: "white", textAlign: "center"}}>If 4 hours or less left you can only buy v-bucks.</h4>
-                    <div style={{borderBottom: "1px dotted grey"}}/>
-                </div>
+                <Grid container justify="center" alignItems="center">
+                    <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.setState({fortniteShop: true}), this.interval = setInterval(() => this.tick(), 1000)}} className={classes.fab}>
+                        <ViewIcon className={classes.extendedIcon2} />
+                        <h6>{t('View Fortnite Shop')}</h6>
+                    </Fab>
+                </Grid>
             </div>}
                 
             <h1 style={{color: "white", textAlign: "center", fontWeight: "bold"}}>{prev.Name}</h1>
@@ -550,17 +566,20 @@ if (this.state.view === "item"){
                     </div>
                 </div>} 
                 <div className="col-xs-6 col-md-6 col-lg-6">
-                    <button className="btn btn-danger btn-block" style={{color : "white"}} onClick={()=>{this.goBack()}}>
-                        <span className="icon glyphicon glyphicon-arrow-left"></span>
-                        <span className="text">{t('backToShop')}</span>
-                    </button>
+                    <Grid container justify="flex-start" alignItems="center">
+                        <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.goBack()}} className={classes.fab}>
+                            <BackIcon className={classes.extendedIcon2} />
+                            <h6>{t('backToShop')}</h6>
+                        </Fab>
+                    </Grid>
                 </div>
                 <div className="col-xs-6 col-md-6 col-lg-6">
-                    <button className="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.addItemToCart(prev)}}>
-                        <span className="icon glyphicon glyphicon-shopping-cart"></span>
-                        <span className="text">{t('addToCart')}</span>
-                    </button>
-                    <br/>
+                    <Grid container justify="flex-start" alignItems="center">
+                        <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.addItemToCart(prev)}} className={classes.fab}>
+                            <ShoppingCart className={classes.extendedIcon2} />
+                            <h6>{t('addToCart')}</h6>
+                        </Fab>
+                    </Grid>
                 </div>
                 <div className="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
 
@@ -574,6 +593,27 @@ if (this.state.view === "item"){
                <br/>
          </div>
       </div>
+      :
+        <div>
+            <Grid container justify="flex-start" alignItems="center">
+                <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({fortniteShop: false}), clearInterval(this.interval);}} className={classes.fab}>
+                    <BackIcon className={classes.extendedIcon2} />
+                    <h6>{t('backToShop')}</h6>
+                </Fab>
+            </Grid>
+            <Grid container justify="center" alignItems="center">
+               {this.state.timeLeft && 
+               <Chip
+                    icon={<Timer />}
+                    label={<h4>Shop Rotation {moment(this.state.timeLeft).format("HH")}Hours - {moment(this.state.timeLeft).format("mm")}Minutes - {moment(this.state.timeLeft).format("ss")}Seconds </h4>}
+                    className={classes.chip}
+                    variant="outlined"
+                    color="primary"
+                />}
+            </Grid>
+            <FortniteShop />
+        </div>
+      }
     </div>
     )
 }
@@ -637,8 +677,10 @@ const matchDispatchToProps = dispatch => bindActionCreators(
     dispatch,
 )
 
- 
-  export default withNamespaces()(connect(mapStateToProps, matchDispatchToProps)(Market));
-  
+export default compose(
+    withStyles(styles),
+    withNamespaces(),
+    connect(mapStateToProps, matchDispatchToProps),
+)(Market); 
 
 

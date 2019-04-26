@@ -54,7 +54,7 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
     },
     extendedIcon2: {
-        marginRight: theme.spacing.unit * 3,
+        marginRight: theme.spacing.unit * 6,
     },
 });
 
