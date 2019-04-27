@@ -47,21 +47,20 @@ app.use(function (req, res, next) {
   app.use('/', userRoutes)
   app.use('/server', Routers);
 
- const server = http.createServer(app, (req, res) => {
+  const server = http.createServer(app, (req, res) => {
     res.statusCode = 301;
     res.setHeader('Location', `https://${hostname}${req.url}`);
     res.end(); 
  });
 
-  const secureServer = https.createServer(app, options, (req, res) => {
+  const secureServer = https.createServer(options, app, (req, res) => {
     res.statusCode = 200;
     res.end("<h1>HTTPS server running</h1>");
  });
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")
-    server.listen(PORT);
-    secureServer.listen(PORT2);
+    secureServer.listen(PORT);
   }, err => {
     console.log('Failed To connect DB',err);	
     process.exit(1);
