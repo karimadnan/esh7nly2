@@ -196,6 +196,8 @@ class Account extends Component {
             function (response) {
               if (response && !response.error) {
                   if(that.state.photo !== response.data.url){
+                    console.log(response.data.url, "URL")
+                    console.log(that.state.photo, "PHOTO")
                     that.setPhoto(response.data.url);
                   }
                   else{
