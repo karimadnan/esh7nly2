@@ -13,7 +13,7 @@ let DB = require('./server/Mongo');
 const normalizePort =port => parseInt(port ,10);
 const PORT = normalizePort(process.env.PORT || 4000);
 const PORT2 = normalizePort(process.env.PORT || 5000);
-
+const helmet = require("helmet");
 const app = express();
 const compression = require('compression');
 app.use(compression());
@@ -32,6 +32,7 @@ let options = {
 };
 
 app.use(morgan('dev'));
+app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false, parameterLimit: 100000, limit: "50mb" }));
