@@ -1,4 +1,5 @@
-const {createServer} = require('http');
+const http = require('http');
+const https = require('https');
 const express = require('express');
 require('dotenv').config();
 const morgan = require('morgan');
@@ -11,6 +12,7 @@ const dbname = process.env.DBName;
 let DB = require('./server/Mongo');
 const normalizePort =port => parseInt(port ,10);
 const PORT = normalizePort(process.env.PORT || 4000);
+const PORT2 = normalizePort(process.env.PORT || 3000);
 
 const app = express();
 const compression = require('compression');
@@ -20,8 +22,6 @@ const fs = require('fs');
 const cert = fs.readFileSync('./ssl/www_ggegypt_com.crt');
 const ca = fs.readFileSync('./ssl/www_ggegypt_com.ca-bundle');
 const key = fs.readFileSync('./ssl/server.key');
-
-const https = require('https');
 
 const hostname = 'ggegypt.com';
 
@@ -47,14 +47,21 @@ app.use(function (req, res, next) {
   app.use('/', userRoutes)
   app.use('/server', Routers);
 
-  const server = https.createServer(options, (req, res) => {
+ const server = http.createServer(app, (req, res) => {
+    res.statusCode = 301;
+    res.setHeader('Location', `https://${hostname}${req.url}`);
+    res.end(); 
+ });
+
+  const secureServer = https.createServer(app, options, (req, res) => {
     res.statusCode = 200;
     res.end("<h1>HTTPS server running</h1>");
-  });
+ });
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")
-    server.listen(PORT, hostname);
+    server.listen(PORT);
+    secureServer.listen(PORT2);
   }, err => {
     console.log('Failed To connect DB',err);	
     process.exit(1);
