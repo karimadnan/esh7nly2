@@ -1,4 +1,5 @@
 const http = require('http');
+const https = require('https');
 const express = require('express');
 require('dotenv').config();
 const morgan = require('morgan');
@@ -33,7 +34,7 @@ app.use(function (req, res, next) {
   app.use('/', userRoutes)
   app.use('/server', Routers);
 
-  const server = http.createServer(app)
+  const server = https.createServer(app)
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")
