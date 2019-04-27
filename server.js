@@ -12,7 +12,7 @@ const dbname = process.env.DBName;
 let DB = require('./server/Mongo');
 const normalizePort =port => parseInt(port ,10);
 const PORT = normalizePort(process.env.PORT || 4000);
-const PORT2 = normalizePort(process.env.PORT || 3000);
+const PORT2 = normalizePort(process.env.PORT || 5000);
 
 const app = express();
 const compression = require('compression');
