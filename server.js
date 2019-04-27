@@ -11,7 +11,6 @@ const dbname = process.env.DBName;
 let DB = require('./server/Mongo');
 const normalizePort =port => parseInt(port ,10);
 const PORT = normalizePort(process.env.PORT || 4000);
-const sslRedirect = require('heroku-ssl-redirect');
 const app = express();
 const compression = require('compression');
 app.use(compression());
