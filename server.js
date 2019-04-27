@@ -19,11 +19,9 @@ const compression = require('compression');
 app.use(compression());
 
 const fs = require('fs');
-const cert = fs.readFileSync('./ssl/www_ggegypt_com.crt');
-const ca = fs.readFileSync('./ssl/www_ggegypt_com.ca-bundle');
+const cert = fs.readFileSync('./ssl/ggegypt.crt');
+const ca = fs.readFileSync('./ssl/ggegypt.ca-bundle');
 const key = fs.readFileSync('./ssl/server.key');
-
-const hostname = 'ggegypt.com';
 
 let options = {
   cert: cert,
@@ -48,11 +46,11 @@ app.use(function (req, res, next) {
   app.use('/', userRoutes)
   app.use('/server', Routers);
 
-  const server = http.createServer(app, (req, res) => {
-    res.statusCode = 301;
-    res.setHeader('Location', `https://${hostname}${req.url}`);
-    res.end(); 
- });
+//   const server = http.createServer(app, (req, res) => {
+//     res.statusCode = 301;
+//     res.setHeader('Location', `https://${hostname}${req.url}`);
+//     res.end(); 
+//  });
 
   const secureServer = https.createServer(options, app)
 
