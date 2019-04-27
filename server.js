@@ -21,6 +21,10 @@ const cert = fs.readFileSync('./ssl/www_ggegypt_com.crt');
 const ca = fs.readFileSync('./ssl/www_ggegypt_com.ca-bundle');
 const key = fs.readFileSync('./ssl/server.key');
 
+const https = require('https');
+
+const hostname = 'ggegypt.com';
+
 let options = {
   cert: cert,
   ca: ca,
@@ -50,7 +54,7 @@ app.use(function (req, res, next) {
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")
-    server.listen(PORT);
+    server.listen(PORT, hostname);
   }, err => {
     console.log('Failed To connect DB',err);	
     process.exit(1);
