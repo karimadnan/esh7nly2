@@ -16,7 +16,6 @@ const app = express();
 const compression = require('compression');
 app.use(compression());
 
-app.use(sslRedirect());
 app.use(morgan('dev'));
 
 app.use(bodyParser.json());
