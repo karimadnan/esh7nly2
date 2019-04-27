@@ -115,6 +115,7 @@
       "fortniteShopTimerSeconds": " - {{seconds}}Seconds",
       "openDayDays": "Launching in {{days}}Days",
       "openDayHours": " - {{hours}}Hours",
-      "openDayMinutes": " - {{minutes}}Minutes"
+      "openDayMinutes": " - {{minutes}}Minutes",
+      "fbPhotoDuplicate": "You already use this photo"
 
 }

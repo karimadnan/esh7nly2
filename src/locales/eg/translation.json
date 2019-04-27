@@ -115,6 +115,7 @@
       "fortniteShopTimerSeconds": " - {{seconds}}ثانية",
       "openDayDays": "فاضل على الافتتاح {{days}} ايام",
       "openDayHours": " - {{hours}} ساعة",
-      "openDayMinutes": " - {{minutes}} دقيقة"
+      "openDayMinutes": " - {{minutes}} دقيقة",
+      "fbPhotoDuplicate": "يعم مهيا نفس الصورة"
 
 }

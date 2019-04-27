@@ -182,6 +182,36 @@ class Account extends Component {
         );
     }
 
+    updateFbPhoto (){
+        const { t } = this.props;
+        var that = this
+        window.FB.api(
+            "/me/picture",
+            {
+                "redirect": false,
+                "height": "150",
+                "type": "normal",
+                "width": "150"
+            },
+            function (response) {
+              if (response && !response.error) {
+                  if(that.state.photo !== response.data.url){
+                    that.setPhoto(response.data.url);
+                  }
+                  else{
+                    that.setState({
+                        ErrorModal:true,
+                        ErrorMsg:`${t(`fbPhotoDuplicate`)}`
+                    })
+                  }
+              }
+              else{
+                  console.log(response.error)
+              }
+            }
+        );
+    }
+
     fbCheckLogin(){
         var that = this
         window.FB.getLoginStatus(function(response) {
@@ -250,7 +280,7 @@ class Account extends Component {
 
                 <Grid container justify="center" alignItems="center">
                 {this.state.fbStatus === 'connected' && this.state.photo ?
-                    <Fab color="primary" variant="extended" aria-label="fbPhotoEdit" onClick={()=>{this.getFbPhoto()}} className={classes.fab}>
+                    <Fab color="primary" variant="extended" aria-label="fbPhotoEdit" onClick={()=>{this.updateFbPhoto()}} className={classes.fab}>
                         <UploadIcon className={classes.extendedIcon2} />
                         <h5>{t('fbEditPhoto')}</h5>
                     </Fab>:undefined}
