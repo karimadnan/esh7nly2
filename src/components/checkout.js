@@ -48,6 +48,9 @@ const styles = theme => ({
         width: 80,
         height: 80,
       },
+    divider: {
+        margin: theme.spacing.unit,
+    },
     fab: {
         margin: theme.spacing.unit,
     },
@@ -475,24 +478,20 @@ class Checkout extends Component {
             return (
                 <div key={item.id}>
                     <div class="row">
-                        <div class="col-xs-12 col-md-3 col-lg-3">
-                            <Avatar alt="Product Picture" src={item.defaultImage} className={classes.Avatar} />
-                        </div>
-                        <div class="col-xs-12 col-md-3 col-lg-3">
-                            <ListItem>
-                                <ListItemText primary={<h5>{item.Name.length > 20 ? (((item.Name).substring(0,10-3)) + '...') : item.Name}</h5>} />
-                            </ListItem>
-                        </div>
-                        <div class="col-xs-6 col-md-3 col-lg-3">
-                            <ListItem>
-                                <ListItemText primary={<h5><CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />{t('currency')}</h5>}/>
-                            </ListItem>
-                        </div>  
-                        <div class="col-xs-6 col-md-3 col-lg-3">
-                            <ListItem>
+                        <Grid container justify="center" alignItems="center">
+                            <div class="col-xs-4 col-md-3 col-lg-3">
+                                <Avatar alt="Product Picture" src={item.defaultImage} className={classes.Avatar} />
+                            </div>
+                            <div class="col-xs-4 col-md-3 col-lg-3">
+                                    <ListItemText primary={<h5>{item.Name.length > 20 ? (((item.Name).substring(0,10-3)) + '...') : item.Name}</h5>} />
+                            </div>
+                            <div class="col-xs-4 col-md-3 col-lg-3">
+                                    <ListItemText primary={<h5><CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />{t('currency')}</h5>}/>
+                            </div>  
+                            <div class="col-xs-4 col-md-3 col-lg-3">
                                     <ListItemText primary={<h5>{t('quantity')}: {item.quantity}</h5>}/>
-                            </ListItem>
-                        </div>  
+                            </div>  
+                        </Grid>
                     </div>
                 </div>
             )
@@ -582,8 +581,8 @@ render(){
     var grandTotal = total > 400 ? total : total + 30
     return(
     <div class="GG-BG-INVERSE">
-        <div  style={{padding: 10}}>
         <div class="col-xs-12 col-md-8 col-lg-8">
+        <div style={{margin: 10}}>
             <div class="WhiteBG">
                        {!this.state.loaded && this.props.loginData.loggedState && <div>
                             <PacmanLoader
@@ -609,29 +608,31 @@ render(){
                         {this.Clean()}
                     </div> 
                 }
-
-                </div>
+            </div>
+            </div>
             </div>
             {/* CART */}
             <div class="col-xs-12 col-md-4 col-lg-4">
-
+            <div style={{margin: 10}}>
             <div class="WhiteBG">
                    {!this.state.cart && this.state.currentIndex != 3 && this.props.cartInfo.totalItems > 0 && 
-                    <Fab color="primary" variant="extended" onClick={()=>{this.setState({cart: true, currentIndex: 0})}} className={classes.fab}>
-                        <Badge className={classes.extendedIcon} badgeContent={this.props.cartInfo.totalItems} color="secondary">     
-                            <ShoppingCart fontSize="large" style={{color: "#fff"}}/>
-                        </Badge>
-                            <h5>{t('editCart')}</h5>
-                    </Fab>}
+                    <Grid container justify="center" alignItems="center">
+                        <Fab color="primary" variant="extended" onClick={()=>{this.setState({cart: true, currentIndex: 0})}} className={classes.fab}>
+                            <Badge className={classes.extendedIcon} badgeContent={this.props.cartInfo.totalItems} color="secondary">     
+                                <ShoppingCart fontSize="large" style={{color: "#fff"}}/>
+                            </Badge>
+                                <h5>{t('editCart')}</h5>
+                        </Fab>
+                    </Grid>}
 
-                    <Divider />
+                    <Divider className={classes.divider}/>
 
                         {this.createCart()}
 
                {this.props.cartInfo.totalItems > 0 ?   
                 <div>  
                     <Typography variant="h4" color="#212121">
-                        {t('items')} {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                        {t('items')}: {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
                     </Typography>
                     <Typography variant="h4" color="#212121">
                     {this.props.cartInfo.totalPrice < 400 ?
@@ -640,9 +641,9 @@ render(){
                         `${t('freeShip')}`
                         }
                     </Typography>
-                <Divider />
+                <Divider className={classes.divider}/>
                     <Typography variant="h4" color="#212121">
-                        {t('grandTotal')} {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                        {t('grandTotal')}: {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
                     </Typography>                 
                 </div>
                  :
@@ -650,8 +651,9 @@ render(){
                         {t('emptyCart')}                 
                 </Typography>}
                 </div>
+                </div>
             </div>
-        </div>
+
         <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
             <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>

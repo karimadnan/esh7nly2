@@ -16,6 +16,16 @@ const app = express();
 const compression = require('compression');
 app.use(compression());
 
+const fs = require('fs');
+const cert = fs.readFileSync('./ssl/www_ggegypt_com.crt');
+const ca = fs.readFileSync('./ssl/www_ggegypt_com.ca-bundle');
+const key = fs.readFileSync('./ssl/server.key');
+
+let options = {
+  cert: cert,
+  ca: ca,
+  key: key
+};
 
 app.use(morgan('dev'));
 
@@ -33,7 +43,10 @@ app.use(function (req, res, next) {
   app.use('/', userRoutes)
   app.use('/server', Routers);
 
-  const server = createServer(app);
+  const server = https.createServer(options, (req, res) => {
+    res.statusCode = 200;
+    res.end("<h1>HTTPS server running</h1>");
+  });
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")
