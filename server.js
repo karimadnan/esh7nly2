@@ -60,8 +60,8 @@ app.use(function (req, res, next) {
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")
-    server.listen(PORT);
-    secureServer.listen(PORT2);
+    // server.listen(PORT);
+    secureServer.listen(PORT);
   }, err => {
     console.log('Failed To connect DB',err);	
     process.exit(1);
