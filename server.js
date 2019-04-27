@@ -53,10 +53,7 @@ app.use(function (req, res, next) {
     res.end(); 
  });
 
-  const secureServer = https.createServer(options, app, (req, res) => {
-    res.statusCode = 200;
-    res.end("<h1>HTTPS server running</h1>");
- });
+  const secureServer = https.createServer(options, app)
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")
