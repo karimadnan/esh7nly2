@@ -108,6 +108,13 @@
       "actKeyInfo": "الكود اتبعت ل {{email}}",
       "actKeyLabel": "كود التفعيل",
       "actKeyError": "اتأكد من كود التفعيل",
-      "actButtonLabel": "يلا بينا"
+      "actButtonLabel": "يلا بينا",
+      "viewFortShop": "فورت نايت شوب النهاردة",
+      "fortniteShopTimerHours": "فاضل {{hours}}ساعة",
+      "fortniteShopTimerMinutes": " - {{minutes}}دقيقة",
+      "fortniteShopTimerSeconds": " - {{seconds}}ثانية",
+      "openDayDays": "فاضل على الافتتاح {{days}} ايام",
+      "openDayHours": " - {{hours}} ساعة",
+      "openDayMinutes": " - {{minutes}} دقيقة"
 
 }

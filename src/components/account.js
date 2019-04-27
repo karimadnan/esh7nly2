@@ -62,10 +62,7 @@ const theme = createMuiTheme({
         primary: { 500: '#3F51B5' }, // custom color in hex
         secondary: { 'A400': '#ff9800' },
         textColor: { 500: '#fafafa' }  // custom color in hex
-    },
-    typography: {
-        useNextVariants: true,
-    },
+    }
 });
 
 const styles = theme => ({
@@ -236,7 +233,7 @@ class Account extends Component {
                 <Grid container justify="center" alignItems="center">
                     {this.state.fbStatus === 'connected' && !this.state.photo ?
                     <Fab color="primary" variant="extended" aria-label="fbPhotoUpload" onClick={()=>{this.getFbPhoto()}} className={classes.fab}>
-                        <NextIcon className={classes.extendedIcon2} />
+                        <UploadIcon className={classes.extendedIcon2} />
                         <h5>{t('fbPhotoUpload')}</h5>
                     </Fab>:undefined}
 

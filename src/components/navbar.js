@@ -350,7 +350,6 @@ function mapStateToProps(state){
   return {
     loginData: state.loginSession,
     server: state.server,
-    extras: state.extras
   }
 }
 

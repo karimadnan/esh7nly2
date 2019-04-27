@@ -27,7 +27,7 @@ import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import BackIcon from '@material-ui/icons/SkipPrevious';
-import ViewIcon from '@material-ui/icons/Pageview';
+import ViewIcon from '@material-ui/icons/RemoveRedEye';
 import Timer from '@material-ui/icons/Timer';
 import { withStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
@@ -285,6 +285,7 @@ if (this.state.view === "shop"){
             <div className ={rarity}>
                 <img src={item.defaultImage} className="splash-card-product-view-constant" />
                 <div className="overlayHover" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}>
+
                     <button className="btn btn-primary btn-block" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}} style={{color : "white"}}>
                         {t('viewButton')}
                     </button>
@@ -364,8 +365,6 @@ if (this.state.view === "shop"){
 handleStepChange = activeStep => {
     var prev = this.props.cart.itemPrev
     this.setState({ activeStep });
-    this.props.updatePrev(prev.img[activeStep], 'img')
-    this.props.updatePrev(this.state.colors[activeStep].label, 'color')
 };
 
 
@@ -444,6 +443,10 @@ if (this.state.view === "item"){
 
     var discount = prev.discount / 100 * prev.price
     var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
+    
+    const hours = moment(this.state.timeLeft).format("HH")
+    const minutes = moment(this.state.timeLeft).format("mm")
+    const seconds = moment(this.state.timeLeft).format("ss")
 
     return (
     <div className="container">
@@ -495,7 +498,7 @@ if (this.state.view === "item"){
                 <Grid container justify="center" alignItems="center">
                     <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.setState({fortniteShop: true}), this.interval = setInterval(() => this.tick(), 1000)}} className={classes.fab}>
                         <ViewIcon className={classes.extendedIcon2} />
-                        <h6>{t('View Fortnite Shop')}</h6>
+                        <h6>{t('viewFortShop')}</h6>
                     </Fab>
                 </Grid>
             </div>}
@@ -605,7 +608,7 @@ if (this.state.view === "item"){
                {this.state.timeLeft && 
                <Chip
                     icon={<Timer />}
-                    label={<h4>Shop Rotation {moment(this.state.timeLeft).format("HH")}Hours - {moment(this.state.timeLeft).format("mm")}Minutes - {moment(this.state.timeLeft).format("ss")}Seconds </h4>}
+                    label={<h4>{t('fortniteShopTimerHours', {hours})}{t('fortniteShopTimerMinutes', {minutes})}{t('fortniteShopTimerSeconds', {seconds})}</h4>}
                     className={classes.chip}
                     variant="outlined"
                     color="primary"

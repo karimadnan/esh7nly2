@@ -108,7 +108,14 @@
       "actKeyInfo": "رقم التفعيل تم ارساله الى {{email}}",
       "actKeyLabel": "رقم التفعيل",
       "actKeyError": "تأكد من رقم التفعيل",
-      "actButtonLabel": "تفعيل"
+      "actButtonLabel": "تفعيل",
+      "viewFortShop": "فورت نايت شوب اليوم",
+      "fortniteShopTimerHours": "باقى {{hours}}ساعة",
+      "fortniteShopTimerMinutes": " - {{minutes}}دقيقة",
+      "fortniteShopTimerSeconds": " - {{seconds}}ثانية",
+      "openDayDays": "تبقى على الافتتاح {{days}} ايام",
+      "openDayHours": " - {{hours}} ساعة",
+      "openDayMinutes": " - {{minutes}} دقيقة"
 
       
 

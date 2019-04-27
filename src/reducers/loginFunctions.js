@@ -9,7 +9,8 @@ export default function(state = initialState, action){
     
     switch(action.type){
         case 'USR_LOGIN':
-        return { 
+        return {
+            ...state,
             loggedState: true,
             userName: action.payload.Name,
             photo: action.payload.Photo,
@@ -17,9 +18,9 @@ export default function(state = initialState, action){
             session: action.payload.Access,
             isAdmin: action.payload.isAdmin
         }
-
         case 'USR_LOGOUT':
         return {
+            ...state,
             loggedState: false,
             userName: '',
             photo: '',

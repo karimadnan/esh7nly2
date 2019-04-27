@@ -33,6 +33,7 @@ import EditIcon from '@material-ui/icons/BorderColor';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import BackIcon from '@material-ui/icons/SkipPrevious';
+import i18next from 'i18next';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -288,45 +289,26 @@ class Checkout extends Component {
             )
         }
     else if (this.state.currentIndex === 0 && this.state.gotData && this.state.loaded){
+        if (i18next.language === "EN"){
         return (
-            <div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('shippedTo')}:</span> {this.state.firstName} {this.state.lastName}</label>
-                        <br/>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('phone')}:</span> {this.state.Phone}</label>
-                        <br/>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('area')}:</span> {this.state.city} / {this.state.Area}</label>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('streetName')}:</span> {this.state.StName}</label>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('locationType')}:</span> {this.state.locationType}</label>
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: "green"}}><span style={{color: "black"}}>{t('shippingNote')}:</span> {this.state.note ? this.state.note : `${t('noShippingNote')}`}</label>
-                    </div>
-                </div>
+            <div style={{whiteSpace: "normal", wordWrap: "break-word"}}>
+                    <h4>{t('shippedTo')}:</h4>
+                    <ListItemText primary={<h4>{this.state.firstName} {this.state.lastName}</h4>} />
+                <Divider />
+                    <h4>{t('phone')}:</h4>
+                    <ListItemText primary={<h4>{this.state.Phone}</h4>} />
+                <Divider />
+                    <h4>{t('area')}:</h4>
+                    <ListItemText primary={<h4>{this.state.city} / {this.state.Area}</h4>} />
+                <Divider />
+                    <h4>{t('streetName')}:</h4>
+                    <ListItemText primary={<h4>{this.state.StName}</h4>} />
+                <Divider />
+                    <h4>{t('locationType')}:</h4>
+                    <ListItemText primary={<h4>{this.state.locationType}</h4>} />
+                <Divider />
+                    <h4 >{t('shippingNote')}:</h4>
+                    <ListItemText primary={<h4>{this.state.note ? this.state.note : `${t('noShippingNote')}`}</h4>} />
 
                 <div class="col-xs-12 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
@@ -345,7 +327,47 @@ class Checkout extends Component {
                     </Grid>
                 </div>
             </div>
+        )}
+    else{
+        return(
+            <div style={{whiteSpace: "normal", wordWrap: "break-word"}}>
+                <h4>:{t('shippedTo')}</h4>
+                <ListItemText primary={<h4>{this.state.firstName} {this.state.lastName}</h4>} />
+            <Divider />
+                <h4>:{t('phone')}</h4>
+                <ListItemText primary={<h4>{this.state.Phone}</h4>} />
+            <Divider />
+                <h4>:{t('area')}</h4>
+                <ListItemText primary={<h4>{this.state.city} / {this.state.Area}</h4>} />
+            <Divider />
+                <h4>:{t('streetName')}</h4>
+                <ListItemText primary={<h4>{this.state.StName}</h4>} />
+            <Divider />
+                <h4>:{t('locationType')}</h4>
+                <ListItemText primary={<h4>{this.state.locationType}</h4>} />
+            <Divider />
+                <h4>:{t('shippingNote')}</h4>
+                <ListItemText primary={<h4>{this.state.note ? this.state.note : `${t('noShippingNote')}`}</h4>} />
+
+            <div class="col-xs-12 col-md-6 col-lg-6">
+                <Grid container justify="center" alignItems="center">
+                    <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({gotData: false})}} className={classes.fab}>
+                        <EditIcon className={classes.extendedIcon2} />
+                        <h5>{t('edit')}</h5>
+                    </Fab>
+                </Grid>
+            </div>
+            <div class="col-xs-12 col-md-6 col-lg-6">
+                <Grid container justify="center" alignItems="center">
+                    <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.setState({currentIndex: 1})}} className={classes.fab}>
+                        <NextIcon className={classes.extendedIcon2} />
+                        <h5>{t('next')}</h5>
+                    </Fab>
+                </Grid>
+            </div>
+        </div>
         )
+    }
     }
 }
     }
@@ -487,59 +509,69 @@ class Checkout extends Component {
     const { t } = this.props;
     const { classes } = this.props;
     if(this.state.currentIndex === 2){
-        return(
-        <div>
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <h1 style={{color: "black"}}>{t('shipping')}:</h1>
-                <br/>
+        if (i18next.language === "EN"){
+            return (
+                <div style={{whiteSpace: "normal", wordWrap: "break-word"}}>
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <h1 style={{color: "black"}}>{t('shipping')}:</h1>
+                    </div>
+                        <h4>{t('shippedTo')}:</h4>
+                        <ListItemText primary={<h4>{this.state.firstName} {this.state.lastName}</h4>} />
+                        <h4>{t('phone')}:</h4>
+                        <ListItemText primary={<h4>{this.state.Phone}</h4>} />
+                        <h4>{t('area')}:</h4>
+                        <ListItemText primary={<h4>{this.state.city} / {this.state.Area}</h4>} />
+                        <h4>{t('streetName')}:</h4>
+                        <ListItemText primary={<h4>{this.state.StName}</h4>} />
+                        <h4>{t('locationType')}:</h4>
+                        <ListItemText primary={<h4>{this.state.locationType}</h4>} />
+                        <h4 >{t('shippingNote')}:</h4>
+                        <ListItemText primary={<h4>{this.state.note ? this.state.note : `${t('noShippingNote')}`}</h4>} />
+
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <h1 style={{color: "black"}}>{t('paymentMethod')}:</h1>
+                        <ListItemText primary={<h4>{this.state.paymentMethod}</h4>} />
+                    </div>
+                    <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
+                    <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.createOrder()}} className={classes.fab}>
+                        <NextIcon className={classes.extendedIcon2} />
+                        <h5>{t('submit')}</h5>
+                    </Fab>
+                    </div>
+                </div>
+            )}
+        else{
+            return(
+                <div>
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('shippedTo')}:</span> {this.state.firstName} {this.state.lastName}</label>
-                    <br/>
+                    <h1 style={{color: "black"}}>:{t('shipping')}</h1>
                 </div>
-            </div>
+                    <h4>:{t('shippedTo')}</h4>
+                    <ListItemText primary={<h4>{this.state.firstName} {this.state.lastName}</h4>} />
+                    <h4>:{t('phone')}</h4>
+                    <ListItemText primary={<h4>{this.state.Phone}</h4>} />
+                    <h4>:{t('area')}</h4>
+                    <ListItemText primary={<h4>{this.state.city} / {this.state.Area}</h4>} />
+                    <h4>:{t('streetName')}</h4>
+                    <ListItemText primary={<h4>{this.state.StName}</h4>} />
+                    <h4>:{t('locationType')}</h4>
+                    <ListItemText primary={<h4>{this.state.locationType}</h4>} />
+                    <h4>:{t('shippingNote')}</h4>           
+                    <ListItemText primary={<h4 style={{whiteSpace: "normal", wordWrap: "break-word"}}>{this.state.note ? this.state.note : `${t('noShippingNote')}`}</h4>} />
 
-            <div class="col-xs-12 col-md-12 col-lg-12">
                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('phone')}:</span> {this.state.Phone}</label>
-                    <br/>
+                        <h1 style={{color: "black"}}>:{t('paymentMethod')}</h1>
+                        <ListItemText primary={<h4>{this.state.paymentMethod}</h4>} />
+                </div>
+                <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
+                    <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.createOrder()}} className={classes.fab}>
+                        <NextIcon className={classes.extendedIcon2} />
+                        <h5>{t('submit')}</h5>
+                    </Fab>
                 </div>
             </div>
-
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('area')}:</span> {this.state.city} / {this.state.Area}</label>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('streetName')}:</span> {this.state.StName}</label>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('locationType')}:</span> {this.state.locationType}</label>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <label style={{color: "green"}}><span style={{color: "black"}}>{t('shippingNote')}:</span> {this.state.note ? this.state.note : `${t('noShippingNote')}`}</label>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-12 col-lg-12">
-                <h1 style={{color: "black"}}>{t('paymentMethod')}:</h1>
-                <label style={{color: "green"}}><span style={{color: "black"}}></span> {this.state.paymentMethod}</label>
-            </div>
-            <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
-                <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.createOrder()}} className={classes.fab}>
-                    <NextIcon className={classes.extendedIcon2} />
-                    <h5>{t('submit')}</h5>
-                </Fab>
-            </div>
-        </div>
-        )
+            )
+        }
     }
 }
 

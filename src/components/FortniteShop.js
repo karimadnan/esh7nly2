@@ -92,7 +92,7 @@ class FortniteShop extends Component {
       let shop = this.state.shop.map((image, index) => {
           var rarity = "card splash-card FortHover rarity-"+image.rarity
           return (
-            <div className="col-md-3 col-md-6" key={index} >
+            <div className="col-xs-12 col-md-3" key={index} >
             <div className ={rarity} style={{color: "white"}}>
               <img className="FortShop" src={image.img} alt={image.name}/>
                <div className="card-image-overlay">

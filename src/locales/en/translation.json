@@ -103,12 +103,18 @@
       "barReview": "Review",
       "barDone": "Done",
       "fbPhotoUpload": "Click to upload photo to your profile",
-      "fbLogin": "Login Facebook",
+      "fbLogin": "Login Facebook to use photo",
       "fbEditPhoto": "Upload New Facebook Photo",
       "actKeyInfo": "Check {{email}} inbox for activation code",
       "actKeyLabel": "Activation Code",
       "actKeyError": "Make sure you entered the correct code",
-      "actButtonLabel": "Activate"
-
+      "actButtonLabel": "Activate",
+      "viewFortShop": "FORTNITE TODAY'S ITEM SHOP",
+      "fortniteShopTimerHours": "Shop Rotation {{hours}}Hours",
+      "fortniteShopTimerMinutes": " - {{minutes}}Minutes",
+      "fortniteShopTimerSeconds": " - {{seconds}}Seconds",
+      "openDayDays": "Launching in {{days}}Days",
+      "openDayHours": " - {{hours}}Hours",
+      "openDayMinutes": " - {{minutes}}Minutes"
 
 }
