@@ -1,4 +1,3 @@
-const https = require('https');
 const http = require('http');
 const express = require('express');
 require('dotenv').config();
@@ -12,15 +11,13 @@ const dbname = process.env.DBName;
 let DB = require('./server/Mongo');
 const normalizePort =port => parseInt(port ,10);
 const PORT = normalizePort(process.env.PORT || 4000);
-const PORT2 = normalizePort(process.env.PORT || 5000);
-const helmet = require("helmet");
+const sslRedirect = require('heroku-ssl-redirect');
 const app = express();
 const compression = require('compression');
 app.use(compression());
 
-
+app.use(sslRedirect());
 app.use(morgan('dev'));
-app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false, parameterLimit: 100000, limit: "50mb" }));
@@ -36,23 +33,12 @@ app.use(function (req, res, next) {
   app.use('/', userRoutes)
   app.use('/server', Routers);
 
-  const fs = require('fs');
-  const cert = fs.readFileSync('./ssl/ggegypt.crt');
-  const ca = fs.readFileSync('./ssl/ggegypt.ca-bundle');
-  const key = fs.readFileSync('./ssl/server.key');
-
-  let options = {
-    cert: cert,
-    ca: ca,
-    key: key
-  };
-
-  const secureServer = http.createServer(app)
+  const server = http.createServer(app)
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")
     // server.listen(PORT);
-    secureServer.listen(PORT);
+    server.listen(PORT);
   }, err => {
     console.log('Failed To connect DB',err);	
     process.exit(1);
