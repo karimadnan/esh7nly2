@@ -20,8 +20,8 @@ const styles = theme => ({
       padding: theme.spacing.unit * 3,
       fontSize: 13,
       [theme.breakpoints.up('sm')]: {
-        fontSize: 17,
-      },
+        fontSize: 20
+      }
   }
 });
 

@@ -93,15 +93,6 @@
 
   }
   
-  .splash-card {
-    margin-bottom: 20px;
-    -webkit-transform: translate(14%, 40%);
-    border-radius: 0;
-    height: 300px;
-    width: 300px;
-  }
-
-  
   .badge {
     display: inline-block;
     padding: 0.05em 1.9em;
@@ -302,16 +293,7 @@
     transform: translate(-10%, 320%);
     font-size: 15px
   }
-  
-    .splash-card {
-      margin-bottom: 20px;
-      -webkit-transform: translate(14%, 40%);
-      border-radius: 0;
-      height: 270px;
-      width: 270px;
-    }
 
-    
     .PaymentDesc  {
       background-color: rgb(0,0,0); /* Fallback color */
       background-color: rgba(0,0,0, 0.5); /* Black w/opacity/see-through */
@@ -371,14 +353,6 @@
       transform: translate(-4.5%, 320%);
       font-size: 15px
     }
-
-  .splash-card {
-    margin-bottom: 20px;
-    -webkit-transform: translate(14%, 40%);
-    border-radius: 0;
-    height: 240px;
-    width: 240px;
-  }
 }
   @media screen and (max-width: 365px) {
   .bg-text {

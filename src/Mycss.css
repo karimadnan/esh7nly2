@@ -586,11 +586,11 @@ background-color: #0ddb06;
 }
 
 .splash-card {
-  margin-bottom: 20px;
-  -webkit-transform: translate(1%, 40%);
-  border-radius: 0;
-  height: 200px;
-  width: 200px;
+  margin: 10px;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .splash-cardTees {
@@ -621,9 +621,11 @@ background-color: #0ddb06;
 }
 
 .FortShop {
-  width: 100%;
-  border-top-left-radius: calc(0.25rem - 1px);
-  border-top-right-radius: calc(0.25rem - 1px);
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   }
 
 .cardItemPrev {
@@ -790,6 +792,15 @@ background-color: #ffffff;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 0.25rem;
+}
+
+.card-img-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1.25rem;
 }
 
 .card-title {

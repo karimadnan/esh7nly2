@@ -54,12 +54,23 @@ const override = css`
 const styles = theme => ({
     fab: {
         margin: theme.spacing.unit,
+        fontSize: 10,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 12,
+        }
+    },
+    fabFort: {
+        margin: theme.spacing.unit * 3,
     },
     extendedIcon2: {
         marginRight: theme.spacing.unit * 6,
     },
     chip: {
         margin: theme.spacing.unit,
+        fontSize: 14,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 20,
+        }
     }
 });
 
@@ -568,19 +579,19 @@ if (this.state.view === "item"){
                         <br/>
                     </div>
                 </div>} 
-                <div className="col-xs-6 col-md-6 col-lg-6">
-                    <Grid container justify="flex-start" alignItems="center">
+                <div className="col-xs-12 col-md-6 col-lg-6">
+                    <Grid container justify="center" alignItems="center">
                         <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.goBack()}} className={classes.fab}>
                             <BackIcon className={classes.extendedIcon2} />
-                            <h6>{t('backToShop')}</h6>
+                            {t('backToShop')}
                         </Fab>
                     </Grid>
                 </div>
-                <div className="col-xs-6 col-md-6 col-lg-6">
-                    <Grid container justify="flex-start" alignItems="center">
+                <div className="col-xs-12 col-md-6 col-lg-6">
+                    <Grid container justify="center" alignItems="center">
                         <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.addItemToCart(prev)}} className={classes.fab}>
                             <ShoppingCart className={classes.extendedIcon2} />
-                            <h6>{t('addToCart')}</h6>
+                            {t('addToCart')}
                         </Fab>
                     </Grid>
                 </div>
@@ -599,7 +610,7 @@ if (this.state.view === "item"){
       :
         <div>
             <Grid container justify="flex-start" alignItems="center">
-                <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({fortniteShop: false}), clearInterval(this.interval);}} className={classes.fab}>
+                <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({fortniteShop: false}), clearInterval(this.interval);}} className={classes.fabFort}>
                     <BackIcon className={classes.extendedIcon2} />
                     <h6>{t('backToShop')}</h6>
                 </Fab>
@@ -608,7 +619,7 @@ if (this.state.view === "item"){
                {this.state.timeLeft && 
                <Chip
                     icon={<Timer />}
-                    label={<h4>{t('fortniteShopTimerHours', {hours})}{t('fortniteShopTimerMinutes', {minutes})}{t('fortniteShopTimerSeconds', {seconds})}</h4>}
+                    label={`${t('fortniteShopTimerHours', {hours})}${t('fortniteShopTimerMinutes', {minutes})}${t('fortniteShopTimerSeconds', {seconds})}`}
                     className={classes.chip}
                     variant="outlined"
                     color="primary"

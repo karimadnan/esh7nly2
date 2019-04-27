@@ -5,6 +5,7 @@ import axios from 'axios';
 import { css } from '@emotion/core';
 import { PacmanLoader } from 'react-spinners';
 import { withNamespaces } from 'react-i18next';
+import Grid from '@material-ui/core/Grid';
 
 const override = css`
     display: block;
@@ -90,24 +91,22 @@ class FortniteShop extends Component {
     }
     else{
       let shop = this.state.shop.map((image, index) => {
-          var rarity = "card splash-card FortHover rarity-"+image.rarity
+          var rarity = "card splash-card rarity-"+image.rarity
           return (
             <div className="col-xs-12 col-md-3" key={index} >
-            <div className ={rarity} style={{color: "white"}}>
-              <img className="FortShop" src={image.img} alt={image.name}/>
-               <div className="card-image-overlay">
-               <div id ="itemdesc" className="card-body">
-                  <h4 className ="card-title itemname">
-                  {image.name}
-               </h4>
-                <p className="card-text itemprice">
-                <img src={this.state.vbucksIcon} style ={{width: 20, height: 20}}/>
-                  {image.cost}
-                </p>
-               </div>
-               </div>
-            </div>
-            </div>
+              <Grid container justify="center" alignItems="center">
+                <div className ={rarity} style={{color: "white"}}>
+                  <img className="FortShop" src={image.img} alt={image.name}/>
+                    <div className="card-image-overlay">
+                        <div id ="itemdesc" className="card-body">
+                            <h4 className ="card-title itemname">{image.name}</h4>
+                            <p className="card-text itemprice">
+                            <img src={this.state.vbucksIcon} style ={{width: 20, height: 20}}/>{image.cost}</p>
+                        </div>
+                      </div>
+                  </div>
+                </Grid>
+              </div>
           
             )
          });
