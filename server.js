@@ -1,5 +1,5 @@
-const http = require('http');
 const https = require('https');
+const http = require('http');
 const express = require('express');
 require('dotenv').config();
 const morgan = require('morgan');
@@ -18,16 +18,6 @@ const app = express();
 const compression = require('compression');
 app.use(compression());
 
-const fs = require('fs');
-const cert = fs.readFileSync('./ssl/ggegypt.crt');
-const ca = fs.readFileSync('./ssl/ggegypt.ca-bundle');
-const key = fs.readFileSync('./ssl/server.key');
-
-let options = {
-  cert: cert,
-  ca: ca,
-  key: key
-};
 
 app.use(morgan('dev'));
 app.use(helmet());
@@ -46,13 +36,18 @@ app.use(function (req, res, next) {
   app.use('/', userRoutes)
   app.use('/server', Routers);
 
-//   const server = http.createServer(app, (req, res) => {
-//     res.statusCode = 301;
-//     res.setHeader('Location', `https://${hostname}${req.url}`);
-//     res.end(); 
-//  });
+  const fs = require('fs');
+  const cert = fs.readFileSync('./ssl/ggegypt.crt');
+  const ca = fs.readFileSync('./ssl/ggegypt.ca-bundle');
+  const key = fs.readFileSync('./ssl/server.key');
 
-  const secureServer = https.createServer(options, app)
+  let options = {
+    cert: cert,
+    ca: ca,
+    key: key
+  };
+
+  const secureServer = http.createServer(app)
 
   DB.connect(url, dbname).then(success => {
     console.log("Server Connected  ---!")
