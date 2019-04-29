@@ -40,9 +40,13 @@ import CategoryIcon from '@material-ui/icons/FilterList';
 import SortIcon from '@material-ui/icons/SwapVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import DotIcon from '@material-ui/icons/FiberManualRecord';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -133,6 +137,13 @@ const styles = theme => ({
     },
     grid2: {
         margin: theme.spacing.unit,
+        color: 'white',
+        fontSize: 14,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 22,
+        }
+    },
+    descStyle: {
         color: 'white',
         fontSize: 14,
         [theme.breakpoints.up('sm')]: {
@@ -548,13 +559,16 @@ handleStepChange = activeStep => {
 
 current(){
 const { t } = this.props;
+const { classes } = this.props;
 const prev = this.props.cart.itemPrev
 if(this.state.value === 0){
         return(
             <div>
-                <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10, color: 'white'}}>
-                    { prev.desc.split(",").map(place => <p key={place}> • {place} </p>)} {prev.color && <p>• {t('color')}: {prev.color.toUpperCase()}</p>} {prev.size && <p>• {t('size')}: {prev.size.toUpperCase()}</p>}
-                </div>
+                { prev.desc.split(",").map((place, index) =>
+                    <ListItem key={index} className={classes.descStyle}>
+                        <ListItemIcon style={{color: 'white'}}>{<DotIcon />}</ListItemIcon>
+                        <ListItemText disableTypography primary={place} />
+                    </ListItem>)}
 
                 {prev.category !== 'micro' &&
                 <div className="col-xs-12 col-md-12 col-lg-12">
