@@ -40,7 +40,9 @@ import CategoryIcon from '@material-ui/icons/FilterList';
 import SortIcon from '@material-ui/icons/SwapVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import AliceCarousel from 'react-alice-carousel';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -57,6 +59,13 @@ const ErrorStyle = {
 const menuTheme = createMuiTheme({
     palette: {
         primary: { 500: '#fff' } // custom color in hex
+    }
+});
+
+const productTheme = createMuiTheme({
+    palette: {
+        primary: { 500: '#212121' }, // custom color in hex
+        secondary: { 'A400': '#3F51B5' } // custom color in hex
     }
 });
 
@@ -117,7 +126,15 @@ const styles = theme => ({
     grid: {
         margin: theme.spacing.unit * 2,
         color: 'white',
-        fontSize: 15,
+        fontSize: 14,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 22,
+        }
+    },
+    grid2: {
+        margin: theme.spacing.unit,
+        color: 'white',
+        fontSize: 14,
         [theme.breakpoints.up('sm')]: {
           fontSize: 22,
         }
@@ -142,6 +159,7 @@ const customStyles = {
 class Market extends Component {
 
 state = {
+    value: 0,
     category: "all",
     condition: "new",
     sort: "",
@@ -187,6 +205,10 @@ getData(){
                               price: this.state.qprice});
 }
     
+handleChange = (event, value) => {
+    this.setState({ value });
+};
+
 handleClose = (state) => {
     this.setState({ [state]: null });
 };
@@ -217,7 +239,9 @@ handleSortPrice(value) {
 
 searchEnter(e){
     if (e.key === "Enter"){
-        this.getData();
+        if(this.state.qName){
+            this.getData();
+        }
     }
 }
 
@@ -359,6 +383,8 @@ addItemToPrev(item){
         desc: item.desc,
         discount: item.discount,
         defaultImage: item.img[0],
+        soldBy: item.soldBy,
+        category: item.category,
         img: item.img
      }
      if (item.options){
@@ -448,7 +474,7 @@ if (this.state.view === "shop"){
                 <div className="col-xs-12 col-md-12 col-lg-4" style={{padding: 0}}>  
                     <Paper className={classes.root} elevation={1}>
                         <InputBase onKeyPress={this.searchEnter.bind(this)} className={classes.input} value={this.state.qName} onChange={e => this.setState({qName: e.target.value})} placeholder="Search store" />
-                        <IconButton className={classes.iconButton} aria-label="Search" onClick={() => {this.getData()}}>
+                        <IconButton className={classes.iconButton} aria-label="Search" onClick={() => {this.state.qName && this.getData()}}>
                             <SearchIcon />
                         </IconButton>
                     </Paper>
@@ -520,43 +546,31 @@ handleStepChange = activeStep => {
     this.setState({ activeStep });
 };
 
+current(){
+const { t } = this.props;
+const prev = this.props.cart.itemPrev
+if(this.state.value === 0){
+        return(
+            <div>
+                <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10, color: 'white'}}>
+                    { prev.desc.split(",").map(place => <p key={place}> • {place} </p>)} {prev.color && <p>• {t('color')}: {prev.color.toUpperCase()}</p>} {prev.size && <p>• {t('size')}: {prev.size.toUpperCase()}</p>}
+                </div>
+
+                {prev.category !== 'micro' &&
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <h2>{t('freeShippingText', { freeShipPrice })}</h2>
+                </div>}
+            </div>
+        )
+    }
+}
 
 ViewProduct(){
 const { t } = this.props;
 const { classes } = this.props;
-var prev = this.props.cart.itemPrev
+const prev = this.props.cart.itemPrev
 if (this.state.view === "item"){
     if(prev.options && !this.state.optionsFetched){
-        // if (prev.id === "5cb82c254e1efafcd06dc1fa") {
-
-        //     this.interval = setInterval(() => this.tick(), 1000);
-        //     const currentDate = moment();
-        //     const future = moment("00:00 AM", ["h:mm A"]);
-        //     let timeCount = moment(future.diff(currentDate))
-            
-        // if(moment(timeCount).hour() > 3){
-        //     axios.get('https://fnbr.co/api/shop', 
-        //     {headers: { 'x-api-key': 'b4d7cae7-7047-4a17-83f6-b4e62091d328' }})
-        //     .then(response => {
-        //     response.data.data.daily.forEach(element => {
-        //         let object1 = {
-        //         label: `${element.name} - ${element.type}`,
-        //         value: parseFloat(element.price.replace(/,/g, ''))*0.19,
-        //         img: element.images.icon
-        //         }
-        //         this.props.addPrevOptions(object1)
-        //       });
-        //       response.data.data.featured.forEach(element => {
-        //         let object2 = {
-        //         label: `${element.name} - ${element.type}`,
-        //         value: parseFloat(element.price.replace(/,/g, ''))*0.19,
-        //         img: element.images.icon
-        //        }
-        //        this.props.addPrevOptions(object2)
-        //      });
-        //      })
-        //     }
-        // }
 
     prev.options.forEach(element => {
         let object = {
@@ -600,29 +614,41 @@ if (this.state.view === "item"){
     const hours = moment(this.state.timeLeft).format("HH")
     const minutes = moment(this.state.timeLeft).format("mm")
     const seconds = moment(this.state.timeLeft).format("ss")
+    const { value } = this.state;
 
     return (
     <div className="container">
        {!this.state.fortniteShop ?
         <div className="BlackBG">
         
-         <div className="col-xs-12 col-md-8 col-lg-8">
-            {prev.colors && prev.colors.length > 1 &&
-                this.state.colors.map((item) =>{
+        <div className="col-xs-12 col-md-12 col-lg-12">
+            <div className="col-xs-12 col-md-6 col-lg-6">
+                <Grid  container justify={"flex-start"} alignItems="center">
+                    <h1 style={{color: "white", fontWeight: "bold"}}>{prev.Name}</h1>
+                </Grid>
+                <Grid  container justify={"flex-start"} alignItems="center">
+                    <h5 style={{color: "#3F51B5", fontWeight: "bold"}}>By: {prev.soldBy}</h5>
+                </Grid>
+            </div>
+        </div>
+
+        {prev.colors && prev.colors.length > 1 &&
+         <div className="col-xs-3 col-md-1 col-lg-1">
+            {this.state.colors.map((item) =>{
                 if(item.value){
                     return(
-                        <div key={item.index} onClick={()=>{this.setState({activeStep: item.index})}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
+                        <div key={item.index} onClick={()=>{this.setState({activeStep: item.index})}} style={{cursor: "pointer", margin: 10}} className="col-xs-12 col-md-12 col-lg-12">
                             <div className ={this.state.activeStep === item.index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
                                 <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
                             </div>
                         </div>
                     )
                 }
-            })
-            }
-         </div>
+            })}
+         </div>}
 
-         <div className="col-xs-12 col-md-6 col-lg-6">
+         <div className={prev.colors && prev.colors.length > 1 ? 
+            "col-xs-9 col-md-5 col-lg-5" : "col-xs-12 col-md-6 col-lg-6"}>
             <div className="cardItemPrev">
                {prev.img.length > 1 ?
                     <SwipeableViews 
@@ -647,6 +673,19 @@ if (this.state.view === "item"){
             </div>
          </div>
 
+         <div className="col-xs-12 col-md-6 col-lg-6">
+            <Grid className={classes.grid2} container justify={"flex-start"} alignItems="center">
+                {prev.discount > 0 ? 
+                        <div>
+                            <h1 style={{color: "#3F51B5"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
+                            <span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}</span> <span style={{fontWeight: "normal"}}>- {t('youSave')} {<CurrencyFormat value={discount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</span>
+                        </div>
+                    :
+                        <h1 style={{color: "#3F51B5"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
+                }
+            </Grid>
+         </div>
+
          <div style={{color: "white", fontSize: 15}} className="col-xs-12 col-md-6 col-lg-6">
             {prev.id === "5cb82c254e1efafcd06dc1fa" &&
             <div>
@@ -657,39 +696,9 @@ if (this.state.view === "item"){
                     </Fab>
                 </Grid>
             </div>}
-                
-            <h1 style={{color: "white", textAlign: "center", fontWeight: "bold"}}>{prev.Name}</h1>
 
-            {prev.discount > 0 ? 
-            <div>
-                <h1 style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
-                <h2><span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}</span> <span>- {t('youSave')} {<CurrencyFormat value={discount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</span></h2>
-            </div>
-            :
-                <h1><span style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</span></h1>
-            }
-
-            <br/>
-                {prev.sizes && 
-                <div>
-                    <div className="col-xs-4 col-md-4 col-lg-4">
-                        <h4>{t('size')}:</h4>
-                    </div>
-                    <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>
-                            <Select
-                                isSearchable={false}
-                                isMulti={false}
-                                styles={customStyles}
-                                value={this.state.selectedSize}
-                                onChange={this.handleChangeSize.bind(this, 'selectedSize')}
-                                options={this.state.sizes} placeholder='Select Size'
-                            /> 
-                        <br/>
-                    </div>
-                </div>} 
-
-                {prev.colors && 
-                <div>
+            {prev.colors && 
+                <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
                     <div className="col-xs-4 col-md-4 col-lg-4">
                         <h4>{t('color')}:</h4>
                     </div>
@@ -702,12 +711,28 @@ if (this.state.view === "item"){
                                 onChange={this.handleChangeColor}
                                 options={this.state.colors} placeholder='Select Color'
                             /> 
-                        <br/>
+                    </div>
+                </div>} 
+                
+                {prev.sizes && 
+                <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
+                    <div className="col-xs-4 col-md-4 col-lg-4">
+                        <h4>{t('size')}:</h4>
+                    </div>
+                    <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>
+                            <Select
+                                isSearchable={false}
+                                isMulti={false}
+                                styles={customStyles}
+                                value={this.state.selectedSize}
+                                onChange={this.handleChangeSize.bind(this, 'selectedSize')}
+                                options={this.state.sizes} placeholder='Select Size'
+                            /> 
                     </div>
                 </div>} 
 
                 {prev.options && 
-                <div>
+                <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
                     <div className="col-xs-4 col-md-4 col-lg-4">
                         <h4>{t('option')}:</h4>
                     </div>
@@ -723,6 +748,7 @@ if (this.state.view === "item"){
                         <br/>
                     </div>
                 </div>} 
+
                 <div className="col-xs-12 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
                         <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.goBack()}} className={classes.fab}>
@@ -739,17 +765,22 @@ if (this.state.view === "item"){
                         </Fab>
                     </Grid>
                 </div>
-                <div className="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
-
-               <div className="col-xs-12 col-md-12 col-lg-12">
-               <h1 style={{textAlign: "center"}}>{t('productDetails')}</h1> { prev.desc.split(",").map(place => <p key={place}> • {place} </p>)} {prev.color && <p>• {t('color')}: {prev.color.toUpperCase()}</p>} {prev.size && <p>• {t('size')}: {prev.size.toUpperCase()}</p>}
-               </div>
-               <div className="col-xs-12 col-md-12 col-lg-12" style={{border: "1px dotted grey"}}/>
-               <div className="col-xs-12 col-md-12 col-lg-12">
-                        <h2>{t('freeShippingText', { freeShipPrice })}</h2>
-                </div>
-               <br/>
          </div>
+         <MuiThemeProvider theme={productTheme}>
+            <AppBar position="static" color="primary">
+                    <Tabs
+                        value={value}
+                        onChange={this.handleChange}
+                        variant="scrollable"
+                        scrollButtons="on"
+                        indicatorColor="secondary"
+                        textColor="seconadry"
+                    >
+                        <Tab label={<h5 style={{color: "white"}}>{t('productDetails')}</h5>} />
+                    </Tabs>
+                </AppBar>
+         </MuiThemeProvider>
+                {this.current()}
       </div>
       :
         <div>
