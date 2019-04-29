@@ -6,13 +6,24 @@ import Navbar from '../components/navbar';
 import {removeCartItem, updateCartInfo} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import {bindActionCreators} from 'redux';
-import rightMark from '../Images/rightmark.png';
-import xMark from '../Images/xmark.png';
 import ReactRouter from 'flux-react-router';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
 import Modal from 'react-responsive-modal';
 import CurrencyFormat from 'react-currency-format';
+import Fab from '@material-ui/core/Fab';
+import Badge from '@material-ui/core/Badge';
+import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import Done from '@material-ui/icons/Done';
+import Off from '@material-ui/icons/HighlightOff';
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import compose from 'recompose/compose';
+import { withNamespaces } from 'react-i18next';
+import Chip from '@material-ui/core/Chip';
+import { Divider } from '@material-ui/core';
+import NextIcon from '@material-ui/icons/Done';
+import i18next from 'i18next';
 
 const ErrorStyle = {
     overlay: {
@@ -35,6 +46,34 @@ const ErrorStyle = {
       borderRadius: '10px',
     },
   }
+
+  const styles = theme => ({
+    chip: {
+        margin: theme.spacing.unit,
+        fontSize: 13,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 20
+        }
+    },
+    listText: {
+        fontSize: 13,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 20
+        }
+    },
+    divider: {
+        margin: theme.spacing.unit,
+    },
+    fab: {
+        margin: theme.spacing.unit,
+    },
+    extendedIcon: {
+        marginRight: theme.spacing.unit,
+    },
+    extendedIcon2: {
+        marginRight: theme.spacing.unit * 6,
+    }
+    })
 
 class cartDetails extends Component {
 
@@ -80,6 +119,7 @@ class cartDetails extends Component {
     }
 
     createListItems(){ 
+        const { classes } = this.props;
 
         let CART = this.props.cart.map(item => {
             return (
@@ -100,21 +140,26 @@ class cartDetails extends Component {
                          {item.info && <h4>Type: <span class="label label-primary">{item.info}</span></h4>}
                          {item.color && <h4>Color: {item.color}</h4>}
                          {item.option && <h4>Option: {item.option}</h4>}
+                         <Divider className={classes.divider}/>
                     </div>
-                    <div style={{border: "1px dotted black"}}/>
                 </div>
             )
         })
         
         return(
         <div >
-            {CART}
+            {CART} 
         </div>
         )
     }
 
 
     render() {
+        const { t } = this.props;
+        const { classes } = this.props;
+        const totalProps = <CurrencyFormat value={this.props.cartInfo.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />
+        const total = totalProps.props.value
+
         if(this.props.cart.length < 1){
             return (
                 <div >
@@ -156,37 +201,49 @@ class cartDetails extends Component {
                     draggable={false}
                     pauseOnHover={false}
                     />
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h1 style={{fontSize: 25}}>Shopping Cart: <span className="glyphicon glyphicon-shopping-cart"></span> <span class="circleRed" style={{color: "white", fontSize: 20}}> {this.props.cartInfo.totalItems}</span></h1>
-                </div>
-                <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h1 style={{fontSize: 25}}>Total:&nbsp;&nbsp;<span class="label label-primary">{this.props.cartInfo.totalPrice} EGP</span></h1>
-                </div>
+                    <Grid container justify="center" alignItems="center">
+                        <Badge className={classes.extendedIcon} badgeContent={this.props.cartInfo.totalItems} color="secondary">     
+                            <ShoppingCart fontSize="large" />
+                        </Badge>
+                            {t('yourCart')}
+                    </Grid>
+                    <Grid container justify="center" alignItems="center">
+                        <Chip label={t('totalCart', {total})} className={classes.chip} />
+                    </Grid>
                 {this.props.cartInfo.totalPrice > 400 ? 
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <h3 style={{fontFamily: "arial"}}>FREE SHIPPING&nbsp;&nbsp;<img src={rightMark}/></h3>
-                    </div>
+                    <Grid container justify="center" alignItems="center">
+                        <Chip
+                            avatar={<Done />}
+                            label={`${t('freeShip')}`}
+                            className={classes.chip}
+                        />
+                    </Grid>
                      :
-                     <div class="col-xs-12 col-md-6 col-lg-6">
-                        <h3 style={{fontFamily: "arial"}}>FREE SHIPPING&nbsp;&nbsp;<img src={xMark}/></h3>
-                        <p>(FREE shipping for orders +400 EGP)</p>
-                     </div>
+                     <Grid container justify="center" alignItems="center">
+                        <Chip
+                            avatar={<Off />}
+                            label={`${t('noFreeShip')}`}
+                            className={classes.chip}
+                        />
+                     </Grid>
                     }
-                <br/>
-                <div class="bordersep col-xs-12 col-md-12 col-lg-12">  
-                    <br/>
-                </div>
+                <Divider className={classes.divider}/>
+
                 <div class="col-xs-12 col-md-12 col-lg-12">
                     {this.createListItems()}
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                    <h1 style={{fontSize: 25}}>Total:&nbsp;&nbsp;({this.props.cartInfo.totalItems} {this.props.cartInfo.totalItems > 1 ? "items" : "item"})&nbsp;&nbsp;<span class="label label-primary">{<CurrencyFormat value={this.props.cartInfo.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</span></h1>
+                    <Grid container justify="center" alignItems="center">
+                        <Chip label={`${t('totalCart', {total})}`} className={classes.chip} />
+                    </Grid>
                 </div>
                 <div class="col-xs-12 col-md-6 col-lg-6">
-                <button class="btn btn-primary btn-block" style={{color : "white", marginTop: 20}} onClick={()=>{this.goToCheckout()}}>
-                    <span className="icon glyphicon glyphicon-shopping-cart"></span>
-                    <span className="text">Proceed to checkout</span>
-                </button>
+                    <Grid container justify="center" alignItems="center">
+                        <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.goToCheckout()}} className={classes.fab}>
+                            <NextIcon className={classes.extendedIcon2} />
+                            <h5>{t('checkout')}</h5>
+                        </Fab>
+                    </Grid>
                 </div>
                 <Navbar />
             </div>
@@ -211,4 +268,8 @@ const matchDispatchToProps = dispatch => bindActionCreators(
     dispatch,
   )
 
-export default connect(mapStateToProps, matchDispatchToProps)(cartDetails);
+export default compose(
+    withStyles(styles),
+    withNamespaces(),
+    connect(mapStateToProps, matchDispatchToProps),
+)(cartDetails);

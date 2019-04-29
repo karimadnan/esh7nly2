@@ -29,9 +29,18 @@ import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import BackIcon from '@material-ui/icons/SkipPrevious';
 import ViewIcon from '@material-ui/icons/RemoveRedEye';
 import Timer from '@material-ui/icons/Timer';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import FortniteShop from './FortniteShop';
+import Paper from '@material-ui/core/Paper';
+import InputBase from '@material-ui/core/InputBase';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
+import CategoryIcon from '@material-ui/icons/FilterList';
+import SortIcon from '@material-ui/icons/SwapVert';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import AliceCarousel from 'react-alice-carousel';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -45,6 +54,12 @@ const ErrorStyle = {
     },
 }
 
+const menuTheme = createMuiTheme({
+    palette: {
+        primary: { 500: '#fff' } // custom color in hex
+    }
+});
+
 const override = css`
     display: block;
     border-color: red;
@@ -52,10 +67,37 @@ const override = css`
 `;
 
 const styles = theme => ({
+    root: {
+        marginTop: theme.spacing.unit,
+        display: 'flex',
+        alignItems: 'center',
+        [theme.breakpoints.up('lg')]: {
+            maxWidth: 352
+        }
+      },
+      input: {
+        fontSize: 17,
+        padding: 7,
+        flex: 1,
+        [theme.breakpoints.up('lg')]: {
+        maxWidth: 352
+        }
+      },
+      iconButton: {
+        padding: 10,
+      },
     fab: {
         margin: theme.spacing.unit,
         fontSize: 10,
         [theme.breakpoints.up('sm')]: {
+          fontSize: 12,
+        }
+    },
+    fabCategory: {
+        fontSize: 8,
+        margin: theme.spacing.unit,
+        [theme.breakpoints.up('lg')]: {
+          minWidth: 160,
           fontSize: 12,
         }
     },
@@ -70,6 +112,14 @@ const styles = theme => ({
         fontSize: 14,
         [theme.breakpoints.up('sm')]: {
           fontSize: 20,
+        }
+    },
+    grid: {
+        margin: theme.spacing.unit * 2,
+        color: 'white',
+        fontSize: 15,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 22,
         }
     }
 });
@@ -108,7 +158,17 @@ state = {
     activeStep: 0,
     optionsFetched: false,
     fortniteShop: false,
-    quantity: 1
+    quantity: 1,
+    hasDiscount: false,
+    filter: '',
+    qName: '',
+    qcategory: '',
+    qskip: '0',
+    qlimit: '15',
+    qprice: 0,
+    categories: ['all', 'merch', 'micro'],
+    anchorEl: null,
+    anchorEl2: null
 }
 
 componentWillUnmount() {
@@ -117,8 +177,48 @@ componentWillUnmount() {
 }
 
 componentDidMount(){
-    this.props.removePrevOptions()
-    this.props.fetchShopData();
+    this.props.removePrevOptions();
+    this.getData();
+}
+
+getData(){
+    this.props.fetchShopData({Name: this.state.qName, 
+                              category: this.state.qcategory, 
+                              price: this.state.qprice});
+}
+    
+handleClose = (state) => {
+    this.setState({ [state]: null });
+};
+
+handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget });
+};
+
+handleClick2 = event => {
+    this.setState({ anchorEl2: event.currentTarget });
+};
+
+handleChangeCategory(value) {
+    this.setState({ qcategory: value === 'all' ? '' : value } ,() =>{
+        this.handleClose('anchorEl');
+        this.getData();
+    }
+    );
+};
+
+handleSortPrice(value) {
+    this.setState({ qprice: value === '0' ? '' : value } ,() =>{
+        this.handleClose('anchorEl2');
+        this.getData();
+    }
+    );
+};
+
+searchEnter(e){
+    if (e.key === "Enter"){
+        this.getData();
+    }
 }
 
 goBack(){
@@ -278,19 +378,16 @@ addItemToPrev(item){
 
 Market(){
 const { t } = this.props;
+const { classes } = this.props;
 let counter = 0
 if (this.state.view === "shop"){
-    let shop = this.props.shop.items.map((item) =>{
-        var discounted = item.discount / 100 * item.price
+    let shop = this.props.shop.items && this.props.shop.items.map((item) =>{
         var rarity = "card splash-cardTees "+item.rarity
         var key = item.Name + `-${counter}`
-        var randomImg = function (obj) {
-            var keys = Object.keys(obj)
-            return obj[keys[ keys.length * Math.random() << 0]];
-        };
-        var shopRandomize = randomImg(item.img)
+
         var priceAfterDiscount = item.price - item.discount / 100 * item.price
         counter ++;
+        if((item.discount || !this.state.hasDiscount)){
         return (
             <div className="col-xs-12 col-md-4 col-md-4" key={key} style={{minHeight: !isMobile ? 400 : 0}}>
             <div className ={rarity}>
@@ -334,43 +431,88 @@ if (this.state.view === "shop"){
             </div>
 
         </div>
-        )
+        )}
     })
+    const anchorEl = this.state.anchorEl
+    const anchorEl2 = this.state.anchorEl2
+    let catergories = []
+
+    for (const [index, value] of this.state.categories.entries()) {
+        catergories.push(<MenuItem key={index} onClick={()=>{this.handleChangeCategory(value)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >{value}</a></MenuItem>)
+    }
+    
     return (
         <div className="container" style={{backgroundColor: "#121212", boxShadow: `1px 5px 5px #000000`}}>
 
-            {/* <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: "#222222", borderBottom: "1px solid black"}}>
-                <div className="form-group has-feedback">
-                        <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <input style={{margin: 10}} className="form-control" type="text" placeholder="Search Store" required></input>
-                        </div>
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                <div className="col-xs-12 col-md-12 col-lg-4" style={{padding: 0}}>  
+                    <Paper className={classes.root} elevation={1}>
+                        <InputBase onKeyPress={this.searchEnter.bind(this)} className={classes.input} value={this.state.qName} onChange={e => this.setState({qName: e.target.value})} placeholder="Search store" />
+                        <IconButton className={classes.iconButton} aria-label="Search" onClick={() => {this.getData()}}>
+                            <SearchIcon />
+                        </IconButton>
+                    </Paper>
+                    
                 </div>
-            </div> */}
+                <div className="col-xs-3 col-md-2 col-lg-2" style={{padding: 0}}>  
+                <MuiThemeProvider theme={menuTheme}>
+                    <Grid container justify="flex-start" alignItems="center">
+                        <Fab onClick={this.handleClick} color="primary" variant="extended" aria-label="Next" className={classes.fabCategory} aria-owns={anchorEl ? 'simple-menu' : undefined}
+                                            aria-haspopup="true">
+                            <CategoryIcon className={classes.extendedIcon} />
+                            {this.state.qcategory ?
+                            this.state.qcategory
+                            :
+                            `${t('category')}`}
+                        </Fab>
+                    </Grid>
+                    </MuiThemeProvider>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={() => {this.handleClose('anchorEl')}}
+                    >
+                    {catergories}
+                    </Menu>
+                </div>
+                <div className="col-xs-3 col-md-2 col-lg-2" style={{padding: 0}}>  
+                <MuiThemeProvider theme={menuTheme}>
+                    <Grid container justify="flex-end" alignItems="center">
+                        <Fab onClick={this.handleClick2} color="primary" variant="extended" aria-label="Sort" className={classes.fabCategory} aria-owns={anchorEl2 ? 'simple-menu' : undefined}
+                                            aria-haspopup="true">
+                            <SortIcon className={classes.extendedIcon} />
+                            {this.state.qprice === 1 ?
+                                "Low to high" : this.state.qprice === -1 ?
+                                "High to low" 
+                            : 
+                            `${t('Sort by')}`}
+                        </Fab>
+                    </Grid>
+                    </MuiThemeProvider>
+                    <Menu
+                        id="simple-menu"
+                        anchorEl={anchorEl2}
+                        open={Boolean(anchorEl2)}
+                        onClose={() => {this.handleClose('anchorEl2')}}
+                    >
+                        <MenuItem onClick={()=>{this.handleSortPrice(0)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Unsort</a></MenuItem>
+                        <MenuItem onClick={()=>{this.handleSortPrice(1)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: Low to high</a></MenuItem>
+                        <MenuItem onClick={()=>{this.handleSortPrice(-1)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: High to low</a></MenuItem>
+                    </Menu>
+                </div>
+            </div>
 
-                {/* <div className="col-xs-12 col-md-2 col-lg-2" style={{backgroundColor: "#222222", marginTop: 10, borderRadius: 3}}>
-                    <h2 style={{color: "grey", textAlign: "center"}}>Category</h2>
-                        <h5 onClick={()=>{this.setState({category: "all"})}} style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "all" && "purple"}}>All (16)</h5>
-                        <h5 onClick={()=>{this.setState({category: "merch"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "micro" && "purple"}}><span className="svg-icon svg-icon-thompson"></span> Microtransactions (3)</h5>
-                        <h5 onClick={()=>{this.setState({category: "merch"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "merch" && "purple"}}><span className="svg-icon svg-icon-tshirt"></span> Merchandise (14)</h5>
-                        <h5 onClick={()=>{this.setState({category: "gaming"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "gaming" && "purple"}}><span className="svg-icon svg-icon-keyboard"></span> Gaming Accessories (2)</h5>
-                        <h5 onClick={()=>{this.setState({category: "consoles"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "consoles" && "purple"}}><span className="svg-icon svg-icon-psController"></span> Playstation (0)</h5>
-                        <h5 onClick={()=>{this.setState({category: "pc"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "pc" && "purple"}}><span className="svg-icon svg-icon-pc"></span> PC (0)</h5>
-                        <h5 onClick={()=>{this.setState({category: "laptop"})}}  style={{color: "white", textAlign: "center", cursor: "pointer", backgroundColor: this.state.category === "laptop" && "purple"}}><span className="svg-icon svg-icon-laptop"></span> Laptop (0)</h5>
-                    <div style={{border: "0.5px dotted grey"}}/>
-                    <h2 style={{color: "grey", textAlign: "center"}}>Condition</h2>
-                        <h5 style={{color: "white", textAlign: "center"}}><span className="	glyphicon glyphicon-star"></span> New (16)</h5>
-                        <h5 style={{color: "white", textAlign: "center"}}><span className="	glyphicon glyphicon-repeat"></span> Used (0)</h5>
-                    <div style={{border: "0.5px dotted grey"}}/>
-                    <h2 style={{color: "grey", textAlign: "center"}}>Sort By</h2>
-                        <h5 style={{color: "white", textAlign: "center"}}><span className="glyphicon glyphicon-arrow-down"></span> Price from Low to High</h5>
-                        <h5 style={{color: "white", textAlign: "center"}}><span className="glyphicon glyphicon-arrow-up"></span> Price from High to Low</h5>
-                        <h5 style={{color: "white", textAlign: "center"}}><span className="glyphicon glyphicon-scissors"></span> Has Discount (3)</h5>
-                </div> */}
+            {this.props.shop.items ?
+                shop
+            :
+            <Grid container justify="flex-start" alignItems="center" className={classes.grid}>
+                    {t('No Matches Found')}
+            </Grid>}
 
-                    {shop}
         </div>
     )
-    }
+}
 }
 
 handleStepChange = activeStep => {
@@ -467,13 +609,15 @@ if (this.state.view === "item"){
          <div className="col-xs-12 col-md-8 col-lg-8">
             {prev.colors && prev.colors.length > 1 &&
                 this.state.colors.map((item) =>{
-                return(
-                    <div key={item.index} onClick={()=>{this.setState({activeStep: item.index})}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
-                        <div className ={this.state.activeStep === item.index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                            <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
+                if(item.value){
+                    return(
+                        <div key={item.index} onClick={()=>{this.setState({activeStep: item.index})}} style={{cursor: "pointer", margin: 10}} className="col-xs-3 col-md-2 col-lg-2">
+                            <div className ={this.state.activeStep === item.index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
+                                <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
+                            </div>
                         </div>
-                    </div>
-                )
+                    )
+                }
             })
             }
          </div>
@@ -647,7 +791,7 @@ render(){
                     color={'#FFFF00'}
                     loading={true}/>
                 </div>
-                <Navbar page={"Offers"}/>
+                <Navbar page={1}/>
             </div>
         )
     }

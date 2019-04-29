@@ -53,7 +53,6 @@ tick() {
 }
 
 render(){
-
   const days = moment(this.state.timeLeft).format("DD")
   const hours = moment(this.state.timeLeft).format("HH")
   const minutes = moment(this.state.timeLeft).format("mm")
@@ -65,8 +64,8 @@ render(){
     <div>
       <div className="bg-image">
         <Navbar page={0}/>
-        <div class="container" >
-            <div class="badge-logo"/>
+        <div className="container" >
+            <div className="badge-logo"/>
             <MuiThemeProvider theme={theme}>
             <Grid container justify="center" alignItems="center">
                {this.state.timeLeft > 0 && 

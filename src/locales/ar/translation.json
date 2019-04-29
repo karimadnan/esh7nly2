@@ -116,7 +116,8 @@
       "openDayDays": "تبقى على الافتتاح {{days}} ايام",
       "openDayHours": " - {{hours}} ساعة",
       "openDayMinutes": " - {{minutes}} دقيقة",
-      "fbPhotoDuplicate": "انت تستخدم نفس الصورة"
+      "fbPhotoDuplicate": "انت تستخدم نفس الصورة",
+      "totalCart": "{{total}}: الثمن"
 
       
 

@@ -116,6 +116,7 @@
       "openDayDays": "Launching in {{days}}Days",
       "openDayHours": " - {{hours}}Hours",
       "openDayMinutes": " - {{minutes}}Minutes",
-      "fbPhotoDuplicate": "You already use this photo"
+      "fbPhotoDuplicate": "You already use this photo",
+      "totalCart": "Total: {{total}}EGP"
 
 }

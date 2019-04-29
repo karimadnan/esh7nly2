@@ -13,6 +13,7 @@ import Account from './components/account';
 import AgentDashboard from './components/agentDashboard';
 import CheckOut from './components/checkout';
 import Login from './components/login';
+// import TestPage from './components/testPage';
 import * as registerServiceWorker from './registerServiceWorker';
 
 import { applyMiddleware, createStore, compose } from 'redux';
@@ -99,6 +100,10 @@ Flux.createRoute('/login',function(){
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Login /></PersistGate></Provider>,document.getElementById('root'));
 })
 
+// Flux.createRoute('/testpage',function(){
+//     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+//     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><TestPage /></PersistGate></Provider>,document.getElementById('root'));
+// })
 
 registerServiceWorker.unregister();
 

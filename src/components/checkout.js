@@ -19,7 +19,6 @@ import {bindActionCreators} from 'redux';
 import {cleanCart, cleanCartInfo} from '../actions/index';
 import CurrencyFormat from 'react-currency-format';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';

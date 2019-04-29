@@ -3,7 +3,7 @@
       "accountPendingStatus": "عايز يتفعل",
       "accountBannedStatus": "اتقفل",
       "home": "الريْسية",
-      "market": "المحل",
+      "market": "السوق",
       "contact": "كلمنا",
       "login": "افتح",
       "logout": "اخرج",
@@ -116,6 +116,7 @@
       "openDayDays": "فاضل على الافتتاح {{days}} ايام",
       "openDayHours": " - {{hours}} ساعة",
       "openDayMinutes": " - {{minutes}} دقيقة",
-      "fbPhotoDuplicate": "يعم مهيا نفس الصورة"
+      "fbPhotoDuplicate": "يعم مهيا نفس الصورة",
+      "totalCart": " جنيه {{total}}: السعر"
 
 }

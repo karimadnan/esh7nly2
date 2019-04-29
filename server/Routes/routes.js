@@ -1,21 +1,19 @@
-var express = require('express');
-let DB = require('../Mongo');
-const moment = require('moment-timezone');
-var bcrypt = require('bcrypt-nodejs');
+const express = require('express');
 const Validator =require('../validation');
-const jwToken=require('../Jwt')
-var ObjectId = require('mongodb').ObjectID;
-var router = express.Router();
+const router = express.Router();
 const orderApis = require('../Apis/orderApis');
 const loginApis = require('../Apis/loginApis');
 const gameApis = require('../Apis/gameApis');
 const extraApis = require('../Apis/extraApis');
+const multer  = require('multer');
+const upload = multer();
 /* GET home page. */
 router.get('/', function(req, res, next) {
 res.render('index', { title: 'Express' });
 });    
 // extra APIS ------------------------------------------------
-router.get('/fetchShop', extraApis.fetchShop); 
+router.post('/fetchShop', extraApis.fetchShop); 
+router.post('/testUpload', upload.single('image'), extraApis.testUpload); 
 // router.post('/sendEmail',extraApis.sendEmail); 
 // login Apis ------------------------------------------------
 router.get('/login',loginApis.login);

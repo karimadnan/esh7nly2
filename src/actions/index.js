@@ -133,12 +133,13 @@ export function fetchProductsError(error) {
     }
 }
 
-export function fetchShopData() {
+export function fetchShopData(query={}) {
     return function(dispatch) {
       dispatch(fetchProductsPending())
-      return axios.get(`https://www.ggegypt.com/server/fetchShop`)
+      return  axios.post("https://www.ggegypt.com/server/fetchShop", query, {headers: {
+        'Content-Type': 'application/json'}})
       .then(function (response) {
-          dispatch(fetchProductsSuccess(response.data.data))
+        dispatch(fetchProductsSuccess(response.data.data))
       })
       .catch(function (error) {
         dispatch(fetchProductsError(error))
