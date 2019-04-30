@@ -4,9 +4,6 @@ button:hover .text { display: none; }
 
 .loginBox {
   /* Add shadows to create the "card" effect */
-
-
-
   text-align: center;
   border-radius: 1.85rem;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.9);
@@ -45,8 +42,11 @@ button:hover .text { display: none; }
   width: 100%;
 }
 
+html { height: 100%; overflow:auto; }
+
 body { 
   padding-top: 65px; 
+  height: 100%;
 }
 
 .container {
@@ -613,6 +613,7 @@ background-color: #0ddb06;
 }
 
 .splash-card-product-view {
+  max-height: 100%;
   max-width: 100%;
   height: auto;
   display: block;

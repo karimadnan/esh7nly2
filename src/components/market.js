@@ -45,6 +45,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
+import { fade } from '@material-ui/core/styles/colorManipulator';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -100,8 +101,9 @@ const styles = theme => ({
     fab: {
         margin: theme.spacing.unit,
         fontSize: 10,
-        [theme.breakpoints.up('sm')]: {
-          fontSize: 12,
+        minWidth: 120,
+        [theme.breakpoints.up('lg')]: {
+          fontSize: 15,
         }
     },
     fabCategory: {
@@ -142,10 +144,9 @@ const styles = theme => ({
         }
     },
     descStyle: {
-        color: 'white',
-        fontSize: 14,
+        fontSize: 12,
         [theme.breakpoints.up('sm')]: {
-          fontSize: 22,
+          fontSize: 15,
         }
     }
 });
@@ -566,7 +567,7 @@ if(this.state.value === 0){
             <div>
                 { prev.desc.split(",").map((place, index) =>
                     <ListItem key={index} className={classes.descStyle}>
-                        <ListItemIcon style={{color: 'white'}}>{<DotIcon />}</ListItemIcon>
+                        <ListItemIcon >{<DotIcon />}</ListItemIcon>
                         <ListItemText disableTypography primary={place} />
                     </ListItem>)}
 
@@ -704,9 +705,9 @@ if (this.state.view === "item"){
             {prev.id === "5cb82c254e1efafcd06dc1fa" &&
             <div>
                 <Grid container justify="center" alignItems="center">
-                    <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.setState({fortniteShop: true}), this.interval = setInterval(() => this.tick(), 1000)}} className={classes.fab}>
+                    <Fab variant="extended" aria-label="Next" onClick={()=>{this.setState({fortniteShop: true}), this.interval = setInterval(() => this.tick(), 1000)}} className={classes.fab}>
                         <ViewIcon className={classes.extendedIcon2} />
-                        <h6>{t('viewFortShop')}</h6>
+                         {t('viewFortShop')}
                     </Fab>
                 </Grid>
             </div>}
@@ -763,7 +764,7 @@ if (this.state.view === "item"){
                     </div>
                 </div>} 
 
-                <div className="col-xs-12 col-md-6 col-lg-6">
+                <div className="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
                         <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.goBack()}} className={classes.fab}>
                             <BackIcon className={classes.extendedIcon2} />
@@ -771,7 +772,7 @@ if (this.state.view === "item"){
                         </Fab>
                     </Grid>
                 </div>
-                <div className="col-xs-12 col-md-6 col-lg-6">
+                <div className="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
                         <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.addItemToCart(prev)}} className={classes.fab}>
                             <ShoppingCart className={classes.extendedIcon2} />
@@ -779,7 +780,7 @@ if (this.state.view === "item"){
                         </Fab>
                     </Grid>
                 </div>
-                <div className="col-xs-12 col-md-6 col-lg-6">
+                <div className="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
                         <Chip
                             label={t('productDetails')}
@@ -787,7 +788,7 @@ if (this.state.view === "item"){
                         />
                     </Grid>
                 </div>
-                <div className="col-xs-12 col-md-6 col-lg-6">
+                <div className="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
                         <CopyToClipboard text={`www.ggegypt.com/productpage/${prev.id}`}>
                             <Chip
@@ -813,19 +814,21 @@ if (this.state.view === "item"){
 
          <MuiThemeProvider theme={productTheme}>
             <AppBar position="static" color="primary">
-                    <Tabs
-                        value={value}
-                        onChange={this.handleChange}
-                        variant="scrollable"
-                        scrollButtons="on"
-                        indicatorColor="secondary"
-                        textColor="secondary"
-                    >
-                        <Tab label={<h5 style={{color: "white"}}>{t('productDetails')}</h5>} />
-                    </Tabs>
+                        <Tabs
+                            value={value}
+                            onChange={this.handleChange}
+                            variant="scrollable"
+                            scrollButtons="on"
+                            indicatorColor="secondary"
+                            textColor="secondary"
+                        >
+                            <Tab label={<h5 style={{color: "white"}}>{t('productDetails')}</h5>} />
+                        </Tabs>
                 </AppBar>
          </MuiThemeProvider>
+            <div className="WhiteBG" style={{color: "black", margin: 2}}>
                 {this.current()}
+            </div>
       </div>
       :
         <div>

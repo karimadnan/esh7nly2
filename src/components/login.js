@@ -118,7 +118,7 @@ render() {
                                     ReactRouter.goTo("/agentdashboard") 
                                 : this.props.loginData.isAdmin && this.props.loginData.session === 2 ? 
                                     ReactRouter.goTo("/admindashboard") 
-                                : null}}>{t('account')}</span></h4>
+                                : undefined}}>{t('account')}</span></h4>
                         </div>
                 </div>
                 <Navbar />
@@ -133,7 +133,7 @@ render() {
                         <div class="badge-logo"/>
                             <div class="form-group has-feedback" style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
                                 <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                        <label style={{color: this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "green" : "orange"}}>{this.state.Phone.length == 11 || isEmail(this.state.Phone) ? "":'*'} {t('phone')}</label>
+                                        <label style={{color: this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "green" : "orange"}}>{this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "":'*'} {t('phone')}</label>
                                         <input class="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
                                         <br/>
                                 </div>

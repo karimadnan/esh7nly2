@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {addCartItem, updateCartInfo, addPrev, updatePrev, addPrevOptions, removePrevOptions} from '../actions/index';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '../Mycss.css';
 import '../Respcss.css';
@@ -68,8 +68,9 @@ const styles = theme => ({
     fab: {
         margin: theme.spacing.unit,
         fontSize: 10,
-        [theme.breakpoints.up('sm')]: {
-          fontSize: 12,
+        minWidth: 120,
+        [theme.breakpoints.up('lg')]: {
+          fontSize: 15,
         }
     },
     fabFort: {
@@ -102,10 +103,9 @@ const styles = theme => ({
         }
     },
     descStyle: {
-        color: 'white',
-        fontSize: 14,
+        fontSize: 12,
         [theme.breakpoints.up('sm')]: {
-          fontSize: 22,
+          fontSize: 15,
         }
     }
 });
@@ -149,22 +149,25 @@ class ProductPage extends Component {
 
     componentDidMount(){
         var that = this
+        const prev = this.props.cart.itemPrev
+
         if(!this.state.productLoaded){
+            if(prev.options){
+                this.props.removePrevOptions()
+            }
             axios.get(this.state.url+`getProduct?id=${this.props.id}`, {headers: {'Content-Type': 'application/json'}})
               .then(function (response) {
-                console.log(response, "RESPONSEEEEEE")
-                that.addItemToPrev(response.data.data[0]) 
+                that.addItemToPrev(response.data.data[0]);
             })
               .catch(function (error) {
-                console.log(error, "ERRORRR")
-                that.setState({productError: true})
+                that.setState({productError: true});
             });
         }
     }
 
     notify = (msg) => toast.success(msg, {
         position: "top-right",
-        autoClose: 2500,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -216,7 +219,7 @@ class ProductPage extends Component {
             price: item.discount > 0 ? item.price - discounted : item.price,
             rarity: item.rarity,
             info: item.info,
-            quantity: this.state.quantity,
+            quantity: 1,
             defaultImage: item.defaultImage,
          }
          if (item.defaultOpt){
@@ -237,7 +240,7 @@ class ProductPage extends Component {
          else if (!item.defaultOpt && !item.color && !item.size){
             object["id"] = uniqueId
          }
-    
+         console.log(object, "OBJECT")
          this.props.addCartItem(object)
     }
 
@@ -314,7 +317,7 @@ class ProductPage extends Component {
                 <div>
                     { prev.desc.split(",").map((place, index) =>
                         <ListItem key={index} className={classes.descStyle}>
-                            <ListItemIcon style={{color: 'white'}}>{<DotIcon />}</ListItemIcon>
+                            <ListItemIcon>{<DotIcon />}</ListItemIcon>
                             <ListItemText disableTypography primary={place} />
                         </ListItem>)}
     
@@ -459,9 +462,9 @@ class ProductPage extends Component {
                     {prev.id === "5cb82c254e1efafcd06dc1fa" &&
                     <div>
                         <Grid container justify="center" alignItems="center">
-                            <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.setState({fortniteShop: true}), this.interval = setInterval(() => this.tick(), 1000)}} className={classes.fab}>
+                            <Fab variant="extended" aria-label="Next" onClick={()=>{this.setState({fortniteShop: true}), this.interval = setInterval(() => this.tick(), 1000)}} className={classes.fab}>
                                 <ViewIcon className={classes.extendedIcon2} />
-                                <h6>{t('viewFortShop')}</h6>
+                                {t('viewFortShop')}
                             </Fab>
                         </Grid>
                     </div>}
@@ -581,7 +584,9 @@ class ProductPage extends Component {
                             </Tabs>
                         </AppBar>
                  </MuiThemeProvider>
+                    <div className="WhiteBG" style={{color: "black", margin: 2}}>
                         {this.current()}
+                    </div>
               </div>
               :
                 <div>
@@ -604,6 +609,17 @@ class ProductPage extends Component {
                     <FortniteShop />
                 </div>
               }
+                <ToastContainer
+                    position="top-center"
+                    autoClose={3500}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange
+                    draggable
+                    pauseOnHover
+                />
             </div>
             )
         }

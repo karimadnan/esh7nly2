@@ -20,7 +20,7 @@ const override = css`
 class NewProducts extends Component {
 
 componentDidMount(){
-this.props.fetchShopData();
+    this.props.fetchShopData();
 }
 
 Discounted(){
@@ -31,11 +31,10 @@ this.props.shop.items.map((item) =>{
     var rarity = "card splash-cardTees rarity-"+item.rarity
     var counter = 0
     var key = item.Name + `-${counter}`
-    var shopRandomize = item.img[Math.floor(Math.random() * item.img.length)]
     counter ++;
     if(item.discount){
         outPut.push(            
-        <div key={key} className={rarity} style={{margin: 5}}  onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
+        <div key={key} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
             <img className="splash-card-product-view-constant" src={item.img[0]} alt={item.id}/>
         
             <div className="overlayHover" >
@@ -65,7 +64,6 @@ this.props.shop.items.map((item) =>{
     var rarity = "card splash-cardTees rarity-"+item.rarity
     var counter = 0
     var key = item.Name + `-${counter}`
-    var shopRandomize = item.img[Math.floor(Math.random() * item.img.length)]
     counter ++;
         outPut.push(            
         <div key={key} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>

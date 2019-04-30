@@ -101,7 +101,7 @@ class FortniteShop extends Component {
                         <div id ="itemdesc" className="card-body">
                             <h4 className ="card-title itemname">{image.name}</h4>
                             <p className="card-text itemprice">
-                            <img src={this.state.vbucksIcon} style ={{width: 20, height: 20}}/>{image.cost}</p>
+                            <img src={this.state.vbucksIcon} alt={"VBucksIcon"} style ={{width: 20, height: 20}}/>{image.cost}</p>
                         </div>
                       </div>
                   </div>

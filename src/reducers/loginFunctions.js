@@ -27,6 +27,9 @@ export default function(state = initialState, action){
             token: '',
             session: 0
         }
+        default: 
+            return state;
         }
+        
     return state;
 }

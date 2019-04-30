@@ -59,7 +59,7 @@ updateInfo (data){
 
 notify = (msg) => toast.error(msg, {
   position: "top-center",
-  autoClose: 2500,
+  autoClose: 1000,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: false,
@@ -93,7 +93,6 @@ render(){
           anchor="right"
           open={this.state.sideBar}
           onClose={()=>{this.setState({ sideBar: false })}}
-          onOpen={()=>{this.setState({ sideBar: true })}}
         >
         <div style={{padding: 20, textAlign: "center", width: isMobile ? 250 : 550}}>
           {this.props.cart.length > 0 ? 
