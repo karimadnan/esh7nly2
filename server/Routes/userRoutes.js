@@ -43,4 +43,7 @@ router.get('/account', function(req, res, next) {
 router.get('/productpage/:id', function(req, res, next) {
     return res.sendFile(path.resolve(Front, 'index.html'))
 }); 
+router.get('/productpage', function(req, res, next) {
+    return res.sendFile(path.resolve(Front, 'index.html'))
+}); 
 module.exports = router;
