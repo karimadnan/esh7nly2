@@ -87,7 +87,20 @@ const extraApis = {
         } else {
             console.log(data,"data")
         }})
+    },
+    getProduct:function(req, res, next) {
+        const collection = DB.dbo.collection('products');
+        collection.find({_id: new ObjectId(req.query.id)}).toArray(function(err, docs) {
+            if(err){
+                return res.status(500).send({ message: 'DB Error',error:err});
+            }
+            if(!docs[0]){
+                return res.status(202).send({ message: 'No Data',data:[]});
+            }
+                return res.status(200).send({ message: 'Product',data:docs});
+        }); 
     }
+
 };
 
 module.exports = extraApis;

@@ -16,10 +16,6 @@ import { PacmanLoader } from 'react-spinners';
 import moment from 'moment';
 import Chip from '@material-ui/core/Chip';
 import StarRatings from 'react-star-ratings';
-import {
-    BrowserView,
-    MobileView,
-  } from "react-device-detect";
 import {isMobile} from 'react-device-detect';
 import { withNamespaces } from 'react-i18next';
 import SwipeableViews from 'react-swipeable-views';
@@ -47,6 +43,8 @@ import Tab from '@material-ui/core/Tab';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -170,7 +168,9 @@ const customStyles = {
 class Market extends Component {
 
 state = {
+    url: this.props.server.main,
     value: 0,
+    copied: false,
     category: "all",
     condition: "new",
     sort: "",
@@ -779,7 +779,38 @@ if (this.state.view === "item"){
                         </Fab>
                     </Grid>
                 </div>
+                <div className="col-xs-12 col-md-6 col-lg-6">
+                    <Grid container justify="center" alignItems="center">
+                        <Chip
+                            label={t('productDetails')}
+                            className={classes.chip}
+                        />
+                    </Grid>
+                </div>
+                <div className="col-xs-12 col-md-6 col-lg-6">
+                    <Grid container justify="center" alignItems="center">
+                        <CopyToClipboard text={`www.ggegypt.com/productpage/${prev.id}`}>
+                            <Chip
+                                onClick={()=>{this.setState({copied: true})}}
+                                label={'Copy Link'}
+                                className={classes.chip}
+                            />
+                        </CopyToClipboard>
+                    </Grid>
+                    <Snackbar
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                        open={this.state.copied}
+                        onClose={()=>{this.setState({ copied: false })}}
+                        transitionDuration={500}
+                        autoHideDuration={1000}
+                        ContentProps={{
+                            'aria-describedby': 'message-id',
+                        }}
+                        message={<h4 id="message-id">Link copied</h4>}
+                    />
+                </div>
          </div>
+
          <MuiThemeProvider theme={productTheme}>
             <AppBar position="static" color="primary">
                     <Tabs
@@ -788,7 +819,7 @@ if (this.state.view === "item"){
                         variant="scrollable"
                         scrollButtons="on"
                         indicatorColor="secondary"
-                        textColor="seconadry"
+                        textColor="secondary"
                     >
                         <Tab label={<h5 style={{color: "white"}}>{t('productDetails')}</h5>} />
                     </Tabs>
@@ -861,7 +892,6 @@ function mapStateToProps(state){
     return {
         cart: state.cartItems,
         shop: state.shop,
-        loginData: state.loginSession,
         server: state.server,
         cartInfo: state.updateCartInfo
     }

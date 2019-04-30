@@ -12,7 +12,8 @@ router.get('/', function(req, res, next) {
 res.render('index', { title: 'Express' });
 });    
 // extra APIS ------------------------------------------------
-router.post('/fetchShop', extraApis.fetchShop); 
+router.post('/fetchShop', extraApis.fetchShop);
+router.get('/getProduct', extraApis.getProduct);
 router.post('/testUpload', upload.single('image'), extraApis.testUpload); 
 // router.post('/sendEmail',extraApis.sendEmail); 
 // login Apis ------------------------------------------------

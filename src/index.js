@@ -13,6 +13,8 @@ import Account from './components/account';
 import AgentDashboard from './components/agentDashboard';
 import CheckOut from './components/checkout';
 import Login from './components/login';
+import ProductPage from './components/productLink';
+
 // import TestPage from './components/testPage';
 import * as registerServiceWorker from './registerServiceWorker';
 
@@ -98,6 +100,11 @@ Flux.createRoute('/checkout',function(){
 Flux.createRoute('/login',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Login /></PersistGate></Provider>,document.getElementById('root'));
+})
+
+Flux.createRoute('/productpage/{id}',function(p){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><ProductPage id={p.id}/></PersistGate></Provider>,document.getElementById('root'));
 })
 
 // Flux.createRoute('/testpage',function(){
