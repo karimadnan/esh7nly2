@@ -107,6 +107,11 @@ Flux.createRoute('/productpage/{id}',function(p){
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><ProductPage id={p.id}/></PersistGate></Provider>,document.getElementById('root'));
 })
 
+Flux.createRoute('/productpage',function(p){
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'));
+    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><ProductPage id={p.id}/></PersistGate></Provider>,document.getElementById('root'));
+})
+
 // Flux.createRoute('/testpage',function(){
 //     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
 //     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><TestPage /></PersistGate></Provider>,document.getElementById('root'));
