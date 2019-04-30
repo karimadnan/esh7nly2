@@ -35,7 +35,7 @@ this.props.shop.items.map((item) =>{
     counter ++;
     if(item.discount){
         outPut.push(            
-        <div key={key} className={rarity} style={{margin: 5}}  onClick={()=>{ReactRouter.goTo(`www.ggegypt.com/productpage/${item._id}`)}}>
+        <div key={key} className={rarity} style={{margin: 5}}  onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
             <img className="splash-card-product-view-constant" src={item.img[0]} alt={item.id}/>
         
             <div className="overlayHover" >
@@ -68,7 +68,7 @@ this.props.shop.items.map((item) =>{
     var shopRandomize = item.img[Math.floor(Math.random() * item.img.length)]
     counter ++;
         outPut.push(            
-        <div key={key} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`www.ggegypt.com/productpage/${item._id}`)}}>
+        <div key={key} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
             <img className="splash-card-product-view-constant" src={item.img[0]} alt={item.id}/>
         
             <div className="overlayHover" >
