@@ -627,7 +627,7 @@ class ProductPage extends Component {
 
     render(){
         const { t } = this.props;
-        if(this.state.productError){
+        if(this.state.productError || !this.props.id){
             return(
                 <div className ="GG-BG-INVERSE">
                     <div className="container">
