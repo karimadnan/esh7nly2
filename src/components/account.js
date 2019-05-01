@@ -12,8 +12,6 @@ import CountUp from 'react-countup';
 import axios from 'axios';
 import Orders from './userOrders';
 import OrdersHistory from './userOrdersHistory';
-import { css } from '@emotion/core';
-import { PacmanLoader } from 'react-spinners';
 import {
     BrowserView,
     MobileView,
@@ -39,12 +37,9 @@ import UploadIcon from '@material-ui/icons/CloudUpload';
 import TextField from '@material-ui/core/TextField';
 import amumu from '../Images/amumusad.png';
 import Modal from 'react-responsive-modal';
-
-const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-`;
+import Loader from '../containers/loader';
+import {updateProfilePhoto} from '../actions/index';
+import {bindActionCreators} from 'redux';
 
 const ErrorStyle = {
     overlay: {
@@ -154,7 +149,7 @@ class Account extends Component {
         let data = {photo: photo}
         axios.post(this.state.Url+"setUserPhoto", data, {headers: this.state.headers})
         .then(function (response) {
-            window.location.reload();
+            this.props.updateProfilePhoto(photo)
         })
         .catch(function (error) {
             console.log(error, "ERROR")
@@ -470,19 +465,11 @@ render() {
     else{
         return (
                 <div className="GG-BG-INVERSE">
-                    <div className="container" style={{color: "white"}}>
-                        {!this.state.status && 
-                        <div>
-                            <PacmanLoader
-                                css={override}
-                                sizeUnit={"px"}
-                                size={100}
-                                color={'#FFFF00'}
-                                loading={true}/>
-                            <h2 style={{color: "white"}}>{t('loading')}...</h2>
-                        </div>}
+                        {!this.state.status ? 
+                            <Loader />
     
-                      {this.state.status && 
+                      :
+                      <div className="container" style={{color: "white"}}>
                         <div className={classes.root}>
                             <MuiThemeProvider theme={theme}>
                                 <AppBar position="static" color="primary">
@@ -503,9 +490,9 @@ render() {
                             <div className="ProfileBGW">
                                     {this.Current()}
                             </div>
+                        </div>
                      </div>} 
-                    </div>
-                    <br/>
+
                     <Navbar page={"Account"}/>
                     <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
                         styles={ErrorStyle}>
@@ -529,8 +516,15 @@ function mapStateToProps(state){
     }
   }
   
+const matchDispatchToProps = dispatch => bindActionCreators(
+    {
+        updateProfilePhoto
+    },
+    dispatch,
+)
+
   export default compose(
     withStyles(styles),
     withNamespaces(),
-    connect(mapStateToProps),
+    connect(mapStateToProps, matchDispatchToProps),
   )(Account);

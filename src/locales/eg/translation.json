@@ -117,6 +117,8 @@
       "openDayHours": " - {{hours}} ساعة",
       "openDayMinutes": " - {{minutes}} دقيقة",
       "fbPhotoDuplicate": "يعم مهيا نفس الصورة",
-      "totalCart": " جنيه {{total}}: السعر"
+      "totalCart": " جنيه {{total}}: السعر",
+      "micro": "الشحن فى الالعاب",
+      "microText": "اشحن فأى لعبة او تطبيق"
 
 }

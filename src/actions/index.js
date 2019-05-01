@@ -126,6 +126,13 @@ export function fetchProductsSuccess(products) {
     }
 }
 
+export function updateProfilePhoto(photo) {
+    return {
+        type: 'USR_UPDATE_PHOTO',
+        payload: photo
+    }
+}
+
 export function fetchProductsError(error) {
     return {
         type: 'FETCH_PRODUCTS_ERROR',

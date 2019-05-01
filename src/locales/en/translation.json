@@ -117,6 +117,8 @@
       "openDayHours": " - {{hours}}Hours",
       "openDayMinutes": " - {{minutes}}Minutes",
       "fbPhotoDuplicate": "You already use this photo",
-      "totalCart": "Total: {{total}}EGP"
+      "totalCart": "Total: {{total}}EGP",
+      "micro": "Microtransaction Services",
+      "microText": "Purchase In-game stuff or gift cards"
 
 }

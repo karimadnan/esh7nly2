@@ -20,8 +20,6 @@ import BackIcon from '@material-ui/icons/SkipPrevious';
 import ViewIcon from '@material-ui/icons/RemoveRedEye';
 import Timer from '@material-ui/icons/Timer';
 import moment from 'moment';
-import { css } from '@emotion/core';
-import { PacmanLoader } from 'react-spinners';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import FortniteShop from './FortniteShop';
@@ -37,6 +35,7 @@ import DotIcon from '@material-ui/icons/FiberManualRecord';
 import ReactRouter from 'flux-react-router';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
+import Loader from '../containers/loader';
 
 const freeShipPrice = 400
 
@@ -57,12 +56,6 @@ const productTheme = createMuiTheme({
         secondary: { 'A400': '#3F51B5' } // custom color in hex
     }
 });
-
-const override = css`
-    display: block;
-    border-color: red;
-    margin: 0 auto;
-`;
 
 const styles = theme => ({
     fab: {
@@ -144,13 +137,13 @@ class ProductPage extends Component {
         optionsFetched: false,
         fortniteShop: false,
         productLoaded: false,
-        productError: false
+        productError: false,
+
     }
 
     componentDidMount(){
         var that = this
         const prev = this.props.cart.itemPrev
-
         if(!this.state.productLoaded){
             if(prev.options){
                 this.props.removePrevOptions()
@@ -167,7 +160,7 @@ class ProductPage extends Component {
 
     notify = (msg) => toast.success(msg, {
         position: "top-right",
-        autoClose: 1000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -626,17 +619,9 @@ class ProductPage extends Component {
         else{
             return(
                 <div className="GG-BG-INVERSE">
-                    <div className="container" style={{height: 300}}>
-                        <h1 style={{color: "white", textAlign: "center"}}> {t('loading')}...</h1>
-                        <PacmanLoader
-                        css={override}
-                        sizeUnit={"px"}
-                        size={100}
-                        color={'#FFFF00'}
-                        loading={true}/>
-                    </div>
-                <Navbar page={1}/>
-            </div>
+                    <Loader />
+                    <Navbar page={1}/>
+                </div>
             )
         }
     }

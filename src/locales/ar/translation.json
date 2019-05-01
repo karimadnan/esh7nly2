@@ -117,7 +117,9 @@
       "openDayHours": " - {{hours}} ساعة",
       "openDayMinutes": " - {{minutes}} دقيقة",
       "fbPhotoDuplicate": "انت تستخدم نفس الصورة",
-      "totalCart": "{{total}}: الثمن"
+      "totalCart": "{{total}}: الثمن",
+      "micro": " خدمات الشحن",
+      "microText": "اشترى من الالعاب و التطبيقات"
 
       
 

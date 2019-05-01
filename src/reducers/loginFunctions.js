@@ -2,6 +2,7 @@ const initialState = {
     loggedState: false,
     userName: '',
     token: '',
+    photo: '',
     session: ''
 }
 
@@ -27,9 +28,12 @@ export default function(state = initialState, action){
             token: '',
             session: 0
         }
+        case 'USR_UPDATE_PHOTO':
+        return {
+            ...state,
+            photo: action.payload
+        }
         default: 
             return state;
         }
-        
-    return state;
 }

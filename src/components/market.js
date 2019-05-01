@@ -11,8 +11,6 @@ import CurrencyFormat from 'react-currency-format';
 import Select from 'react-select';
 import Modal from 'react-responsive-modal';
 import amumu from '../Images/amumusad.png';
-import { css } from '@emotion/core';
-import { PacmanLoader } from 'react-spinners';
 import moment from 'moment';
 import Chip from '@material-ui/core/Chip';
 import StarRatings from 'react-star-ratings';
@@ -45,7 +43,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import Loader from '../containers/loader';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -71,12 +69,6 @@ const productTheme = createMuiTheme({
         secondary: { 'A400': '#3F51B5' } // custom color in hex
     }
 });
-
-const override = css`
-    display: block;
-    border-color: red;
-    margin: 0 auto;
-`;
 
 const styles = theme => ({
     root: {
@@ -274,7 +266,7 @@ goBack(){
 
 notify = (msg) => toast.success(msg, {
     position: "top-right",
-    autoClose: 2500,
+    autoClose: 1500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: false,
@@ -861,15 +853,7 @@ render(){
     if(!this.props.shop.fetched){
         return(
             <div className="GG-BG-INVERSE">
-                <div className="container" style={{backgroundColor: "#121212", boxShadow: `1px 5px 5px #000000`, height: 300}}>
-                    <h1 style={{color: "white", textAlign: "center"}}> {t('loading')}...</h1>
-                    <PacmanLoader
-                    css={override}
-                    sizeUnit={"px"}
-                    size={100}
-                    color={'#FFFF00'}
-                    loading={true}/>
-                </div>
+                <Loader />
                 <Navbar page={1}/>
             </div>
         )
