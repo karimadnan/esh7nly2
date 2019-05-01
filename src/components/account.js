@@ -147,9 +147,10 @@ class Account extends Component {
 
     setPhoto(photo){
         let data = {photo: photo}
+        var that = this
         axios.post(this.state.Url+"setUserPhoto", data, {headers: this.state.headers})
         .then(function (response) {
-            this.props.updateProfilePhoto(photo)
+            that.props.updateProfilePhoto(photo)
         })
         .catch(function (error) {
             console.log(error, "ERROR")
