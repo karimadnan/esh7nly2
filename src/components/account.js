@@ -249,7 +249,7 @@ class Account extends Component {
             return(
             <div>
                 <Grid container justify="center" alignItems="center">
-                    {this.state.fbStatus === 'connected' && !this.state.photo ?
+                    {this.state.fbStatus === 'connected' && !this.props.loginData.photo ?
                     <Fab color="primary" variant="extended" aria-label="fbPhotoUpload" onClick={()=>{this.getFbPhoto()}} className={classes.fab}>
                         <UploadIcon className={classes.extendedIcon2} />
                         <h5>{t('fbPhotoUpload')}</h5>
@@ -263,11 +263,11 @@ class Account extends Component {
 
                 </Grid>
                 <Grid container justify="center" alignItems="center">
-                    <Avatar alt="Profile Picture" src={!this.state.photo ? Pp : this.state.photo} className={classes.Avatar} />
+                    <Avatar alt="Profile Picture" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} className={classes.Avatar} />
                 </Grid>
 
                 <Grid container justify="center" alignItems="center">
-                {this.state.fbStatus === 'connected' && this.state.photo ?
+                {this.state.fbStatus === 'connected' && this.props.loginData.photo ?
                     <Fab color="primary" variant="extended" aria-label="fbPhotoEdit" onClick={()=>{this.updateFbPhoto()}} className={classes.fab}>
                         <UploadIcon className={classes.extendedIcon2} />
                         <h5>{t('fbEditPhoto')}</h5>
