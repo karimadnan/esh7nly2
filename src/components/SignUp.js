@@ -217,7 +217,7 @@ render() {
                 </div>
               <br/><br/>
         </div>
-        <Navbar page={"SignUp"}/>
+        <Navbar />
         <Footer/>
 </div>
   )

@@ -5,19 +5,51 @@ import '../Respcss.css';
 import Navbar from './navbar';
 import {connect} from 'react-redux';
 import axios from 'axios';
-import Leads from './leads';
-import { css } from '@emotion/core';
-import { PacmanLoader } from 'react-spinners';
-import {
-    BrowserView,
-    MobileView,
-  } from "react-device-detect";
+import Leads from '../containers/leads';
+import Loader from '../containers/loader';
+import {updateProfilePhoto} from '../actions/index';
+import {bindActionCreators} from 'redux';
+import { withNamespaces } from 'react-i18next';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import compose from 'recompose/compose';
+import Pp from '../Images/avatar.png';
+import Grid from '@material-ui/core/Grid';
+import Avatar from '@material-ui/core/Avatar';
+import Chip from '@material-ui/core/Chip';
+import MyOrders from '../containers/adminOrders';
 
-const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-`;
+const theme = createMuiTheme({
+    palette: {
+        primary: { 500: '#3e2723' }, // custom color in hex
+        secondary: { 'A400': '#ffab00' }
+    }
+});
+
+const styles = theme => ({
+    root: {
+      flexGrow: 1,
+      width: '100%',
+      backgroundColor: theme.palette.background.paper,
+    },
+    appBar: {
+        marginTop: theme.spacing.unit * 2
+    },
+    Avatar: {
+        margin: 10,
+        width: 150,
+        height: 150,
+      },
+    chip: {
+        margin: theme.spacing.unit,
+        fontSize: 14,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 20,
+        }
+    },
+});
 
 class AgentDashboard extends Component {
 
@@ -33,168 +65,124 @@ class AgentDashboard extends Component {
         totalOrders: 0,
         failed: 0,
         passed: 0,
-        nav: 'profile'
+        value: 0,
+        nav: 'profile',
+        agentOrders: []
     }
+    
+    componentDidMount(){
+        var that = this
+        axios.get(`${this.state.Url}getAdminHistory`, {headers: this.state.headers})
+        .then(function (response) {
+          console.log(response, "HISTORY")
+        })
+        .catch(function (error) {
+        //   that.setState({loaded: true})
+        })
+    }
+
+    handleChange = (event, value) => {
+        this.setState({ value });
+    };
 
     updateInput(key, value) {
         this.setState({ [key]: value });
     }
     
-    Current(){
-        if(this.state.nav === "profile"){
+Current(){
+    const { value } = this.state;
+
+        if(value === 0){
             return(
-            <div>
-            <BrowserView>
-                <h1 style={{color: "black"}}><span style={{color: "purple"}}>Agent</span>, {this.props.loginData.userName}</h1>
-                    <br/>
-                    <h3 style={{textAlign: "center", color: "black"}}>Your performance this month</h3>
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <span style={{fontSize: 16}} class="label label-primary col-xs-4 col-md-4 col-lg-4">Total: {this.state.totalOrders}</span>
-                        <span style={{fontSize: 16}} class="label label-success col-xs-4 col-md-4 col-lg-4">Passed: {this.state.passed}</span>
-                        <span style={{fontSize: 16}} class="label label-danger col-xs-4 col-md-4 col-lg-4">Failed: {this.state.failed}</span>
-                    </div>
-                    <br/>
-                    <h3 style={{fontFamily: "impact", color: "black", textTransform: 'uppercase'}}>Account Status:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>
-
-                    <h3 style={{fontFamily: "impact", color: "black"}}>Email:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-babyRed">{this.state.email}</span></h3>
-                <br/>
-                    <h3 style={{fontFamily: "impact", color: "black"}}>Phone:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-babyRed">{this.state.phone}</span></h3>
-                <br/>
-            </BrowserView>
-            <MobileView>
-                <h1 style={{color: "black", fontSize: "8vw"}}>Agent, {this.props.loginData.userName}</h1>
-                    <br/>
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <span style={{fontSize: "4vw"}} class="label label-primary col-xs-4 col-md-4 col-lg-4">Total: {this.state.totalOrders}</span>
-                        <span style={{fontSize: "4vw"}} class="label label-success col-xs-4 col-md-4 col-lg-4">Passed: {this.state.passed}</span>
-                        <span style={{fontSize: "4vw"}} class="label label-danger col-xs-4 col-md-4 col-lg-4">Failed: {this.state.failed}</span>
-                    </div>
-                    <br/>
-                    <h3 style={{fontFamily: "impact", color: "black", textTransform: 'uppercase', fontSize: "6vw"}}>Account Status:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: this.state.status === "active" ? "Lime" : "Red", fontWeight: "bold"}} >{this.state.status}</span></h3>
-
-                    <h3 style={{fontFamily: "impact", color: "black", fontSize: "5vw"}}>Email:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-babyRed">{this.state.email}</span></h3>
-                <br/>
-                    <h3 style={{fontFamily: "impact", color: "black", fontSize: "7vw"}}>Phone:&nbsp;&nbsp;<span style={{fontFamily: "arial", color: "white"}} class="menuLabel-small menuLabel-babyRed">{this.state.phone}</span></h3>
-                <br/>
-            </MobileView>
-            </div>
+                <Leads/>
             )
         }
-      else if (this.state.nav === "leads"){
+      else if (value === 1){
           return(
-            <Leads/>
+                <MyOrders/>
         )
       }
-    }
+}
 
-    render() {
+render() {
+    const { classes } = this.props;
+    const { value } = this.state;
+    const { t } = this.props;
     if (!this.props.loginData.loggedState || !this.props.loginData.isAdmin){
         return (
-            <div class ="GG-BG">
-            <div class="container">
-              <div class="WhiteBG" style={{color: "black"}}>
+            <div className="GG-BG-INVERSE">
+            <div className="container">
+              <div className="WhiteBG" style={{color: "black"}}>
                   <h1>403 (Forbidden)</h1>
-                  <p> Ooops Something Went Wrong.</p>
+                  <p> {t('403')}</p>
               </div>
             </div>
             <Navbar />
           </div>
         )
         }
-    else{
-        if(!this.state.status){
-            let Data = {token: this.props.loginData.token}
-            var that = this
-
-            axios.post(this.state.Url+"getAdminbyId", Data, {headers: this.state.headers})
-            .then(function (response) {
-                const info = response.data.doc
-                that.setState({email: info.Email, phone: info.Phone, status: info.status})
-            })
-            .catch(function (error) {
-                // console.log(error.response.data.message, "FAIL")
-            })
-
-            axios.get(`${this.state.Url}getAdminHistory`, {headers: this.state.headers})
-            .then(function (response) {
-                console.log(response)
-                // that.setState({ordersData: response.data.doc})
-            })
-            .catch(function (error) {
-              if (error.response.data.message){
-                // console.log(error.response.data.message, "FAIL")
-              }
-            })
-            
-        }
         return (
-                <div class ="GG-BG">
-                    <div class="container">
-                        
-                        {!this.state.status && 
-                        <div>
-                            <PacmanLoader
-                                css={override}
-                                sizeUnit={"px"}
-                                size={100}
-                                color={'#FFFF00'}
-                                loading={true}/>
-                            <h2 style={{color: "white"}}>Loading...</h2>
-                        </div>}
-    
-                      {this.state.status && 
-                      <div>
-                        <br/>
-                        <BrowserView>
-                            <div class="agentNav col-xs-12 col-md-12 col-lg-12">
-                                <div class={this.state.nav === "profile" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h3 onClick={()=>{this.updateInput("nav", "profile")}} style={{lineHeight: 0.3}}>Profile</h3>
-                                </div>
-                                <div class={this.state.nav === "leads" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h3 onClick={()=>{this.updateInput("nav", "leads")}} style={{lineHeight: 0.3}}>Leads</h3>
-                                </div>
-                                <div class={this.state.nav === "Orders" ? "profileNavActive col-xs-3 col-md-2 col-lg-2" : "profileNavItem col-xs-3 col-md-2 col-lg-2"}>
-                                    <h3 onClick={()=>{this.updateInput("nav", "Orders")}} style={{lineHeight: 1.9, display: "inline"}}>My Orders</h3>
-                                </div>
-                                <div class={this.state.nav === "Settings" ? "profileNavActive col-xs-3 col-md-2 col-lg-2" : "profileNavItem col-xs-3 col-md-2 col-lg-2"}>
-                                    <h3 onClick={()=>{this.updateInput("nav", "Settings")}} style={{lineHeight: 0.3}}>Settings</h3>
-                                </div>
-                            </div>
-                        </BrowserView>
-                        <MobileView>
-                            <div class="agentNav col-xs-12 col-md-12 col-lg-12">
-                                <div class={this.state.nav === "profile" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h5 onClick={()=>{this.updateInput("nav", "profile")}} style={{lineHeight: 1.7}}>Profile</h5>
-                                </div>
-                                <div class={this.state.nav === "leads" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h5 onClick={()=>{this.updateInput("nav", "leads")}} style={{lineHeight: 1.7}}>Leads</h5>
-                                </div>
-                                <div class={this.state.nav === "Orders" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h5 onClick={()=>{this.updateInput("nav", "Orders")}} style={{lineHeight: 1.7, display: "inline"}}>My Orders</h5>
-                                </div>
-                                <div class={this.state.nav === "Settings" ? "profileNavActive col-xs-3 col-md-1 col-lg-1" : "profileNavItem col-xs-3 col-md-1 col-lg-1"}>
-                                    <h5 onClick={()=>{this.updateInput("nav", "Settings")}} style={{lineHeight: 1.7}} style={{lineHeight: 1.7}}>Settings</h5>
-                                </div>
-                            </div>
-                        </MobileView>
-                        <div class="ProfileBGW">
+                <div className="GG-BG-INVERSE">
+                      <div className="container" style={{color: "white"}}>
+                        <div className={classes.root}>
+                            <MuiThemeProvider theme={theme}>
+                                <AppBar position="static" color="primary" className={classes.appBar}>
+                                    <Tabs
+                                        value={value}
+                                        onChange={this.handleChange}
+                                        variant="scrollable"
+                                        scrollButtons="on"
+                                        indicatorColor="secondary"
+                                        textColor="secondary"
+                                    >
+                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 0 && "white"}}>Leads</h4>} />
+                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 1 && "white"}}>My orders</h4>} />
+                                    </Tabs>
+                                </AppBar>
+                                <Grid container justify="center" alignItems="center">
+                                    <Avatar alt="Profile Picture" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} className={classes.Avatar} />
+                                </Grid>
+                                <Grid container justify="center" alignItems="center">
+
+                                    <Chip
+                                        color="primary"
+                                        label="Passed Orders (10)"
+                                        className={classes.chip}
+                                    />
+                                    <Chip
+                                        color="primary"
+                                        label="Your Success Rate (70%)"
+                                        className={classes.chip}
+                                    />
+                                </Grid>
+                            </MuiThemeProvider>
+                        <div className="ProfileBGW">
                                 {this.Current()}
+                        </div>
                      </div>
-                     </div>} 
                     </div>
-                    <Navbar page={"Account"}/>
-                </div>
+                    <Navbar />
+            </div>
             )
-    }
     }
 }
 
 function mapStateToProps(state){
     return {
         loginData: state.loginSession,
-        server: state.server,
-        lang: state.lang.lang
+        server: state.server
     }
   }
   
-  export default connect(mapStateToProps)(AgentDashboard);
+const matchDispatchToProps = dispatch => bindActionCreators(
+    {
+        updateProfilePhoto
+    },
+    dispatch,
+)
+
+export default compose(
+withStyles(styles),
+withNamespaces(),
+connect(mapStateToProps, matchDispatchToProps),
+)(AgentDashboard);

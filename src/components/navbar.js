@@ -132,6 +132,13 @@ const theme = createMuiTheme({
   },
 });
 
+const adminTheme = createMuiTheme({
+  palette: {
+      primary: { main: '#fafafa', contrastText: "#fff" },
+      secondary: { main: '#3e2723', contrastText: "#fff" }
+  },
+});
+
 class Navbar extends React.Component {
 
   state = {
@@ -232,13 +239,15 @@ class Navbar extends React.Component {
             onKeyDown={this.toggleDrawer('drawer', false)}
           >
           {this.props.loginData.loggedState ?
-          <Chip
-              color="secondary"
-              avatar={<Avatar alt="PP" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} />}
-              label={<h4>{this.props.loginData.userName}</h4>}
-              onClick={this.profile.bind(this)}
-              className={classes.chipMobile}
-          />
+          <MuiThemeProvider theme={this.props.loginData.isAdmin ? adminTheme : theme}>
+            <Chip
+                color="secondary"
+                avatar={<Avatar alt="PP" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} />}
+                label={<h4>{this.props.loginData.userName}</h4>}
+                onClick={this.profile.bind(this)}
+                className={classes.chipMobile}
+            />
+          </MuiThemeProvider>
           : undefined}  
 
           {!this.props.loginData.loggedState ?  
@@ -304,14 +313,16 @@ class Navbar extends React.Component {
                   <GlobalCart />
 
                   {this.props.loginData.loggedState ?
-                  <Chip
-                      color="secondary"
-                      avatar={<Avatar alt="PP" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} />}
-                      label={<h4>{this.props.loginData.userName}</h4>}
-                      onClick={this.profile.bind(this)}
-                      onDelete={this.logoutClick.bind(this)}
-                      className={classes.chipDesktop}
-                  />
+                  <MuiThemeProvider theme={this.props.loginData.isAdmin ? adminTheme : theme}>
+                    <Chip
+                        color="secondary"
+                        avatar={<Avatar alt="PP" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} />}
+                        label={<h4>{this.props.loginData.userName}</h4>}
+                        onClick={this.profile.bind(this)}
+                        onDelete={this.logoutClick.bind(this)}
+                        className={classes.chipDesktop}
+                    />
+                  </MuiThemeProvider>
                   : undefined}  
 
                   {!this.props.loginData.loggedState ?  

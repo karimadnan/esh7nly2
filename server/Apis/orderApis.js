@@ -88,7 +88,7 @@ const orderApis = {
         "game": 1,
         "orderType": 1,
         "paymentMethod": 1}},
-        {$sort: { createdAt: -1 }}
+        {$sort: { createdAt: 1 }}
         ]).toArray(function(err, docs) {
         if(err){
         return res.status(500).send({ message: 'DB Error',error:err});
@@ -149,12 +149,11 @@ const orderApis = {
         "user._id": 1, 
         "status": 1, 
         "createdAt": 1,
-        "game": 1,
         "orderType": 1,
-        "extra":1,
+        "cart":1,
         "transId":1,
         "paymentMethod": 1}},
-        {$sort: { createdAt: -1 }}
+        {$sort: { createdAt: 1 }}
         ]).toArray(function(err, docs) {
         if(err){
         return res.status(500).send({ message: 'DB Error',error:err});

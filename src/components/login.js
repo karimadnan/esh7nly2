@@ -169,7 +169,7 @@ render() {
                     <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
                     <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
                 </Modal>
-                <Navbar page={"Login"}/>
+                <Navbar />
          </div>
 
     );

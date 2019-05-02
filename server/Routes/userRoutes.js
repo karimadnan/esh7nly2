@@ -13,9 +13,6 @@ router.get('/main', function(req, res, next) {
 router.get('/payment', function(req, res, next) {
     return res.sendFile(path.resolve(Front, 'index.html'))
 }); 
-router.get('/fortniteshop', function(req, res, next) {
-    return res.sendFile(path.resolve(Front, 'index.html'))
-}); 
 router.get('/signup', function(req, res, next) {
     return res.sendFile(path.resolve(Front, 'index.html'))
 }); 

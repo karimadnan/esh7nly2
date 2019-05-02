@@ -25,7 +25,7 @@ import ViewIcon from '@material-ui/icons/RemoveRedEye';
 import Timer from '@material-ui/icons/Timer';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
-import FortniteShop from './FortniteShop';
+import FortniteShop from '../containers/FortniteShop';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';

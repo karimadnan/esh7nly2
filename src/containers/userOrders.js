@@ -134,7 +134,6 @@ render(){
   if(this.state.loaded ){
     if (this.state.ordersData.length > 0 && !this.state.showRow){
 
-        var counter = 0
         var pending = 0
         var onGoing = 0
 
@@ -146,9 +145,7 @@ render(){
               onGoing ++;
           }
         })
-            counter ++;
             return (
-            <div>
             <Paper className={classes.root}>
                 <Table className={classes.table}>
                     <TableHead>
@@ -162,9 +159,9 @@ render(){
                     </TableHead>
                     <TableBody>
 
-                    {this.state.ordersData.map(row => (
+                    {this.state.ordersData.map((row, index) => (
                         
-                        <TableRow className={classes.row} key={counter}>
+                        <TableRow className={classes.row} key={index}>
                                             
                         <CustomTableCell align="center" >
                             <Tooltip title={<h6>{t('viewButton')}</h6>} aria-label={<h6>{t('viewButton')}</h6>} placement="bottom">
@@ -172,9 +169,9 @@ render(){
                             </Tooltip>
                         </CustomTableCell>
                         <CustomTableCell component="th" scope="row">
-                        {row.cart.map(imgs => {
+                        {row.cart.map((imgs, index) => {
                         return(
-                            <div class="col-xs-2 col-md-1 col-lg-1" key={imgs}>
+                            <div class="col-xs-2 col-md-1 col-lg-1" key={index}>
                                 <Avatar className={classes.Avatar} alt="PP" src={imgs.defaultImage}/>
                             </div>
                         )
@@ -189,7 +186,6 @@ render(){
                     </TableBody>
                 </Table>
             </Paper>
-            </div>
           )
   }
   else if(this.state.showRow){

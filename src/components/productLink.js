@@ -22,7 +22,7 @@ import Timer from '@material-ui/icons/Timer';
 import moment from 'moment';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
-import FortniteShop from './FortniteShop';
+import FortniteShop from '../containers/FortniteShop';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';

@@ -10,8 +10,7 @@ import Navbar from './navbar';
 import {connect} from 'react-redux';
 import CountUp from 'react-countup';
 import axios from 'axios';
-import Orders from './userOrders';
-import OrdersHistory from './userOrdersHistory';
+import Orders from '../containers/userOrders';
 import {
     BrowserView,
     MobileView,
@@ -88,6 +87,9 @@ const styles = theme => ({
     },
     extendedIcon2: {
         marginRight: theme.spacing.unit * 3,
+    },
+    appBar: {
+        marginTop: theme.spacing.unit * 2
     }
 });
 
@@ -403,7 +405,7 @@ class Account extends Component {
       }
       else if (this.state.value === 2){
         return(
-          <OrdersHistory/>
+          <div />
       )
     }
     }
@@ -466,35 +468,33 @@ render() {
     else{
         return (
                 <div className="GG-BG-INVERSE">
-                        {!this.state.status ? 
-                            <Loader />
-    
-                      :
-                      <div className="container" style={{color: "white"}}>
-                        <div className={classes.root}>
-                            <MuiThemeProvider theme={theme}>
-                                <AppBar position="static" color="primary">
-                                    <Tabs
-                                    value={value}
-                                    onChange={this.handleChange}
-                                    variant="scrollable"
-                                    scrollButtons="on"
-                                    indicatorColor="secondary"
-                                    textColor="secondary"
-                                    >
-                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 0 && "white"}}>{t('profile')}</h4>} />
-                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 1 && "white"}}>{t('orders')}</h4>} />
-                                    <Tab label={<h4 style={{fontWeight: "bold", color: value !== 2 && "white"}}>{t('history')}</h4>} />
-                                    </Tabs>
-                                </AppBar>
-                            </MuiThemeProvider>
-                            <div className="ProfileBGW">
-                                    {this.Current()}
+                       {!this.state.status ? <Loader />
+                       :
+                        <div className="container" style={{color: "white"}}>
+                            <div className={classes.root}>
+                                <MuiThemeProvider theme={theme}>
+                                    <AppBar position="static" color="primary" className={classes.appBar}>
+                                        <Tabs
+                                        value={value}
+                                        onChange={this.handleChange}
+                                        variant="scrollable"
+                                        scrollButtons="on"
+                                        indicatorColor="secondary"
+                                        textColor="secondary"
+                                        >
+                                        <Tab label={<h4 style={{fontWeight: "bold", color: value !== 0 && "white"}}>{t('profile')}</h4>} />
+                                        <Tab label={<h4 style={{fontWeight: "bold", color: value !== 1 && "white"}}>{t('orders')}</h4>} />
+                                        <Tab label={<h4 style={{fontWeight: "bold", color: value !== 2 && "white"}}>{t('history')}</h4>} />
+                                        </Tabs>
+                                    </AppBar>
+                                </MuiThemeProvider>
+                                <div className="ProfileBGW">
+                                        {this.Current()}
+                                </div>
                             </div>
-                        </div>
-                     </div>} 
+                        </div>} 
 
-                    <Navbar page={"Account"}/>
+                    <Navbar />
                     <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
                         styles={ErrorStyle}>
                         <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>

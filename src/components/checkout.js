@@ -13,8 +13,6 @@ import VodafoneCashLogo from '../Images/Vodacash.png';
 import EtisalatCashLogo from '../Images/Etiscash.png';
 import FawryLogo from '../Images/fawrypaymenttest.png';
 import isInt from 'validator/lib/isInt';
-import { css } from '@emotion/core';
-import { PacmanLoader } from 'react-spinners';
 import {bindActionCreators} from 'redux';
 import {cleanCart, cleanCartInfo} from '../actions/index';
 import CurrencyFormat from 'react-currency-format';
@@ -33,13 +31,10 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import BackIcon from '@material-ui/icons/SkipPrevious';
 import i18next from 'i18next';
+import Loader from '../containers/loader';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
-const override = css`
-    display: block;
-    border-color: red;
-`;
 
 const styles = theme => ({
     Avatar: {
@@ -425,7 +420,7 @@ class Checkout extends Component {
     };
 
     getShippingData(){
-        if(this.props.loginData.loggedState){
+        if(this.props.loginData.loggedState && !this.props.loginData.isAdmin){
             var that = this
             axios.get(`${this.state.Url}getUserAddress`, {headers: this.state.headers})
             .then(success => {
@@ -583,15 +578,8 @@ render(){
         <div class="col-xs-12 col-md-8 col-lg-8">
         <div style={{margin: 10}}>
             <div class="WhiteBG">
-                       {!this.state.loaded && this.props.loginData.loggedState && <div>
-                            <PacmanLoader
-                                css={override}
-                                sizeUnit={"px"}
-                                size={100}
-                                color={'#FFFF00'}
-                                loading={true}/>
-                            <h2 style={{color: "black"}}>{t('loading')}...</h2>
-                        </div> }
+                {!this.state.loaded && this.props.loginData.loggedState && !this.props.loginData.isAdmin && <Loader />}
+                {this.props.loginData.isAdmin ? <h1 style={{color: "red"}}>Admins cannot checkout</h1>:undefined}
                 {!this.props.loginData.loggedState && !this.state.cart ?
                     <h1 style={{color: "red"}}>{t('notLogged')}</h1>
                     : 

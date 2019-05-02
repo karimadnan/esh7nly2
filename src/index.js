@@ -6,7 +6,7 @@ import './index.css'
 import Main from './components/main';
 import SignUp from './components/SignUp';
 import Market from './components/market';
-import FortniteShop from './components/FortniteShop';
+import FortniteShop from './containers/FortniteShop';
 import ContactUs from './components/ContactUs';
 import Privacy from './components/privacypolicy';
 import Account from './components/account';
