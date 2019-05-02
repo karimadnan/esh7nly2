@@ -228,7 +228,7 @@ class Navbar extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { page } = this.props;
+    const page  = this.props.page || 0;
     const { t } = this.props;
     const renderMobileDrawer = (
         <Drawer anchor="right" classes={{ paper: classes.paper }} open={this.state.drawer} onClose={this.toggleDrawer('drawer', false)}>

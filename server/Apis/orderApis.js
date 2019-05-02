@@ -151,6 +151,7 @@ const orderApis = {
         "createdAt": 1,
         "orderType": 1,
         "cart":1,
+        "comment":1,
         "transId":1,
         "paymentMethod": 1}},
         {$sort: { createdAt: 1 }}

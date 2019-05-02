@@ -143,15 +143,9 @@ render() {
                                     <Avatar alt="Profile Picture" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} className={classes.Avatar} />
                                 </Grid>
                                 <Grid container justify="center" alignItems="center">
-
                                     <Chip
                                         color="primary"
                                         label="Passed Orders (10)"
-                                        className={classes.chip}
-                                    />
-                                    <Chip
-                                        color="primary"
-                                        label="Your Success Rate (70%)"
                                         className={classes.chip}
                                     />
                                 </Grid>
