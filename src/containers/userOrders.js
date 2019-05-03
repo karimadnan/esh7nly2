@@ -9,12 +9,6 @@ import {
   MobileView,
 } from "react-device-detect";
 import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import { withNamespaces } from 'react-i18next';
 import Avatar from '@material-ui/core/Avatar';
 import compose from 'recompose/compose';
@@ -31,14 +25,17 @@ import Euro from '@material-ui/icons/EuroSymbol';
 import OrderStatus from '@material-ui/icons/WatchLater';
 import OrderComment from '@material-ui/icons/SpeakerNotes';
 import CurrencyFormat from 'react-currency-format';
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
 
 const override = css`
     display: block;
@@ -47,16 +44,6 @@ const override = css`
 `;
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
-
-const CustomTableCell = withStyles(theme => ({
-    head: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white,
-    },
-    body: {
-      fontSize: 16,
-    },
-}))(TableCell);
 
 const styles = theme => ({
     root: {
@@ -67,6 +54,26 @@ const styles = theme => ({
     table: {
       minWidth: 700,
     },
+    mediaCard: {
+        height: 150,
+        width: 120,
+      },
+    pending: {
+        margin: 10,
+        width: 60,
+        height: 60,
+        color: '#fff',
+        fontWeight: 'bold',
+        backgroundColor: '#3f51b5',
+      },
+    ongoing: {
+        margin: 10,
+        width: 60,
+        height: 60,
+        color: '#fff',
+        fontWeight: 'bold',
+        backgroundColor: fade('#ff9800', 0.625),
+      },
     fab: {
         margin: theme.spacing.unit,
       },
@@ -78,6 +85,16 @@ const styles = theme => ({
     },
     card: {
         marginBottom: theme.spacing.unit,
+        backgroundColor: fade('#3F51B5', 0.225),
+        maxWidth: 'auto',
+        '&:hover': {
+            backgroundColor: fade('#3F51B5', 0.325),
+          }
+      },
+    cardBeforeView: {
+        minHeight: 350,
+        maxHeight: 350,
+        margin: theme.spacing.unit,
         backgroundColor: fade('#3F51B5', 0.225),
         maxWidth: 'auto',
         '&:hover': {
@@ -146,46 +163,43 @@ render(){
           }
         })
             return (
-            <Paper className={classes.root}>
-                <Table className={classes.table}>
-                    <TableHead>
-                    <TableRow>
-                        <CustomTableCell align="center"><h4>{t('viewButton')}</h4></CustomTableCell>
-                        <CustomTableCell align="center"><h4>{t('image')}</h4></CustomTableCell>
-                        <CustomTableCell align="center"><h4>{t('date')}</h4></CustomTableCell>
-                        <CustomTableCell align="center"><h4>{t('comment')}</h4></CustomTableCell>
-                        <CustomTableCell align="center"><h4>{t('status')}</h4></CustomTableCell>
-                    </TableRow>
-                    </TableHead>
-                    <TableBody>
+        <div>
+            {this.state.ordersData.map((row, index) => (
+        <Tooltip title={<h6>View Details</h6>} aria-label={'View'} placement="top">
+            <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
+                <Card className={classes.cardBeforeView} onClick={ () => {this.setState({MyRow: row, showRow: true})}} style={{cursor: 'pointer'}}>
+                  <CardHeader
+                      avatar={
+                        row.status === 'pending' ?
+                          <Avatar className={classes.pending}>Pending</Avatar>
+                      :row.status === 'onGoing' ?
+                          <Avatar className={classes.ongoing}>OnGoing</Avatar>               
+                      :undefined}
 
-                    {this.state.ordersData.map((row, index) => (
-                        
-                        <TableRow className={classes.row} key={index}>
-                                            
-                        <CustomTableCell align="center" >
-                            <Tooltip title={<h6>{t('viewButton')}</h6>} aria-label={<h6>{t('viewButton')}</h6>} placement="bottom">
-                                <Visibility className={classes.viewOrder} onClick={ () => {this.setState({MyRow: row, showRow: true})}}/>
-                            </Tooltip>
-                        </CustomTableCell>
-                        <CustomTableCell component="th" scope="row">
-                        {row.cart.map((imgs, index) => {
-                        return(
-                            <div class="col-xs-2 col-md-1 col-lg-1" key={index}>
-                                <Avatar className={classes.Avatar} alt="PP" src={imgs.defaultImage}/>
-                            </div>
-                        )
-
-                        })}
-                        </CustomTableCell>
-                        <CustomTableCell align="center" style={{color: "white",  whiteSpace: "normal", wordWrap: "break-word", fontWeight: "bold"}}>{moment(row.createdAt).format('LL')}</CustomTableCell>
-                        <CustomTableCell align="center" style={{color: "white",  whiteSpace: "normal", wordWrap: "break-word", fontWeight: "bold"}}>{row.comment}</CustomTableCell>
-                        <CustomTableCell align="center" style={{color: "white", fontWeight: "bold"}}>{row.status}</CustomTableCell>
-                        </TableRow>
-                    ))}
-                    </TableBody>
-                </Table>
-            </Paper>
+                      title={<h4>{row.comment}</h4>}
+                      subheader={<h5>{moment(row.createdAt).format('LL')}</h5>}
+                      />
+                      <Grid container justify="center" alignItems="center">
+                          <p style={{color: '#3F51B5'}}>{row.status}</p>
+                      </Grid>
+                      <Divider variant="middle" className={classes.divider}/>
+                      {row.cart.map((imgs, index) => {
+                          return(
+                          <div className="col-xs-2 col-md-2 col-lg-2" key={index}>
+                          <CardMedia
+                              className={classes.mediaCard}
+                              image={imgs.defaultImage}
+                              title="Order Images"
+                          />
+                          </div>
+                          )
+                      })}
+                      <CardContent>
+                      </CardContent>
+                  </Card>
+            </div>
+            </Tooltip>))}
+          </div>
           )
   }
   else if(this.state.showRow){

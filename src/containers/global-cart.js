@@ -125,7 +125,7 @@ render(){
                             <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 30 ? (((cartName).substring(0,40-3))  + '...' ) : cartName}</h4>
                         </div>
                         <div className="col-md-2 col-lg-2">
-                            <h4 style={{color: "purple", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h4>
+                            <h4 style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h4>
                         </div>
                         <div className="col-md-2 col-lg-2">
                             <h5 style={{color: "black"}}>{t('quantity')}: {item.quantity}</h5>

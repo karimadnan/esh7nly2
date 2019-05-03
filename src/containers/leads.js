@@ -17,6 +17,9 @@ import Paper from '@material-ui/core/Paper';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
+import Fab from '@material-ui/core/Fab';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import Snackbar from '@material-ui/core/Snackbar';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -108,6 +111,9 @@ const styles = theme => ({
         fontWeight: 'bold',
         backgroundColor: '#ff9800',
       },
+    extendedIcon2: {
+        marginRight: theme.spacing.unit * 6,
+    },
 });
 
 class Leads extends Component {
@@ -119,7 +125,8 @@ state = {
     Url: this.props.server.main,
     ordersData: {},
     loaded: false,
-    ordersCount: 0
+    ordersCount: 0,
+    refreshed: false
 }
 
 componentDidMount(){
@@ -198,6 +205,23 @@ render(){
                     className={classes.chip}
                 />
             </Grid>
+            <Grid container justify="center" alignItems="center">
+                <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.getLeads(), this.setState({refreshed: true})}} className={classes.fab}>
+                    <RefreshIcon className={classes.extendedIcon2} />
+                        Refresh
+                </Fab>
+            </Grid>
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                open={this.state.refreshed}
+                onClose={()=>{this.setState({ refreshed: false })}}
+                transitionDuration={500}
+                autoHideDuration={1000}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<h4 id="message-id">Leads Refreshed</h4>}
+            />
         </MuiThemeProvider>
         <Paper className={classes.root}>
             <Table className={classes.table}>

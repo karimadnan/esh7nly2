@@ -25,7 +25,7 @@ this.props.shop.items.map((item, index) =>{
     if(item.discount){
         outPut.push(            
         <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
-            <img className="splash-card-product-view-constant" src={item.img[0]} alt={item.id}/>
+            <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
         
             <div className="overlayHover" >
                 <button className="btn btn-primary btn-block" style={{color : "white"}}>
@@ -54,7 +54,7 @@ this.props.shop.items.map((item, index) =>{
     var rarity = "card splash-cardTees rarity-"+item.rarity
         outPut.push(            
         <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
-            <img className="splash-card-product-view-constant" src={item.img[0]} alt={item.id}/>
+            <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
         
             <div className="overlayHover" >
                 <button className="btn btn-primary btn-block" style={{color : "white"}}>
@@ -83,7 +83,7 @@ Micro(){
         if(item.category === 'micro'){
             outPut.push(            
             <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
-                <img className="splash-card-product-view-constant" src={item.img[0]} alt={item.id}/>
+                <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
             
                 <div className="overlayHover" >
                     <button className="btn btn-primary btn-block" style={{color : "white"}}>

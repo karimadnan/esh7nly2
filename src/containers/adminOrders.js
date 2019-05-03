@@ -31,8 +31,12 @@ const styles = theme => ({
     card: {
         minHeight: 350,
         maxHeight: 350,
+        maxWidth: 'auto',
         margin: theme.spacing.unit,
         backgroundColor: fade('#3e2723', 0.225),
+        '&:hover': {
+            backgroundColor: fade('#3e2723', 0.325),
+          }
       },
     divider:{
         margin: theme.spacing.unit
@@ -128,7 +132,7 @@ class AdminOrders extends Component {
             {this.state.orders.map((order, index) =>{
 
                 return(
-                    <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
+                    <div className="col-xs-12 col-md-4 col-lg-4" style={{cursor: 'pointer'}} key={index} onClick={()=>{this.setState({order: order, openOrder: true})}}>
                           <Card className={classes.card}>
                             <CardHeader
                                 avatar={
@@ -140,11 +144,6 @@ class AdminOrders extends Component {
                                     <Avatar className={classes.fawryAvatar}>Fawry</Avatar>                         
                                 :           
                                     <Avatar className={classes.cashAvatar}>Cash</Avatar>} 
-                                action={
-                                    <IconButton onClick={()=>{this.setState({order: order, openOrder: true})}}> 
-                                        <ViewOrder />
-                                    </IconButton>
-                                }
                                 title={<h4>{order.user.Name}</h4>}
                                 subheader={<h5>{moment(order.createdAt).format('LL')}</h5>}
                                 />
