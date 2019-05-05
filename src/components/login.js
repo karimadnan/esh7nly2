@@ -107,10 +107,10 @@ render() {
     const { t } = this.props;
     if(this.props.loginData.loggedState){
         return(
-            <div class ="GG-BG">
-                <div class="container">
-                        <div class="WhiteBG" style={{color: "black", textAlign: "center"}}>
-                            <div class="badge-logo"/>
+            <div className ="GG-BG">
+                <div className="container">
+                        <div className="WhiteBG" style={{color: "black", textAlign: "center"}}>
+                            <div className="badge-logo"/>
                                 <h1>{t('welcome')}, {this.props.loginData.userName}</h1>
                                 <h4>{t('alreadyLogged')} <span style={{color: "#3F51B5", cursor: "pointer", textDecoration: "underline"}} onClick={()=>{!this.props.loginData.isAdmin ? 
                                     ReactRouter.goTo("/account") 
@@ -127,36 +127,36 @@ render() {
     }
 
     return (
-        <div class ="GG-BG-INVERSE">
-            <div class="container">
-            <div class="BlackBG">
-                        <div class="badge-logo"/>
-                            <div class="form-group has-feedback" style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
-                                <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+        <div className ="GG-BG-INVERSE">
+            <div className="container">
+            <div className="BlackBG">
+                        <div className="badge-logo"/>
+                            <div className="form-group has-feedback" style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
+                                <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                         <label style={{color: this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "green" : "orange"}}>{this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "":'*'} {t('phone')}</label>
-                                        <input class="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
+                                        <input className="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
                                         <br/>
                                 </div>
 
-                                <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                         <label style={{color: this.state.Password.length >= 8 ? "green" : "orange"}}>{this.state.Password.length >= 8 ? "":'*'} {t('password')}</label>
-                                        <input class="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Password", e.target.value)} placeholder={t('password')} required></input>
+                                        <input className="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Password", e.target.value)} placeholder={t('password')} required></input>
                                         <br/>
                                 </div>
 
-                                <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                    <button class="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.login()}}>
+                                <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                    <button className="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.login()}}>
                                         <span className="icon glyphicon glyphicon-ok"></span>
                                         <span className="text">{t('login')}</span>
                                     </button>
                                     <br/>
                                 </div>
 
-                                <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                     <h4 style={{color: "grey"}}>{t('signUpText')}</h4>
                                 </div>
-                                <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                    <button class="btn btn-success btn-block" style={{color : "white"}} onClick={()=>{ReactRouter.goTo("/signup")}}>
+                                <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                    <button className="btn btn-success btn-block" style={{color : "white"}} onClick={()=>{ReactRouter.goTo("/signup")}}>
                                         <span className="svg-icon svg-icon-sphinx"></span> {t('signUp')}
                                     </button>
                                 </div>
@@ -166,8 +166,8 @@ render() {
                     </div>
                 <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
                     styles={ErrorStyle}>
-                    <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
-                    <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
+                    <h3 className="col-xs-6">{this.state.ErrorMsg}</h3>
+                    <img style ={{width: 150, height: 120}} className="col-xs-6" src={amumu} alt=""></img> 
                 </Modal>
                 <Navbar />
          </div>

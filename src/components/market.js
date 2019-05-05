@@ -14,7 +14,6 @@ import amumu from '../Images/amumusad.png';
 import moment from 'moment';
 import Chip from '@material-ui/core/Chip';
 import StarRatings from 'react-star-ratings';
-import {isMobile} from 'react-device-detect';
 import { withNamespaces } from 'react-i18next';
 import SwipeableViews from 'react-swipeable-views';
 import Fab from '@material-ui/core/Fab';
@@ -421,7 +420,7 @@ if (this.state.view === "shop"){
         counter ++;
         if((item.discount || !this.state.hasDiscount)){
         return (
-            <div className="col-xs-12 col-md-4 col-md-4" key={key} style={{minHeight: !isMobile ? 400 : 0}}>
+            <div className="col-xs-12 col-md-4 col-md-4" key={key} style={{cursor: 'pointer'}} onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}>
             <div className ={rarity}>
                 <img src={item.defaultImage} className="splash-card-product-view-constant" />
                 <div className="overlayHover" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}>

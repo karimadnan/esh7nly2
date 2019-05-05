@@ -18,7 +18,10 @@ button:hover .text { display: none; }
   color: white;
   overflow: hidden;
   padding: .54rem 1.25rem;
-  height: 100px;
+  height: 30%;
+  width: 100%;
+  bottom: 0;
+  position: absolute;
 }
 
 .marketCardTitle {
@@ -663,6 +666,7 @@ background-color: #ffffff;
 }
 
 .card {
+    min-height: 400px;
     max-height: 400px;
     position: relative;
     display: -webkit-box;
@@ -672,12 +676,26 @@ background-color: #ffffff;
     -webkit-box-direction: normal;
     -ms-flex-direction: column;
     flex-direction: column;
-    min-width: 0;
     word-wrap: break-word;
     background-color: #ffffff;
     background-clip: border-box;
     border-radius: 0.25rem;
+}
 
+.fortniteCard {
+  max-height: 400px;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  word-wrap: break-word;
+  background-color: #ffffff;
+  background-clip: border-box;
+  border-radius: 0.25rem;
 }
 
 #itemdesc {

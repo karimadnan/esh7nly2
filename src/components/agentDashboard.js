@@ -74,7 +74,6 @@ class AgentDashboard extends Component {
         var that = this
         axios.get(`${this.state.Url}getAdminHistory`, {headers: this.state.headers})
         .then(function (response) {
-          console.log(response, "HISTORY")
         })
         .catch(function (error) {
         //   that.setState({loaded: true})

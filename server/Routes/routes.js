@@ -42,6 +42,7 @@ router.get('/getOrderForuser',Validator.checkJWT,orderApis.getOrderForuser);
 router.post('/createOrder',Validator.checkJWT, orderApis.createOrder);// Not Tested
 router.post('/viewOrder',Validator.checkJWT,Validator.isAdmin,orderApis.viewOrder);// Not Tested
 router.post('/endOrder',Validator.checkJWT,Validator.isAdmin,orderApis.endOrder);   // Not Tested
+router.post('/updateComment',Validator.checkJWT,Validator.isAdmin,orderApis.updateComment);   // Not Tested
 // game Apis-------------------------------------------------    
 router.get('/getGame',gameApis.getGame);
     

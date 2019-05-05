@@ -182,15 +182,17 @@ class ProductPage extends Component {
             price: item.price,
             desc: item.desc,
             discount: item.discount,
-            defaultImage: item.img[0],
             soldBy: item.soldBy,
             category: item.category,
-            img: item.img
+            defaultImage: item.defaultImage
+         }
+         if (item.img){
+             object["img"] = item.img;
          }
          if (item.options){
             object["defaultOpt"] = item.options[0];
             object["options"] = item.options;
-        }
+         }
         if (item.colors){
             object["color"] = item.colors[0].label;
             object["colors"] = item.colors;
@@ -297,7 +299,7 @@ class ProductPage extends Component {
             this.setState({
                 ErrorModal: true,
                 ErrorMsg: `${t('marketOptionError')}`
-              })
+            })
         }
     }
     

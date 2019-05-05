@@ -91,7 +91,7 @@ class FortniteShop extends Component {
     }
     else{
       let shop = this.state.shop.map((image, index) => {
-          var rarity = "card splash-card rarity-"+image.rarity
+          var rarity = "fortniteCard splash-card rarity-"+image.rarity
           return (
             <div className="col-xs-12 col-md-3" key={index} >
               <Grid container justify="center" alignItems="center">

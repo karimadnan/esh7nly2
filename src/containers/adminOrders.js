@@ -15,10 +15,27 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from '@material-ui/core/Divider';
-import ViewOrder from '@material-ui/icons/ThumbUp';
 import Chip from '@material-ui/core/Chip';
 import BackIcon from '@material-ui/icons/SkipPrevious';
 import Fab from '@material-ui/core/Fab';
+import Euro from '@material-ui/icons/EuroSymbol';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import CurrencyFormat from 'react-currency-format';
+import Typography from '@material-ui/core/Typography';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Timer from '@material-ui/icons/Timer';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import OrderComment from '@material-ui/icons/SpeakerNotes';
+import TextField from '@material-ui/core/TextField';
+import NextIcon from '@material-ui/icons/Done';
+import Motorcycle from '@material-ui/icons/Motorcycle';
+import Failed from '@material-ui/icons/ReportProblem';
+import Fake from '@material-ui/icons/ThumbDown';
 
 const theme = createMuiTheme({
     palette: {
@@ -27,11 +44,40 @@ const theme = createMuiTheme({
     }
 });
 
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
 const styles = theme => ({
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 280,
+        [theme.breakpoints.up('sm')]: {
+            width: 420,
+          }
+    },
+    fab:{
+        margin: theme.spacing.unit
+    },
+    panel:{
+        margin: theme.spacing.unit,
+        backgroundColor: fade('#3e2723', 0.725),
+    },
+    heading: {
+        fontSize: theme.typography.pxToRem(25),
+        fontWeight: theme.typography.fontWeightRegular,
+        color: 'white'
+      },
     card: {
         minHeight: 350,
         maxHeight: 350,
         maxWidth: 'auto',
+        margin: theme.spacing.unit,
+        backgroundColor: fade('#3e2723', 0.225),
+        '&:hover': {
+            backgroundColor: fade('#3e2723', 0.325),
+          }
+      },
+      card2: {
         margin: theme.spacing.unit,
         backgroundColor: fade('#3e2723', 0.225),
         '&:hover': {
@@ -45,6 +91,14 @@ const styles = theme => ({
         height: 150,
         width: 120,
       },
+    media2: {
+        margin: '0 auto',
+        height: 250,
+        width: 250
+    },
+    extendedIcon1: {
+        marginRight: theme.spacing.unit * 2,
+    },
     extendedIcon2: {
         marginRight: theme.spacing.unit * 6,
     },
@@ -102,10 +156,16 @@ class AdminOrders extends Component {
         Url: this.props.server.main,
         orders: [],
         openOrder: false,
-        order: ''
+        order: '',
+        comment: '',
+        updateComment: ''
     }
 
     componentDidMount(){
+        this.getOrders();
+    }
+
+    getOrders(){
         var that = this
         axios.get(`${this.state.Url}getAdminOrders`, {headers: this.state.headers})
         .then(function (response) {
@@ -115,6 +175,24 @@ class AdminOrders extends Component {
             // console.log(error)
         })
     }
+
+    Error = (msg) => toast.error(`${msg}`, {
+        position: "top-left",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+    });
+    
+    Success = (msg) => toast.success(`${msg}`, {
+        position: "top-left",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+    });
 
     drawOrders(){
         const { classes } = this.props;
@@ -130,9 +208,8 @@ class AdminOrders extends Component {
                 </Grid>
             </MuiThemeProvider>
             {this.state.orders.map((order, index) =>{
-
                 return(
-                    <div className="col-xs-12 col-md-4 col-lg-4" style={{cursor: 'pointer'}} key={index} onClick={()=>{this.setState({order: order, openOrder: true})}}>
+                    <div className="col-xs-12 col-md-4 col-lg-4" style={{cursor: 'pointer'}} key={index} onClick={()=>{this.setState({order: order, openOrder: true, comment: order.comment})}}>
                           <Card className={classes.card}>
                             <CardHeader
                                 avatar={
@@ -186,10 +263,43 @@ class AdminOrders extends Component {
     )
     }
 
+    endOrder(status){
+        var data = {orderID: this.state.order._id, status: status}
+        var that = this
+        axios.post(this.state.Url+"endOrder", data, {headers: this.state.headers})
+        .then(function (response) {
+            that.setState({openOrder: false, order: ''});
+            that.getOrders();
+            that.Success(response.data.message);
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+    }
+
+    updateComment(comment){
+        var data = {orderID: this.state.order._id, comment: comment}
+        var that = this
+        axios.post(this.state.Url+"updateComment", data, {headers: this.state.headers})
+        .then(function (response) {
+            that.setState({comment: comment})
+            that.Success(response.data.message);
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+    }
+
 render(){
     const { classes } = this.props;
+
     if(this.state.openOrder){
-        console.log(this.state.order, "ORDER")
+        let totalPrice = 0;
+    
+        this.state.order.cart.map(row => {
+            totalPrice = totalPrice + row.price
+        })
+
         return(
         <div>
             <MuiThemeProvider theme={theme}>
@@ -200,6 +310,102 @@ render(){
                     </Fab>
                 </Grid>
             </MuiThemeProvider>
+            
+            <div className="col-xs-12 col-md-7 col-lg-7">
+                <MuiThemeProvider theme={theme}>
+                    <ExpansionPanel className={classes.panel}>
+                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography className={classes.heading}>User Info</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails className={classes.heading}>
+                            <Grid container justify="flex-start" alignItems="center">
+                            Name: {this.state.order.user.Name}
+                            </Grid>
+                            <Grid container justify="flex-start" alignItems="center">
+                            Phone: {this.state.order.user.Phone}
+                            </Grid>
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>
+                    <ListItem>
+                        <ListItemIcon>{<OrderComment />}</ListItemIcon>
+                        <ListItemText primary={<h3>{this.state.comment}</h3>} />
+                    </ListItem>
+                    <form className={classes.container} noValidate autoComplete="off">
+                        <TextField
+                            id="Comment"
+                            label="Comment"
+                            type="text"
+                            className={classes.textField}
+                            margin="normal"
+                            onChange={e => this.setState({updateComment: e.target.value})}
+                        />
+                            <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.updateComment(this.state.updateComment)}} className={classes.fab}>
+                                <NextIcon className={classes.extendedIcon2} />
+                                <h5>Update</h5>
+                            </Fab>
+                    </form>
+                    <ListItem>
+                        <ListItemIcon>{<Timer />}</ListItemIcon>
+                        <ListItemText primary={<h3>{moment(this.state.order.createdAt).format('LLL')}</h3>} />
+                    </ListItem>
+                    <Divider/>
+                    <ListItem>
+                        <ListItemIcon>{<Euro />}</ListItemIcon>
+                        <ListItemText primary={<h3>Grand Total: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h3>} />
+                    </ListItem>
+                    <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.endOrder(1)}} className={classes.fab}>
+                        <Motorcycle className={classes.extendedIcon1} />
+                        <h5>Order Delivered</h5>
+                    </Fab>
+                    <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.endOrder(2)}} className={classes.fab}>
+                        <Failed className={classes.extendedIcon1} />
+                        <h5>Order Failed</h5>
+                    </Fab>
+                    <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.endOrder(3)}} className={classes.fab}>
+                        <Fake className={classes.extendedIcon1} />
+                        <h5>Fake Order</h5>
+                    </Fab>
+                </MuiThemeProvider>
+            </div>
+
+            <div className="col-xs-12 col-md-5 col-lg-5">
+                {this.state.order.cart.map((row, index) =>{
+                return(
+                <Card className={classes.card2} key={index}>
+                    <CardActionArea>
+                        <CardMedia
+                            className={classes.media2}
+                            image={row.defaultImage}
+                            title={row.Name}
+                        />
+                        <CardContent>
+                        <Typography gutterBottom variant="h3" component="h2">
+                            {row.Name}
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                            <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> EGP
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                            qty: x{row.quantity}
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                            {row.size && `Size: ${row.size}` }
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                            {row.info && `Type: ${row.info}`}
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                                {row.color && `Color: ${row.color}`}
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                                {row.option && `Option: ${row.option}`}
+                        </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+
+                )})}
+            </div>
         </div>
         )
     }

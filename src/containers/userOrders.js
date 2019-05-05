@@ -34,7 +34,6 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 
 const override = css`
@@ -151,17 +150,6 @@ render(){
   if(this.state.loaded ){
     if (this.state.ordersData.length > 0 && !this.state.showRow){
 
-        var pending = 0
-        var onGoing = 0
-
-        this.state.ordersData.map(row => {
-          if (row.status === "pending"){
-              pending ++;
-          }
-          else {
-              onGoing ++;
-          }
-        })
             return (
         <div>
             {this.state.ordersData.map((row, index) => (

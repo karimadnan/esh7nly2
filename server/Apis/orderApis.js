@@ -333,7 +333,7 @@ const orderApis = {
         return  res.status(500).send({ message: 'server error 001'}); 
         });
     if(!doc){
-    return res.status(404).send({ message: 'Wrong orderID'});
+        return res.status(404).send({ message: 'Wrong orderID'});
     }
     if(body.status == 1 ){
         doc['status']="Passed";
@@ -341,11 +341,11 @@ const orderApis = {
     }
     else if (body.status == 2){
         doc['status']="Failed";
-        doc['comment']=(body.comment)? body.comment : "Order Failed No Strikes";
+        doc['comment']=(body.comment)? body.comment : "Order Failed";
     }
     else if (body.status == 3) {
         doc['status']="Failed";
-        doc['comment']=(body.comment)? body.comment : "Order Failed with Strike"; 
+        doc['comment']=(body.comment)? body.comment : "Order Failed, you lost a life"; 
         let user;
         try{
            user = await DB.dbo.collection('users').findOne({_id:new ObjectId(doc.user)}) 
@@ -386,6 +386,21 @@ const orderApis = {
         }
         return res.status(200).send({ message: 'Order Ended',data:[]});
     });
+    },
+    updateComment:async function(req, res, next){
+        var body= req.body;
+        if(!body.comment || !body.orderID){
+            return res.status(400).send({message:'Missing fields'})
+        }
+        const collection = DB.dbo.collection('orders');
+        var doc = await collection.findOne({ _id: new ObjectId(body.orderID) }).catch(err =>{   
+            return  res.status(500).send({ message: 'server error 001'}); 
+        });
+        if(!doc){
+            return res.status(404).send({ message: 'Wrong orderID'});
+        }
+        doc['comment']=body.comment;
+        return res.status(200).send({ message: 'Comment Updated',data:[]});
     },
     getOrderForuser:function(req, res, next) {
     const collection = DB.dbo.collection('orders');
