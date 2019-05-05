@@ -21,7 +21,7 @@ const { t } = this.props;
 if(this.props.shop.fetched){
 let outPut = []
 this.props.shop.items.map((item, index) =>{
-    var rarity = "card splash-cardTees rarity-"+item.rarity
+    var rarity = "fortniteCard splash-cardTees rarity-"+item.rarity
     if(item.discount){
         outPut.push(            
         <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
@@ -51,7 +51,7 @@ const { t } = this.props;
 if(this.props.shop.fetched){
 let outPut = []
 this.props.shop.items.map((item, index) =>{
-    var rarity = "card splash-cardTees rarity-"+item.rarity
+    var rarity = "fortniteCard splash-cardTees rarity-"+item.rarity
         outPut.push(            
         <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
             <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
@@ -79,7 +79,7 @@ Micro(){
     if(this.props.shop.fetched){
     let outPut = []
     this.props.shop.items.map((item, index) =>{
-        var rarity = "card splash-cardTees rarity-"+item.rarity
+        var rarity = "fortniteCard splash-cardTees rarity-"+item.rarity
         if(item.category === 'micro'){
             outPut.push(            
             <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>

@@ -547,7 +547,6 @@ if (this.state.view === "shop"){
 }
 
 handleStepChange = activeStep => {
-    var prev = this.props.cart.itemPrev
     this.setState({ activeStep });
 };
 
@@ -639,7 +638,7 @@ if (this.state.view === "item"){
                 </Grid>
             </div>
         </div>
-
+ 
 
         {/* SMALL IMAGES PREVIEW START*/}
         {prev.colors && prev.colors.length > 1 ?

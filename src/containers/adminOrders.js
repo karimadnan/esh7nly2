@@ -284,6 +284,7 @@ class AdminOrders extends Component {
         .then(function (response) {
             that.setState({comment: comment})
             that.Success(response.data.message);
+            that.getOrders();
         })
         .catch(function (error) {
             console.log(error)
