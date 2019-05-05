@@ -389,7 +389,7 @@ const orderApis = {
     },
     updateComment:async function(req, res, next){
         var body= req.body;
-        if(!body.comment || !body.orderID){
+        if(!body.comment && !body.orderID){
             return res.status(400).send({message:'Missing fields'})
         }
         const collection = DB.dbo.collection('orders');
@@ -399,8 +399,14 @@ const orderApis = {
         if(!doc){
             return res.status(404).send({ message: 'Wrong orderID'});
         }
-        doc['comment']=body.comment;
-        return res.status(200).send({ message: 'Comment Updated',data:[]});
+        collection.updateOne({_id:new ObjectId(body.orderID)}, {$set:{"comment":body.comment}}, function(err, result) {
+            if (err) {
+             console.log("failed To update comment")
+             console.log("Error =>",err)
+             return res.status(500).send({message:"Update Failed"})
+            }
+             return res.status(200).send({message:"Comment Updated"});
+          });
     },
     getOrderForuser:function(req, res, next) {
     const collection = DB.dbo.collection('orders');

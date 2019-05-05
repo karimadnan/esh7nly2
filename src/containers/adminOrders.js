@@ -328,7 +328,7 @@ render(){
                     </ExpansionPanel>
                     <ListItem>
                         <ListItemIcon>{<OrderComment />}</ListItemIcon>
-                        <ListItemText primary={<h3>{this.state.comment}</h3>} />
+                        <ListItemText primary={<h3 style={{whiteSpace: "normal", wordWrap: "break-word"}}>{this.state.comment}</h3>} />
                     </ListItem>
                     <form className={classes.container} noValidate autoComplete="off">
                         <TextField
