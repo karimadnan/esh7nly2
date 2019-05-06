@@ -278,6 +278,7 @@ class AdminOrders extends Component {
     }
 
     updateComment(comment){
+        if(comment){
         var data = {orderID: this.state.order._id, comment: comment}
         var that = this
         axios.post(this.state.Url+"updateComment", data, {headers: this.state.headers})
@@ -289,6 +290,7 @@ class AdminOrders extends Component {
         .catch(function (error) {
             console.log(error)
         })
+    }
     }
 
 render(){

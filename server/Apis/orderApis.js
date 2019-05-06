@@ -147,6 +147,7 @@ const orderApis = {
         { $unwind:"$user" },{$project: {"user.Name": 1, 
         "user.Phone": 1, 
         "user._id": 1, 
+        "user.ShippingData": 1,
         "status": 1, 
         "createdAt": 1,
         "orderType": 1,
