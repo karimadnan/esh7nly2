@@ -36,6 +36,7 @@ import ReactRouter from 'flux-react-router';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
 import Loader from '../containers/loader';
+import Truck from '@material-ui/icons/AirportShuttle';
 
 const freeShipPrice = 400
 
@@ -98,7 +99,7 @@ const styles = theme => ({
     descStyle: {
         fontSize: 12,
         [theme.breakpoints.up('sm')]: {
-          fontSize: 15,
+          fontSize: 16,
         }
     }
 });
@@ -119,8 +120,9 @@ const customStyles = {
 }
 
 class ProductPage extends Component {
-
-    state = {
+constructor(props){
+    super(props);
+    this.state = {
         url: this.props.server.main,
         copied: false,
         value: 0,
@@ -139,8 +141,9 @@ class ProductPage extends Component {
         productLoaded: false,
         productError: false,
 
-    }
-
+    }   
+}
+ 
     componentDidMount(){
         var that = this
         const prev = this.props.cart.itemPrev
@@ -148,7 +151,7 @@ class ProductPage extends Component {
             if(prev.options){
                 this.props.removePrevOptions()
             }
-            axios.get(this.state.url+`getProduct?id=${this.props.id}`, {headers: {'Content-Type': 'application/json'}})
+            axios.get(this.state.url+`getProduct?id=${window.location.href.split('/')[4]}`, {headers: {'Content-Type': 'application/json'}})
               .then(function (response) {
                 that.addItemToPrev(response.data.data[0]);
             })
@@ -318,7 +321,10 @@ class ProductPage extends Component {
     
                     {prev.category !== 'micro' &&
                     <div className="col-xs-12 col-md-12 col-lg-12">
-                        <h2>{t('freeShippingText', { freeShipPrice })}</h2>
+                        <ListItem className={classes.descStyle}>
+                            <ListItemIcon >{<Truck />}</ListItemIcon>
+                            <ListItemText disableTypography primary={t('freeShippingText', { freeShipPrice })} />
+                        </ListItem>
                     </div>}
                 </div>
             )
@@ -602,7 +608,6 @@ class ProductPage extends Component {
                             />
                         </div>
                  </div>
-        
                  <MuiThemeProvider theme={productTheme}>
                     <AppBar position="static" color="primary">
                             <Tabs
@@ -621,6 +626,7 @@ class ProductPage extends Component {
                         {this.current()}
                     </div>
               </div>
+
               :
                 <div>
                     <Grid container justify="flex-start" alignItems="center">
@@ -668,7 +674,7 @@ class ProductPage extends Component {
 
     render(){
         const { t } = this.props;
-        if(this.state.productError || !this.props.id){
+        if(this.state.productError){
             return(
                 <div className ="GG-BG-INVERSE">
                     <div className="container">

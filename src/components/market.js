@@ -34,6 +34,7 @@ import SortIcon from '@material-ui/icons/SwapVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import DotIcon from '@material-ui/icons/FiberManualRecord';
+import Truck from '@material-ui/icons/AirportShuttle';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -565,7 +566,10 @@ if(this.state.value === 0){
 
                 {prev.category !== 'micro' &&
                 <div className="col-xs-12 col-md-12 col-lg-12">
-                    <h2>{t('freeShippingText', { freeShipPrice })}</h2>
+                    <ListItem className={classes.descStyle}>
+                        <ListItemIcon >{<Truck />}</ListItemIcon>
+                        <ListItemText disableTypography primary={t('freeShippingText', { freeShipPrice })} />
+                    </ListItem>
                 </div>}
             </div>
         )

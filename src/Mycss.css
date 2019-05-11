@@ -354,7 +354,6 @@ background: rgb(131, 211, 248);
   padding: 10px;
   border-radius: 1.95rem;
   color: rgb(182, 180, 180);
-  height: fit-content;
   overflow-x: hidden;
   background-size: cover;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.9);

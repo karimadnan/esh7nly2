@@ -69,7 +69,7 @@ const extraApis = {
             if(!docs[0]){
             return res.status(202).send({ message: 'No Data'});
             }
-        return res.status(200).send({ message: 'all products',data:docs});
+        return res.status(200).send({ message: 'payload',data:docs});
         });
     },
     testUpload:function(req, res){

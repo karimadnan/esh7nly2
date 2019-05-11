@@ -13,6 +13,12 @@ import amumu from '../Images/amumusad.png';
 import Modal from 'react-responsive-modal';
 import { withNamespaces } from 'react-i18next';
 import i18next from 'i18next';
+import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
+import LoginIcon from '@material-ui/icons/Forward';
+import SignUpIcon from '@material-ui/icons/AccountCircle';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import compose from 'recompose/compose';
 
 const ErrorStyle = {
     overlay: {
@@ -24,6 +30,29 @@ const ErrorStyle = {
       borderRadius: '10px',
     },
 }
+
+const styles = theme => ({
+    fab: {
+        margin: theme.spacing.unit,
+        fontSize: 10,
+        minWidth: 310,
+        maxWidth: 310,
+        [theme.breakpoints.up('lg')]: {
+          fontSize: 15,
+          minWidth: 350,
+          maxWidth: 350,
+        }
+    },
+    extendedIcon: {
+        marginRight: theme.spacing.unit * 5,
+    },
+});
+
+const theme = createMuiTheme({
+    palette: {
+        secondary: { main: '#00C853', contrastText: "#fff" }
+    },
+});
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -104,12 +133,13 @@ login() {
 } 
 
 render() {
+    const { classes } = this.props;
     const { t } = this.props;
     if(this.props.loginData.loggedState){
         return(
-            <div className ="GG-BG">
+            <div className ="GG-BG-INVERSE">
                 <div className="container">
-                        <div className="WhiteBG" style={{color: "black", textAlign: "center"}}>
+                        <div className="BlackBG" style={{color: "white", textAlign: "center"}}>
                             <div className="badge-logo"/>
                                 <h1>{t('welcome')}, {this.props.loginData.userName}</h1>
                                 <h4>{t('alreadyLogged')} <span style={{color: "#3F51B5", cursor: "pointer", textDecoration: "underline"}} onClick={()=>{!this.props.loginData.isAdmin ? 
@@ -133,33 +163,40 @@ render() {
                         <div className="badge-logo"/>
                             <div className="form-group has-feedback" style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
                                 <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                        <label style={{color: this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "green" : "orange"}}>{this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "":'*'} {t('phone')}</label>
+                                        <label style={{color: this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "green" : "#3F51B5"}}>{this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "":'*'} {t('phone')}</label>
                                         <input className="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
                                         <br/>
                                 </div>
 
                                 <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                        <label style={{color: this.state.Password.length >= 8 ? "green" : "orange"}}>{this.state.Password.length >= 8 ? "":'*'} {t('password')}</label>
+                                        <label style={{color: this.state.Password.length >= 8 ? "green" : "#3F51B5"}}>{this.state.Password.length >= 8 ? "":'*'} {t('password')}</label>
                                         <input className="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Password", e.target.value)} placeholder={t('password')} required></input>
                                         <br/>
                                 </div>
 
-                                <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                    <button className="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.login()}}>
-                                        <span className="icon glyphicon glyphicon-ok"></span>
-                                        <span className="text">{t('login')}</span>
-                                    </button>
-                                    <br/>
+                                <div className="col-xs-12 col-md-12 col-lg-12">
+                                    <Grid container justify="center" alignItems="center">
+                                        <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.login()}} className={classes.fab}>
+                                            <LoginIcon className={classes.extendedIcon} />
+                                            {t('login')}
+                                        </Fab>
+                                    </Grid>
                                 </div>
 
                                 <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                     <h4 style={{color: "grey"}}>{t('signUpText')}</h4>
                                 </div>
-                                <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                    <button className="btn btn-success btn-block" style={{color : "white"}} onClick={()=>{ReactRouter.goTo("/signup")}}>
-                                        <span className="svg-icon svg-icon-sphinx"></span> {t('signUp')}
-                                    </button>
-                                </div>
+
+                                <MuiThemeProvider theme={theme}>
+                                    <div className="col-xs-12 col-md-12 col-lg-12">
+                                        <Grid container justify="center" alignItems="center">
+                                            <Fab color="secondary" variant="extended" aria-label="Next" onClick={()=>{ReactRouter.goTo("/signup")}} className={classes.fab}>
+                                                <SignUpIcon className={classes.extendedIcon} />
+                                                {t('signUp')}
+                                            </Fab>
+                                        </Grid>
+                                    </div>
+                                </MuiThemeProvider>
 
                             </div>
                         </div>
@@ -189,5 +226,8 @@ function mapStateToProps(state){
       dispatch,
     )
   
-  export default withNamespaces()(connect(mapStateToProps, matchDispatchToProps)(Login));
-  
+export default compose(
+    withStyles(styles),
+    withNamespaces(),
+    connect(mapStateToProps, matchDispatchToProps),
+)(Login); 

@@ -302,7 +302,7 @@ render(){
         this.state.order.cart.map(row => {
             totalPrice = totalPrice + row.price
         })
-
+        console.log(this.state.order, "RODERAS")
         return(
         <div>
             <MuiThemeProvider theme={theme}>
@@ -327,6 +327,15 @@ render(){
                             <Grid container justify="flex-start" alignItems="center">
                             Phone: {this.state.order.user.Phone}
                             </Grid>
+                            <Grid container justify="flex-start" alignItems="center">
+                            Shipping Data: 
+                            </Grid>
+                            {this.state.order.user.ShippingData.Area}
+                            {this.state.order.user.ShippingData.City}
+                            {this.state.order.user.ShippingData.locationType}
+                            {this.state.order.user.ShippingData.StreetNameNo}
+                            {this.state.order.user.ShippingData.ShippingNote}
+
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ListItem>
