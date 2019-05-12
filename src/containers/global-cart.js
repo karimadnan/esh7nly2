@@ -14,6 +14,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import { withNamespaces } from 'react-i18next';
 import compose from 'recompose/compose';
+import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
 
 const customStyles = {
   overlay: {
@@ -31,6 +33,17 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 3,
   },
+  fab: {
+    margin: theme.spacing.unit,
+    fontSize: 10,
+    minWidth: 120,
+    [theme.breakpoints.up('lg')]: {
+      fontSize: 15,
+    }
+},
+extendedIcon2: {
+  marginRight: theme.spacing.unit * 10,
+},
 });
 
 class GlobalCart extends Component {
@@ -77,6 +90,7 @@ goToCheckout(){
 
 render(){
   const { t } = this.props;
+  const { classes } = this.props;
   return (
     <div> 
       <Modal          
@@ -150,10 +164,12 @@ render(){
           </div>}
           {!window.location.href.includes("checkout") && this.props.cart.length > 0 && 
           <div className="col-xs-12 col-md-12 col-lg-12">
-                <button className="btn btn-primary btn-block" style={{color : "white", margin: 10}} onClick={()=>{this.goToCheckout()}}>
-                    <span className="icon glyphicon glyphicon-shopping-cart"></span>
-                    <span className="text">{t('checkout')}</span>
-                </button>
+                <Grid container justify="center" alignItems="center">
+                    <Fab color="secondary" variant="extended" aria-label="Next" onClick={()=>{this.goToCheckout()}} className={classes.fab}>
+                        <ShoppingCart className={classes.extendedIcon2} />
+                        {t('checkout')}
+                    </Fab>
+                </Grid>
             </div>}
           </div>
           </Drawer>

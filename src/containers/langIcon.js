@@ -25,7 +25,8 @@ const changeLanguage = (lng) => {
 class langIcon extends Component {
 
     state= {
-        anchorEl: null
+        anchorEl: null,
+        value: i18next.language === 'EN' ? 2 : i18next.language === 'EG' ? 0 : 1
     }
 
 
@@ -37,9 +38,10 @@ class langIcon extends Component {
       this.setState({ anchorEl: null });
     };
     
-    setLanguage(lng){
+    setLanguage(lng, value){
       this.handleClose()
       changeLanguage(lng)
+      this.setState({value: value})
     }
 
 render(){
@@ -62,9 +64,9 @@ render(){
             open={Boolean(anchorEl)}
             onClose={this.handleClose}
           >
-          <MenuItem onClick={()=>{this.setLanguage('EG')}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-eg"></span> مصرى</a></MenuItem>
-          <MenuItem onClick={()=>{this.setLanguage('AR')}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-sa"></span> عربى</a></MenuItem>
-          <MenuItem onClick={()=>{this.setLanguage('EN')}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-gb"></span> English</a></MenuItem>
+          <MenuItem selected={this.state.value === 0} onClick={()=>{this.setLanguage('EG', 0)}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-eg"></span> مصرى</a></MenuItem>
+          <MenuItem selected={this.state.value === 1} onClick={()=>{this.setLanguage('AR', 1)}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-sa"></span> عربى</a></MenuItem>
+          <MenuItem selected={this.state.value === 2} onClick={()=>{this.setLanguage('EN', 2)}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-gb"></span> English</a></MenuItem>
         </Menu>
     </React.Fragment>
     </div>

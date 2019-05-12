@@ -109,7 +109,7 @@ const customStyles = {
     option: (provided, state) => ({
       ...provided,
       borderBottom: '1px dotted black',
-      color: state.isSelected ? 'red' : 'blue',
+      color: state.isSelected ? 'white' : '#212121',
     }),
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;

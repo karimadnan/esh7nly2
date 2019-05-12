@@ -148,7 +148,7 @@ const customStyles = {
     option: (provided, state) => ({
       ...provided,
       borderBottom: '1px dotted black',
-      color: state.isSelected ? 'red' : 'blue',
+      color: state.isSelected ? 'white' : '#212121',
     }),
     singleValue: (provided, state) => {
       const opacity = state.isDisabled ? 0.5 : 1;
@@ -470,7 +470,7 @@ if (this.state.view === "shop"){
     let catergories = []
 
     for (const [index, value] of this.state.categories.entries()) {
-        catergories.push(<MenuItem key={index} onClick={()=>{this.handleChangeCategory(value)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >{value}</a></MenuItem>)
+        catergories.push(<MenuItem key={index} selected={value === this.state.qcategory} onClick={()=>{this.handleChangeCategory(value)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >{value}</a></MenuItem>)
     }
     
     return (
@@ -528,9 +528,9 @@ if (this.state.view === "shop"){
                         open={Boolean(anchorEl2)}
                         onClose={() => {this.handleClose('anchorEl2')}}
                     >
-                        <MenuItem onClick={()=>{this.handleSortPrice(0)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Unsort</a></MenuItem>
-                        <MenuItem onClick={()=>{this.handleSortPrice(1)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: Low to high</a></MenuItem>
-                        <MenuItem onClick={()=>{this.handleSortPrice(-1)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: High to low</a></MenuItem>
+                        <MenuItem selected={this.state.qprice === 0} onClick={()=>{this.handleSortPrice(0)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Unsort</a></MenuItem>
+                        <MenuItem selected={this.state.qprice === 1} onClick={()=>{this.handleSortPrice(1)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: Low to high</a></MenuItem>
+                        <MenuItem selected={this.state.qprice === -1} onClick={()=>{this.handleSortPrice(-1)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: High to low</a></MenuItem>
                     </Menu>
                 </div>
             </div>
