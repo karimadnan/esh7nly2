@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 import '../Mycss.css';
 import '../Respcss.css';
 import Navbar from './navbar';
-import { FacebookProvider, Page, MessageUs, CustomChat } from 'react-facebook';
+import { FacebookProvider, MessageUs} from 'react-facebook';
 import Footer from './footer';
 import isEmail from 'validator/lib/isEmail';
-import ReCAPTCHA from "react-google-recaptcha";
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
-import TextField from '@material-ui/core/TextField';
-import NextIcon from '@material-ui/icons/Done';
-import Fab from '@material-ui/core/Fab';
 import amumu from '../Images/amumusad.png';
 import Modal from 'react-responsive-modal';
 import fortniteDab from '../Images/fortnitedab.png';
@@ -21,9 +17,10 @@ import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 import {connect} from 'react-redux';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import DotIcon from '@material-ui/icons/FiberManualRecord';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import Snackbar from '@material-ui/core/Snackbar';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const styles = theme => ({
     chip: {
@@ -132,7 +129,7 @@ class Contact extends Component {
         ErrorMsg: '',
         SuccessModal: false,
         SuccessMsg: '',
-        captcha: ''
+        copied: false
     }
 
 updateInput(key, value) {
@@ -151,43 +148,9 @@ onCloseModal = (type) => {
 this.setState({[type]: false });
 };
 
-verifier(){
-    var headers = {
-        'Content-Type': 'application/json'
-    }
-    var that = this;
-    if (this.state.name.length < 3){
-        this.setState({ErrorModal: true, ErrorMsg: "Name is required"})
-    }
-    else if (!isEmail(this.state.email)){
-        this.setState({ErrorModal: true, ErrorMsg: "Email is invaild"})
-    }
-    else if (this.state.subject.length < 3){
-        this.setState({ErrorModal: true, ErrorMsg: "Email subject is required"})
-    }
-    else if (this.state.body.length < 10){
-        this.setState({ErrorModal: true, ErrorMsg: "You need to write something to email"})
-    }
-    else if(!this.state.captcha){
-        this.setState({ErrorModal: true, ErrorMsg: "Check the captcha box"})
-    }
-    else {
-        let Data = {from: this.state.email, subject: this.state.subject, text: this.state.body, name: this.state.name}
-        axios.post(`${this.state.Url}sendEmail`, Data, {headers: headers})
-        .then(function (response) {
-            that.setState({SuccessModal: true, SuccessMsg: "Email Sent"})
-        })
-        .catch(function (error) {
-                that.setState({
-                ErrorModal:true,
-                ErrorMsg:"Failed"
-                })
-        });
-    }
-}
-
 render() {
 const { classes } = this.props;
+const { t } = this.props;
     return (
   <div>
     <div className="GG-BG-INVERSE"> 
@@ -199,7 +162,7 @@ const { classes } = this.props;
                     <Grid container justify="center" alignItems="center">
                         <Chip
                                 icon={<Avatar className={classes.fbAvatar}>F</Avatar>}
-                                label={`Message us on facebook`}
+                                label={t('contactFBTitle')}
                                 className={classes.chip}
                                 color="default"
                             />
@@ -217,139 +180,56 @@ const { classes } = this.props;
                 <Grid container justify="center" alignItems="center">
                     <Chip
                             icon={<Avatar className={classes.emailAvatar}>@</Avatar>}
-                            label={`Contact us by email`}
+                            label={t('contactEmailTitle')}
                             className={classes.chip}
                             color="default"
                         />
                 </Grid>
 
                     <ListItem className={classes.descStyle}>
-                        <ListItemText disableTypography primary={"Please only contact us with stuff related to the website or your puchases"} />
+                        <ListItemText disableTypography primary={t('contactRule1')} />
                     </ListItem>
                     <ListItem className={classes.descStyle}>
-                        <ListItemText disableTypography primary={"If you found a bug take a screenshot and send it by email for your reward 😉"} />
+                        <ListItemText disableTypography primary={t('contactRule2')} />
                     </ListItem>
                     <Grid container justify="center" alignItems="center">
-                        <Chip
-                            color={'primary'}
-                            label={'contact@ggegypt.com'}
-                            className={classes.chip}
-                        />
-                    </Grid>
-                    <ListItem className={classes.descStyle}>
-                        <ListItemText disableTypography primary={"For business inquiries only contact us on the email below"} />
-                    </ListItem>
-                    <Grid container justify="center" alignItems="center">
-                        <Chip
-                            color={'primary'}
-                            label={'admin@ggegypt.com'}
-                            className={classes.chip}
-                        />
-                    </Grid>
-            {/* <form className={classes.container} noValidate autoComplete="off">
-
-                    <div className="col-xs-12 col-md-12 col-lg-12">
-                        <Grid container justify="center" alignItems="center">
-                            <TextField
-                                InputProps={{
-                                    classes: {
-                                        input: classes.resize,
-                                    },
-                                }}
-                                error={this.state.name.length < 2}
-                                id="name"
-                                label="Name"
-                                className={classes.textField}
-                                value={this.state.name}
-                                onChange={e => this.updateInput('name', e.target.value)}
-                                margin="normal"
-                                variant="filled"
-                            />
-                        </Grid>
-                    </div>
-
-                    <div className="col-xs-12 col-md-12 col-lg-12">
-                        <Grid container justify="center" alignItems="center">
-                            <TextField
-                                InputProps={{
-                                    classes: {
-                                        input: classes.resize,
-                                    },
-                                }}
-                                error={!isEmail(this.state.email)}
-                                id="email"
-                                label="Your Email"
-                                className={classes.textField}
-                                value={this.state.email}
-                                onChange={e => this.updateInput('email', e.target.value)}
-                                margin="normal"
-                                variant="filled"
-                            />
-                        </Grid>
-                    </div>
-
-                    <div className="col-xs-12 col-md-12 col-lg-12">
-                        <Grid container justify="center" alignItems="center">
-                            <TextField
-                                InputProps={{
-                                    classes: {
-                                        input: classes.resize,
-                                    },
-                                }}
-                                error={this.state.subject.length < 3}
-                                id="Subject"
-                                label="Email Subject"
-                                className={classes.textField}
-                                value={this.state.subject}
-                                onChange={e => this.updateInput('subject', e.target.value)}
-                                margin="normal"
-                                variant="filled"
-                            />
-                        </Grid>
-                    </div>
-
-                    <div className="col-xs-12 col-md-12 col-lg-12">
-                        <Grid container justify="center" alignItems="center">
-                            <TextField
-                                InputProps={{
-                                    classes: {
-                                        input: classes.resize,
-                                    },
-                                }}
-                                multiline={true}
-                                rows={4}
-                                error={this.state.body.length < 10}
-                                id="Subject"
-                                label="Your Question"
-                                className={classes.textField}
-                                value={this.state.body}
-                                onChange={e => this.updateInput('body', e.target.value)}
-                                margin="normal"
-                                variant="filled"
-                            />
-                        </Grid>
-                    </div>
-                    
-                    <div className="recaptcha col-xs-12 col-md-12 col-lg-12">
-                        <Grid container justify="center" alignItems="center">
-                                <ReCAPTCHA
-                                    onExpired={this.onExpired}
-                                    sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
-                                    onChange={this.onChange}
+                        <CopyToClipboard text={`contact@ggegypt.com`}>
+                            <Tooltip  title={<h4>{t('copyEmail')}</h4>} aria-label={t('copylink')} placement="right">
+                                <Chip
+                                    onClick={()=>{this.setState({copied: true})}}
+                                    color={'primary'}
+                                    label={'contact@ggegypt.com'}
+                                    className={classes.chip}
                                 />
-                        </Grid>
-                    </div>
-
-                    <div className="col-xs-12 col-md-12 col-lg-12">
-                        <Grid container justify="center" alignItems="center">
-                            <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.verifier()}} className={classes.fab}>
-                                <NextIcon className={classes.extendedIcon} />
-                                send
-                            </Fab>
-                        </Grid>
-                    </div>
-
-                </form> */}
+                            </Tooltip>
+                        </CopyToClipboard>
+                    </Grid>
+                    <ListItem className={classes.descStyle}>
+                        <ListItemText disableTypography primary={t('contactAdmin')} />
+                    </ListItem>
+                    <Grid container justify="center" alignItems="center">
+                        <CopyToClipboard text={`admin@ggegypt.com`}>
+                            <Tooltip title={<h4>{t('copyEmail')}</h4>} aria-label={t('copylink')} placement="right">
+                                <Chip
+                                    onClick={()=>{this.setState({copied: true})}}
+                                    color={'primary'}
+                                    label={'admin@ggegypt.com'}
+                                    className={classes.chip}
+                                />
+                            </Tooltip>
+                        </CopyToClipboard>
+                    </Grid>
+                    <Snackbar
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                        open={this.state.copied}
+                        onClose={()=>{this.setState({ copied: false })}}
+                        transitionDuration={500}
+                        autoHideDuration={1000}
+                        ContentProps={{
+                            'aria-describedby': 'message-id',
+                        }}
+                        message={<h4 id="message-id">{t('copiedEmail')}</h4>}
+                    />
             </div>
         </div>
         <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center

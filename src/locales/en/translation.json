@@ -121,6 +121,13 @@
       "micro": "Microtransaction Services",
       "microText": "Purchase In-game stuff or gift cards",
       "copylink": "Copy Link",
-      "byStore": "By" 
+      "byStore": "By",
+      "copyEmail": "Copy Email",
+      "copiedEmail": "Email Copied",
+      "contactFBTitle": "Message us on facebook",
+      "contactEmailTitle": "Contact us by email",
+      "contactRule1": "Please only contact us with stuff related to the website or your puchases",
+      "contactRule2": "If you found a bug take a screenshot and send it by email for your reward 😉",
+      "contactAdmin": "For business inquiries only contact us on the email below"
 
 }
