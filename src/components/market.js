@@ -44,6 +44,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
 import Loader from '../containers/loader';
+import i18next from 'i18next';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -559,10 +560,12 @@ if(this.state.value === 0){
         return(
             <div>
                 { prev.desc.split(",").map((place, index) =>
-                    <ListItem key={index} className={classes.descStyle}>
-                        <ListItemIcon >{<DotIcon />}</ListItemIcon>
-                        <ListItemText disableTypography primary={place} />
-                    </ListItem>)}
+                    <div style={{backgroundColor: index % 2 === 0 ? '#fff' : '#f7f9fe'}}>
+                        <ListItem key={index} className={classes.descStyle}>
+                            <ListItemIcon>{<DotIcon />}</ListItemIcon>
+                            <ListItemText disableTypography primary={place} />
+                        </ListItem>
+                    </div>)}
 
                 {prev.category !== 'micro' &&
                 <div className="col-xs-12 col-md-12 col-lg-12">
@@ -638,7 +641,10 @@ if (this.state.view === "item"){
                     <h1 style={{color: "white", fontWeight: "bold"}}>{prev.Name}</h1>
                 </Grid>
                 <Grid  container justify={"flex-start"} alignItems="center">
-                    <h5 style={{color: "#3F51B5", fontWeight: "bold"}}>By: {prev.soldBy}</h5>
+                    {i18next.language === 'EN' ?
+                    <h5 style={{color: "#3F51B5", fontWeight: "bold"}}>{t('byStore')}: {prev.soldBy}</h5>
+                    :
+                    <h5 style={{color: "#3F51B5", fontWeight: "bold"}}> {prev.soldBy} :{t('byStore')}</h5>}
                 </Grid>
             </div>
         </div>
@@ -646,38 +652,41 @@ if (this.state.view === "item"){
 
         {/* SMALL IMAGES PREVIEW START*/}
         {prev.colors && prev.colors.length > 1 ?
-         <div className="col-xs-3 col-md-1 col-lg-1">
+        <div className="col-xs-12 col-md-12 col-lg-12">
+         <div className="col-xs-12 col-md-6 col-lg-6">
             {prev.colors.map((item, index) =>{
                 if(item.value){
                     return(
-                        <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer", margin: 10}} className="col-xs-12 col-md-12 col-lg-12">
+                        <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer"}} className="col-xs-3 col-md-2 col-lg-2">
                             <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                                <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
+                                <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 50}}/>
                             </div>
                         </div>
                     )
                 }
             })}
          </div>
+        </div>
          : prev.img && prev.img.length > 1 ?
-            <div className="col-xs-3 col-md-1 col-lg-1">
+         <div className="col-xs-12 col-md-12 col-lg-12">
+            <div className="col-xs-12 col-md-6 col-lg-6">
                 {prev.img.map((item, index) =>{
                     return(
-                        <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer", margin: 10}} className="col-xs-12 col-md-12 col-lg-12">
+                        <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer"}} className="col-xs-3 col-md-2 col-lg-2">
                             <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                                <img src={item} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
+                                <img src={item} className="splash-card-product-view" style={{cursor: "pointer"}}/>
                             </div>
                         </div>
                     )
                 })}
             </div>
+         </div>
             :undefined}
         {/* SMALL IMAGES PREVIEW END*/}
 
 
         {/* MAIN IMAGE SLIDER START*/}
-         <div className={prev.colors && prev.colors.length > 1 || prev.img && prev.img.length > 1 ?
-            "col-xs-9 col-md-5 col-lg-5" : "col-xs-12 col-md-6 col-lg-6"}>
+         <div className="col-xs-12 col-md-5 col-lg-5">
             <div className="cardItemPrev">
                {prev.colors && prev.colors.length > 1 ?
                     <SwipeableViews 
@@ -825,7 +834,7 @@ if (this.state.view === "item"){
                         <CopyToClipboard text={`www.ggegypt.com/productpage/${prev.id}`}>
                             <Chip
                                 onClick={()=>{this.setState({copied: true})}}
-                                label={'Copy Link'}
+                                label={t('copylink')}
                                 className={classes.chip}
                             />
                         </CopyToClipboard>

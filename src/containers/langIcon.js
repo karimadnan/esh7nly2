@@ -16,7 +16,7 @@ const styles = theme => ({
     margin: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 3,
   },
-});
+}); 
 
 const changeLanguage = (lng) => {
   i18n.changeLanguage(lng);

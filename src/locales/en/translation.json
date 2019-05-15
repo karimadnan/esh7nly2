@@ -36,7 +36,7 @@
       "addToCart": "Add To Cart",
       "productDetails": "Product Details",
       "freeShip": "Free Shipping",
-      "freeShippingText": "Free shipping on order {{freeShipPrice}}EGP and above",
+      "freeShippingText": "Free shipping on orders {{freeShipPrice}}EGP and above",
       "marketOptionError": "Did you choose everything?",
       "addedToCartMsg": "{{itemName}} Added to cart",
       "removedFromCartMsg": "{{itemName}} removed from cart",
@@ -119,6 +119,8 @@
       "fbPhotoDuplicate": "You already use this photo",
       "totalCart": "Total: {{total}}EGP",
       "micro": "Microtransaction Services",
-      "microText": "Purchase In-game stuff or gift cards"
+      "microText": "Purchase In-game stuff or gift cards",
+      "copylink": "Copy Link",
+      "byStore": "By" 
 
 }

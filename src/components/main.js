@@ -10,6 +10,7 @@ import Chip from '@material-ui/core/Chip';
 import Timer from '@material-ui/icons/Timer';
 import { withNamespaces } from 'react-i18next';
 import { withStyles, MuiThemeProvider, createMuiTheme  } from '@material-ui/core/styles';
+import i18next from 'i18next';
 
 const styles = theme => ({
   extendedIcon2: {
@@ -65,7 +66,9 @@ render(){
       <div className="bg-image">
         <Navbar page={0}/>
         <div className="container" >
-            <div className="badge-logo"/>
+            {i18next.language === "EN" ? 
+            <div className="badge-logo"/>:
+            <div className="badge-logo-ar"/>}
             <MuiThemeProvider theme={theme}>
             <Grid container justify="center" alignItems="center">
                {this.state.timeLeft > 0 && 

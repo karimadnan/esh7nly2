@@ -15,7 +15,6 @@ res.render('index', { title: 'Express' });
 router.post('/fetchShop', extraApis.fetchShop);
 router.get('/getProduct', extraApis.getProduct);
 router.post('/testUpload', upload.single('image'), extraApis.testUpload); 
-// router.post('/sendEmail',extraApis.sendEmail); 
 // login Apis ------------------------------------------------
 router.get('/login',loginApis.login);
 router.get('/validateUser',Validator.checkJWT,loginApis.validateUser);

@@ -117,7 +117,7 @@ render(){
     }
     return(
     <div className="BlackBG">
-        <h1 style={{color: "orange", textAlign: "center", fontWeight: "bold"}}>{t('micro')}</h1>
+        <h1 style={{color: "#3F51B5", textAlign: "center", fontWeight: "bold"}}>{t('micro')}</h1>
         <h3 style={{color: "white", textAlign: "center"}}>{t('microText')}</h3>
             <AliceCarousel
                 items={this.Micro()}
@@ -137,7 +137,7 @@ render(){
                 onSlideChanged={this.onSlideChanged}
             />
 
-        <h1 style={{color: "orange", textAlign: "center", fontWeight: "bold"}}>{t('newProductsSlider')}</h1>
+        <h1 style={{color: "#3F51B5", textAlign: "center", fontWeight: "bold"}}>{t('newProductsSlider')}</h1>
         <h3 style={{color: "white", textAlign: "center"}}>{t('newProductsSliderText')}</h3>
             <AliceCarousel
                 items={this.New()}
@@ -158,7 +158,7 @@ render(){
                 onSlideChanged={this.onSlideChanged}
             />
 
-        <h1 style={{color: "orange", textAlign: "center", fontWeight: "bold"}}>{t('discountsProductsSlider')}</h1>
+        <h1 style={{color: "#3F51B5", textAlign: "center", fontWeight: "bold"}}>{t('discountsProductsSlider')}</h1>
         <h3 style={{color: "white", textAlign: "center"}}>{t('discountsProductsSliderText')}</h3>
             <AliceCarousel
                 items={this.Discounted()}

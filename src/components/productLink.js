@@ -314,10 +314,12 @@ constructor(props){
             return(
                 <div>
                     { prev.desc.split(",").map((place, index) =>
-                        <ListItem key={index} className={classes.descStyle}>
-                            <ListItemIcon>{<DotIcon />}</ListItemIcon>
-                            <ListItemText disableTypography primary={place} />
-                        </ListItem>)}
+                        <div style={{backgroundColor: index % 2 === 0 ? '#fff' : '#f7f9fe'}}>
+                            <ListItem key={index} className={classes.descStyle}>
+                                <ListItemIcon>{<DotIcon />}</ListItemIcon>
+                                <ListItemText disableTypography primary={place} />
+                            </ListItem>
+                        </div>)}
     
                     {prev.category !== 'micro' &&
                     <div className="col-xs-12 col-md-12 col-lg-12">
@@ -409,40 +411,43 @@ constructor(props){
                     </div>
                 </div>
         
-                {/* SMALL IMAGES PREVIEW START*/}
-                {prev.colors && prev.colors.length > 1 ?
-                <div className="col-xs-3 col-md-1 col-lg-1">
-                    {prev.colors.map((item, index) =>{
-                        if(item.value){
-                            return(
-                                <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer", margin: 10}} className="col-xs-12 col-md-12 col-lg-12">
-                                    <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                                        <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
-                                    </div>
+            {/* SMALL IMAGES PREVIEW START*/}
+            {prev.colors && prev.colors.length > 1 ?
+            <div className="col-xs-12 col-md-12 col-lg-12">
+            <div className="col-xs-12 col-md-6 col-lg-6">
+                {prev.colors.map((item, index) =>{
+                    if(item.value){
+                        return(
+                            <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer"}} className="col-xs-3 col-md-2 col-lg-2">
+                                <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
+                                    <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 50}}/>
                                 </div>
-                            )
-                        }
+                            </div>
+                        )
+                    }
+                })}
+            </div>
+            </div>
+            : prev.img && prev.img.length > 1 ?
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                <div className="col-xs-12 col-md-6 col-lg-6">
+                    {prev.img.map((item, index) =>{
+                        return(
+                            <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer"}} className="col-xs-3 col-md-2 col-lg-2">
+                                <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
+                                    <img src={item} className="splash-card-product-view" style={{cursor: "pointer"}}/>
+                                </div>
+                            </div>
+                        )
                     })}
                 </div>
-                : prev.img && prev.img.length > 1 ?
-                    <div className="col-xs-3 col-md-1 col-lg-1">
-                        {prev.img.map((item, index) =>{
-                            return(
-                                <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer", margin: 10}} className="col-xs-12 col-md-12 col-lg-12">
-                                    <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                                        <img src={item} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 53}}/>
-                                    </div>
-                                </div>
-                            )
-                        })}
-                    </div>
-                    :undefined}
-                {/* SMALL IMAGES PREVIEW END*/}
+            </div>
+                :undefined}
+            {/* SMALL IMAGES PREVIEW END*/}
 
 
                 {/* MAIN IMAGE SLIDER START*/}
-                <div className={prev.colors && prev.colors.length > 1 || prev.img && prev.img.length > 1 ?
-                    "col-xs-9 col-md-5 col-lg-5" : "col-xs-12 col-md-6 col-lg-6"}>
+                <div className="col-xs-12 col-md-5 col-lg-5">
                     <div className="cardItemPrev">
                     {prev.colors && prev.colors.length > 1 ?
                             <SwipeableViews 
@@ -560,7 +565,7 @@ constructor(props){
                             </div>
                         </div>} 
         
-                        <div className="col-xs-12 col-md-6 col-lg-6">
+                        <div className="col-xs-6 col-md-6 col-lg-6">
                             <Grid container justify="center" alignItems="center">
                                 <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.goBack()}} className={classes.fab}>
                                     <BackIcon className={classes.extendedIcon2} />
@@ -568,7 +573,7 @@ constructor(props){
                                 </Fab>
                             </Grid>
                         </div>
-                        <div className="col-xs-12 col-md-6 col-lg-6">
+                        <div className="col-xs-6 col-md-6 col-lg-6">
                             <Grid container justify="center" alignItems="center">
                                 <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.addItemToCart(prev)}} className={classes.fab}>
                                     <ShoppingCart className={classes.extendedIcon2} />
@@ -576,7 +581,7 @@ constructor(props){
                                 </Fab>
                             </Grid>
                         </div>
-                        <div className="col-xs-12 col-md-6 col-lg-6">
+                        <div className="col-xs-6 col-md-6 col-lg-6">
                             <Grid container justify="center" alignItems="center">
                                 <Chip
                                     label={t('productDetails')}
@@ -584,13 +589,13 @@ constructor(props){
                                 />
                             </Grid>
                         </div>
-                        <div className="col-xs-12 col-md-6 col-lg-6">
+                        <div className="col-xs-6 col-md-6 col-lg-6">
 
                             <Grid container justify="center" alignItems="center">
                                 <CopyToClipboard text={`www.ggegypt.com/productpage/${prev.id}`}>
                                     <Chip
                                         onClick={()=>{this.setState({copied: true})}}
-                                        label={'Copy Link'}
+                                        label={t('copylink')}
                                         className={classes.chip}
                                     />
                                 </CopyToClipboard>
