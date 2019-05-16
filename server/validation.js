@@ -15,7 +15,8 @@ let Validator =  {
 		Name:Joi.string().min(3).max(15).alphanum().required(),
 		Phone:Joi.string().regex(/^[0-9]+$/, 'numbers').min(11).max(11).required(),
 		Password:Joi.string().min(8).max(20).regex( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,21}$/,'must contain uppercase lowercase and number').required(),
-		Email:Joi.string().email().required()
+		Email:Joi.string().email().required(),
+		Captcha:Joi.string().required(),
 	},
 	ShippingData:{
 		FirstName:Joi.string().min(3).max(10).regex(/^[a-zA-Z]+$/, "must be letters only").label("First Name").required(),

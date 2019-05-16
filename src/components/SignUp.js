@@ -73,19 +73,7 @@ onCloseModal = (type) => {
 };
 
 onChange = (value) => {
-  var headers = {
-    'Content-Type': 'application/json'
-  } 
-  this.setState({captcha: value} ,() =>{
-    let Data = {secret: "6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2", response: this.state.captcha}
-    axios.post("https://www.google.com/recaptcha/api/siteverify", Data, {headers: headers})
-    .then(function (response) {
-        console.log("RESPONSE", response)
-    })
-    .catch(function (error) {
-        console.log("ERROR", error)
-  })
-  })
+  this.setState({captcha: value})
 }
 
 onExpired = () => {
@@ -107,7 +95,7 @@ createUser = () => {
         if(this.state.password.length >= 7){
           if(this.state.captcha){
             this.setState({running: true})
-            let Data = {Name: this.state.name, Phone: this.state.phone, Password: this.state.password, Email: this.state.email}
+            let Data = {Name: this.state.name, Phone: this.state.phone, Password: this.state.password, Email: this.state.email, Captcha: this.state.captcha}
             axios.post(this.state.Url+"signup", Data, {headers: headers})
             .then(function (response) {
               that.setState({SuccessModal: true, 
