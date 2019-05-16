@@ -11,8 +11,8 @@ let transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: process.env.VERIFY_EMAIL,
-        pass: process.env.VERIFY_EMAIL_PASSWORD
+        user: process.env.V_E,
+        pass: process.env.V_E_P
     }
 });
 
@@ -92,12 +92,9 @@ if(!match)  return res.status(400).send({ message: 'Wrong password'});
 },
 signup:function(req, res, next) {
 var body =req.body;
-
 Validator.check(body,'signup').then(success=>{ 
-    var data = {secret: "6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2", response: body.Captcha};
-    axios.post("https://www.google.com/recaptcha/api/siteverify", data)
+    axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.GREC}&response=${body.Captcha}`)
     .then(success=>{
-        console.log("RESPONSE", success)
         const collection = DB.dbo.collection('users');
         body.createdAt=Date.now();
         body['status']="pending";
