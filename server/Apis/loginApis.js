@@ -138,8 +138,7 @@ Validator.check(body,'signup').then(success=>{
       
         });
     });
-    })
-    .catch(err=>{
+    },err=>{
         console.log("Recaptcha failed", err)
         return res.status(400).send(err);
     });
