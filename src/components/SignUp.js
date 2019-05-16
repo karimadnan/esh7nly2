@@ -73,12 +73,25 @@ onCloseModal = (type) => {
 };
 
 onChange = (value) => {
-  this.setState({captcha: value})
+  var headers = {
+    'Content-Type': 'application/json'
+  } 
+  this.setState({captcha: value} ,() =>{
+    let Data = {secret: "6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2", response: this.state.captcha}
+    axios.post("https://www.google.com/recaptcha/api/siteverify", Data, {headers: headers})
+    .then(function (response) {
+        console.log("RESPONSE", response)
+    })
+    .catch(function (error) {
+        console.log("ERROR", error)
+  })
+  })
 }
 
 onExpired = () => {
   this.setState({captcha: false})
 }
+
 
 createUser = () => {
   
