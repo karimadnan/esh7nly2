@@ -6,13 +6,12 @@ const ObjectId = require('mongodb').ObjectID;
 const nodemailer = require("nodemailer");
 
 let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    requireTLS: true,
+    host: 'mail.privateemail.com',
+    port: 465,
+    secure: true,
     auth: {
-        user: 'karimmadnan@gmail.com',
-        pass: '12121995a'
+        user: process.env.VERIFY_EMAIL,
+        pass: process.env.VERIFY_EMAIL_PASSWORD
     }
 });
 
@@ -100,7 +99,7 @@ Validator.check(body,'signup').then(success=>{
     body.VouchPoints=0;
     body.health=3;
     body.Photo="";
-    body.verifyEmail=Math.floor((Math.random() * 100000) + 1);
+    body.verifyEmail=Math.floor((Math.random() * 1000000) + 1);
     bcrypt.hash(body.Password,null,null,function (err, hash) {
     if(err){
     console.log(err)
@@ -114,17 +113,23 @@ Validator.check(body,'signup').then(success=>{
         }
         let mailOptions = {
             from: 'contact@ggegypt.com', // sender address
-            to: "mahmoudzaher95@gmail.com", // list of receivers
-            subject: "GG-Egypt Verify", // Subject line
-            text: `Welcome to GG-Egypt ${body.Name} your code is ${body.verifyEmail} please verify your account to start ordering.`, // plain text body
+            to: `${body.Email}`, // list of receivers
+            subject: "GG-Egypt Complete Registration", // Subject line
+            text: `Welcome to GG-Egypt: ${body.Name}.`, // plain text body
+            // HTML body
+            html: `<h2> ${body.Name}</h2> <p><b>Welcome to GG-Egypt</b></p>
+            <p>Your verification code is:<br/><h1>${body.verifyEmail}</h1></p>
+            <p>If it wasn't you just ignore this email.</p>
+            <p>-----------------------------------------------</p>
+            <h2> ${body.Name}</h2> <p><b> GG-Egypt اهلا بك فى </b></p>
+            <p> :كود التفعيل الخاص بك هو <br/><h1>${body.verifyEmail}</h1></p>
+            <p> اذا لم تطلب هذا الكود تجاهل الأيميل </p>`,
         };
 
         // send mail with defined transport object
         transporter.sendMail(mailOptions).then(success => {
-            console.log(success, "Email SENTTT")
             return res.status(200).send({ message: 'User Created and email sent'});
         },err=>{
-            console.log(err, "Email failed")
             return res.status(200).send({ message: 'User Created and email failed'});
         })
   

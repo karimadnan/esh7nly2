@@ -46,6 +46,9 @@ const styles = theme => ({
     extendedIcon: {
         marginRight: theme.spacing.unit * 5,
     },
+    inputMargin: {
+        margin: theme.spacing.unit,
+    },
 });
 
 const theme = createMuiTheme({
@@ -157,21 +160,21 @@ render() {
     }
 
     return (
-        <div className ="GG-BG-INVERSE">
-            <div className="container">
+    <div className ="GG-BG-INVERSE">
+        <div className="container">
             <div className="BlackBG">
-                        <div className="badge-logo"/>
+                            {i18next.language === "EN" ? 
+                            <div className="badge-logo"/>:
+                            <div className="badge-logo-ar"/>}
                             <div className="form-group has-feedback" style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
                                 <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                         <label style={{color: this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "green" : "#3F51B5"}}>{this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "":'*'} {t('phone')}</label>
-                                        <input className="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
-                                        <br/>
+                                        <input style={{textAlign: i18next.language === "EN" ? "left" : "right", margin: 5}} className="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
                                 </div>
 
                                 <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                         <label style={{color: this.state.Password.length >= 8 ? "green" : "#3F51B5"}}>{this.state.Password.length >= 8 ? "":'*'} {t('password')}</label>
-                                        <input className="form-control" type="text" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Password", e.target.value)} placeholder={t('password')} required></input>
-                                        <br/>
+                                        <input style={{textAlign: i18next.language === "EN" ? "left" : "right", margin: 5}} className="form-control" type="password" onKeyPress={this.keyClicked.bind(this)} onChange={e => this.updateInput("Password", e.target.value)} placeholder={t('password')} required></input>
                                 </div>
 
                                 <div className="col-xs-12 col-md-12 col-lg-12">
@@ -207,7 +210,7 @@ render() {
                     <img style ={{width: 150, height: 120}} className="col-xs-6" src={amumu} alt=""></img> 
                 </Modal>
                 <Navbar />
-         </div>
+        </div>
 
     );
     }

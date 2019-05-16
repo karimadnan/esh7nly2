@@ -3,16 +3,16 @@ button:hover .icon { display: inline; }
 button:hover .text { display: none; }
 
 .recaptcha {
-  -webkit-transform: scale(0.80);
-     -moz-transform: scale(0.80);
-      -ms-transform: scale(0.80);
-       -o-transform: scale(0.80);
-          transform: scale(0.80);
-   -webkit-transform-origin: 1 0;
-      -moz-transform-origin: 1 0;
-       -ms-transform-origin: 1 0;
-        -o-transform-origin: 1 0;
-           transform-origin: 1 0;
+  -webkit-transform: scale(1.14);
+     -moz-transform: scale(1.14);
+      -ms-transform: scale(1.14);
+       -o-transform: scale(1.14);
+          transform: scale(1.14);
+   -webkit-transform-origin: 0 0;
+      -moz-transform-origin: 0 0;
+       -ms-transform-origin: 0 0;
+        -o-transform-origin: 0 0;
+           transform-origin: 0 0;
 }
 
 .loginBox {

@@ -19,7 +19,7 @@ router.get('/signup', function(req, res, next) {
 router.get('/market', function(req, res, next) {
     return res.sendFile(path.resolve(Front, 'index.html'))
 }); 
-router.get('/admindashboard', function(req, res, next) {
+router.get('/agentdashboard', function(req, res, next) {
     return res.sendFile(path.resolve(Front, 'index.html'))
 }); 
 router.get('/privacy', function(req, res, next) {

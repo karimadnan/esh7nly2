@@ -12,9 +12,34 @@ import {connect} from 'react-redux';
 import isEmail from 'validator/lib/isEmail';
 import isInt from 'validator/lib/isInt';
 import Footer from './footer';
+import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
+import LoginIcon from '@material-ui/icons/Forward';
+import { withNamespaces } from 'react-i18next';
+import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import compose from 'recompose/compose';
+import i18next from 'i18next';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-const TEST_SITE_KEY = "6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2";
-const DELAY = 1500;
+const styles = theme => ({
+  fab: {
+      margin: theme.spacing.unit,
+      fontSize: 10,
+      minWidth: 310,
+      maxWidth: 310,
+      [theme.breakpoints.up('lg')]: {
+        fontSize: 15,
+        minWidth: 350,
+        maxWidth: 350,
+      }
+  },
+  extendedIcon: {
+      marginRight: theme.spacing.unit * 5,
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
+});
 
 class SignUp extends Component {
 
@@ -28,33 +53,12 @@ class SignUp extends Component {
     SuccessModal: false,
     ErrorMsg: '',
     ErrorModal: false,
-    gender: '',
-    callback: "not fired",
-    value: "[empty]",
     load: false,
     expired: "false",
-    ref: React.createRef(),
-    confirmPassword: ''
+    confirmPassword: '',
+    captcha: '',
+    running: false
   }
-  
-componentWillMount(){
-    setTimeout(() => {
-      this.setState({ load: true });
-    }, DELAY);
-    console.log("didMount - reCaptcha Ref-", this._reCaptchaRef);
-}
-
-handleChange = value => {
-  console.log("Captcha value:", value);
-  this.setState({ value });
-  // if value is null recaptcha expired
-  if (value === null) this.setState({ expired: "true" });
-};
-
-asyncScriptOnLoad = () => {
-  this.setState({ callback: "called!" });
-  console.log("scriptLoad - reCaptcha Ref-", this._reCaptchaRef);
-};
 
 updateInput(key, value) {
   this.setState({ [key]: value });
@@ -69,8 +73,7 @@ onCloseModal = (type) => {
 };
 
 onChange = (value) => {
-  this.setState({captchaValue: value})
-  this.googleVerify();
+  this.setState({captcha: value})
 }
 
 onExpired = () => {
@@ -90,7 +93,8 @@ createUser = () => {
       if (isEmail(this.state.email)){
         if(this.state.password.length >= 7){
           if(this.state.captcha){
-            let Data = {Name: this.state.name, Phone: this.state.phone, Password: this.state.password, Gender: this.state.gender, Email: this.state.email}
+            this.setState({running: true})
+            let Data = {Name: this.state.name, Phone: this.state.phone, Password: this.state.password, Email: this.state.email}
             axios.post(this.state.Url+"signup", Data, {headers: headers})
             .then(function (response) {
               that.setState({SuccessModal: true, 
@@ -100,10 +104,12 @@ createUser = () => {
                              password: '',
                              confirmPassword: '',
                              phone: '',
-                             email: ''})
+                             email: '',
+                            running: false})
+
             })
             .catch(function (error) {
-              that.setState({ErrorModal: true, ErrorMsg: error.response.data.message})  
+              that.setState({ErrorModal: true, ErrorMsg: error.response.data.message, running: false})  
           })
         }
         else {
@@ -132,7 +138,6 @@ else {
 }
 
 render() {
-  const { value, callback, load, expired } = this.state || {};
   const SuccessStyle = {
     overlay: {
       background: "transparent"
@@ -153,8 +158,10 @@ render() {
       borderRadius: '10px',
     },
   }
+  const { t } = this.props;
+  const { classes } = this.props;
   return(
-    
+  
 <div class="GG-BG-INVERSE">
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
@@ -167,51 +174,57 @@ render() {
             <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img>
       </Modal>
         <div class="container">
-              <div class="loginBox">
+              <div class="BlackBG">
+                      {i18next.language === "EN" ? 
+                            <div className="badge-logo"/>:
+                            <div className="badge-logo-ar"/>}
                       <div class="form-group has-feedback">
                           <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.name.length >= 6 ? "green" : "red"}}>{this.state.name.length >= 6 ? "":'*'} Your name</label>
-                                <input class="form-control" type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="Your name" required></input>
+                                <label style={{color: this.state.name.length >= 6 ? "green" : "#3F51B5"}}>{this.state.name.length >= 6 ? "":'*'} Your name</label>
+                                <input class="form-control" value={this.state.name} type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="Your name" required></input>
                                 <br/>
                           </div>
                           <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.phone.length == 11 && isInt(this.state.phone) ? "green" : "red"}}>{this.state.phone.length == 11 && isInt(this.state.phone) ? "":'*'} Phone number</label>
-                                <input class="form-control" type="text" onChange={e => this.updateInput("phone", e.target.value)} placeholder="Phone number" required></input>
+                                <label style={{color: this.state.phone.length == 11 && isInt(this.state.phone) ? "green" : "#3F51B5"}}>{this.state.phone.length == 11 && isInt(this.state.phone) ? "":'*'} Phone number</label>
+                                <input class="form-control" value={this.state.phone} type="text" onChange={e => this.updateInput("phone", e.target.value)} placeholder="Phone number" required></input>
                                 <br/>
                           </div>
                           <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: isEmail(this.state.email) ? "green" : "red"}}>{isEmail(this.state.email) ? "":'*'} Email address</label>
-                                <input class="form-control" type="text" onChange={e => this.updateInput("email", e.target.value)} placeholder="Your email ex:example@gmail.com" required></input>
+                                <label style={{color: isEmail(this.state.email) ? "green" : "#3F51B5"}}>{isEmail(this.state.email) ? "":'*'} Email address</label>
+                                <input class="form-control" value={this.state.email} type="text" onChange={e => this.updateInput("email", e.target.value)} placeholder="Your email ex:example@gmail.com" required></input>
                                 <br/>
                           </div>
                           <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.password.length >= 7 ? "green" : "red"}}>{this.state.password.length >= 7 ? "":'*'} Password</label>
-                                <input class="form-control" type="password" onChange={e => this.updateInput("password", e.target.value)} placeholder="Password" required></input>
+                                <label style={{color: this.state.password.length >= 7 ? "green" : "#3F51B5"}}>{this.state.password.length >= 7 ? "":'*'} Password</label>
+                                <input class="form-control" value={this.state.password} type="password" onChange={e => this.updateInput("password", e.target.value)} placeholder="Password" required></input>
                                 <br/>
                           </div>
                           <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "green" : "red"}}>{this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "":'*'} Confirm password</label>
-                                <input class="form-control" type="password" onChange={e => this.updateInput("confirmPassword", e.target.value)} placeholder="Confirm password" required></input>
+                                <label style={{color: this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "green" : "#3F51B5"}}>{this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "":'*'} Confirm password</label>
+                                <input class="form-control" value={this.state.confirmPassword} type="password" onChange={e => this.updateInput("confirmPassword", e.target.value)} placeholder="Confirm password" required></input>
                                 <br/>
                           </div>
-                          <div class="g-recaptcha col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                          {load && (
-                              <ReCAPTCHA
-                                style={{ display: "inline-block" }}
-                                ref={this.state.ref}
-                                sitekey={TEST_SITE_KEY}
-                                onChange={this.handleChange}
-                                asyncScriptOnLoad={this.asyncScriptOnLoad}
-                              />
-                            )}
+                          <div class="recaptcha col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <ReCAPTCHA
+                                onExpired={this.onExpired}
+                                sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
+                                onChange={this.onChange}
+                                />
                             
                             <br/>
                         </div>
-                        <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                            <button class="btn btn-primary btn-block" style={{color : "white"}} onClick={()=>{this.createUser()}}>
-                                <span className="icon glyphicon glyphicon-ok"></span>
-                                <span className="text">Sign up</span>
-                            </button>
+                        <div className="col-xs-12 col-md-12 col-lg-12">
+                            {this.state.running && 
+                            <Grid container justify="center" alignItems="center">
+                              <CircularProgress className={classes.progress} />
+                            </Grid>
+                            }
+                            <Grid container justify="center" alignItems="center">
+                                <Fab disabled={this.state.running} color="primary" variant="extended" aria-label="Next" onClick={()=>{this.createUser()}} className={classes.fab}>
+                                    <LoginIcon className={classes.extendedIcon} />
+                                    {t('signUp')}
+                                </Fab>
+                            </Grid>
                         </div>
                     </div>
                 </div>
@@ -231,4 +244,8 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(SignUp);
+export default compose(
+  withStyles(styles),
+  withNamespaces(),
+  connect(mapStateToProps),
+)(SignUp); 

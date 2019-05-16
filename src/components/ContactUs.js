@@ -4,7 +4,6 @@ import '../Respcss.css';
 import Navbar from './navbar';
 import { FacebookProvider, MessageUs} from 'react-facebook';
 import Footer from './footer';
-import isEmail from 'validator/lib/isEmail';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
@@ -12,7 +11,6 @@ import Chip from '@material-ui/core/Chip';
 import amumu from '../Images/amumusad.png';
 import Modal from 'react-responsive-modal';
 import fortniteDab from '../Images/fortnitedab.png';
-import axios from 'axios';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 import {connect} from 'react-redux';
@@ -58,7 +56,7 @@ const styles = theme => ({
         fontSize: 20,
         color: '#fff',
         fontWeight: 'bold',
-        backgroundColor: '#b71c1c',
+        backgroundColor: '#f50057',
       },
     container: {
         display: 'flex',
@@ -192,31 +190,39 @@ const { t } = this.props;
                     <ListItem className={classes.descStyle}>
                         <ListItemText disableTypography primary={t('contactRule2')} />
                     </ListItem>
+
+
                     <Grid container justify="center" alignItems="center">
                         <CopyToClipboard text={`contact@ggegypt.com`}>
-                            <Tooltip  title={<h4>{t('copyEmail')}</h4>} aria-label={t('copylink')} placement="right">
-                                <Chip
-                                    onClick={()=>{this.setState({copied: true})}}
-                                    color={'primary'}
-                                    label={'contact@ggegypt.com'}
-                                    className={classes.chip}
-                                />
-                            </Tooltip>
+                            <div>
+                                <Tooltip  title={<h4>{t('copyEmail')}</h4>} aria-label={t('copylink')} placement="right">
+                                    <Chip
+                                        onClick={()=>{this.setState({copied: true})}}
+                                        color={'primary'}
+                                        label={'contact@ggegypt.com'}
+                                        className={classes.chip}
+                                    />
+                                </Tooltip>
+                            </div>
                         </CopyToClipboard>
                     </Grid>
+
                     <ListItem className={classes.descStyle}>
                         <ListItemText disableTypography primary={t('contactAdmin')} />
                     </ListItem>
+                    
                     <Grid container justify="center" alignItems="center">
                         <CopyToClipboard text={`admin@ggegypt.com`}>
-                            <Tooltip title={<h4>{t('copyEmail')}</h4>} aria-label={t('copylink')} placement="right">
-                                <Chip
-                                    onClick={()=>{this.setState({copied: true})}}
-                                    color={'primary'}
-                                    label={'admin@ggegypt.com'}
-                                    className={classes.chip}
-                                />
-                            </Tooltip>
+                            <div>
+                                <Tooltip title={<h4>{t('copyEmail')}</h4>} aria-label={t('copylink')} placement="right">
+                                    <Chip
+                                        onClick={()=>{this.setState({copied: true})}}
+                                        color={'primary'}
+                                        label={'admin@ggegypt.com'}
+                                        className={classes.chip}
+                                    />
+                                </Tooltip>
+                            </div>
                         </CopyToClipboard>
                     </Grid>
                     <Snackbar
