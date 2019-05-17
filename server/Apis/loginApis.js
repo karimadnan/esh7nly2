@@ -95,52 +95,57 @@ var body =req.body;
 Validator.check(body,'signup').then(success=>{ 
     axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.GREC}&response=${body.Captcha}`)
     .then(success=>{
-        const collection = DB.dbo.collection('users');
-        body.createdAt=Date.now();
-        body['status']="pending";
-        body.Access=1;
-        body.VouchPoints=0;
-        body.health=3;
-        body.Photo="";
-        body.verifyEmail=Math.floor((Math.random() * 1000000) + 1);
-        bcrypt.hash(body.Password,null,null,function (err, hash) {
-        if(err){
-        console.log(err)
-        return res.status(500).send(err);}
-    
-        body.Password = hash;
-        collection.insertOne(body,(err,result)=>{
+        if(success.data.success){
+            const collection = DB.dbo.collection('users');
+            body.createdAt=Date.now();
+            body['status']="pending";
+            body.Access=1;
+            body.VouchPoints=0;
+            body.health=3;
+            body.Photo="";
+            body.verifyEmail=Math.floor((Math.random() * 1000000) + 1);
+            bcrypt.hash(body.Password,null,null,function (err, hash) {
             if(err){
-            console.log('create User Error =>',err)
-            return res.status(400).send({message:'User with same data exists'});
-            }
-            let mailOptions = {
-                from: 'contact@ggegypt.com', // sender address
-                to: `${body.Email}`, // list of receivers
-                subject: "GG-Egypt Complete Registration", // Subject line
-                text: `Welcome to GG-Egypt: ${body.Name}.`, // plain text body
-                // HTML body
-                html: `<h2> ${body.Name}</h2> <p><b>Welcome to GG-Egypt</b></p>
-                <p>Your verification code is:<br/><h1>${body.verifyEmail}</h1></p>
-                <p>If it wasn't you just ignore this email.</p>
-                <p>-----------------------------------------------</p>
-                <h2> ${body.Name}</h2> <p><b> GG-Egypt اهلا بك فى </b></p>
-                <p> :كود التفعيل الخاص بك هو <br/><h1>${body.verifyEmail}</h1></p>
-                <p> اذا لم تطلب هذا الكود تجاهل الأيميل </p>`,
-            };
-    
-            // send mail with defined transport object
-            transporter.sendMail(mailOptions).then(success => {
-                return res.status(200).send({ message: 'User Created and email sent'});
-            },err=>{
-                return res.status(200).send({ message: 'User Created and email failed'});
+            console.log(err)
+            return res.status(500).send(err);}
+        
+            body.Password = hash;
+            collection.insertOne(body,(err,result)=>{
+                if(err){
+                    console.log('create User Error =>',err)
+                    return res.status(400).send({message:'User with same data exists'});
+                }
+                let mailOptions = {
+                    from: 'contact@ggegypt.com', // sender address
+                    to: `${body.Email}`, // list of receivers
+                    subject: "GG-Egypt Complete Registration", // Subject line
+                    text: `Welcome to GG-Egypt: ${body.Name}.`, // plain text body
+                    // HTML body
+                    html: `<h2> ${body.Name}</h2> <p><b>Welcome to GG-Egypt</b></p>
+                    <p>Your verification code is:<br/><h1>${body.verifyEmail}</h1></p>
+                    <p>If it wasn't you just ignore this email.</p>
+                    <p>---------------------------------------------------------------------------------</p>
+                    <h2> ${body.Name}</h2> <p><b> GG-Egypt اهلا بك فى </b></p>
+                    <p> :كود التفعيل الخاص بك هو <br/><h1>${body.verifyEmail}</h1></p>
+                    <p> اذا لم تطلب هذا الكود تجاهل الأيميل </p>`,
+                };
+        
+                // send mail with defined transport object
+                transporter.sendMail(mailOptions).then(success => {
+                    return res.status(200).send({ message: 'User Created and email sent'});
+                },err=>{
+                    return res.status(200).send({ message: 'User Created and email failed'});
+                });
+        
             });
-      
         });
-    });
+    }else{
+        console.log("Recaptcha token verify", success.data.success)
+        return res.status(500).send({message:'Recaptcha token verify failed'});
+    };
     },err=>{
         console.log("Recaptcha failed", err)
-        return res.status(400).send(err);
+        return res.status(500).send(err);
     });
 },err=>{
     console.log('signup validation',err)

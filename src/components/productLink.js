@@ -37,6 +37,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
 import Loader from '../containers/loader';
 import Truck from '@material-ui/icons/AirportShuttle';
+import i18next from 'i18next';
 
 const freeShipPrice = 400
 
@@ -481,9 +482,14 @@ constructor(props){
                         </SwipeableViews>
                         :
                     <img src={prev.defaultImage} className="splash-card-product-view" />}
-                    {prev.discount > 0 && <div id ="merchDiscount" className="card-body">
-                            <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{prev.discount}% {t('discount')}</span>
-                    </div> }
+                    {prev.discount > 0 && 
+                        <div id ="merchDiscount" className="card-body">
+                            <Chip
+                                label={`${prev.discount}% ${t('discount')}`}
+                                className={classes.chip}
+                                color={'secondary'}
+                            />                    
+                        </div>}
                     </div>
                 </div>
                 {/* MAIN IMAGE SLIDER END*/}
@@ -513,41 +519,78 @@ constructor(props){
                         </Grid>
                     </div>}
         
-                    {prev.colors && 
+                        {prev.colors && 
+                        i18next.language === 'EN' ? 
                         <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
-                            <div className="col-xs-4 col-md-4 col-lg-4">
+                            <div className="col-xs-3 col-md-4 col-lg-4">
                                 <h4>{t('color')}:</h4>
                             </div>
-                            <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>
+                            <div className="col-xs-9 col-md-8 col-lg-8" style={{textAlign: "center"}}>
                                     <Select
                                         isSearchable={false}
                                         isMulti={false}
                                         styles={customStyles}
                                         value={this.state.selectedColor}
                                         onChange={this.handleChangeColor}
-                                        options={this.state.colors} placeholder='Select Color'
+                                        options={this.state.colors} placeholder={t('color')}
                                     /> 
                             </div>
-                        </div>} 
-                        
-                        {prev.sizes && 
+                        </div>
+                        :prev.colors && 
+                        i18next.language !== 'EN' ?
                         <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
-                            <div className="col-xs-4 col-md-4 col-lg-4">
+                            <div className="col-xs-9 col-md-8 col-lg-8" style={{textAlign: "center"}}>
+                                    <Select
+                                        isSearchable={false}
+                                        isMulti={false}
+                                        styles={customStyles}
+                                        value={this.state.selectedColor}
+                                        onChange={this.handleChangeColor}
+                                        options={this.state.colors} placeholder={t('color')}
+                                    /> 
+                            </div>
+                            <div className="col-xs-3 col-md-4 col-lg-4">
+                                <h4 style={{textAlign: 'right'}}>:{t('color')}</h4>
+                            </div>
+
+                        </div>:undefined} 
+                                
+                        {prev.sizes && 
+                        i18next.language === 'EN' ?
+                        <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
+                            <div className="col-xs-3 col-md-4 col-lg-4">
                                 <h4>{t('size')}:</h4>
                             </div>
-                            <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>
+                            <div className="col-xs-9 col-md-8 col-lg-8" style={{textAlign: "center"}}>
                                     <Select
                                         isSearchable={false}
                                         isMulti={false}
                                         styles={customStyles}
                                         value={this.state.selectedSize}
                                         onChange={this.handleChangeSize.bind(this, 'selectedSize')}
-                                        options={this.state.sizes} placeholder='Select Size'
+                                        options={this.state.sizes} placeholder={t('size')}
                                     /> 
                             </div>
-                        </div>} 
-        
-                        {prev.options && 
+                        </div>:
+                        prev.sizes && 
+                        i18next.language !== 'EN' ?
+                        <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
+                            <div className="col-xs-9 col-md-8 col-lg-8" style={{textAlign: "center"}}>
+                                <Select
+                                    isSearchable={false}
+                                    isMulti={false}
+                                    styles={customStyles}
+                                    value={this.state.selectedSize}
+                                    onChange={this.handleChangeSize.bind(this, 'selectedSize')}
+                                    options={this.state.sizes} placeholder={t('size')}
+                                /> 
+                            </div>
+                            <div className="col-xs-3 col-md-4 col-lg-4">
+                                <h4 style={{textAlign: 'right'}}>:{t('size')}</h4>
+                            </div>
+                        </div>:undefined} 
+                
+                        {prev.options && i18next.language === 'EN' ?
                         <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
                             <div className="col-xs-4 col-md-4 col-lg-4">
                                 <h4>{t('option')}:</h4>
@@ -559,11 +602,28 @@ constructor(props){
                                         styles={customStyles}
                                         value={this.state.selectedOpt}
                                         onChange={this.handleChangeOption.bind(this, 'selectedOpt')}
-                                        options={this.props.cart.prevOptions} placeholder='Select Offer'
+                                        options={this.props.cart.prevOptions} placeholder={t('option')}
                                     />     
                                 <br/>
                             </div>
-                        </div>} 
+                        </div>:prev.options && i18next.language !== 'EN' ?
+                        <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
+                            <div className="col-xs-8 col-md-8 col-lg-8" style={{textAlign: "center"}}>                       
+                                <Select
+                                    isSearchable={false}
+                                    isMulti={false}
+                                    styles={customStyles}
+                                    value={this.state.selectedOpt}
+                                    onChange={this.handleChangeOption.bind(this, 'selectedOpt')}
+                                    options={this.props.cart.prevOptions} placeholder={t('option')}
+                                />
+                            </div>     
+                            <div className="col-xs-4 col-md-4 col-lg-4">
+                                <h4 style={{textAlign: 'right'}}>:{t('option')}</h4>
+                            </div>
+        
+                                <br/>
+                        </div>:undefined} 
         
                         <div className="col-xs-6 col-md-6 col-lg-6">
                             <Grid container justify="center" alignItems="center">

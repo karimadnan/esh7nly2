@@ -128,6 +128,19 @@
       "contactEmailTitle": "Contact us by email",
       "contactRule1": "Please only contact us with stuff related to the website or your puchases",
       "contactRule2": "If you found a bug take a screenshot and send it by email for your reward 😉",
-      "contactAdmin": "For business inquiries only contact us on the email below"
+      "contactAdmin": "For business inquiries only contact us on the email below",
+      "signUpSuccess": "Your account has been created go to your email to verfiy it",
+      "captchaBoxError": "Please check the captcha box",
+      "weakPassword": "Your password is weak",
+      "invalidEmail": "Email is invalid",
+      "invalidPhone": "Mobile number is invaild",
+      "confirmPassError": "Passwords does not match",
+      "SignupNameError": "Please write your name without spaces or symbols",
+      "SignupName": "Your name without spaces",
+      "SignupPhone": "Mobile number",
+      "SignupEmail": "Email address",
+      "SignupPassword": "Password",
+      "SignupConfirmPassword": "Confirm password"
+
 
 }

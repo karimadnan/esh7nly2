@@ -9,14 +9,30 @@ import {bindActionCreators} from 'redux';
 import { withNamespaces } from 'react-i18next';
 import ReactRouter from 'flux-react-router';
 import Loader from './loader';
+import { withStyles } from '@material-ui/core/styles';
+import compose from 'recompose/compose';
+import Chip from '@material-ui/core/Chip';
+
+const styles = theme => ({
+    chipDiscount: {
+        margin: theme.spacing.unit,
+        fontSize: 10,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 17,
+        }
+    }
+});
 
 class NewProducts extends Component {
 
 componentDidMount(){
-    this.props.fetchShopData();
+    if(!this.props.shop.fetching){
+        this.props.fetchShopData();
+    }
 }
 
 Discounted(){
+const { classes } = this.props;
 const { t } = this.props;
 if(this.props.shop.fetched){
 let outPut = []
@@ -33,8 +49,12 @@ this.props.shop.items.map((item, index) =>{
                 </button>
 
                 {item.discount > 0 && 
-                <div id ="merchDiscount" style={{width: isMobile && 60}}className="card-body">
-                    <span style={{fontSize: isMobile ? 10 : 15, lineHeight: 2.5}} className="label label-danger">{item.discount}% {t('discount')}</span>
+                <div id ="merchDiscount" className="card-body">
+                    <Chip
+                        label={`${item.discount}% ${t('discount')}`}
+                        className={classes.chipDiscount}
+                        color={'secondary'}
+                    />
                 </div> 
                 }
             </div>
@@ -48,6 +68,7 @@ this.props.shop.items.map((item, index) =>{
 
 New(){
 const { t } = this.props;
+const { classes } = this.props;
 if(this.props.shop.fetched){
 let outPut = []
 this.props.shop.items.map((item, index) =>{
@@ -61,11 +82,6 @@ this.props.shop.items.map((item, index) =>{
                     {t('viewButton')}
                 </button>
 
-                {item.discount > 0 && 
-                <div id ="merchDiscount" className="card-body">
-                    <span style={{fontSize: 15, lineHeight: 2.5}} className="label label-danger">{item.discount}% {t('discount')}</span>
-                </div> 
-                }
             </div>
         </div> 
         )
@@ -196,4 +212,8 @@ function mapStateToProps(state){
     dispatch,
 )
 
-  export default withNamespaces()(connect(mapStateToProps, matchDispatchToProps)(NewProducts));
+export default compose(
+    withStyles(styles),
+    withNamespaces(),
+    connect(mapStateToProps, matchDispatchToProps),
+)(NewProducts); 

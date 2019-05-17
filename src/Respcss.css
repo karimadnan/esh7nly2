@@ -14,6 +14,22 @@
     .GG-BG-INVERSE {
       background-image: url('Images/bgrespinverse.png');
     }
+    .recaptcha {
+      -webkit-transform: scale(0.96);
+         -moz-transform: scale(0.96);
+          -ms-transform: scale(0.96);
+           -o-transform: scale(0.96);
+              transform: scale(0.96);
+       -webkit-transform-origin: 0 0;
+          -moz-transform-origin: 0 0;
+           -ms-transform-origin: 0 0;
+            -o-transform-origin: 0 0;
+               transform-origin: 0 0;
+    }
+    #merchDiscount {
+      position: absolute;
+      left: 0;
+    }
   }
 
 /* @media screen and (max-width: 1366px) {

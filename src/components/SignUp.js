@@ -80,9 +80,8 @@ onExpired = () => {
   this.setState({captcha: false})
 }
 
-
 createUser = () => {
-  
+  const { t } = this.props;
   var headers = {
     'Content-Type': 'application/json'
   } 
@@ -99,14 +98,14 @@ createUser = () => {
             axios.post(this.state.Url+"signup", Data, {headers: headers})
             .then(function (response) {
               that.setState({SuccessModal: true, 
-                             SuccessMsg: "Your account has been created go to your email to verfiy it.",
+                             SuccessMsg: t('signUpSuccess'),
                              captcha: false,
                              name: '',
                              password: '',
                              confirmPassword: '',
                              phone: '',
                              email: '',
-                            running: false})
+                             running: false})
 
             })
             .catch(function (error) {
@@ -114,27 +113,27 @@ createUser = () => {
           })
         }
         else {
-          this.setState({ErrorModal: true, ErrorMsg: "Please check the captcha box."})  
+          this.setState({ErrorModal: true, ErrorMsg: t('captchaBoxError')})  
         }
         }
         else {
-          this.setState({ErrorModal: true, ErrorMsg: "Your password is weak."})    
+          this.setState({ErrorModal: true, ErrorMsg: t('weakPassword')})    
         }
       }
       else {
-      this.setState({ErrorModal: true, ErrorMsg: "Email is invalid."})    
+      this.setState({ErrorModal: true, ErrorMsg: t('invalidEmail')})    
       }
     }
     else {
-      this.setState({ErrorModal: true, ErrorMsg: "Mobile number is invaild."})
+      this.setState({ErrorModal: true, ErrorMsg: t('invalidPhone')})
     }
   }
   else {
-    this.setState({ErrorModal: true, ErrorMsg: "Passwords does not match."})
+    this.setState({ErrorModal: true, ErrorMsg: t('confirmPassError')})
   }
 }
 else {
-  this.setState({ErrorModal: true, ErrorMsg: "Please put your first and second name."})
+  this.setState({ErrorModal: true, ErrorMsg: t('SignupNameError')})
 }
 }
 
@@ -163,53 +162,53 @@ render() {
   const { classes } = this.props;
   return(
   
-<div class="GG-BG-INVERSE">
+<div className="GG-BG-INVERSE">
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
-            <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
-            <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
+            <h3 className="col-xs-6">{this.state.SuccessMsg}</h3>
+            <img style ={{width: 150, height: 120}} className="col-xs-6" src={fortniteDab} alt=""></img>
       </Modal>
       <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
               styles={ErrorStyle}>
-            <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
-            <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img>
+            <h3 className="col-xs-6">{this.state.ErrorMsg}</h3>
+            <img style ={{width: 150, height: 120}} className="col-xs-6" src={amumu} alt=""></img>
       </Modal>
-        <div class="container">
-              <div class="BlackBG">
+        <div className="container">
+              <div className="BlackBG">
                       {i18next.language === "EN" ? 
                             <div className="badge-logo"/>:
                             <div className="badge-logo-ar"/>}
-                      <div class="form-group has-feedback">
-                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.name.length >= 6 ? "green" : "#3F51B5"}}>{this.state.name.length >= 6 ? "":'*'} Your name</label>
-                                <input class="form-control" value={this.state.name} type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder="Your name" required></input>
+                      <div className="form-group has-feedback" style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
+                          <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: this.state.name.length >= 6 ? "green" : "#3F51B5"}}>{this.state.name.length >= 6 ? "":'*'} {t('SignupName')}</label>
+                                <input style={{textAlign: i18next.language === "EN" ? "left" : "right"}} className="form-control" value={this.state.name} type="text" onChange={e => this.updateInput("name", e.target.value)} placeholder={t('SignupName')} required></input>
                                 <br/>
                           </div>
-                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.phone.length == 11 && isInt(this.state.phone) ? "green" : "#3F51B5"}}>{this.state.phone.length == 11 && isInt(this.state.phone) ? "":'*'} Phone number</label>
-                                <input class="form-control" value={this.state.phone} type="text" onChange={e => this.updateInput("phone", e.target.value)} placeholder="Phone number" required></input>
+                          <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: this.state.phone.length == 11 && isInt(this.state.phone) ? "green" : "#3F51B5"}}>{this.state.phone.length == 11 && isInt(this.state.phone) ? "":'*'} {t('SignupPhone')}</label>
+                                <input style={{textAlign: i18next.language === "EN" ? "left" : "right"}} className="form-control" value={this.state.phone} type="text" onChange={e => this.updateInput("phone", e.target.value)} placeholder={t('SignupPhone')} required></input>
                                 <br/>
                           </div>
-                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: isEmail(this.state.email) ? "green" : "#3F51B5"}}>{isEmail(this.state.email) ? "":'*'} Email address</label>
-                                <input class="form-control" value={this.state.email} type="text" onChange={e => this.updateInput("email", e.target.value)} placeholder="Your email ex:example@gmail.com" required></input>
+                          <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: isEmail(this.state.email) ? "green" : "#3F51B5"}}>{isEmail(this.state.email) ? "":'*'} {t('SignupEmail')}</label>
+                                <input style={{textAlign: i18next.language === "EN" ? "left" : "right"}} className="form-control" value={this.state.email} type="text" onChange={e => this.updateInput("email", e.target.value)} placeholder={t('SignupEmail')} required></input>
                                 <br/>
                           </div>
-                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.password.length >= 7 ? "green" : "#3F51B5"}}>{this.state.password.length >= 7 ? "":'*'} Password</label>
-                                <input class="form-control" value={this.state.password} type="password" onChange={e => this.updateInput("password", e.target.value)} placeholder="Password" required></input>
+                          <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: this.state.password.length >= 7 ? "green" : "#3F51B5"}}>{this.state.password.length >= 7 ? "":'*'} {t('SignupPassword')}</label>
+                                <input style={{textAlign: i18next.language === "EN" ? "left" : "right"}} className="form-control" value={this.state.password} type="password" onChange={e => this.updateInput("password", e.target.value)} placeholder={t('SignupPassword')} required></input>
                                 <br/>
                           </div>
-                          <div class="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "green" : "#3F51B5"}}>{this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "":'*'} Confirm password</label>
-                                <input class="form-control" value={this.state.confirmPassword} type="password" onChange={e => this.updateInput("confirmPassword", e.target.value)} placeholder="Confirm password" required></input>
+                          <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                                <label style={{color: this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "green" : "#3F51B5"}}>{this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "":'*'} {t('SignupConfirmPassword')}</label>
+                                <input style={{textAlign: i18next.language === "EN" ? "left" : "right"}} className="form-control" value={this.state.confirmPassword} type="password" onChange={e => this.updateInput("confirmPassword", e.target.value)} placeholder={t('SignupConfirmPassword')} required></input>
                                 <br/>
                           </div>
-                          <div class="recaptcha col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+                          <div className="recaptcha col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                 <ReCAPTCHA
-                                onExpired={this.onExpired}
-                                sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
-                                onChange={this.onChange}
+                                  onExpired={this.onExpired}
+                                  sitekey="6LdZBo0UAAAAAHmWc3Anr9foEnlQNrzuNu-q1QZ2"
+                                  onChange={this.onChange}
                                 />
                             
                             <br/>
