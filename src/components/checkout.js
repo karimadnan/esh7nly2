@@ -131,7 +131,9 @@ class Checkout extends Component {
         var Data = {paymentMethod: payment,
                     orderType: "Products",
                     cart: this.props.cart};
-        (this.state.transId) ? Data['transId']=this.state.transId : null;
+        if(this.state.transId){
+            Data['transId']=this.state.transId
+        }
         axios.post(this.state.Url+"createOrder", Data, {headers: this.state.headers})
         .then(function (response) {
             that.props.cleanCart()

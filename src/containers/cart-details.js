@@ -101,6 +101,12 @@ class cartDetails extends Component {
         }
     }
 
+    remove(item){
+        this.props.removeCartItem(item)
+        this.notify(item.Name)
+        this.updateInfo(item)
+    }
+
     notify = (id) => toast.error(`${id} removed from cart!`, {
         position: "top-right",
         autoClose: 2500,
@@ -129,7 +135,7 @@ class cartDetails extends Component {
                     </div>
                     <div class="col-md-4 col-lg-4" style={{color: "black"}}>
                         <h3 style={{fontWeight: "bold"}}>{item.Name}</h3>
-                        <button class="btn btn-danger" style={{cursor: "pointer", minWidth: 100}} onClick={() => {this.props.removeCartItem(item), this.notify(item.Name), this.updateInfo(item)}}>
+                        <button class="btn btn-danger" style={{cursor: "pointer", minWidth: 100}} onClick={() => {this.remove(item)}}>
                             <span className="icon glyphicon glyphicon-remove-circle"></span>
                             <span className="text">Remove</span>
                         </button>

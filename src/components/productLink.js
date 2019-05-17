@@ -334,6 +334,16 @@ constructor(props){
         }
     }
 
+    openFortniteShop(){
+        this.setState({fortniteShop: true})
+        this.interval = setInterval(() => this.tick(), 1000)
+    }
+    
+    closeFortniteShop(){
+        this.setState({fortniteShop: false})
+        clearInterval(this.interval)
+    }
+
     goBack(){
         if(this.interval){
             clearInterval(this.interval)
@@ -357,7 +367,7 @@ constructor(props){
                     label: element.option,
                     value: element.price
                 };
-                (element.img) ? object['img']=element.img : undefined;
+                if(element.img){object['img']=element.img}
                     this.props.addPrevOptions(object)
                 });
                     this.setState({optionsFetched: true})
@@ -512,7 +522,7 @@ constructor(props){
                     {prev.id === "5cb82c254e1efafcd06dc1fa" &&
                     <div>
                         <Grid container justify="center" alignItems="center">
-                            <Fab variant="extended" aria-label="Next" onClick={()=>{this.setState({fortniteShop: true}), this.interval = setInterval(() => this.tick(), 1000)}} className={classes.fab}>
+                            <Fab variant="extended" aria-label="Next" onClick={()=>{this.openFortniteShop()}} className={classes.fab}>
                                 <ViewIcon className={classes.extendedIcon2} />
                                 {t('viewFortShop')}
                             </Fab>
@@ -695,7 +705,7 @@ constructor(props){
               :
                 <div>
                     <Grid container justify="flex-start" alignItems="center">
-                        <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({fortniteShop: false}), clearInterval(this.interval);}} className={classes.fabFort}>
+                        <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.closeFortniteShop()}} className={classes.fabFort}>
                             <BackIcon className={classes.extendedIcon2} />
                             <h6>{t('backToShop')}</h6>
                         </Fab>

@@ -189,6 +189,10 @@ assignLead(lead){
     })
 }
 
+refreshLeads(){
+    this.getLeads()
+    this.setState({refreshed: true})
+}
 
 render(){
   const { classes } = this.props;
@@ -206,7 +210,7 @@ render(){
                 />
             </Grid>
             <Grid container justify="center" alignItems="center">
-                <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.getLeads(), this.setState({refreshed: true})}} className={classes.fab}>
+                <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.refreshLeads()}} className={classes.fab}>
                     <RefreshIcon className={classes.extendedIcon2} />
                         Refresh
                 </Fab>

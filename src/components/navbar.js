@@ -199,9 +199,7 @@ class Navbar extends React.Component {
     else if(this.props.loginData.isAdmin && this.props.loginData.session === 1){
         ReactRouter.goTo("/agentdashboard")} 
     else if(this.props.loginData.isAdmin && this.props.loginData.session === 2){ 
-        ReactRouter.goTo("/admindashboard")}
-    else{
-      undefined
+        ReactRouter.goTo("/admindashboard")
     }
   }
   

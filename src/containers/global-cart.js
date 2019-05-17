@@ -79,6 +79,15 @@ notify = (msg) => toast.error(msg, {
   draggable: false,
 });
 
+remove(item){
+  const { t } = this.props;
+  const itemName = item.Name
+  const msg = t('removedFromCartMsg', {itemName})
+  this.props.removeCartItem(item)
+  this.notify(msg)
+  this.updateInfo(item)
+}
+
 goToCheckout(){
   if(this.props.loginData.loggedState){
       ReactRouter.goTo("/checkout")
@@ -127,11 +136,9 @@ render(){
                     cartName = `(${item.color.toUpperCase()}) `+ cartName
                 }
 
-              const itemName = item.Name
-              const msg = t('removedFromCartMsg', {itemName})
               return(
                 <li key={item.id}>
-                    <div className="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.props.removeCartItem(item), this.notify(msg), this.updateInfo(item)}}>
+                    <div className="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.remove(item)}}>
                         <div className="col-md-4 col-lg-4">
                             <img src={item.defaultImage} className="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
                         </div>

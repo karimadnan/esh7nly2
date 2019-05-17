@@ -135,6 +135,18 @@ login() {
     }
 } 
 
+loginRedirect(){
+if(!this.props.loginData.isAdmin){
+    ReactRouter.goTo("/account") 
+}
+else if (this.props.loginData.isAdmin && this.props.loginData.session === 1){
+    ReactRouter.goTo("/agentdashboard") 
+}
+else if (this.props.loginData.isAdmin && this.props.loginData.session === 2){
+    ReactRouter.goTo("/admindashboard") 
+}
+}
+
 render() {
     const { classes } = this.props;
     const { t } = this.props;
@@ -145,13 +157,7 @@ render() {
                         <div className="BlackBG" style={{color: "white", textAlign: "center"}}>
                             <div className="badge-logo"/>
                                 <h1>{t('welcome')}, {this.props.loginData.userName}</h1>
-                                <h4>{t('alreadyLogged')} <span style={{color: "#3F51B5", cursor: "pointer", textDecoration: "underline"}} onClick={()=>{!this.props.loginData.isAdmin ? 
-                                    ReactRouter.goTo("/account") 
-                                : this.props.loginData.isAdmin && this.props.loginData.session === 1 ?  
-                                    ReactRouter.goTo("/agentdashboard") 
-                                : this.props.loginData.isAdmin && this.props.loginData.session === 2 ? 
-                                    ReactRouter.goTo("/admindashboard") 
-                                : undefined}}>{t('account')}</span></h4>
+                                <h4>{t('alreadyLogged')} <span style={{color: "#3F51B5", cursor: "pointer", textDecoration: "underline"}} onClick={()=>{this.loginRedirect()}}>{t('account')}</span></h4>
                         </div>
                 </div>
                 <Navbar />

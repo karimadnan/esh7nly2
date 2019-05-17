@@ -418,6 +418,11 @@ addItemToPrev(item){
      this.props.addPrev(object)
 }
 
+viewItem(item){
+    this.addItemToPrev(item)
+    this.setState({view: 'item'})
+}
+
 Market(){
 const { t } = this.props;
 const { classes } = this.props;
@@ -431,12 +436,12 @@ if (this.state.view === "shop"){
         counter ++;
         if((item.discount || !this.state.hasDiscount)){
         return (
-            <div className="col-xs-12 col-md-4 col-md-4" key={key} style={{cursor: 'pointer'}} onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}>
+            <div className="col-xs-12 col-md-4 col-md-4" key={key} style={{cursor: 'pointer'}} onClick={() => {this.viewItem(item)}}>
             <div className ={rarity}>
                 <img src={item.defaultImage} className="splash-card-product-view-constant" />
-                <div className="overlayHover" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}}>
+                <div className="overlayHover" onClick={() => {this.viewItem(item)}}>
 
-                    <button className="btn btn-primary btn-block" onClick={() => {this.addItemToPrev(item), this.setState({view: 'item'})}} style={{color : "white"}}>
+                    <button className="btn btn-primary btn-block" onClick={() => {this.viewItem(item)}} style={{color : "white"}}>
                         {t('viewButton')}
                     </button>
 
@@ -565,6 +570,16 @@ handleStepChange = activeStep => {
     this.setState({ activeStep });
 };
 
+openFortniteShop(){
+    this.setState({fortniteShop: true})
+    this.interval = setInterval(() => this.tick(), 1000)
+}
+
+closeFortniteShop(){
+    this.setState({fortniteShop: false})
+    clearInterval(this.interval)
+}
+
 current(){
 const { t } = this.props;
 const { classes } = this.props;
@@ -604,7 +619,7 @@ if (this.state.view === "item"){
             label: element.option,
             value: element.price
         };
-        (element.img) ? object['img']=element.img : undefined;
+        if(element.img) {object['img']=element.img}
             this.props.addPrevOptions(object)
         });
             this.setState({optionsFetched: true})
@@ -764,7 +779,7 @@ if (this.state.view === "item"){
             {prev.id === "5cb82c254e1efafcd06dc1fa" &&
             <div>
                 <Grid container justify="center" alignItems="center">
-                    <Fab variant="extended" aria-label="Next" onClick={()=>{this.setState({fortniteShop: true}), this.interval = setInterval(() => this.tick(), 1000)}} className={classes.fab}>
+                    <Fab variant="extended" aria-label="Next" onClick={()=>{this.openFortniteShop()}} className={classes.fab}>
                         <ViewIcon className={classes.extendedIcon2} />
                          {t('viewFortShop')}
                     </Fab>
@@ -946,7 +961,7 @@ if (this.state.view === "item"){
       :
         <div>
             <Grid container justify="flex-start" alignItems="center">
-                <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({fortniteShop: false}), clearInterval(this.interval);}} className={classes.fabFort}>
+                <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.closeFortniteShop()}} className={classes.fabFort}>
                     <BackIcon className={classes.extendedIcon2} />
                     <h6>{t('backToShop')}</h6>
                 </Fab>
