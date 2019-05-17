@@ -30,7 +30,7 @@ render() {
         <br />  
         <div className="bordersep"/>
             <div className="col-md-6 col-lg-6 col-xs-12 ">
-                <h6 style={{textAlign: "center", fontWeight: "bold"}}> © 2019, GGegypt.com - <a  onClick={()=>{ReactRouter.goTo("/privacy")}} style={{cursor: 'pointer'}}>Privacy Policy  <span className="glyphicon glyphicon-briefcase"></span> </a> </h6>
+                <h6 style={{textAlign: "center", fontWeight: "bold"}}> © 2019, ggegypt.com - <a  onClick={()=>{ReactRouter.goTo("/privacy")}} style={{cursor: 'pointer'}}>Privacy Policy  <span className="glyphicon glyphicon-briefcase"></span> </a> </h6>
             </div>
             <div className="col-md-1 col-lg-1 col-xs-4">
                 <img style ={{width: 70, height: 70, marginTop: 10}} src={VodafoneCashLogo} alt=""/>
