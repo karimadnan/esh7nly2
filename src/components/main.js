@@ -65,7 +65,6 @@ render(){
     <div>
       <div className="bg-image">
         <Navbar page={0}/>
-        <div className="container" >
             {i18next.language === "EN" ? 
             <div className="badge-logo"/>:
             <div className="badge-logo-ar"/>}
@@ -81,8 +80,6 @@ render(){
             </Grid>
             </MuiThemeProvider>
              <ProductSlider />
-        </div>
-        <br/>
         <Footer />
       </div>
 

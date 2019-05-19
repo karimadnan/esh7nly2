@@ -140,7 +140,11 @@
       "SignupPhone": "Mobile number",
       "SignupEmail": "Email address",
       "SignupPassword": "Password",
-      "SignupConfirmPassword": "Confirm password"
+      "SignupConfirmPassword": "Confirm password",
+      "footerText1": "You can always find us",
+      "footerText2": "Contact us on:",
+      "likeUsFb": "Like us on facebook",
+      "privacyPolicy": "Privacy Policy"
 
 
 }

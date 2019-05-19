@@ -140,7 +140,11 @@
       "SignupPhone": "رقم الموبايل",
       "SignupEmail": "البريد الالكترونى",
       "SignupPassword": "كلمة السر",
-      "SignupConfirmPassword": "تأكيد كلمة السر"
+      "SignupConfirmPassword": "تأكيد كلمة السر",
+      "footerText1": "على طول معاك",
+      "footerText2": "تواصل معنا على",
+      "likeUsFb": "تابعنا على الفيس بوك",
+      "privacyPolicy": "سياسة الأستخدام"
 
       
 

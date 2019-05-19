@@ -228,10 +228,8 @@ render() {
                         </div>
                     </div>
                 </div>
-              <br/><br/>
         </div>
-        <Navbar />
-        <Footer/>
+        <Navbar />  
 </div>
   )
 }

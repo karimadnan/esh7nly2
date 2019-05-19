@@ -102,14 +102,14 @@ Flux.createRoute('/login',function(){
     ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><Login /></PersistGate></Provider>,document.getElementById('root'));
 })
 
-Flux.createRoute('/productpage/{id}',function(p){
+Flux.createRoute('/productpage/{id}',function(params){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><ProductPage id={p.id}/></PersistGate></Provider>,document.getElementById('root'));
+    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><ProductPage id={params.id}/></PersistGate></Provider>,document.getElementById('root'));
 })
 
-Flux.createRoute('/productpage',function(p){
+Flux.createRoute('/productpage',function(){
     ReactDOM.unmountComponentAtNode(document.getElementById('root'));
-    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><ProductPage id={p.id}/></PersistGate></Provider>,document.getElementById('root'));
+    ReactDOM.render(<Provider store={store}><PersistGate loading={null} persistor={persistor}><ProductPage /></PersistGate></Provider>,document.getElementById('root'));
 })
 
 // Flux.createRoute('/testpage',function(){

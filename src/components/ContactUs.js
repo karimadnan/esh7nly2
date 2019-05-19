@@ -248,7 +248,6 @@ const { t } = this.props;
             <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
             <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
         </Modal>
-        <Footer />
     </div>
   </div>
     );

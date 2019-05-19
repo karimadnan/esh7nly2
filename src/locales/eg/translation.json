@@ -140,7 +140,11 @@
       "SignupPhone": "رقم الموبايل",
       "SignupEmail": "الأيميل",
       "SignupPassword": "الباسورد",
-      "SignupConfirmPassword": "الباسورد تانى"
+      "SignupConfirmPassword": "الباسورد تانى",
+      "footerText1": "على طول معاك",
+      "footerText2": "كلمنا على",
+      "likeUsFb": "تابعنا على الفيس بوك",
+      "privacyPolicy": "سياسة الأستخدام"
 
 
 }

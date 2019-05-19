@@ -402,16 +402,13 @@ background: rgb(131, 211, 248);
   bottom: 0;
   color: rgb(182, 180, 180);
   background-color: rgb(27, 27, 27);
-  font-size: 16px;
   font-family: OpenSans,sans-serif;
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  padding: 1.25em 1.5em 3.5em;
-  height: 430px;
+  height: 270px;
   background-attachment: fixed;
-  z-index: 10;
   border-top: 1px solid;
   border-color: #333!important;
 }

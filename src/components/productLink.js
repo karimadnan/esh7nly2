@@ -121,8 +121,9 @@ const customStyles = {
 }
 
 class ProductPage extends Component {
-constructor(props){
-    super(props);
+constructor(nextProps){
+    super(nextProps);
+    console.log(nextProps)
     this.state = {
         url: this.props.server.main,
         copied: false,
@@ -144,10 +145,11 @@ constructor(props){
 
     }   
 }
- 
+
     componentDidMount(){
         var that = this
         const prev = this.props.cart.itemPrev
+
         if(!this.state.productLoaded){
             if(prev.options){
                 this.props.removePrevOptions()
@@ -315,8 +317,8 @@ constructor(props){
             return(
                 <div>
                     { prev.desc.split(",").map((place, index) =>
-                        <div style={{backgroundColor: index % 2 === 0 ? '#fff' : '#f7f9fe'}}>
-                            <ListItem key={index} className={classes.descStyle}>
+                        <div key={index} style={{backgroundColor: index % 2 === 0 ? '#fff' : '#f7f9fe'}}>
+                            <ListItem className={classes.descStyle}>
                                 <ListItemIcon>{<DotIcon />}</ListItemIcon>
                                 <ListItemText disableTypography primary={place} />
                             </ListItem>
