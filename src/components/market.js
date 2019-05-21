@@ -45,6 +45,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
 import Loader from '../containers/loader';
 import i18next from 'i18next';
+import {Helmet} from "react-helmet";
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -100,11 +101,13 @@ const styles = theme => ({
         }
     },
     fabCategory: {
-        fontSize: 8,
+        fontSize: 10,
+        fontWeight: 'bold',
+        minWidth: 90,
         margin: theme.spacing.unit,
         [theme.breakpoints.up('lg')]: {
-          minWidth: 160,
-          fontSize: 12,
+          minWidth: 170,
+          fontSize: 15,
         }
     },
     fabFort: {
@@ -505,7 +508,7 @@ if (this.state.view === "shop"){
                     </Paper>
                     
                 </div>
-                <div className="col-xs-3 col-md-2 col-lg-2" style={{padding: 0}}>  
+                <div className="col-xs-4 col-md-2 col-lg-2" style={{padding: 0}}>  
                 <MuiThemeProvider theme={menuTheme}>
                     <Grid container justify="flex-start" alignItems="center">
                         <Fab onClick={this.handleClick} color="primary" variant="extended" aria-label="Next" className={classes.fabCategory} aria-owns={anchorEl ? 'simple-menu' : undefined}
@@ -527,7 +530,7 @@ if (this.state.view === "shop"){
                     {catergories}
                     </Menu>
                 </div>
-                <div className="col-xs-3 col-md-2 col-lg-2" style={{padding: 0}}>  
+                <div className="col-xs-4 col-md-2 col-lg-2" style={{padding: 0}}>  
                 <MuiThemeProvider theme={menuTheme}>
                     <Grid container justify="flex-end" alignItems="center">
                         <Fab onClick={this.handleClick2} color="primary" variant="extended" aria-label="Sort" className={classes.fabCategory} aria-owns={anchorEl2 ? 'simple-menu' : undefined}
@@ -537,7 +540,7 @@ if (this.state.view === "shop"){
                                 "Low to high" : this.state.qprice === -1 ?
                                 "High to low" 
                             : 
-                            `${t('Sort by')}`}
+                            `${t('Sortby')}`}
                         </Fab>
                     </Grid>
                     </MuiThemeProvider>
@@ -660,6 +663,10 @@ if (this.state.view === "item"){
 
     return (
     <div className="container">
+        <Helmet>
+            <title>{prev.Name} | {prev.category} | {prev.soldBy}</title>
+            <meta name="description" content={`${prev.Name} | ${prev.category} | ${prev.soldBy}`} />
+        </Helmet>
        {!this.state.fortniteShop ?
         <div className="BlackBG">
         
@@ -910,14 +917,6 @@ if (this.state.view === "item"){
                 </div>
                 <div className="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
-                        <Chip
-                            label={t('productDetails')}
-                            className={classes.chip}
-                        />
-                    </Grid>
-                </div>
-                <div className="col-xs-6 col-md-6 col-lg-6">
-                    <Grid container justify="center" alignItems="center">
                         <CopyToClipboard text={`www.ggegypt.com/productpage/${prev.id}`}>
                             <Chip
                                 onClick={()=>{this.setState({copied: true})}}
@@ -935,7 +934,7 @@ if (this.state.view === "item"){
                         ContentProps={{
                             'aria-describedby': 'message-id',
                         }}
-                        message={<h4 id="message-id">Link copied</h4>}
+                        message={<h4 id="message-id">{t('linkCopied')}</h4>}
                     />
                 </div>
          </div>
@@ -996,6 +995,10 @@ render(){
     }
     return(
         <div className="GG-BG-INVERSE">
+            <Helmet>
+                <title>{t('marketTitle')}</title>
+                <meta name="description" content={t('marketTitle')} />
+            </Helmet>
                 {this.Market()}
                 {this.ViewProduct()}
             <Navbar page={1}/>

@@ -38,6 +38,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Loader from '../containers/loader';
 import Truck from '@material-ui/icons/AirportShuttle';
 import i18next from 'i18next';
+import {Helmet} from "react-helmet";
 
 const freeShipPrice = 400
 
@@ -410,6 +411,10 @@ constructor(nextProps){
         
             return (
             <div className="container">
+            <Helmet>
+                <title>{prev.Name} | {prev.category} | {prev.soldBy}</title>
+                <meta name="description" content={`${prev.Name} | ${prev.category} | ${prev.soldBy}`} />
+            </Helmet>
                {!this.state.fortniteShop ?
                 <div className="BlackBG">
                 
@@ -651,14 +656,6 @@ constructor(nextProps){
                                     <ShoppingCart className={classes.extendedIcon2} />
                                     {t('addToCart')}
                                 </Fab>
-                            </Grid>
-                        </div>
-                        <div className="col-xs-6 col-md-6 col-lg-6">
-                            <Grid container justify="center" alignItems="center">
-                                <Chip
-                                    label={t('productDetails')}
-                                    className={classes.chip}
-                                />
                             </Grid>
                         </div>
                         <div className="col-xs-6 col-md-6 col-lg-6">

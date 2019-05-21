@@ -11,7 +11,6 @@ import fortniteDab from '../Images/fortnitedab.png';
 import {connect} from 'react-redux';
 import isEmail from 'validator/lib/isEmail';
 import isInt from 'validator/lib/isInt';
-import Footer from './footer';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import LoginIcon from '@material-ui/icons/Forward';
@@ -20,6 +19,7 @@ import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/
 import compose from 'recompose/compose';
 import i18next from 'i18next';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {Helmet} from "react-helmet";
 
 const styles = theme => ({
   fab: {
@@ -163,6 +163,10 @@ render() {
   return(
   
 <div className="GG-BG-INVERSE">
+      <Helmet>
+          <title>{t('signUpTitle')}</title>
+          <meta name="description" content={t('signUpTitle')} />
+      </Helmet>
       <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
             <h3 className="col-xs-6">{this.state.SuccessMsg}</h3>

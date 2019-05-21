@@ -144,7 +144,18 @@
       "footerText1": "على طول معاك",
       "footerText2": "كلمنا على",
       "likeUsFb": "تابعنا على الفيس بوك",
-      "privacyPolicy": "سياسة الأستخدام"
+      "privacyPolicy": "سياسة الأستخدام",
+      "category": "الفئة",
+      "Sortby": "ترتيب حسب",
+      "mainTitle": "GG-Egypt | Online Shop",
+      "marketTitle": "السوق | GG-Egypt",
+      "contactTitle": "كلمنا | GG-Egypt",
+      "loginTitle": "تسجيل الدخول | GG-Egypt",
+      "signUpTitle": "اعمل اكونت | GG-Egypt",
+      "profileTitle": "{{userName}} | البروفايل",
+      "ordersTitle": "{{userName}} | الطلبات",
+      "historyTitle": "{{userName}} | القديم",
+      "checkoutTitle": "الحساب | GG-Egypt"
 
 
 }

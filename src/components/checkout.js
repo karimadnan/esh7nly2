@@ -32,6 +32,7 @@ import Grid from '@material-ui/core/Grid';
 import BackIcon from '@material-ui/icons/SkipPrevious';
 import i18next from 'i18next';
 import Loader from '../containers/loader';
+import {Helmet} from "react-helmet";
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -577,6 +578,10 @@ render(){
     var grandTotal = total > 400 ? total : total + 30
     return(
     <div class="GG-BG-INVERSE">
+        <Helmet>
+            <title>{t('checkoutTitle')}</title>
+            <meta name="description" content={t('checkoutTitle')} />
+        </Helmet>
         <div class="col-xs-12 col-md-8 col-lg-8">
         <div style={{margin: 10}}>
             <div class="WhiteBG">

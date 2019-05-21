@@ -19,6 +19,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
 import Tooltip from '@material-ui/core/Tooltip';
+import {Helmet} from "react-helmet";
 
 const styles = theme => ({
     chip: {
@@ -152,6 +153,10 @@ const { t } = this.props;
     return (
   <div>
     <div className="GG-BG-INVERSE"> 
+    <Helmet>
+        <title>{t('contactTitle')}</title>
+        <meta name="description" content={t('contactTitle')} />
+    </Helmet>
     <Navbar page={2}/>
         <div class="container">
             <div class="BlackBG" style={{minHeight: 450}}>

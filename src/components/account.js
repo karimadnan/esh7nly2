@@ -39,6 +39,7 @@ import Modal from 'react-responsive-modal';
 import Loader from '../containers/loader';
 import {updateProfilePhoto} from '../actions/index';
 import {bindActionCreators} from 'redux';
+import {Helmet} from "react-helmet";
 
 const ErrorStyle = {
     overlay: {
@@ -244,12 +245,17 @@ class Account extends Component {
         const { classes } = this.props;
         const accountStatus = this.state.status
         const email = this.state.email
+        const userName = this.props.loginData.userName
         if(!this.state.fbStatus){
             this.fbCheckLogin();
         }
         if(this.state.value === 0){
             return(
             <div>
+                <Helmet>
+                    <title>{t('profileTitle', {userName})}</title>
+                    <meta name="description" content={t('profileTitle', {userName})} />
+                </Helmet>
                 <Grid container justify="center" alignItems="center">
                     {this.state.fbStatus === 'connected' && !this.props.loginData.photo ?
                     <Fab color="primary" variant="extended" aria-label="fbPhotoUpload" onClick={()=>{this.getFbPhoto()}} className={classes.fab}>
@@ -399,13 +405,26 @@ class Account extends Component {
             )
         }
       else if (this.state.value === 1){
+          const userName = this.props.loginData.userName
           return(
+          <div>
+            <Helmet>
+                <title>{t('ordersTitle', {userName})}</title>
+                <meta name="description" content={t('ordersTitle', {userName})} />
+            </Helmet>
             <Orders/>
+          </div>
         )
       }
       else if (this.state.value === 2){
+        const userName = this.props.loginData.userName
         return(
-          <div />
+          <div >
+            <Helmet>
+                <title>{t('historyTitle', {userName})}</title>
+                <meta name="description" content={t('historyTitle', {userName})} />
+            </Helmet>
+          </div>
       )
     }
     }
@@ -455,6 +474,10 @@ render() {
     if (!this.props.loginData.loggedState || this.props.loginData.isAdmin){
         return (
             <div class ="GG-BG-INVERSE">
+            <Helmet>
+                <title>403 (Forbidden)</title>
+                <meta name="description" content="403 (Forbidden)" />
+            </Helmet>
             <div class="container">
               <div class="WhiteBG" style={{color: "black"}}>
                   <h1>403 (Forbidden)</h1>

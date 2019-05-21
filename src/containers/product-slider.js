@@ -68,7 +68,6 @@ this.props.shop.items.map((item, index) =>{
 
 New(){
 const { t } = this.props;
-const { classes } = this.props;
 if(this.props.shop.fetched){
 let outPut = []
 this.props.shop.items.map((item, index) =>{
@@ -132,7 +131,7 @@ render(){
         )
     }
     return(
-    <div className="BlackBG">
+    <div className="BlackBG" style={{margin: 10}}>
         <h1 style={{color: "#3F51B5", textAlign: "center", fontWeight: "bold"}}>{t('micro')}</h1>
         <h3 style={{color: "white", textAlign: "center"}}>{t('microText')}</h3>
             <AliceCarousel

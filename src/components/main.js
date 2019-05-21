@@ -11,6 +11,7 @@ import Timer from '@material-ui/icons/Timer';
 import { withNamespaces } from 'react-i18next';
 import { withStyles, MuiThemeProvider, createMuiTheme  } from '@material-ui/core/styles';
 import i18next from 'i18next';
+import {Helmet} from "react-helmet";
 
 const styles = theme => ({
   extendedIcon2: {
@@ -64,6 +65,10 @@ render(){
   return(
     <div>
       <div className="bg-image">
+        <Helmet>
+            <title>{t('mainTitle')}</title>
+            <meta name="description" content={t('mainTitle')} />
+        </Helmet>
         <Navbar page={0}/>
             {i18next.language === "EN" ? 
             <div className="badge-logo"/>:

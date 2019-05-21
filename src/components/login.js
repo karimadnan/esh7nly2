@@ -19,6 +19,7 @@ import LoginIcon from '@material-ui/icons/Forward';
 import SignUpIcon from '@material-ui/icons/AccountCircle';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
+import {Helmet} from "react-helmet";
 
 const ErrorStyle = {
     overlay: {
@@ -35,12 +36,12 @@ const styles = theme => ({
     fab: {
         margin: theme.spacing.unit,
         fontSize: 10,
-        minWidth: 310,
-        maxWidth: 310,
+        minWidth: 280,
+        maxWidth: 280,
         [theme.breakpoints.up('lg')]: {
           fontSize: 15,
-          minWidth: 350,
-          maxWidth: 350,
+          minWidth: 340,
+          maxWidth: 340,
         }
     },
     extendedIcon: {
@@ -153,6 +154,10 @@ render() {
     if(this.props.loginData.loggedState){
         return(
             <div className ="GG-BG-INVERSE">
+            <Helmet>
+                <title>{t('loginTitle')}</title>
+                <meta name="description" content={t('loginTitle')} />
+            </Helmet>
                 <div className="container">
                         <div className="BlackBG" style={{color: "white", textAlign: "center"}}>
                             <div className="badge-logo"/>
@@ -167,8 +172,12 @@ render() {
 
     return (
     <div className ="GG-BG-INVERSE">
+        <Helmet>
+            <title>{t('loginTitle')}</title>
+            <meta name="description" content={t('loginTitle')} />
+        </Helmet>
         <div className="container">
-            <div className="BlackBG">
+            <div className="BlackBG" style={{padding: 20}}>
                             {i18next.language === "EN" ? 
                             <div className="badge-logo"/>:
                             <div className="badge-logo-ar"/>}

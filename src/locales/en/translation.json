@@ -144,7 +144,17 @@
       "footerText1": "You can always find us",
       "footerText2": "Contact us on:",
       "likeUsFb": "Like us on facebook",
-      "privacyPolicy": "Privacy Policy"
-
+      "privacyPolicy": "Privacy Policy",
+      "category": "Category",
+      "Sortby": "Sort By",
+      "mainTitle": "GG-Egypt | Online Shop",
+      "marketTitle": "Market | GG-Egypt",
+      "contactTitle": "Contact Us | GG-Egypt",
+      "loginTitle": "Sign In | GG-Egypt",
+      "signUpTitle": "Create Account | GG-Egypt",
+      "profileTitle": "{{userName}} | Profile",
+      "ordersTitle": "{{userName}} | Orders",
+      "historyTitle": "{{userName}} | History",
+      "checkoutTitle": "Checking Out | GG-Egypt"
 
 }
