@@ -445,7 +445,7 @@ class Checkout extends Component {
                         that.setState({gotData: false, loaded: true})
                     }
             }, error => {
-                that.setState({gotData: true, loaded: true})
+                that.setState({gotData: false, loaded: true})
             });
         }
     }
