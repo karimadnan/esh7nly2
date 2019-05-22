@@ -208,7 +208,7 @@ class AdminOrders extends Component {
                     />
                 </Grid>
             </MuiThemeProvider>
-            {this.state.orders.map((order, index) =>{
+            {this.state.orders && this.state.orders.map((order, index) =>{
                 return(
                     <div className="col-xs-12 col-md-4 col-lg-4" style={{cursor: 'pointer'}} key={index} onClick={()=>{this.setState({order: order, openOrder: true, comment: order.comment})}}>
                           <Card className={classes.card}>
