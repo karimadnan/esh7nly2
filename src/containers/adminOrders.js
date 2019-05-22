@@ -196,13 +196,14 @@ class AdminOrders extends Component {
 
     drawOrders(){
         const { classes } = this.props;
+        const orders = this.state.orders ? this.state.orders.length : 0
         return(
         <div>
             <MuiThemeProvider theme={theme}>
                 <Grid container justify="center" alignItems="center">
                     <Chip
                         color="primary"
-                        label={`Orders Picked (${this.state.orders.length})`}
+                        label={`Orders Picked (${orders})`}
                         className={classes.chip}
                     />
                 </Grid>
