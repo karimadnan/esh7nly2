@@ -12,7 +12,7 @@ let Validator =  {
 		cart:Joi.array().min(1).required()
 	},
 	signup:{
-		Name:Joi.string().min(3).max(15).alphanum().required(),
+		Name:Joi.string().min(3).max(15).required(),
 		Phone:Joi.string().regex(/^[0-9]+$/, 'numbers').min(11).max(11).required(),
 		Password:Joi.string().min(8).max(20).regex( /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,21}$/,'must contain uppercase lowercase and number').required(),
 		Email:Joi.string().email().required(),

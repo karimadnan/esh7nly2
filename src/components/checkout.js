@@ -428,6 +428,7 @@ class Checkout extends Component {
             axios.get(`${this.state.Url}getUserAddress`, {headers: this.state.headers})
             .then(success => {
                 const shipping = success.data.user.ShippingData
+
                     if(shipping){
                         that.setState({firstName: shipping.FirstName, 
                                        lastName: shipping.LastName,
@@ -440,7 +441,11 @@ class Checkout extends Component {
                                        gotData: true,
                                        loaded: true})
                     }
+                    else{
+                        that.setState({gotData: false, loaded: true})
+                    }
             }, error => {
+                that.setState({gotData: true, loaded: true})
             });
         }
     }
