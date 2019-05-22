@@ -432,7 +432,7 @@ const { classes } = this.props;
 let counter = 0
 if (this.state.view === "shop"){
     let shop = this.props.shop.items && this.props.shop.items.map((item) =>{
-        var rarity = "card splash-cardTees "+item.rarity
+        var rarity = "card splash-cardTees "
         var key = item.Name + `-${counter}`
 
         var priceAfterDiscount = item.price - item.discount / 100 * item.price
@@ -466,18 +466,18 @@ if (this.state.view === "shop"){
                         <span>
                             {item.discount ?
                             <div>
-                                <h4 className="marketCardTitle" style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>
+                                <h4 className="marketCardTitle" style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>
                                 <h5 className="marketCardTitle" style={{color: "grey", textDecoration: "line-through"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h5>
                             </div>
                             :
-                            <h4 className="marketCardTitle" style={{color: "orange", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>}
+                            <h4 className="marketCardTitle" style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>}
                         </span>}
                         <span>
                            
                             <div>
                                 {item.price > 400 && 
                                 <h5 style={{color: "white", float: "left"}}>{t('freeShip')} </h5>}
-                                <h6 style={{color: "white", float: "right"}}>{t('store')}: <span style={{color: "orange"}}>{item.soldBy}</span></h6>
+                                <h6 style={{color: "white", float: "right"}}>{t('store')}: <span style={{color: "#3F51B5"}}>{item.soldBy}</span></h6>
                             </div>
                         </span>
 

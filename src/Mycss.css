@@ -669,11 +669,12 @@ background-color: #0ddb06;
 }
 
 .cardItemPrevSmall-active {
-border: 3px solid #ffbb00;
+border: 3px solid #3F51B5;
 background-color: #ffffff;
 }
 
 .card {
+    border: 1px solid #313131;
     min-height: 400px;
     max-height: 400px;
     position: relative;
@@ -685,12 +686,13 @@ background-color: #ffffff;
     -ms-flex-direction: column;
     flex-direction: column;
     word-wrap: break-word;
-    background-color: #ffffff;
+    background-color: rgba(241, 241, 241, 0.112);
     background-clip: border-box;
-    border-radius: 0.25rem;
+    border-radius: 0.30rem;
 }
 
 .fortniteCard {
+
   min-height: 300px;
   max-height: 400px;
   position: relative;
@@ -702,9 +704,9 @@ background-color: #ffffff;
   -ms-flex-direction: column;
   flex-direction: column;
   word-wrap: break-word;
-  background-color: #ffffff;
+  background-color: rgba(241, 241, 241, 0.112);
   background-clip: border-box;
-  border-radius: 0.25rem;
+  border-radius: 0.30rem;
 }
 
 #itemdesc {
