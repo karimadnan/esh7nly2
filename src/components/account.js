@@ -148,74 +148,74 @@ class Account extends Component {
           return hearts
     }
 
-    setPhoto(photo){
-        let data = {photo: photo}
-        var that = this
-        axios.post(this.state.Url+"setUserPhoto", data, {headers: this.state.headers})
-        .then(function (response) {
-            that.props.updateProfilePhoto(photo)
-        })
-        .catch(function (error) {
-            console.log(error, "ERROR")
-        })
-    }
+    // setPhoto(photo){
+    //     let data = {photo: photo}
+    //     var that = this
+    //     axios.post(this.state.Url+"setUserPhoto", data, {headers: this.state.headers})
+    //     .then(function (response) {
+    //         that.props.updateProfilePhoto(photo)
+    //     })
+    //     .catch(function (error) {
+    //         console.log(error, "ERROR")
+    //     })
+    // }
 
-    getFbPhoto (){
-        var that = this
-        window.FB.api(
-            "/me/picture",
-            {
-                "redirect": false,
-                "height": "150",
-                "type": "normal",
-                "width": "150"
-            },
-            function (response) {
-              if (response && !response.error) {
-                  that.setPhoto(response.data.url);
-              }
-              else{
-                  console.log(response.error)
-              }
-            }
-        );
-    }
+    // getFbPhoto (){
+    //     var that = this
+    //     window.FB.api(
+    //         "/me/picture",
+    //         {
+    //             "redirect": false,
+    //             "height": "150",
+    //             "type": "normal",
+    //             "width": "150"
+    //         },
+    //         function (response) {
+    //           if (response && !response.error) {
+    //               that.setPhoto(response.data.url);
+    //           }
+    //           else{
+    //               console.log(response.error)
+    //           }
+    //         }
+    //     );
+    // }
 
-    updateFbPhoto (){
-        const { t } = this.props;
-        var that = this
-        window.FB.api(
-            "/me/picture",
-            {
-                "redirect": false,
-                "height": "150",
-                "type": "normal",
-                "width": "150"
-            },
-            function (response) {
-              if (response && !response.error) {
-                    that.setPhoto(response.data.url);
-              }
-              else{
-                  console.log(response.error)
-              }
-            }
-        );
-    }
+    // updateFbPhoto (){
+    //     const { t } = this.props;
+    //     var that = this
+    //     window.FB.api(
+    //         "/me/picture",
+    //         {
+    //             "redirect": false,
+    //             "height": "150",
+    //             "type": "normal",
+    //             "width": "150"
+    //         },
+    //         function (response) {
+    //           if (response && !response.error) {
+    //                 that.setPhoto(response.data.url);
+    //           }
+    //           else{
+    //               console.log(response.error)
+    //           }
+    //         }
+    //     );
+    // }
 
-    fbCheckLogin(){
-        var that = this
-        window.FB.getLoginStatus(function(response) {
-            that.setState({fbStatus: response.status})
-        });
-    }
+    // fbCheckLogin(){
+    //     var that = this
+    //     window.FB.getLoginStatus(function(response) {
+    //         that.setState({fbStatus: response.status})
+    //     });
+    // }
 
-    authFbLogin(){
-        var that = this
-        window.FB.login(function(response) {
-              that.setState({fbStatus: response.status})
-          }, {scope: 'public_profile'});
-    }
+    // authFbLogin(){
+    //     var that = this
+    //     window.FB.login(function(response) {
+    //           that.setState({fbStatus: response.status})
+    //       }, {scope: 'public_profile'});
+    // }
     
     validatePendingUser(){
         const { t } = this.props;
@@ -246,9 +246,9 @@ class Account extends Component {
         const accountStatus = this.state.status
         const email = this.state.email
         const userName = this.props.loginData.userName
-        if(!this.state.fbStatus){
-            this.fbCheckLogin();
-        }
+        // if(!this.state.fbStatus){
+        //     this.fbCheckLogin();
+        // }
         if(this.state.value === 0){
             return(
             <div>
@@ -256,30 +256,9 @@ class Account extends Component {
                     <title>{t('profileTitle', {userName})}</title>
                     <meta name="description" content={t('profileTitle', {userName})} />
                 </Helmet>
-                <Grid container justify="center" alignItems="center">
-                    {this.state.fbStatus === 'connected' && !this.props.loginData.photo ?
-                    <Fab color="primary" variant="extended" aria-label="fbPhotoUpload" onClick={()=>{this.getFbPhoto()}} className={classes.fab}>
-                        <UploadIcon className={classes.extendedIcon2} />
-                        <h5>{t('fbPhotoUpload')}</h5>
-                    </Fab>:undefined}
 
-                   {this.state.fbStatus !== 'connected' ?
-                   <Fab color="primary" variant="extended" aria-label="fbPhotoLogin" onClick={()=>{this.authFbLogin()}} className={classes.fab}>
-                        <NextIcon className={classes.extendedIcon2} />
-                        <h5>{t('fbLogin')}</h5>
-                    </Fab>:undefined}
-
-                </Grid>
                 <Grid container justify="center" alignItems="center">
                     <Avatar alt="Profile Picture" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} className={classes.Avatar} />
-                </Grid>
-
-                <Grid container justify="center" alignItems="center">
-                {this.state.fbStatus === 'connected' && this.props.loginData.photo ?
-                    <Fab color="primary" variant="extended" aria-label="fbPhotoEdit" onClick={()=>{this.updateFbPhoto()}} className={classes.fab}>
-                        <UploadIcon className={classes.extendedIcon2} />
-                        <h5>{t('fbEditPhoto')}</h5>
-                    </Fab>:undefined}
                 </Grid>
 
             {i18next.language === "EN" ?

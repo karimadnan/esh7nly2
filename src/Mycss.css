@@ -384,6 +384,18 @@ background: rgb(131, 211, 248);
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.9);
 }
 
+.cartBG {
+  border-radius: 0.55rem;
+  color: rgb(182, 180, 180);
+  height: fit-content;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: rgb(255, 255, 255); 
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.9);
+}
+
+
+
 .g-recaptcha{
   transform:scale(1);
   -webkit-transform:scale(1.04);
@@ -625,6 +637,15 @@ background-color: #0ddb06;
 
 .splash-card-product-view {
   max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.userOrdersImages {
+  max-height: 190px;
   max-width: 100%;
   height: auto;
   display: block;

@@ -20,11 +20,8 @@ import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
-import Avatar from '@material-ui/core/Avatar';
 import { withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
-import Badge from '@material-ui/core/Badge';
-import ShoppingCart from '@material-ui/icons/ShoppingCart';
 import NextIcon from '@material-ui/icons/Done';
 import EditIcon from '@material-ui/icons/BorderColor';
 import Typography from '@material-ui/core/Typography';
@@ -33,6 +30,8 @@ import BackIcon from '@material-ui/icons/SkipPrevious';
 import i18next from 'i18next';
 import Loader from '../containers/loader';
 import {Helmet} from "react-helmet";
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -55,6 +54,39 @@ const styles = theme => ({
     extendedIcon2: {
         marginRight: theme.spacing.unit * 6,
     },
+    cartFont: {
+        fontSize: 13,
+        fontWeight: 'bold',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 17,
+        }
+    },
+    priceFont: {
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: '#3F51B5',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 17,
+        }
+    },
+    shoppingCartFont:{
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: '#212121',
+        margin: theme.spacing.unit,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 20,
+        }
+    },
+    shoppingCartPrice:{
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: '#212121',
+        margin: theme.spacing.unit,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 17,
+        }
+    }
 });
 
 const ErrorStyle = {
@@ -479,21 +511,25 @@ class Checkout extends Component {
         let CART = this.props.cart.map(item => {
             return (
                 <div key={item.id}>
-                    <div class="row">
-                        <Grid container justify="center" alignItems="center">
-                            <div class="col-xs-4 col-md-3 col-lg-3">
-                                <Avatar alt="Product Picture" src={item.defaultImage} className={classes.Avatar} />
-                            </div>
-                            <div class="col-xs-4 col-md-3 col-lg-3">
-                                    <ListItemText primary={<h5>{item.Name.length > 20 ? (((item.Name).substring(0,10-3)) + '...') : item.Name}</h5>} />
-                            </div>
-                            <div class="col-xs-4 col-md-3 col-lg-3">
-                                    <ListItemText primary={<h5><CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />{t('currency')}</h5>}/>
+                    <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div class="col-xs-4 col-md-4 col-lg-4">
+                            <img src={item.defaultImage} className="userOrdersImages" />
+                        </div>
+                        <div class="col-xs-8 col-md-8 col-lg-8">
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <Typography className={classes.cartFont}>
+                                    {item.Name.length > 20 ? (((item.Name).substring(0,10-3)) + '...') : item.Name}
+                                </Typography>
+                            </div>          
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <Typography className={classes.priceFont}>
+                                    <CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> {t('currency')}
+                                </Typography>
                             </div>  
-                            <div class="col-xs-4 col-md-3 col-lg-3">
-                                    <ListItemText primary={<h5>{t('quantity')}: {item.quantity}</h5>}/>
+                            <div class="col-xs-12 col-md-12 col-lg-12">
+                                <ListItemText primary={<h5>{t('quantity')}: {item.quantity}</h5>}/>
                             </div>  
-                        </Grid>
+                        </div>
                     </div>
                 </div>
             )
@@ -585,7 +621,7 @@ render(){
     <div class="GG-BG-INVERSE">
         <Helmet>
             <title>{t('checkoutTitle')}</title>
-            <meta name="description" content={t('checkoutTitle')} />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
         </Helmet>
         <div class="col-xs-12 col-md-8 col-lg-8">
         <div style={{margin: 10}}>
@@ -613,40 +649,133 @@ render(){
             {/* CART */}
             <div class="col-xs-12 col-md-4 col-lg-4">
             <div style={{margin: 10}}>
-            <div class="WhiteBG">
+            <div class="cartBG">
                    {!this.state.cart && this.state.currentIndex != 3 && this.props.cartInfo.totalItems > 0 && 
+                <div style={{backgroundColor: fade('#f2efef', 0.625)}}>
                     <Grid container justify="center" alignItems="center">
-                        <Fab color="primary" variant="extended" onClick={()=>{this.setState({cart: true, currentIndex: 0})}} className={classes.fab}>
-                            <Badge className={classes.extendedIcon} badgeContent={this.props.cartInfo.totalItems} color="secondary">     
-                                <ShoppingCart fontSize="large" style={{color: "#fff"}}/>
-                            </Badge>
-                                <h5>{t('editCart')}</h5>
-                        </Fab>
-                    </Grid>}
-
-                    <Divider className={classes.divider}/>
-
+                        <Typography className={classes.shoppingCartFont}>
+                            {t('yourCart')}
+                        </Typography>
+                    </Grid>
+                </div>}
+                <Scrollbars autoHeight autoHeightMin={100} autoHeightMax={300}>
                         {this.createCart()}
+                </Scrollbars>
 
                {this.props.cartInfo.totalItems > 0 ?   
                 <div>  
-                    <Typography variant="h4" color="#212121">
-                        {t('items')}: {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
-                    </Typography>
-                    <Typography variant="h4" color="#212121">
-                    {this.props.cartInfo.totalPrice < 400 ?
-                        `${t('shipping')}: 30${t('currency')}`
+                    <div className="row" style={{backgroundColor: fade('#f2efef', 0.625)}}>
+                    {i18next.language === "EN" ?
+                        <Typography className={classes.shoppingCartPrice}>
+                            <div className="col-xs-6 col-md-6 col-lg-6">
+                                <Grid container justify="flex-start" alignItems="center">
+                                    {t('items')}: 
+                                </Grid>
+                            </div>
+                            <div className="col-xs-6 col-md-6 col-lg-6">
+                                <Grid container justify="flex-end" alignItems="center">
+                                    {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                </Grid>
+                            </div>
+                        </Typography>
+                    :
+                        <Typography className={classes.shoppingCartPrice}>
+                            <div className="col-xs-6 col-md-6 col-lg-6">
+                                <Grid container justify="flex-start" alignItems="center">
+                                    {t('currency')} {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />}
+                                </Grid>
+                            </div>
+
+                            <div className="col-xs-6 col-md-6 col-lg-6">
+                                <Grid container justify="flex-end" alignItems="center">
+                                    : {t('items')} 
+                                </Grid>
+                            </div>
+                        </Typography>}
+
+                    {i18next.language === "EN" ?
+                        <Typography className={classes.shoppingCartPrice}>
+                            {this.props.cartInfo.totalPrice < 400 ?
+                            <div>
+                                <div className="col-xs-6 col-md-6 col-lg-6">
+                                    <Grid container justify="flex-start" alignItems="center">
+                                        {`${t('shipping')}:`}
+                                    </Grid>
+                                </div>
+                                <div className="col-xs-6 col-md-6 col-lg-6">
+                                    <Grid container justify="flex-end" alignItems="center">
+                                        {`30${t('currency')}`}
+                                    </Grid>
+                                </div>
+                            </div>
+                                :
+                                <div className="col-xs-6 col-md-6 col-lg-6">
+                                    <Grid container justify="flex-start" alignItems="center">
+                                        {`${t('freeShip')}`}
+                                    </Grid>
+                                </div>
+                                }
+                        </Typography>
                         :
-                        `${t('freeShip')}`
-                        }
-                    </Typography>
-                <Divider className={classes.divider}/>
-                    <Typography variant="h4" color="#212121">
-                        {t('grandTotal')}: {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
-                    </Typography>                 
+                        <Typography className={classes.shoppingCartPrice}>
+                            {this.props.cartInfo.totalPrice < 400 ?
+                            <div>
+                                <div className="col-xs-6 col-md-6 col-lg-6">
+                                    <Grid container justify="flex-start" alignItems="center">
+                                        {`30${t('currency')}`}
+                                    </Grid>
+                                </div>
+
+                                <div className="col-xs-6 col-md-6 col-lg-6">
+                                    <Grid container justify="flex-end" alignItems="center">
+                                        {`: ${t('shipping')}`}
+                                    </Grid>
+                                </div>
+                            </div>
+                                :
+                                <div className="col-xs-12 col-md-12 col-lg-12">
+                                    <Grid container justify="flex-end" alignItems="center">
+                                        {`${t('freeShip')}`}
+                                    </Grid>
+                                </div>
+                                }
+                        </Typography>}
+
+                </div>
+
+                <div className="row" style={{backgroundColor: fade('#ccc7c7', 1)}}>
+                {i18next.language === "EN" ?
+                    <Typography className={classes.shoppingCartPrice}>
+                        <div className="col-xs-6 col-md-6 col-lg-6">
+                            <Grid container justify="flex-start" alignItems="center">
+                                {t('grandTotal')}:
+                            </Grid>
+                        </div>
+                        <div className="col-xs-6 col-md-6 col-lg-6">
+                            <Grid container justify="flex-end" alignItems="center">
+                                {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                            </Grid>
+                        </div>
+                    </Typography>    
+                :
+                    <Typography className={classes.shoppingCartPrice}>
+                        <div className="col-xs-6 col-md-6 col-lg-6">
+                            <Grid container justify="flex-start" alignItems="center">
+                                {t('currency')} {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />}
+                            </Grid>
+                        </div>
+
+                        <div className="col-xs-6 col-md-6 col-lg-6">
+                            <Grid container justify="flex-end" alignItems="center">
+                                : {t('grandTotal')}
+                            </Grid>
+                        </div>
+                    </Typography>}
+
+                </div>             
                 </div>
                  :
-                 <Typography variant="h4" color="#212121">
+                 <Typography className={classes.cartFont}>
                         {t('emptyCart')}                 
                 </Typography>}
                 </div>

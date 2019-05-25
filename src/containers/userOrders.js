@@ -12,7 +12,6 @@ import { withStyles } from '@material-ui/core/styles';
 import { withNamespaces } from 'react-i18next';
 import Avatar from '@material-ui/core/Avatar';
 import compose from 'recompose/compose';
-import Visibility from '@material-ui/icons/Visibility';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import Tooltip from '@material-ui/core/Tooltip';
 import BackIcon from '@material-ui/icons/SkipPrevious';
@@ -83,6 +82,8 @@ const styles = theme => ({
         margin: 10,
     },
     card: {
+        minHeight: 350,
+        maxHeight: 350,
         marginBottom: theme.spacing.unit,
         backgroundColor: fade('#3F51B5', 0.225),
         maxWidth: 'auto',
@@ -100,9 +101,6 @@ const styles = theme => ({
             backgroundColor: fade('#3F51B5', 0.325),
           }
       },
-      media: {
-        height: 350,
-    },
     viewOrder: {
           color: '#fff',
           cursor: 'pointer',
@@ -173,12 +171,10 @@ render(){
                       <Divider variant="middle" className={classes.divider}/>
                       {row.cart.map((imgs, index) => {
                           return(
-                          <div className="col-xs-2 col-md-2 col-lg-2" key={index}>
-                          <CardMedia
-                              className={classes.mediaCard}
-                              image={imgs.defaultImage}
-                              title="Order Images"
-                          />
+                          <div className="col-xs-4 col-md-4 col-lg-4" key={index}>
+                          <CardMedia>
+                            <img src={imgs.defaultImage} className="userOrdersImages" />
+                          </CardMedia>
                           </div>
                           )
                       })}
@@ -245,11 +241,9 @@ render(){
             <div className="col-xs-12 col-md-4 col-lg-4">
             <Card className={classes.card}>
                 <CardActionArea>
-                  <CardMedia
-                    className={classes.media}
-                    image={row.defaultImage}
-                    title={row.Name}
-                  />
+                  <CardMedia>
+                    <img src={row.defaultImage} className="userOrdersImages" />
+                  </CardMedia>
                   <CardContent>
                     <Typography gutterBottom variant="h3" component="h2">
                         {row.Name}

@@ -17,7 +17,14 @@ const extraApis = {
         const collection = DB.dbo.collection('products');
         let array=[];  
         if(req.body.Name){
-           array.push({$match:{"Name": new RegExp(req.body.Name, 'i')}})
+           array.push({$match: { 
+            $or: [
+           { "soldBy": new RegExp(req.body.Name, 'i')}, 
+           { "category": new RegExp(req.body.Name, 'i')}, 
+           { "Name": new RegExp(req.body.Name, 'i')},
+           { "desc": new RegExp(req.body.Name, 'i')}
+                 ]
+        }})
         }
         if(req.body.category){
             array.push({$match:{"category":req.body.category}})
