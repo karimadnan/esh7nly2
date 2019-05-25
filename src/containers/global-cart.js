@@ -143,7 +143,7 @@ render(){
                             <img src={item.defaultImage} className="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
                         </div>
                         <div className="col-md-4 col-lg-4">
-                            <h4 style={{fontWeight: "bold", color: "black"}}>{item.Name.length > 30 ? (((cartName).substring(0,40-3))  + '...' ) : cartName}</h4>
+                            <h4 style={{fontWeight: "bold", color: "black"}}>{cartName.length > 30 ? (((cartName).substring(0,30-10))  + '...' ) : cartName}</h4>
                         </div>
                         <div className="col-md-2 col-lg-2">
                             <h4 style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h4>

@@ -52,7 +52,12 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
     },
     extendedIcon2: {
-        marginRight: theme.spacing.unit * 6,
+        marginRight: theme.spacing.unit * 2,
+        [theme.breakpoints.up('lg')]: {
+            fontSize: 15,
+            minWidth: 100,
+            maxWidth: 100,
+          }
     },
     cartFont: {
         fontSize: 13,
@@ -209,16 +214,6 @@ class Checkout extends Component {
         }
     }
 
-    Cart(){
-        if(this.state.cart){
-            return(
-            <div style={{color: "black"}}>
-                <CartDetails/>
-            </div>
-            )
-        }
-    }
-
     Bar(){
     const { t } = this.props;
     const { classes } = this.props;
@@ -342,7 +337,7 @@ class Checkout extends Component {
                     <h4 >{t('shippingNote')}:</h4>
                     <ListItemText primary={<h4>{this.state.note ? this.state.note : `${t('noShippingNote')}`}</h4>} />
 
-                <div class="col-xs-12 col-md-6 col-lg-6">
+                <div class="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
                         <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({gotData: false})}} className={classes.fab}>
                             <EditIcon className={classes.extendedIcon2} />
@@ -350,7 +345,7 @@ class Checkout extends Component {
                         </Fab>
                     </Grid>
                 </div>
-                <div class="col-xs-12 col-md-6 col-lg-6">
+                <div class="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
                         <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.setState({currentIndex: 1})}} className={classes.fab}>
                             <NextIcon className={classes.extendedIcon2} />
@@ -508,17 +503,28 @@ class Checkout extends Component {
     createCart(){
         const { t } = this.props;
         const { classes } = this.props;
+
         let CART = this.props.cart.map(item => {
+            let productName = item.Name
+            if(item.option){
+                productName = `(${item.option}) ` + productName
+            }
+            if(item.size){
+                productName = `(${item.size.charAt(0).toUpperCase()}) `+ productName
+            }
+            if(item.color){
+                productName = `(${item.color.toUpperCase()}) `+ productName
+            }
             return (
-                <div key={item.id}>
-                    <div class="col-xs-12 col-md-12 col-lg-12">
+                <div key={item.id}> 
+                    <div class="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
                         <div class="col-xs-4 col-md-4 col-lg-4">
                             <img src={item.defaultImage} className="userOrdersImages" />
                         </div>
                         <div class="col-xs-8 col-md-8 col-lg-8">
                             <div class="col-xs-12 col-md-12 col-lg-12">
                                 <Typography className={classes.cartFont}>
-                                    {item.Name.length > 20 ? (((item.Name).substring(0,10-3)) + '...') : item.Name}
+                                    {productName.length > 20 ? (((productName).substring(0,20-3)) + '...') : productName}
                                 </Typography>
                             </div>          
                             <div class="col-xs-12 col-md-12 col-lg-12">
@@ -638,7 +644,6 @@ render(){
                         {this.Bar()}
                         {this.Shipping()}
                         {this.Payment()}
-                        {this.Cart()}
                         {this.Done()}
                         {this.Clean()}
                     </div> 
@@ -658,7 +663,10 @@ render(){
                         </Typography>
                     </Grid>
                 </div>}
-                <Scrollbars autoHeight autoHeightMin={100} autoHeightMax={300}>
+                <Scrollbars autoHeight 
+                            autoHeightMin={100} 
+                            autoHeightMax={300}
+                            renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
                         {this.createCart()}
                 </Scrollbars>
 

@@ -34,6 +34,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const override = css`
     display: block;
@@ -169,17 +170,9 @@ render(){
                           <p style={{color: '#3F51B5'}}>{row.status}</p>
                       </Grid>
                       <Divider variant="middle" className={classes.divider}/>
-                      {row.cart.map((imgs, index) => {
-                          return(
-                          <div className="col-xs-4 col-md-4 col-lg-4" key={index}>
-                          <CardMedia>
-                            <img src={imgs.defaultImage} className="userOrdersImages" />
-                          </CardMedia>
-                          </div>
-                          )
-                      })}
-                      <CardContent>
-                      </CardContent>
+                        <CardMedia>
+                            <img src={row.cart[0].defaultImage} style={{margin: 5}} className="userOrdersImages" />
+                        </CardMedia>
                   </Card>
             </div>
             </Tooltip>))}
