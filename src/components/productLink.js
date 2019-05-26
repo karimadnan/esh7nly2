@@ -421,7 +421,7 @@ constructor(nextProps){
                 <div className="col-xs-12 col-md-12 col-lg-12">
                     <div className="col-xs-12 col-md-6 col-lg-6">
                         <Grid  container justify={"flex-start"} alignItems="center">
-                            <h1 style={{color: "white", fontWeight: "bold"}}>{prev.Name}</h1>
+                            <h1 style={{color: "white", fontWeight: "bold", wordBreak: 'break-word'}}>{prev.Name}</h1>
                         </Grid>
                         <Grid  container justify={"flex-start"} alignItems="center">
                             <h5 style={{color: "#3F51B5", fontWeight: "bold"}}>By: {prev.soldBy}</h5>

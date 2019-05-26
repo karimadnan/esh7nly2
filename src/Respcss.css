@@ -50,7 +50,7 @@
   .badge-logo {
     padding: 6.15em 6.15em 6.15em;
     margin: 0 auto;
-    background-image: url('Images/landinglogoMB.png');
+    background-image: url('Images/mainlogo.svg');
     background-repeat: no-repeat;
     background-position: center;
     width: 300px;
@@ -60,7 +60,7 @@
   .badge-logo-ar {
     padding: 6.15em 6.15em 6.15em;
     margin: 0 auto;
-    background-image: url('Images/landinglogoMBar.png');
+    background-image: url('Images/mainlogoar.svg');
     background-repeat: no-repeat;
     background-position: center;
     width: 300px;

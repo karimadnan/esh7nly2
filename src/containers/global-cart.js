@@ -19,16 +19,21 @@ import Grid from '@material-ui/core/Grid';
 
 const customStyles = {
   overlay: {
-    background: "transparent"
+    background: "transparent",
+    zIndex: 1100
   },
   modal: {
-    backgroundColor: 'rgba(219, 105, 105, 0.9)',
+    backgroundColor: 'rgba(219, 105, 105, 1)',
+    minWidth: 300,
     color: "white",
     borderRadius: '10px',
   }
 }
 
 const styles = theme => ({
+  drawer:{
+    zIndex: 1100
+  },
   margin: {
     margin: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 3,
@@ -71,12 +76,13 @@ updateInfo (data){
 }
 
 notify = (msg) => toast.error(msg, {
-  position: "top-center",
-  autoClose: 1000,
-  hideProgressBar: false,
-  closeOnClick: true,
+  zIndex: 1100,
+  autoClose: true,
+  position: toast.POSITION.TOP_CENTER,
+  autoClose: 2000,
   pauseOnHover: false,
-  draggable: false,
+  pauseOnFocusLoss: false,
+  closeOnClick: true
 });
 
 remove(item){
@@ -113,6 +119,7 @@ render(){
           </Badge>
       </Tooltip>
       <Drawer
+          className={classes.drawer}
           anchor="right"
           open={this.state.sideBar}
           onClose={()=>{this.setState({ sideBar: false })}}
@@ -180,17 +187,7 @@ render(){
             </div>}
           </div>
           </Drawer>
-          <ToastContainer
-            position="top-center"
-            autoClose={3500}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnVisibilityChange
-            draggable
-            pauseOnHover
-          />
+          <ToastContainer/>
         </div>
   );
 }

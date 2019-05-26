@@ -460,7 +460,7 @@ if (this.state.view === "shop"){
                 </div>
                     <div className="marketInfoBox">
                         <span className="marketCardText">
-                            <h4 className="marketCardTitle">{item.Name}</h4>
+                            <h4 className="marketCardTitle" style={{wordBreak: 'break-word'}}>{item.Name.length > 50 ? (((item.Name).substring(0,50-5))  + '..' ) : item.Name}</h4>
                         </span>
                         {item.price > 0 &&
                         <span>
@@ -671,9 +671,9 @@ if (this.state.view === "item"){
         <div className="BlackBG">
         
         <div className="col-xs-12 col-md-12 col-lg-12">
-            <div className="col-xs-12 col-md-6 col-lg-6">
+            <div className="col-xs-12 col-md-12 col-lg-12">
                 <Grid  container justify={"flex-start"} alignItems="center">
-                    <h1 style={{color: "white", fontWeight: "bold"}}>{prev.Name}</h1>
+                    <h1 style={{color: "white", fontWeight: "bold", wordBreak: 'break-word'}}>{prev.Name}</h1>
                 </Grid>
                 <Grid  container justify={"flex-start"} alignItems="center">
                     {i18next.language === 'EN' ?

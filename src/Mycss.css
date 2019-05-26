@@ -61,7 +61,7 @@ button:hover .text { display: none; }
 html { height: 100%; overflow:auto; }
 
 body { 
-  padding-top: 65px; 
+  padding-top: 67px; 
   height: 100%;
 }
 
@@ -936,7 +936,7 @@ background-color: #ffffff;
 .badge-logo {
   padding: 7em;
   margin: 0 auto;
-  background-image: url('Images/landinglogo.png');
+  background-image: url('Images/mainlogo.svg');
   background-repeat: no-repeat;
   background-position: center;
   width: 450px;
@@ -946,7 +946,7 @@ background-color: #ffffff;
 .badge-logo-ar {
   padding: 7em;
   margin: 0 auto;
-  background-image: url('Images/landinglogoar.png');
+  background-image: url('Images/mainlogoar.svg');
   background-repeat: no-repeat;
   background-position: center;
   width: 450px;
