@@ -16,7 +16,7 @@ render(){
     const { t } = this.props;
     return(
         <div className="container" style={{height: 300}}>
-            <h1 style={{color: "white", textAlign: "center"}}> {t('loading')}...</h1>
+            <h1 style={{color: this.props.color || 'white', textAlign: "center"}}> {t('loading')}...</h1>
             <PacmanLoader
                 css={override}
                 sizeUnit={"px"}

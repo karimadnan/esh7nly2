@@ -17,7 +17,7 @@
       "loading": "جارى التحميل",
       "profile": "البروفايل",
       "orders": "الطلبات",
-      "history": "القديم",
+      "ordersHistory": "المستلمة",
       "account": "الحساب",
       "alreadyLogged": "انت متصل",
       "password": "كلمة السر",
@@ -155,7 +155,8 @@
       "profileTitle": "{{userName}} | البروفايل",
       "ordersTitle": "{{userName}} | الطلبات",
       "historyTitle": "{{userName}} | القديم",
-      "checkoutTitle": "الحساب | GG-Egypt"
+      "checkoutTitle": "الحساب | GG-Egypt",
+      "optionSelected": "الاختيار"
 
       
 

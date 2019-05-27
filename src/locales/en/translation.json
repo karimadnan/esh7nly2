@@ -17,7 +17,7 @@
       "loading": "Loading",
       "profile": "Profile",
       "orders": "Orders",
-      "history": "History",
+      "ordersHistory": "Finished Orders",
       "account": "Account",
       "alreadyLogged": "You're already logged in",
       "password": "Password",
@@ -154,6 +154,7 @@
       "profileTitle": "{{userName}} | Profile",
       "ordersTitle": "{{userName}} | Orders",
       "historyTitle": "{{userName}} | History",
-      "checkoutTitle": "Checking Out | GG-Egypt"
+      "checkoutTitle": "Checking Out | GG-Egypt",
+      "optionSelected": "Selected Option"
 
 }

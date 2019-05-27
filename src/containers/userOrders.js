@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import { css } from '@emotion/core';
-import { PacmanLoader } from 'react-spinners';
 import { withStyles } from '@material-ui/core/styles';
 import { withNamespaces } from 'react-i18next';
 import Avatar from '@material-ui/core/Avatar';
@@ -30,12 +28,8 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
-
-const override = css`
-    display: block;
-    margin: 0 auto;
-    border-color: red;
-`;
+import i18next from 'i18next';
+import Loader from '../containers/loader';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -211,21 +205,40 @@ render(){
                 </Step>))}
             </Stepper>
             :undefined}
-
-            <ListItem>
-                <ListItemIcon>{<Euro />}</ListItemIcon>
-                <ListItemText primary={<h3>{t('totalPrice')}: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h3>} />
-            </ListItem>
-            <Divider/>
-            <ListItem>
-                <ListItemIcon>{<OrderStatus />}</ListItemIcon>
-                <ListItemText primary={<h3>{t('orderStatus')}: {this.state.MyRow.status}</h3>} />
-            </ListItem>
-            <Divider/>
-            <ListItem>
-                <ListItemIcon>{<OrderComment />}</ListItemIcon>
-                <ListItemText primary={<h3>{t('orderComment')}: {this.state.MyRow.comment}</h3>} />
-            </ListItem>
+        {i18next.language === "EN" ?
+            <div>
+                <ListItem classes={classes.listItem}>
+                    <ListItemIcon>{<Euro />}</ListItemIcon>
+                    <ListItemText primary={<h3>{t('totalPrice')}: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h3>} />
+                </ListItem>
+                <Divider/>
+                <ListItem>
+                    <ListItemIcon>{<OrderStatus />}</ListItemIcon>
+                    <ListItemText primary={<h3>{t('orderStatus')}: {this.state.MyRow.status}</h3>} />
+                </ListItem>
+                <Divider/>
+                <ListItem>
+                    <ListItemIcon>{<OrderComment />}</ListItemIcon>
+                    <ListItemText primary={<h3>{t('orderComment')}: {this.state.MyRow.comment}</h3>} />
+                </ListItem>
+            </div>
+        :
+            <div>
+                <ListItem classes={classes.listItem}>
+                    <ListItemText style={{textAlign: "right"}} primary={<h3>{t('totalPrice')}: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h3>} />
+                    <ListItemIcon>{<Euro />}</ListItemIcon>
+                </ListItem>
+                <Divider/>
+                <ListItem>
+                    <ListItemText style={{textAlign: "right"}} primary={<h3>{this.state.MyRow.status} :{t('orderStatus')}</h3>} />
+                    <ListItemIcon>{<OrderStatus />}</ListItemIcon>
+                </ListItem>
+                <Divider/>
+                <ListItem>
+                    <ListItemText style={{textAlign: "right"}} primary={<h3>{this.state.MyRow.comment} :{t('orderComment')}</h3>} />
+                    <ListItemIcon>{<OrderComment />}</ListItemIcon>
+                </ListItem>
+            </div>}
         {this.state.MyRow.cart.map(row => {
             return(
             <div className="col-xs-12 col-md-4 col-lg-4">
@@ -234,6 +247,7 @@ render(){
                   <CardMedia>
                     <img src={row.defaultImage} alt={'Product'} className="userOrdersImages" />
                   </CardMedia>
+                  {i18next.language === "EN" ?
                   <CardContent>
                     <Typography gutterBottom variant="h3" component="h2">
                         {row.Name}
@@ -257,6 +271,27 @@ render(){
                          {row.option && `${t('option')}: ${row.option}`}
                     </Typography>
                   </CardContent>
+                  :
+                  <CardContent style={{textAlign: 'right'}}>
+                    <Typography gutterBottom variant="h3" component="h2">
+                        {row.Name}
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                            {t('currency')} <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> 
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                        {row.quantity}x : {t('quantity')}
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                        {row.size && `${row.size} :${t('size')}` }
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary" >
+                        {row.color && `${row.color} :${t('color')}`}
+                    </Typography>
+                    <Typography variant="h5" color="textSecondary">
+                        {row.option && `${row.option} :${t('optionSelected')}`}
+                    </Typography>
+                 </CardContent>}
                 </CardActionArea>
             </Card>
             </div>)
@@ -275,16 +310,7 @@ render(){
 }
 else{
   return(
-
-        <div>
-            <PacmanLoader
-                css={override}
-                sizeUnit={"px"}
-                size={100}
-                color={'#FFFF00'}
-                loading={true}/>
-            <h2 style={{color: "black"}}>{t('loading')}...</h2>
-    </div>
+    <Loader color={'black'}/>
   )
 }
 }

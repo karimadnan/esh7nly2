@@ -17,7 +17,7 @@
       "loading": "استنا بيحمل",
       "profile": "الاكونت",
       "orders": "الحاجة الطلبتها",
-      "history": "الطلبات القديمة",
+      "ordersHistory": "الطلبات الخلصانة",
       "account": "الاكونت",
       "alreadyLogged": "انت فاتح روح الاكونت",
       "password": "الباسورد",
@@ -155,7 +155,8 @@
       "profileTitle": "{{userName}} | البروفايل",
       "ordersTitle": "{{userName}} | الطلبات",
       "historyTitle": "{{userName}} | القديم",
-      "checkoutTitle": "الحساب | GG-Egypt"
+      "checkoutTitle": "الحساب | GG-Egypt",
+      "optionSelected": "الاختيار"
 
 
 }
