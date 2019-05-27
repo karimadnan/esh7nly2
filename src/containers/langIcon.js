@@ -64,9 +64,9 @@ render(){
             open={Boolean(anchorEl)}
             onClose={this.handleClose}
           >
-          <MenuItem selected={this.state.value === 0} onClick={()=>{this.setLanguage('EG', 0)}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-eg"></span> مصرى</a></MenuItem>
-          <MenuItem selected={this.state.value === 1} onClick={()=>{this.setLanguage('AR', 1)}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-sa"></span> عربى</a></MenuItem>
-          <MenuItem selected={this.state.value === 2} onClick={()=>{this.setLanguage('EN', 2)}}><a style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-gb"></span> English</a></MenuItem>
+          <MenuItem selected={this.state.value === 0} onClick={()=>{this.setLanguage('EG', 0)}}><p style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-eg"></span> مصرى</p></MenuItem>
+          <MenuItem selected={this.state.value === 1} onClick={()=>{this.setLanguage('AR', 1)}}><p style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-sa"></span> عربى</p></MenuItem>
+          <MenuItem selected={this.state.value === 2} onClick={()=>{this.setLanguage('EN', 2)}}><p style={{cursor: 'pointer', color: "black"}} ><span style={{cursor: 'pointer'}} className="flag-icon flag-icon-gb"></span> English</p></MenuItem>
         </Menu>
     </React.Fragment>
     </div>

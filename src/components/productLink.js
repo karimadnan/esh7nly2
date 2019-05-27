@@ -438,7 +438,7 @@ constructor(nextProps){
                         return(
                             <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer"}} className="col-xs-3 col-md-2 col-lg-2">
                                 <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                                    <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 50}}/>
+                                    <img src={item.value} alt={'Product'} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 50}}/>
                                 </div>
                             </div>
                         )
@@ -453,7 +453,7 @@ constructor(nextProps){
                         return(
                             <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer"}} className="col-xs-3 col-md-2 col-lg-2">
                                 <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                                    <img src={item} className="splash-card-product-view" style={{cursor: "pointer"}}/>
+                                    <img src={item} alt={'Product'} className="splash-card-product-view" style={{cursor: "pointer"}}/>
                                 </div>
                             </div>
                         )
@@ -477,7 +477,7 @@ constructor(nextProps){
                                     {prev.colors.map((step, index) => (
                                         <div key={index}>
                                         {Math.abs(this.state.activeStep - index) <= 2 ? (
-                                            <img src={step.value} className="splash-card-product-view" />
+                                            <img src={step.value} alt={'Product'} className="splash-card-product-view" />
                                         ) : null}
                                         </div>
                                     ))}
@@ -492,13 +492,13 @@ constructor(nextProps){
                                 {prev.img.map((img, index) => (
                                     <div key={index}>
                                     {Math.abs(this.state.activeStep - index) <= 2 ? (
-                                        <img src={img} className="splash-card-product-view" />
+                                        <img src={img} alt={'Product'} className="splash-card-product-view" />
                                     ) : null}
                                     </div>
                                 ))}
                         </SwipeableViews>
                         :
-                    <img src={prev.defaultImage} className="splash-card-product-view" />}
+                    <img src={prev.defaultImage} alt={'Product'} className="splash-card-product-view" />}
                     {prev.discount > 0 && 
                         <div id ="merchDiscount" className="card-body">
                             <Chip

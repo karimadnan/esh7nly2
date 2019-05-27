@@ -15,7 +15,7 @@ import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import LoginIcon from '@material-ui/icons/Forward';
 import { withNamespaces } from 'react-i18next';
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import i18next from 'i18next';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -89,7 +89,7 @@ createUser = () => {
   var that = this
  if (this.state.name.length >= 6) {
    if (this.state.password === this.state.confirmPassword){
-    if (this.state.phone.length == 11 && isInt(this.state.phone)){
+    if (this.state.phone.length === 11 && isInt(this.state.phone)){
       if (isEmail(this.state.email)){
         if(this.state.password.length >= 7){
           if(this.state.captcha){
@@ -189,7 +189,7 @@ render() {
                                 <br/>
                           </div>
                           <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.phone.length == 11 && isInt(this.state.phone) ? "green" : "#3F51B5"}}>{this.state.phone.length == 11 && isInt(this.state.phone) ? "":'*'} {t('SignupPhone')}</label>
+                                <label style={{color: this.state.phone.length === 11 && isInt(this.state.phone) ? "green" : "#3F51B5"}}>{this.state.phone.length === 11 && isInt(this.state.phone) ? "":'*'} {t('SignupPhone')}</label>
                                 <input style={{textAlign: i18next.language === "EN" ? "left" : "right"}} className="form-control" value={this.state.phone} type="text" onChange={e => this.updateInput("phone", e.target.value)} placeholder={t('SignupPhone')} required></input>
                                 <br/>
                           </div>
@@ -204,7 +204,7 @@ render() {
                                 <br/>
                           </div>
                           <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-                                <label style={{color: this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "green" : "#3F51B5"}}>{this.state.password === this.state.confirmPassword && this.state.confirmPassword != '' ? "":'*'} {t('SignupConfirmPassword')}</label>
+                                <label style={{color: this.state.password === this.state.confirmPassword && this.state.confirmPassword !== '' ? "green" : "#3F51B5"}}>{this.state.password === this.state.confirmPassword && this.state.confirmPassword !== '' ? "":'*'} {t('SignupConfirmPassword')}</label>
                                 <input style={{textAlign: i18next.language === "EN" ? "left" : "right"}} className="form-control" value={this.state.confirmPassword} type="password" onChange={e => this.updateInput("confirmPassword", e.target.value)} placeholder={t('SignupConfirmPassword')} required></input>
                                 <br/>
                           </div>

@@ -2,16 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import NavBar from './navbar';
-import CartDetails from '../containers/cart-details';
 import ReactRouter from 'flux-react-router';
 import '../Mycss.css';
 import '../Respcss.css';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
 import Modal from 'react-responsive-modal';
-import VodafoneCashLogo from '../Images/Vodacash.png';
-import EtisalatCashLogo from '../Images/Etiscash.png';
-import FawryLogo from '../Images/fawrypaymenttest.png';
 import isInt from 'validator/lib/isInt';
 import {bindActionCreators} from 'redux';
 import {cleanCart, cleanCartInfo} from '../actions/index';
@@ -32,6 +28,7 @@ import Loader from '../containers/loader';
 import {Helmet} from "react-helmet";
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Scrollbars } from 'react-custom-scrollbars';
+import Avatar from '@material-ui/core/Avatar';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -91,7 +88,31 @@ const styles = theme => ({
         [theme.breakpoints.up('sm')]: {
           fontSize: 17,
         }
-    }
+    },
+    vodaAvatar: {
+        margin: 10,
+        width: 150,
+        height: 150,
+        color: '#fff',
+        fontWeight: 'bold',
+        backgroundColor: '#b71c1c',
+      },
+    etisAvatar: {
+        margin: 10,
+        width: 150,
+        height: 150,
+        color: '#fff',
+        fontWeight: 'bold',
+        backgroundColor: '#1b5e20',
+      },
+    fawryAvatar: {
+        margin: 10,
+        width: 150,
+        height: 150,
+        fontWeight: 'bold',
+        color: '#0277bd',
+        backgroundColor: '#fdd835',
+      },
 });
 
 const ErrorStyle = {
@@ -165,6 +186,8 @@ class Checkout extends Component {
             case `${t('cashOnDel')}`:
                 payment = 'Cash On Delivery'
             break;
+            default: 
+            return undefined
         }
         var Data = {paymentMethod: payment,
                     orderType: "Products",
@@ -227,8 +250,8 @@ class Checkout extends Component {
                     {t('back')}
             </Fab>}
             <h2 style={{color: "black", textAlign: "center"}}>{current[this.state.currentIndex]}</h2>
-            <div class="progress">
-                <div class={this.state.currentN[this.state.currentIndex] > 66 ? "progress-bar progress-bar-success progress-bar-striped active" : this.state.currentN[this.state.currentIndex] > 33 ? "progress-bar progress-bar-striped active" : "progress-bar progress-bar-warning progress-bar-striped active"} role="progressbar"
+            <div className="progress">
+                <div className={this.state.currentN[this.state.currentIndex] > 66 ? "progress-bar progress-bar-success progress-bar-striped active" : this.state.currentN[this.state.currentIndex] > 33 ? "progress-bar progress-bar-striped active" : "progress-bar progress-bar-warning progress-bar-striped active"} role="progressbar"
                     aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style={{width: `${this.state.currentN[this.state.currentIndex]}%`}}>
                 </div>
             </div>
@@ -243,32 +266,32 @@ class Checkout extends Component {
     if(!this.state.cart){
         if(this.state.currentIndex === 0 && !this.state.gotData && this.state.loaded){
             return (
-                <div class="form-group has-feedback">
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
+                <div className="form-group has-feedback">
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-6 col-lg-6">
                         <label style={{color: this.state.firstName.length > 2 ? "green" : "red"}}>{this.state.firstName.length > 2 ? "":'*'} {t('firstName')}</label>
-                        <input class="form-control" type="text" value={this.state.firstName} onChange={e => this.updateInput("firstName", e.target.value)} placeholder={t('firstName')} required></input>
+                        <input className="form-control" type="text" value={this.state.firstName} onChange={e => this.updateInput("firstName", e.target.value)} placeholder={t('firstName')} required></input>
                         <br/>
                     </div>
-                    <div class="col-xs-12 col-md-6 col-lg-6">
+                    <div className="col-xs-12 col-md-6 col-lg-6">
                         <label style={{color: this.state.lastName.length > 2 ? "green" : "red"}}>{this.state.lastName.length > 2 ? "":'*'} {t('lastName')}</label>
-                        <input class="form-control" type="text" value={this.state.lastName} onChange={e => this.updateInput("lastName", e.target.value)} placeholder={t('firstName')} required></input>
+                        <input className="form-control" type="text" value={this.state.lastName} onChange={e => this.updateInput("lastName", e.target.value)} placeholder={t('firstName')} required></input>
                         <br/>
                     </div>
                 </div>
 
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-6 col-lg-6">
                         <label style={{color: this.state.Phone.length === 11 ? "green" : "red"}}>{this.state.Phone.length === 11 ? "":'*'} {t('phone')}</label>
-                        <input class="form-control" type="text" value={this.state.Phone} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
+                        <input className="form-control" type="text" value={this.state.Phone} onChange={e => this.updateInput("Phone", e.target.value)} placeholder={t('phone')} required></input>
                         <br/>
                     </div>
                 </div>
 
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: this.state.city != '' ? "green" : "red"}}>{this.state.city != '' ? "":'*'} {t('city')}</label>
-                        <select class="form-control" id="sel1" value={this.state.city} onChange={e => this.updateInput("city", e.target.value)}>
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-6 col-lg-6">
+                        <label style={{color: this.state.city !== '' ? "green" : "red"}}>{this.state.city !== '' ? "":'*'} {t('city')}</label>
+                        <select className="form-control" id="sel1" value={this.state.city} onChange={e => this.updateInput("city", e.target.value)}>
                             <option>{t('select')}</option>
                             <option>{t('cairo')}</option>
                             <option>{t('giza')}</option>
@@ -276,37 +299,37 @@ class Checkout extends Component {
                             <option>{t('6oct')}</option>
                         </select>
                     </div>
-                    <div class="col-xs-12 col-md-6 col-lg-6">
+                    <div className="col-xs-12 col-md-6 col-lg-6">
                         <label style={{color: this.state.Area.length > 4 ? "green" : "red"}}>{this.state.Area.length > 4 ? "":'*'} {t('area')}</label>
-                        <input class="form-control" type="text" value={this.state.Area} onChange={e => this.updateInput("Area", e.target.value)} placeholder={t('area')} required></input>
+                        <input className="form-control" type="text" value={this.state.Area} onChange={e => this.updateInput("Area", e.target.value)} placeholder={t('area')} required></input>
                         <br/>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-12 col-lg-12">
                         <label style={{color: this.state.StName.length > 6 ? "green" : "red"}}>{this.state.StName.length > 6 ? "":'*'} {t('streetName')}</label>
-                        <input class="form-control" type="text" value={this.state.StName} onChange={e => this.updateInput("StName", e.target.value)} placeholder={t('streetName')} required></input>
+                        <input className="form-control" type="text" value={this.state.StName} onChange={e => this.updateInput("StName", e.target.value)} placeholder={t('streetName')} required></input>
                         <br/>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <label style={{color: this.state.locationType != '' ? "green" : "red"}}>{this.state.locationType != '' ? "":'*'} {t('locationType')}</label>
-                        <select class="form-control" id="sel1" value={this.state.locationType} onChange={e => this.updateInput("locationType", e.target.value)}>
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-12 col-lg-12">
+                        <label style={{color: this.state.locationType !== '' ? "green" : "red"}}>{this.state.locationType !== '' ? "":'*'} {t('locationType')}</label>
+                        <select className="form-control" id="sel1" value={this.state.locationType} onChange={e => this.updateInput("locationType", e.target.value)}>
                             <option>{t('select')}</option>
                             <option>{t('locationHome')}</option>
                             <option>{t('locationBusiness')}</option>
                         </select>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-12 col-lg-12">
                     <br/>
                         <label style={{color: "black"}}> {t('shippingNote')}</label>
                         <textarea onChange={e => this.updateInput("note", e.target.value)} value={this.state.note} class="form-control" rows="2" id="comment"></textarea>
                     </div>
                 </div>
-                    <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
+                    <div className="col-xs-12 col-md-offset-6 col-lg-offset-6">
                             <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.updateShipping()}} className={classes.fab}>
                                 <NextIcon className={classes.extendedIcon2} />
                                 <h5>{t('save')}</h5>
@@ -337,7 +360,7 @@ class Checkout extends Component {
                     <h4 >{t('shippingNote')}:</h4>
                     <ListItemText primary={<h4>{this.state.note ? this.state.note : `${t('noShippingNote')}`}</h4>} />
 
-                <div class="col-xs-6 col-md-6 col-lg-6">
+                <div className="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
                         <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({gotData: false})}} className={classes.fab}>
                             <EditIcon className={classes.extendedIcon2} />
@@ -345,7 +368,7 @@ class Checkout extends Component {
                         </Fab>
                     </Grid>
                 </div>
-                <div class="col-xs-6 col-md-6 col-lg-6">
+                <div className="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
                         <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.setState({currentIndex: 1})}} className={classes.fab}>
                             <NextIcon className={classes.extendedIcon2} />
@@ -376,7 +399,7 @@ class Checkout extends Component {
                 <h4>:{t('shippingNote')}</h4>
                 <ListItemText primary={<h4>{this.state.note ? this.state.note : `${t('noShippingNote')}`}</h4>} />
 
-            <div class="col-xs-12 col-md-6 col-lg-6">
+            <div className="col-xs-12 col-md-6 col-lg-6">
                 <Grid container justify="center" alignItems="center">
                     <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.setState({gotData: false})}} className={classes.fab}>
                         <EditIcon className={classes.extendedIcon2} />
@@ -384,7 +407,7 @@ class Checkout extends Component {
                     </Fab>
                 </Grid>
             </div>
-            <div class="col-xs-12 col-md-6 col-lg-6">
+            <div className="col-xs-12 col-md-6 col-lg-6">
                 <Grid container justify="center" alignItems="center">
                     <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.setState({currentIndex: 1})}} className={classes.fab}>
                         <NextIcon className={classes.extendedIcon2} />
@@ -405,10 +428,10 @@ class Checkout extends Component {
         if(this.state.currentIndex === 1){
             return ( 
             <div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                        <label style={{color: this.state.paymentMethod != ``  ? "green" : "red"}}>{this.state.paymentMethod != ``  ? "":'*'} {t('paymentMethod')}</label>
-                        <select class="form-control" id="sel1" value={this.state.paymentMethod} onChange={e => this.setState({paymentMethod: e.target.value, transId: ''})}>
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-6 col-lg-6">
+                        <label style={{color: this.state.paymentMethod !== ``  ? "green" : "red"}}>{this.state.paymentMethod !== ``  ? "":'*'} {t('paymentMethod')}</label>
+                        <select className="form-control" id="sel1" value={this.state.paymentMethod} onChange={e => this.setState({paymentMethod: e.target.value, transId: ''})}>
                             <option>{t('select')}</option>
                             <option>{t('vodaCash')}</option>
                             <option>{t('etisCash')}</option>
@@ -416,21 +439,21 @@ class Checkout extends Component {
                             <option>{t('cashOnDel')}</option>
                         </select>
                     </div>
-                    <div class="col-xs-12 col-md-6 col-lg-6">
-                      {this.state.paymentMethod === `${t('vodaCash')}` && <img src={VodafoneCashLogo} style ={{width: 70, height: 70}}/> }
-                      {this.state.paymentMethod === `${t('etisCash')}` && <img src={EtisalatCashLogo} style ={{width: 70, height: 70}}/> }
-                      {this.state.paymentMethod === `${t('fawry')}` && <img src={FawryLogo} style ={{width: 70, height: 70}}/> }
+                    <div className="col-xs-12 col-md-6 col-lg-6">
+                      {this.state.paymentMethod === `${t('vodaCash')}` && <Avatar className={classes.vodaAvatar}>Vodafone</Avatar> }
+                      {this.state.paymentMethod === `${t('etisCash')}` && <Avatar className={classes.etisAvatar}>Etisalat</Avatar>  }
+                      {this.state.paymentMethod === `${t('fawry')}` && <Avatar className={classes.fawryAvatar}>Fawry</Avatar>   }
                     </div>
                 </div>
 
                {this.state.paymentMethod === `${t('vodaCash')}` || this.state.paymentMethod === `${t('etisCash')}` || this.state.paymentMethod === `${t('fawry')}` ?
-                 <div class="col-xs-12 col-md-12 col-lg-12">
-                    <div class="col-xs-12 col-md-12 col-lg-12">
-                        <label style={{color: this.state.transId.length == 12 ? "green" : "red"}}>{this.state.transId.length == 12 ? "":'*'} {t('transId')}</label>
-                        <input class="form-control" type="text" value={this.state.transId} onChange={e => this.updateInput("transId", e.target.value)} placeholder={t('transId')} required></input>
+                 <div className="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-12 col-lg-12">
+                        <label style={{color: this.state.transId.length === 12 ? "green" : "red"}}>{this.state.transId.length === 12 ? "":'*'} {t('transId')}</label>
+                        <input className="form-control" type="text" value={this.state.transId} onChange={e => this.updateInput("transId", e.target.value)} placeholder={t('transId')} required></input>
                     </div>
                 </div> : null}
-                <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
+                <div className="col-xs-12 col-md-offset-6 col-lg-offset-6">
                     <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.PaymentNext()}} className={classes.fab}>
                         <NextIcon className={classes.extendedIcon2} />
                             {t('next')}
@@ -517,22 +540,22 @@ class Checkout extends Component {
             }
             return (
                 <div key={item.id}> 
-                    <div class="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
-                        <div class="col-xs-4 col-md-4 col-lg-4">
-                            <img src={item.defaultImage} className="userOrdersImages" />
+                    <div className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
+                        <div className="col-xs-4 col-md-4 col-lg-4">
+                            <img src={item.defaultImage} alt={'Product'} className="userOrdersImages" />
                         </div>
-                        <div class="col-xs-8 col-md-8 col-lg-8">
-                            <div class="col-xs-12 col-md-12 col-lg-12">
+                        <div className="col-xs-8 col-md-8 col-lg-8">
+                            <div className="col-xs-12 col-md-12 col-lg-12">
                                 <Typography className={classes.cartFont}>
                                     {productName.length > 20 ? (((productName).substring(0,20-3)) + '...') : productName}
                                 </Typography>
                             </div>          
-                            <div class="col-xs-12 col-md-12 col-lg-12">
+                            <div className="col-xs-12 col-md-12 col-lg-12">
                                 <Typography className={classes.priceFont}>
                                     <CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> {t('currency')}
                                 </Typography>
                             </div>  
-                            <div class="col-xs-12 col-md-12 col-lg-12">
+                            <div className="col-xs-12 col-md-12 col-lg-12">
                                 <ListItemText primary={<h5>{t('quantity')}: {item.quantity}</h5>}/>
                             </div>  
                         </div>
@@ -555,7 +578,7 @@ class Checkout extends Component {
         if (i18next.language === "EN"){
             return (
                 <div style={{whiteSpace: "normal", wordWrap: "break-word"}}>
-                    <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-12 col-lg-12">
                         <h1 style={{color: "black"}}>{t('shipping')}:</h1>
                     </div>
                         <h4>{t('shippedTo')}:</h4>
@@ -571,11 +594,11 @@ class Checkout extends Component {
                         <h4 >{t('shippingNote')}:</h4>
                         <ListItemText primary={<h4>{this.state.note ? this.state.note : `${t('noShippingNote')}`}</h4>} />
 
-                    <div class="col-xs-12 col-md-12 col-lg-12">
+                    <div className="col-xs-12 col-md-12 col-lg-12">
                         <h1 style={{color: "black"}}>{t('paymentMethod')}:</h1>
                         <ListItemText primary={<h4>{this.state.paymentMethod}</h4>} />
                     </div>
-                    <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
+                    <div className="col-xs-12 col-md-offset-6 col-lg-offset-6">
                     <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.createOrder()}} className={classes.fab}>
                         <NextIcon className={classes.extendedIcon2} />
                         <h5>{t('submit')}</h5>
@@ -586,7 +609,7 @@ class Checkout extends Component {
         else{
             return(
                 <div>
-                <div class="col-xs-12 col-md-12 col-lg-12">
+                <div className="col-xs-12 col-md-12 col-lg-12">
                     <h1 style={{color: "black"}}>:{t('shipping')}</h1>
                 </div>
                     <h4>:{t('shippedTo')}</h4>
@@ -602,11 +625,11 @@ class Checkout extends Component {
                     <h4>:{t('shippingNote')}</h4>           
                     <ListItemText primary={<h4 style={{whiteSpace: "normal", wordWrap: "break-word"}}>{this.state.note ? this.state.note : `${t('noShippingNote')}`}</h4>} />
 
-                <div class="col-xs-12 col-md-12 col-lg-12">
+                <div className="col-xs-12 col-md-12 col-lg-12">
                         <h1 style={{color: "black"}}>:{t('paymentMethod')}</h1>
                         <ListItemText primary={<h4>{this.state.paymentMethod}</h4>} />
                 </div>
-                <div class="col-xs-12 col-md-offset-6 col-lg-offset-6">
+                <div className="col-xs-12 col-md-offset-6 col-lg-offset-6">
                     <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.createOrder()}} className={classes.fab}>
                         <NextIcon className={classes.extendedIcon2} />
                         <h5>{t('submit')}</h5>
@@ -624,20 +647,20 @@ render(){
     var total = this.props.cartInfo.totalPrice
     var grandTotal = total > 400 ? total : total + 30
     return(
-    <div class="GG-BG-INVERSE">
+    <div className="GG-BG-INVERSE">
         <Helmet>
             <title>{t('checkoutTitle')}</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
         </Helmet>
-        <div class="col-xs-12 col-md-8 col-lg-8">
+        <div className="col-xs-12 col-md-8 col-lg-8">
         <div style={{margin: 10}}>
-            <div class="WhiteBG">
+            <div className="WhiteBG">
                 {!this.state.loaded && this.props.loginData.loggedState && !this.props.loginData.isAdmin && <Loader />}
                 {this.props.loginData.isAdmin ? <h1 style={{color: "red"}}>Admins cannot checkout</h1>:undefined}
                 {!this.props.loginData.loggedState && !this.state.cart ?
                     <h1 style={{color: "red"}}>{t('notLogged')}</h1>
                     : 
-                    this.props.loginData.loggedState && this.state.currentIndex != 3 && this.props.cartInfo.totalItems === 0 ?
+                    this.props.loginData.loggedState && this.state.currentIndex !== 3 && this.props.cartInfo.totalItems === 0 ?
                          <h1 style={{color: "red"}}>{t('emptyCart')}</h1>  
                     :
                     <div>
@@ -652,10 +675,10 @@ render(){
             </div>
             </div>
             {/* CART */}
-            <div class="col-xs-12 col-md-4 col-lg-4">
+            <div className="col-xs-12 col-md-4 col-lg-4">
             <div style={{margin: 10}}>
-            <div class="cartBG">
-                   {!this.state.cart && this.state.currentIndex != 3 && this.props.cartInfo.totalItems > 0 && 
+            <div className="cartBG">
+                   {!this.state.cart && this.state.currentIndex !== 3 && this.props.cartInfo.totalItems > 0 && 
                 <div style={{backgroundColor: fade('#f2efef', 0.625)}}>
                     <Grid container justify="center" alignItems="center">
                         <Typography className={classes.shoppingCartFont}>
@@ -674,111 +697,140 @@ render(){
                 <div>  
                     <div className="row" style={{backgroundColor: fade('#f2efef', 0.625)}}>
                     {i18next.language === "EN" ?
-                        <Typography className={classes.shoppingCartPrice}>
+                        <div>
                             <div className="col-xs-6 col-md-6 col-lg-6">
                                 <Grid container justify="flex-start" alignItems="center">
-                                    {t('items')}: 
+                                    <Typography className={classes.shoppingCartPrice}>
+                                        {t('items')}: 
+                                    </Typography>
                                 </Grid>
                             </div>
                             <div className="col-xs-6 col-md-6 col-lg-6">
                                 <Grid container justify="flex-end" alignItems="center">
-                                    {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                    <Typography className={classes.shoppingCartPrice}>
+                                        {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                    </Typography>
                                 </Grid>
                             </div>
-                        </Typography>
+                        </div>
                     :
-                        <Typography className={classes.shoppingCartPrice}>
+                        <div>
                             <div className="col-xs-6 col-md-6 col-lg-6">
                                 <Grid container justify="flex-start" alignItems="center">
-                                    {t('currency')} {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />}
+                                    <Typography className={classes.shoppingCartPrice}>
+                                        {t('currency')} {<CurrencyFormat value={total.toFixed(2)} displayType={'text'} thousandSeparator={true} />}
+                                    </Typography>
                                 </Grid>
                             </div>
 
                             <div className="col-xs-6 col-md-6 col-lg-6">
                                 <Grid container justify="flex-end" alignItems="center">
-                                    : {t('items')} 
+                                    <Typography className={classes.shoppingCartPrice}>
+                                        : {t('items')} 
+                                    </Typography>
                                 </Grid>
                             </div>
-                        </Typography>}
+                        </div>}
 
                     {i18next.language === "EN" ?
-                        <Typography className={classes.shoppingCartPrice}>
+                        <div>
                             {this.props.cartInfo.totalPrice < 400 ?
                             <div>
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
-                                        {`${t('shipping')}:`}
+                                        <Typography className={classes.shoppingCartPrice}>
+                                            {`${t('shipping')}:`}
+                                        </Typography>
                                     </Grid>
                                 </div>
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-end" alignItems="center">
-                                        {`30${t('currency')}`}
+                                        <Typography className={classes.shoppingCartPrice}>
+                                            {`30${t('currency')}`}
+                                        </Typography>
                                     </Grid>
                                 </div>
                             </div>
                                 :
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
-                                        {`${t('freeShip')}`}
+                                        <Typography className={classes.shoppingCartPrice}>
+                                            {`${t('freeShip')}`}
+                                        </Typography>
                                     </Grid>
                                 </div>
                                 }
-                        </Typography>
+                        </div>
                         :
-                        <Typography className={classes.shoppingCartPrice}>
+                        <div>
+
                             {this.props.cartInfo.totalPrice < 400 ?
                             <div>
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
-                                        {`30${t('currency')}`}
+                                        <Typography className={classes.shoppingCartPrice}>
+                                            {`30${t('currency')}`}
+                                        </Typography>
                                     </Grid>
                                 </div>
 
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-end" alignItems="center">
-                                        {`: ${t('shipping')}`}
+                                        <Typography className={classes.shoppingCartPrice}>
+                                            {`: ${t('shipping')}`}
+                                        </Typography>
                                     </Grid>
                                 </div>
                             </div>
                                 :
                                 <div className="col-xs-12 col-md-12 col-lg-12">
                                     <Grid container justify="flex-end" alignItems="center">
-                                        {`${t('freeShip')}`}
+                                        <Typography className={classes.shoppingCartPrice}>
+                                            {`${t('freeShip')}`}
+                                        </Typography>
                                     </Grid>
                                 </div>
                                 }
-                        </Typography>}
+                        </div>}
 
                 </div>
 
                 <div className="row" style={{backgroundColor: fade('#ccc7c7', 1)}}>
                 {i18next.language === "EN" ?
-                    <Typography className={classes.shoppingCartPrice}>
+                    <div>
                         <div className="col-xs-6 col-md-6 col-lg-6">
                             <Grid container justify="flex-start" alignItems="center">
-                                {t('grandTotal')}:
+                                <Typography className={classes.shoppingCartPrice}>
+                                    {t('grandTotal')}:
+                                </Typography>    
                             </Grid>
                         </div>
                         <div className="col-xs-6 col-md-6 col-lg-6">
                             <Grid container justify="flex-end" alignItems="center">
-                                {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                <Typography className={classes.shoppingCartPrice}>
+                                    {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                </Typography>    
                             </Grid>
                         </div>
-                    </Typography>    
+                    </div>
                 :
-                    <Typography className={classes.shoppingCartPrice}>
+                    <div>
                         <div className="col-xs-6 col-md-6 col-lg-6">
                             <Grid container justify="flex-start" alignItems="center">
-                                {t('currency')} {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />}
+                                <Typography className={classes.shoppingCartPrice}>
+                                    {t('currency')} {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />}
+                                </Typography>
                             </Grid>
                         </div>
 
                         <div className="col-xs-6 col-md-6 col-lg-6">
                             <Grid container justify="flex-end" alignItems="center">
-                                : {t('grandTotal')}
+                                <Typography className={classes.shoppingCartPrice}>
+                                    : {t('grandTotal')}
+                                </Typography>
                             </Grid>
                         </div>
-                    </Typography>}
+                    </div>}
 
                 </div>             
                 </div>
@@ -792,13 +844,13 @@ render(){
 
         <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
-            <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
-            <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
+            <h3 className="col-xs-6">{this.state.SuccessMsg}</h3>
+            <img style ={{width: 150, height: 120}} className="col-xs-6" src={fortniteDab} alt=""></img>
         </Modal>
         <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
             styles={ErrorStyle}>
-            <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
-            <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
+            <h3 className="col-xs-6">{this.state.ErrorMsg}</h3>
+            <img style ={{width: 150, height: 120}} className="col-xs-6" src={amumu} alt=""></img> 
         </Modal>
         <NavBar/>
     </div>

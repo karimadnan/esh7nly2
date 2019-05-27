@@ -20,7 +20,16 @@ const styles = theme => ({
         [theme.breakpoints.up('sm')]: {
           fontSize: 17,
         }
-    }
+    },
+    chipView: {
+        margin: theme.spacing.unit,
+        minWidth: 100,
+        fontSize: 15,
+        cursor: 'pointer',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 19,
+        }
+    },
 });
 
 class NewProducts extends Component {
@@ -34,19 +43,25 @@ componentDidMount(){
 Discounted(){
 const { classes } = this.props;
 const { t } = this.props;
-if(this.props.shop.fetched){
+
+if(this.props.shop.fetched && this.props.shop.items){
 let outPut = []
 this.props.shop.items.map((item, index) =>{
-    var rarity = "fortniteCard splash-cardTees rarity-"
+    var rarity = "fortniteCard splash-cardTees"
     if(item.discount){
         outPut.push(            
         <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
             <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
         
-            <div className="overlayHover" >
-                <button className="btn btn-primary btn-block" style={{color : "white"}}>
-                    {t('viewButton')}
-                </button>
+            <div className="overlayHover">
+
+                <div id="ViewButton">
+                    <Chip
+                        label={t('viewButton')}
+                        className={classes.chipView}
+                        color={'default'}
+                    />
+                </div>
 
                 {item.discount > 0 && 
                 <div id ="merchDiscount" className="card-body">
@@ -68,7 +83,9 @@ this.props.shop.items.map((item, index) =>{
 
 New(){
 const { t } = this.props;
-if(this.props.shop.fetched){
+const { classes } = this.props;
+
+if(this.props.shop.fetched && this.props.shop.items){
 let outPut = []
 this.props.shop.items.map((item, index) =>{
     var rarity = "fortniteCard splash-cardTees rarity-"
@@ -77,9 +94,14 @@ this.props.shop.items.map((item, index) =>{
             <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
         
             <div className="overlayHover" >
-                <button className="btn btn-primary btn-block" style={{color : "white"}}>
-                    {t('viewButton')}
-                </button>
+
+                <div id="ViewButton">
+                    <Chip
+                        label={t('viewButton')}
+                        className={classes.chipView}
+                        color={'default'}
+                    />
+                </div>
 
             </div>
         </div> 
@@ -91,7 +113,9 @@ this.props.shop.items.map((item, index) =>{
 
 Micro(){
     const { t } = this.props;
-    if(this.props.shop.fetched){
+    const { classes } = this.props;
+    
+    if(this.props.shop.fetched && this.props.shop.items){
     let outPut = []
     this.props.shop.items.map((item, index) =>{
         var rarity = "fortniteCard splash-cardTees rarity-"
@@ -101,9 +125,14 @@ Micro(){
                 <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
             
                 <div className="overlayHover" >
-                    <button className="btn btn-primary btn-block" style={{color : "white"}}>
-                        {t('viewButton')}
-                    </button>
+
+                    <div id="ViewButton">
+                        <Chip
+                            label={t('viewButton')}
+                            className={classes.chipView}
+                            color={'default'}
+                        />
+                    </div>
     
                     {item.discount > 0 && 
                     <div id ="merchDiscount" style={{width: isMobile && 60}}className="card-body">

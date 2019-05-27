@@ -77,7 +77,6 @@ updateInfo (data){
 
 notify = (msg) => toast.error(msg, {
   zIndex: 1100,
-  autoClose: true,
   position: toast.POSITION.TOP_CENTER,
   autoClose: 2000,
   pauseOnHover: false,

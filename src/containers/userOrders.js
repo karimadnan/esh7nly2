@@ -4,10 +4,6 @@ import {connect} from 'react-redux';
 import moment from 'moment';
 import { css } from '@emotion/core';
 import { PacmanLoader } from 'react-spinners';
-import {
-  BrowserView,
-  MobileView,
-} from "react-device-detect";
 import { withStyles } from '@material-ui/core/styles';
 import { withNamespaces } from 'react-i18next';
 import Avatar from '@material-ui/core/Avatar';
@@ -145,38 +141,38 @@ render(){
     })
   }
   
-  if(this.state.loaded ){
+  if(this.state.loaded){
     if (this.state.ordersData.length > 0 && !this.state.showRow){
+        return (
+            this.state.ordersData.map((row, index) => (
+                <div key={index}>
+                    <Tooltip title={<h6>{t('view')}</h6>} aria-label={'View'} placement="top">
+                        <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
+                            <Card className={classes.cardBeforeView} onClick={ () => {this.setState({MyRow: row, showRow: true})}} style={{cursor: 'pointer'}}>
+                            <CardHeader
+                                avatar={
+                                    row.status === 'pending' ?
+                                    <Avatar className={classes.pending}>Pending</Avatar>
+                                :row.status === 'onGoing' ?
+                                    <Avatar className={classes.ongoing}>OnGoing</Avatar>               
+                                :undefined}
 
-            return (
-        <div>
-            {this.state.ordersData.map((row, index) => (
-        <Tooltip title={<h6>View Details</h6>} aria-label={'View'} placement="top">
-            <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
-                <Card className={classes.cardBeforeView} onClick={ () => {this.setState({MyRow: row, showRow: true})}} style={{cursor: 'pointer'}}>
-                  <CardHeader
-                      avatar={
-                        row.status === 'pending' ?
-                          <Avatar className={classes.pending}>Pending</Avatar>
-                      :row.status === 'onGoing' ?
-                          <Avatar className={classes.ongoing}>OnGoing</Avatar>               
-                      :undefined}
-
-                      title={<h4>{row.comment}</h4>}
-                      subheader={<h5>{moment(row.createdAt).format('LL')}</h5>}
-                      />
-                      <Grid container justify="center" alignItems="center">
-                          <p style={{color: '#3F51B5'}}>{row.status}</p>
-                      </Grid>
-                      <Divider variant="middle" className={classes.divider}/>
-                        <CardMedia>
-                            <img src={row.cart[0].defaultImage} style={{margin: 5}} className="userOrdersImages" />
-                        </CardMedia>
-                  </Card>
-            </div>
-            </Tooltip>))}
-          </div>
-          )
+                                title={<h4>{row.comment}</h4>}
+                                subheader={<h5>{moment(row.createdAt).format('LL')}</h5>}
+                                />
+                                <Grid container justify="center" alignItems="center">
+                                    <p style={{color: '#3F51B5'}}>{row.status}</p>
+                                </Grid>
+                                <Divider variant="middle" className={classes.divider}/>
+                                <CardMedia>
+                                    <img src={row.cart[0].defaultImage} alt={'Product'} style={{margin: 5}} className="userOrdersImages" />
+                                </CardMedia>
+                            </Card>
+                        </div>
+                    </Tooltip>
+                </div>)
+                )
+            )
   }
   else if(this.state.showRow){
     var totalPrice = 0
@@ -193,6 +189,8 @@ render(){
         case 'Passed':
             step = 2
         break;
+        default:
+        return undefined
     }
 
     this.state.MyRow.cart.map(row => {
@@ -234,7 +232,7 @@ render(){
             <Card className={classes.card}>
                 <CardActionArea>
                   <CardMedia>
-                    <img src={row.defaultImage} className="userOrdersImages" />
+                    <img src={row.defaultImage} alt={'Product'} className="userOrdersImages" />
                   </CardMedia>
                   <CardContent>
                     <Typography gutterBottom variant="h3" component="h2">

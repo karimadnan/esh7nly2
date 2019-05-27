@@ -11,10 +11,6 @@ import {connect} from 'react-redux';
 import CountUp from 'react-countup';
 import axios from 'axios';
 import Orders from '../containers/userOrders';
-import {
-    BrowserView,
-    MobileView,
-  } from "react-device-detect";
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 import i18next from 'i18next';
@@ -116,7 +112,7 @@ class Account extends Component {
     }
 
     componentDidMount(){
-        this.loadFbApi();
+        // this.loadFbApi();
         this.getUserData();
     }
 
@@ -426,24 +422,24 @@ class Account extends Component {
         })
     }
 
-    loadFbApi(){
-        window.fbAsyncInit = function() {
-            window.FB.init({
-              appId: "1984023341904164",
-              cookie: true,
-              status: true,
-              xfbml: true,
-              version: "v3.2"
-            });
-          };
-          (function(d, s, id) {
-            var js, fjs=d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js=d.createElement(s); js.id=id;
-            js.src="//connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, "script", "facebook-jssdk"));
-    }
+    // loadFbApi(){
+    //     window.fbAsyncInit = function() {
+    //         window.FB.init({
+    //           appId: "1984023341904164",
+    //           cookie: true,
+    //           status: true,
+    //           xfbml: true,
+    //           version: "v3.2"
+    //         });
+    //       };
+    //       (function(d, s, id) {
+    //         var js, fjs=d.getElementsByTagName(s)[0];
+    //         if (d.getElementById(id)) {return;}
+    //         js=d.createElement(s); js.id=id;
+    //         js.src="//connect.facebook.net/en_US/sdk.js";
+    //         fjs.parentNode.insertBefore(js, fjs);
+    //       }(document, "script", "facebook-jssdk"));
+    // }
 
 render() {
     const { t } = this.props;
@@ -477,16 +473,16 @@ render() {
                                 <MuiThemeProvider theme={theme}>
                                     <AppBar position="static" color="primary" className={classes.appBar}>
                                         <Tabs
-                                        value={value}
-                                        onChange={this.handleChange}
-                                        variant="scrollable"
-                                        scrollButtons="on"
-                                        indicatorColor="secondary"
-                                        textColor="secondary"
+                                            value={value}
+                                            onChange={this.handleChange}
+                                            variant="scrollable"
+                                            scrollButtons="on"
+                                            indicatorColor="secondary"
+                                            textColor="secondary"
                                         >
-                                        <Tab label={<h4 style={{fontWeight: "bold", color: value !== 0 && "white"}}>{t('profile')}</h4>} />
-                                        <Tab label={<h4 style={{fontWeight: "bold", color: value !== 1 && "white"}}>{t('orders')}</h4>} />
-                                        <Tab label={<h4 style={{fontWeight: "bold", color: value !== 2 && "white"}}>{t('history')}</h4>} />
+                                            <Tab label={<h4 style={{fontWeight: "bold", color: value !== 0 && "white"}}>{t('profile')}</h4>} />
+                                            <Tab label={<h4 style={{fontWeight: "bold", color: value !== 1 && "white"}}>{t('orders')}</h4>} />
+                                            <Tab label={<h4 style={{fontWeight: "bold", color: value !== 2 && "white"}}>{t('history')}</h4>} />
                                         </Tabs>
                                     </AppBar>
                                 </MuiThemeProvider>

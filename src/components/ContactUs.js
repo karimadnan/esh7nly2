@@ -3,8 +3,7 @@ import '../Mycss.css';
 import '../Respcss.css';
 import Navbar from './navbar';
 import { FacebookProvider, MessageUs} from 'react-facebook';
-import Footer from './footer';
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
@@ -83,13 +82,6 @@ const styles = theme => ({
           fontSize: 15,
         }
     },
-    chip: {
-        margin: theme.spacing.unit,
-        fontSize: 15,
-        [theme.breakpoints.up('sm')]: {
-          fontSize: 20,
-        }
-    },
 });
 
 const ErrorStyle = {
@@ -158,10 +150,10 @@ const { t } = this.props;
         <meta name="description" content={t('contactTitle')} />
     </Helmet>
     <Navbar page={2}/>
-        <div class="container">
-            <div class="BlackBG" style={{minHeight: 450}}>
+        <div className="container">
+            <div className="BlackBG" style={{minHeight: 450}}>
 
-                <div style={{height: 70}}>
+                <div style={{height: 70, margin: 10}}>
                     <Grid container justify="center" alignItems="center">
                         <Chip
                                 icon={<Avatar className={classes.fbAvatar}>F</Avatar>}
@@ -250,8 +242,8 @@ const { t } = this.props;
         </Modal>
         <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
-            <h3 class="col-xs-6">{this.state.SuccessMsg}</h3>
-            <img style ={{width: 150, height: 120}} class="col-xs-6" src={fortniteDab} alt=""></img>
+            <h3 className="col-xs-6">{this.state.SuccessMsg}</h3>
+            <img style ={{width: 150, height: 120}} className="col-xs-6" src={fortniteDab} alt=""></img>
         </Modal>
     </div>
   </div>

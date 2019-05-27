@@ -87,12 +87,12 @@ render() {
             </div>
             <div className="col-md-3 col-lg-3 col-xs-4 ">
                 <Grid container justify="flex-end" alignItems="center">
-                    <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <a onClick={()=>{ReactRouter.goTo("/privacy")}}> {t('privacyPolicy')} </a></h6>
+                    <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/privacy")}}> {t('privacyPolicy')} </p></h6>
                 </Grid>
             </div>
             <div className="col-md-3 col-lg-3 col-xs-3 ">
                 <Grid container justify="flex-start" alignItems="center">
-                    <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <a onClick={()=>{ReactRouter.goTo("/contactus")}}> {t('contact')} </a> </h6>
+                    <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/contactus")}}> {t('contact')} </p> </h6>
                 </Grid>
             </div>
             </div>
@@ -141,12 +141,12 @@ render() {
                 </div>
                 <div className="col-md-3 col-lg-3 col-xs-4 ">
                     <Grid container justify="flex-end" alignItems="center">
-                        <h5 style={{fontWeight: "bold", cursor: 'pointer'}}> <a onClick={()=>{ReactRouter.goTo("/privacy")}}> {t('privacyPolicy')} </a></h5>
+                        <h5 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/privacy")}}> {t('privacyPolicy')} </p></h5>
                     </Grid>
                 </div>
                 <div className="col-md-3 col-lg-3 col-xs-3 ">
                     <Grid container justify="flex-start" alignItems="center">
-                        <h5 style={{fontWeight: "bold", cursor: 'pointer'}}> <a onClick={()=>{ReactRouter.goTo("/contactus")}}> {t('contact')} </a> </h5>
+                        <h5 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/contactus")}}> {t('contact')} </p> </h5>
                     </Grid>
                 </div>
             </div>
@@ -191,12 +191,12 @@ render() {
                 </div>
                 <div className="col-md-3 col-lg-3 col-xs-4 ">
                     <Grid container justify="flex-end" alignItems="center">
-                        <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <a onClick={()=>{ReactRouter.goTo("/privacy")}}> {t('privacyPolicy')} </a></h6>
+                        <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/privacy")}}> {t('privacyPolicy')} </p></h6>
                     </Grid>
                 </div>
                 <div className="col-md-3 col-lg-3 col-xs-3 ">
                     <Grid container justify="flex-start" alignItems="center">
-                        <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <a onClick={()=>{ReactRouter.goTo("/contactus")}}> {t('contact')} </a> </h6>
+                        <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/contactus")}}> {t('contact')} </p> </h6>
                     </Grid>
                 </div>
                 </div>: undefined}

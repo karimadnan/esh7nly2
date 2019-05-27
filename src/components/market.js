@@ -130,6 +130,15 @@ const styles = theme => ({
           fontSize: 17,
         }
     },
+    chipView: {
+        margin: theme.spacing.unit,
+        minWidth: 100,
+        fontSize: 15,
+        cursor: 'pointer',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 19,
+        }
+    },
     grid: {
         margin: theme.spacing.unit * 2,
         color: 'white',
@@ -429,24 +438,27 @@ viewItem(item){
 Market(){
 const { t } = this.props;
 const { classes } = this.props;
-let counter = 0
 if (this.state.view === "shop"){
-    let shop = this.props.shop.items && this.props.shop.items.map((item) =>{
-        var rarity = "card splash-cardTees "
-        var key = item.Name + `-${counter}`
+    let shop = this.props.shop.items && this.props.shop.items.map((item, index) =>{
+        var rarity = "card splash-cardTees"
 
         var priceAfterDiscount = item.price - item.discount / 100 * item.price
-        counter ++;
+
         if((item.discount || !this.state.hasDiscount)){
         return (
-            <div className="col-xs-12 col-md-4 col-md-4" key={key} style={{cursor: 'pointer'}} onClick={() => {this.viewItem(item)}}>
+            <div className="col-xs-12 col-md-4 col-md-4" key={index} style={{cursor: 'pointer'}} onClick={() => {this.viewItem(item)}}>
             <div className ={rarity}>
-                <img src={item.defaultImage} className="splash-card-product-view-constant" />
-                <div className="overlayHover" onClick={() => {this.viewItem(item)}}>
+                <img src={item.defaultImage} alt={item.Name} className="splash-card-product-view-constant" />
+                
+                <div className="overlayHover">
 
-                    <button className="btn btn-primary btn-block" onClick={() => {this.viewItem(item)}} style={{color : "white"}}>
-                        {t('viewButton')}
-                    </button>
+                    <div id="ViewButton">
+                        <Chip
+                            label={t('viewButton')}
+                            className={classes.chipView}
+                            color={'default'}
+                        />
+                    </div>
 
                     {item.discount > 0 && 
                     <div id ="merchDiscount" className="card-body">
@@ -475,8 +487,6 @@ if (this.state.view === "shop"){
                         <span>
                            
                             <div>
-                                {item.price > 400 && 
-                                <h5 style={{color: "white", float: "left"}}>{t('freeShip')} </h5>}
                                 <h6 style={{color: "white", float: "right"}}>{t('store')}: <span style={{color: "#3F51B5"}}>{item.soldBy}</span></h6>
                             </div>
                         </span>
@@ -492,7 +502,7 @@ if (this.state.view === "shop"){
     let catergories = []
 
     for (const [index, value] of this.state.categories.entries()) {
-        catergories.push(<MenuItem key={index} selected={value === this.state.qcategory} onClick={()=>{this.handleChangeCategory(value)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >{value}</a></MenuItem>)
+        catergories.push(<MenuItem key={index} selected={value === this.state.qcategory} onClick={()=>{this.handleChangeCategory(value)}}><p style={{cursor: 'pointer', color: "black", fontSize: 15}} >{value}</p></MenuItem>)
     }
     
     return (
@@ -550,9 +560,9 @@ if (this.state.view === "shop"){
                         open={Boolean(anchorEl2)}
                         onClose={() => {this.handleClose('anchorEl2')}}
                     >
-                        <MenuItem selected={this.state.qprice === 0} onClick={()=>{this.handleSortPrice(0)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Unsort</a></MenuItem>
-                        <MenuItem selected={this.state.qprice === 1} onClick={()=>{this.handleSortPrice(1)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: Low to high</a></MenuItem>
-                        <MenuItem selected={this.state.qprice === -1} onClick={()=>{this.handleSortPrice(-1)}}><a style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: High to low</a></MenuItem>
+                        <MenuItem selected={this.state.qprice === 0} onClick={()=>{this.handleSortPrice(0)}}><p style={{cursor: 'pointer', color: "black", fontSize: 15}} >Unsort</p></MenuItem>
+                        <MenuItem selected={this.state.qprice === 1} onClick={()=>{this.handleSortPrice(1)}}><p style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: Low to high</p></MenuItem>
+                        <MenuItem selected={this.state.qprice === -1} onClick={()=>{this.handleSortPrice(-1)}}><p style={{cursor: 'pointer', color: "black", fontSize: 15}} >Price: High to low</p></MenuItem>
                     </Menu>
                 </div>
             </div>
@@ -694,7 +704,7 @@ if (this.state.view === "item"){
                     return(
                         <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer"}} className="col-xs-3 col-md-2 col-lg-2">
                             <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                                <img src={item.value} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 50}}/>
+                                <img src={item.value} alt={item.label} className="splash-card-product-view" style={{cursor: "pointer", maxHeight: 50}}/>
                             </div>
                         </div>
                     )
@@ -709,7 +719,7 @@ if (this.state.view === "item"){
                     return(
                         <div key={index} onClick={()=>{this.setState({activeStep: index})}} style={{cursor: "pointer"}} className="col-xs-3 col-md-2 col-lg-2">
                             <div className ={this.state.activeStep === index ? "cardItemPrevSmall-active" : "cardItemPrevSmall"}>
-                                <img src={item} className="splash-card-product-view" style={{cursor: "pointer"}}/>
+                                <img src={item} alt={'Product'} className="splash-card-product-view" style={{cursor: "pointer"}}/>
                             </div>
                         </div>
                     )
@@ -733,7 +743,7 @@ if (this.state.view === "item"){
                             {prev.colors.map((step, index) => (
                                 <div key={index}>
                                 {Math.abs(this.state.activeStep - index) <= 2 ? (
-                                    <img src={step.value} className="splash-card-product-view" />
+                                    <img src={step.value} alt={'Step'} className="splash-card-product-view" />
                                 ) : null}
                                 </div>
                             ))}
@@ -748,13 +758,13 @@ if (this.state.view === "item"){
                         {prev.img.map((img, index) => (
                             <div key={index}>
                             {Math.abs(this.state.activeStep - index) <= 2 ? (
-                                <img src={img} className="splash-card-product-view" />
+                                <img src={img} alt={'Product'} className="splash-card-product-view" />
                             ) : null}
                             </div>
                         ))}
                 </SwipeableViews>
                 :
-               <img src={prev.defaultImage} className="splash-card-product-view" />}
+               <img src={prev.defaultImage} alt={'Product'} className="splash-card-product-view" />}
                {prev.discount > 0 && 
                 <div id ="merchDiscount" className="card-body">
                 <Chip

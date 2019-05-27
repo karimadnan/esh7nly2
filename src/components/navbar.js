@@ -221,6 +221,8 @@ class Navbar extends React.Component {
         ReactRouter.goTo("/contactus")
         break
       }
+      default: 
+        return undefined
     }
   };
 

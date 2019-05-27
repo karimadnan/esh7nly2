@@ -81,6 +81,8 @@ export const updatePrev = (thing, action) => {
             type: "UPDATE_PRICE",
             payload: thing
         }
+        default:
+            return undefined
         }
 }
 
@@ -95,6 +97,8 @@ export const loginFunction = (data, action) => {
         return {
             type: "USR_LOGOUT"
         }
+        default:
+        return undefined
         }
 }
 
@@ -110,6 +114,8 @@ export const updateCartInfo = (data, action) => {
             type: "UPDATE_CART_REMOVE",
             payload: data
         }
+        default:
+        return undefined
         }
 }
 

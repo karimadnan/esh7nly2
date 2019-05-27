@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import { ToastContainer, toast, Flip } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Loader from '../containers/loader';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';

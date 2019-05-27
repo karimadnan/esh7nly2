@@ -61,7 +61,7 @@ button:hover .text { display: none; }
 html { height: 100%; overflow:auto; }
 
 body { 
-  padding-top: 67px; 
+  padding-top: 66px; 
   height: 100%;
 }
 
@@ -810,7 +810,7 @@ background-color: #ffffff;
   display: block;
 }
 
-.card button {
+.overlayHover #ViewButton {
   text-align: center;
   position: absolute;
   transform: translate(-50%,-50%);
@@ -821,7 +821,7 @@ background-color: #ffffff;
   display: none;
 }
 
-.card:hover button {
+.overlayHover:hover #ViewButton {
   display: block;
 }
 
@@ -939,7 +939,12 @@ background-color: #ffffff;
   background-image: url('Images/mainlogo.svg');
   background-repeat: no-repeat;
   background-position: center;
-  width: 450px;
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 
@@ -949,7 +954,12 @@ background-color: #ffffff;
   background-image: url('Images/mainlogoar.svg');
   background-repeat: no-repeat;
   background-position: center;
-  width: 450px;
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .badge-dark2 {
