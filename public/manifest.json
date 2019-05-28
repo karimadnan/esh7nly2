@@ -3,9 +3,9 @@
   "name": "GamerGoods Store",
   "icons": [
     {
-      "src": "logo.svg",
+      "src": "favicon-32x32.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/svg+xml"
+      "type": "image\/png"
     }
   ],
   "start_url": ".",

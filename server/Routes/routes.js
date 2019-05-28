@@ -34,7 +34,7 @@ router.get('/getAdminOrders',Validator.checkJWT,Validator.isAdmin,orderApis.getA
 router.get('/getAdminHistory',Validator.checkJWT,Validator.isAdmin,orderApis.getAdminHistory);// Not Tested
 router.get('/assginlead',Validator.checkJWT,Validator.isAdmin,orderApis.assginlead);// Not Tested
 router.get('/getUserOrders',Validator.checkJWT,Validator.isAdmin,orderApis.getUserOrders);// Not Tested
-router.get('/getUserHistory',Validator.checkJWT,Validator.isAdmin,orderApis.getUserHistory);// Not Tested
+router.get('/getUserHistory',Validator.checkJWT,orderApis.getUserHistory);// Not Tested
 router.get('/getAllOrders',Validator.checkJWT,Validator.isAdmin,orderApis.getAllOrders);
 router.get('/getAllOrdersHistory',Validator.checkJWT,Validator.isAdmin,orderApis.getAllOrdersHistory);
 router.get('/getOrderForuser',Validator.checkJWT,orderApis.getOrderForuser);

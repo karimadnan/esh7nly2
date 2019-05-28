@@ -10,6 +10,7 @@ import Navbar from './navbar';
 import {connect} from 'react-redux';
 import Orders from '../containers/userOrders';
 import Profile from '../containers/userProfile';
+import History from '../containers/userOrdersHistory';
 import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 import amumu from '../Images/amumusad.png';
@@ -136,6 +137,7 @@ class Account extends Component {
                 <title>{t('historyTitle', {userName})}</title>
                 <meta name="description" content={t('historyTitle', {userName})} />
             </Helmet>
+            <History />
           </div>
       )
     }
