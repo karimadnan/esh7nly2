@@ -155,6 +155,9 @@
       "ordersTitle": "{{userName}} | Orders",
       "historyTitle": "{{userName}} | History",
       "checkoutTitle": "Checking Out | GG-Egypt",
-      "optionSelected": "Selected Option"
+      "optionSelected": "Selected Option",
+      "noOrderHistory1": "You have no finished orders",
+      "noOrderHistory2": "When an order is delivered it will appear here",
+      "HistoryError": "There was an error retrieving your orders history, We're very sorry."
 
 }

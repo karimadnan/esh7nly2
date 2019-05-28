@@ -156,7 +156,10 @@
       "ordersTitle": "{{userName}} | الطلبات",
       "historyTitle": "{{userName}} | القديم",
       "checkoutTitle": "الحساب | GG-Egypt",
-      "optionSelected": "الاختيار"
+      "optionSelected": "الاختيار",
+      "noOrderHistory1": "مفيش اوردرات خلصت",
+      "noOrderHistory2": "لما الاوردر يخلص هيظهر هنا",
+      "HistoryError": "حاجة غلط حصلت حاول تانى"
 
 
 }

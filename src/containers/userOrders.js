@@ -34,6 +34,21 @@ import Loader from '../containers/loader';
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const styles = theme => ({
+    typo1: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#212121',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 22,
+        }
+      },
+      typo2: {
+        fontSize: 16,
+        color: '#212121',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 17,
+        }
+      },
     root: {
       width: '100%',
       marginTop: theme.spacing.unit * 3,
@@ -303,10 +318,14 @@ render(){
   }
   else{
     return(
-        <div style={{color: "black"}}>
-              <h1>{t('noOrdersText')}</h1>
-              <p>{t('noOrdersText2')}</p>
-        </div>
+        <div style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
+            <Typography gutterBottom className={classes.typo1}>
+                {t('noOrdersText')}
+            </Typography>
+            <Typography gutterBottom className={classes.typo2}>
+                {t('noOrdersText2')}
+            </Typography>
+      </div>
     )
   }
 }

@@ -3,8 +3,31 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import moment from 'moment';
 import Loader from '../containers/loader';
+import compose from 'recompose/compose';
+import { withStyles } from '@material-ui/core/styles';
+import { withNamespaces } from 'react-i18next';
+import Typography from '@material-ui/core/Typography';
+import i18next from 'i18next';
 
-class userOrders extends Component {
+const styles = theme => ({
+  typo1: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#212121',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 22,
+    }
+  },
+  typo2: {
+    fontSize: 16,
+    color: '#212121',
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 17,
+    }
+  },
+});
+
+class userOrdersHistory extends Component {
 
 state = {
     headers: {
@@ -32,16 +55,34 @@ getUserOrderHistory(){
 }
 
 render(){
+const { t } = this.props;
+const { classes } = this.props;
 if(this.state.done){
     if(this.state.loaded){
-        console.log(this.state.ordersData, "History")
-        return(
-            <h1> ORDERS HISTORY </h1>
-        )
+        if(this.state.ordersData){
+          console.log(this.state.ordersData, "History")
+          return(
+              <h1> ORDERS HISTORY </h1>
+          )
+        }
+        else{
+          return(
+            <div style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
+              <Typography gutterBottom className={classes.typo1}>
+                  {t('noOrderHistory1')}
+              </Typography>
+              <Typography gutterBottom className={classes.typo2}>
+                  {t('noOrderHistory2')}
+              </Typography>
+            </div>
+          )
+        }
     }
     else{
       return(
-        <h1> HISTORY ERROR </h1>
+        <Typography gutterBottom className={classes.typo1}>
+            {t('HistoryError')}
+        </Typography>
       )
     }
 }
@@ -60,4 +101,8 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps)(userOrders);
+export default compose(
+  withStyles(styles),
+  withNamespaces(),
+  connect(mapStateToProps),
+)(userOrdersHistory);
