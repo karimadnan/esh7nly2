@@ -262,18 +262,18 @@ const orderApis = {
         as: "user"
         }
         },
-        { $unwind:"$user" },{$project: {"user.Name": 1, 
+        { $unwind:"$user" },{$project: {"user.Name": 1,
+        "_id": 1,
         "user.Phone": 1, 
         "user._id": 1, 
         "status": 1, 
         "createdAt": 1,
-        "game": 1,
-        "orderType": 1,
         "extra":1,
         "transId":1,
         "comment":1,
         "endedAt":1,
         "endedBy":1,
+        "cart":1,
         "paymentMethod": 1}}
         ]).toArray(function(err, docs) {
         if(err){

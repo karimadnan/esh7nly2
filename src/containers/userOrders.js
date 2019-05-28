@@ -158,8 +158,10 @@ render(){
                                     <p style={{color: '#3F51B5'}}>{row.status}</p>
                                 </Grid>
                                 <Divider variant="middle" className={classes.divider}/>
-                                <CardMedia>
-                                    <img src={row.cart[0].defaultImage} alt={'Product'} style={{margin: 5}} className="userOrdersImages" />
+                                <CardMedia image={'null'}>
+                                    <Grid container justify="center" alignItems="center">
+                                        <img src={row.cart[0].defaultImage} alt={'Product'} style={{margin: 5}} className="userOrdersImages" />
+                                    </Grid>
                                 </CardMedia>
                             </Card>
                         </div>

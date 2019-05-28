@@ -376,6 +376,7 @@ addItemToArray(item){
         price: item.discount > 0 ? item.price - discounted : item.price,
         rarity: item.rarity,
         info: item.info,
+        soldBy: item.soldBy,
         quantity: this.state.quantity,
         defaultImage: item.defaultImage,
      }
@@ -600,13 +601,14 @@ const prev = this.props.cart.itemPrev
 if(this.state.value === 0){
         return(
             <div>
-                { prev.desc.split(",").map((place, index) =>
-                    <div style={{backgroundColor: index % 2 === 0 ? '#fff' : '#f7f9fe'}}>
+                {prev.desc.split(",").map((place, index) =>
+                    <div style={{backgroundColor: index % 2 === 0 ? '#fff' : '#f7f9fe'}} key={index}>
                         <ListItem key={index} className={classes.descStyle}>
                             <ListItemIcon>{<DotIcon />}</ListItemIcon>
                             <ListItemText disableTypography primary={place} />
                         </ListItem>
-                    </div>)}
+                    </div>
+                )}
 
                 {prev.category !== 'micro' &&
                 <div className="col-xs-12 col-md-12 col-lg-12">

@@ -221,6 +221,7 @@ constructor(nextProps){
             price: item.discount > 0 ? item.price - discounted : item.price,
             rarity: item.rarity,
             info: item.info,
+            soldBy: item.soldBy,
             quantity: 1,
             defaultImage: item.defaultImage,
          }
