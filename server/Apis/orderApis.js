@@ -2,7 +2,6 @@ const DB = require('../Mongo');
 const Validator =require('../validation');
 const ObjectId = require('mongodb').ObjectID;
 
-
 const orderApis = {
     createOrder:function(req, res, next) {
         var body =req.body;
@@ -375,8 +374,8 @@ const orderApis = {
     }
     doc['endedAt']=Date.now();
     doc['endedBy']=new ObjectId(req.token.userId);
+    doc['orderCode']=body._id
     delete doc._id;
-    delete doc.status;
     var rom = await collection.remove({ _id: new ObjectId(body.orderID)}).catch(err =>{   
         return  res.status(500).send({ message: 'server error 002'}); 
     });;

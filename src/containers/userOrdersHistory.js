@@ -61,9 +61,19 @@ if(this.state.done){
     if(this.state.loaded){
         if(this.state.ordersData){
           console.log(this.state.ordersData, "History")
+        let history =  this.state.ordersData.map((order, index) =>{
+            console.log(order, "Order")
           return(
-              <h1> ORDERS HISTORY </h1>
+              <div key={index}>
+                <h1>test</h1>
+              </div>
           )
+        })
+        return(
+          <div>
+            {history}
+          </div>
+        )
         }
         else{
           return(

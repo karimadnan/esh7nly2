@@ -678,14 +678,24 @@ render(){
             <div className="col-xs-12 col-md-4 col-lg-4">
             <div style={{margin: 10}}>
             <div className="cartBG">
-                   {!this.state.cart && this.state.currentIndex !== 3 && this.props.cartInfo.totalItems > 0 && 
+                   {!this.state.cart && this.state.currentIndex !== 3 && this.props.cartInfo.totalItems > 0 ? 
+                   
                 <div style={{backgroundColor: fade('#f2efef', 0.625)}}>
                     <Grid container justify="center" alignItems="center">
                         <Typography className={classes.shoppingCartFont}>
                             {t('yourCart')}
                         </Typography>
                     </Grid>
+                </div>
+                :
+                <div style={{backgroundColor: fade('#f2efef', 0.625)}}>
+                    <Grid container justify="center" alignItems="center">
+                        <Typography className={classes.shoppingCartFont}>
+                            {t('emptyCart')}   
+                        </Typography>
+                    </Grid>
                 </div>}
+
                 <Scrollbars autoHeight 
                             autoHeightMin={100} 
                             autoHeightMax={300}
@@ -833,11 +843,7 @@ render(){
                     </div>}
 
                 </div>             
-                </div>
-                 :
-                 <Typography className={classes.cartFont}>
-                        {t('emptyCart')}                 
-                </Typography>}
+                </div>: undefined}
                 </div>
                 </div>
             </div>
