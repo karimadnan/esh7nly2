@@ -158,6 +158,13 @@
       "optionSelected": "Selected Option",
       "noOrderHistory1": "You have no finished orders",
       "noOrderHistory2": "When an order is delivered it will appear here",
-      "HistoryError": "There was an error retrieving your orders history, We're very sorry."
+      "HistoryError": "There was an error retrieving your orders history, We're very sorry.",
+      "linkCopied": "Copied",
+      "orderPaymentMethod": "Paid by",
+      "orderFinishDate": "Order Finished At",
+      "lastComment": "Last Comment",
+      "orderID": "Order ID: {{ID}}",
+      "orderPassed": "Passed",
+      "orderFailed": "Failed"
 
 }

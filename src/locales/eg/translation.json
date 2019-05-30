@@ -159,7 +159,14 @@
       "optionSelected": "الاختيار",
       "noOrderHistory1": "مفيش اوردرات خلصت",
       "noOrderHistory2": "لما الاوردر يخلص هيظهر هنا",
-      "HistoryError": "حاجة غلط حصلت حاول تانى"
+      "HistoryError": "حاجة غلط حصلت حاول تانى",
+      "linkCopied": "اتنسخ",
+      "orderPaymentMethod": "طريقة الدفع",
+      "orderFinishDate": "تم انهاء الطلب فى",
+      "lastComment": "اخر تعليق",
+      "orderID": "{{ID}} :رقم الاوردر",
+      "orderPassed": "ناجح",
+      "orderFailed": "فشل"
 
 
 }

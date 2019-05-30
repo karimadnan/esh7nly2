@@ -20,6 +20,8 @@ import Chip from '@material-ui/core/Chip';
 import Grid from '@material-ui/core/Grid';
 import AliceCarousel from 'react-alice-carousel';
 import "react-alice-carousel/lib/alice-carousel.css";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import Snackbar from '@material-ui/core/Snackbar';
 
 const styles = theme => ({
   card:{
@@ -73,7 +75,7 @@ headerFont: {
   fontSize: 10,
   color: '#212121',
   [theme.breakpoints.up('sm')]: {
-    fontSize: 13,
+    fontSize: 15,
   }
 },
 headerFont2: {
@@ -81,7 +83,22 @@ headerFont2: {
   color: '#212121',
   fontWeight: 'bold',
   [theme.breakpoints.up('sm')]: {
-    fontSize: 13,
+    fontSize: 17,
+  }
+},
+footerFont: {
+  fontSize: 13,
+  color: '#212121',
+  fontWeight: 'bold',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: 18,
+  }
+},
+footerFont2: {
+  fontSize: 10,
+  color: '#212121',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: 15,
   }
 },
 });
@@ -96,7 +113,8 @@ state = {
     ordersData: {},
     loaded: false,
     done: false,
-    slideIndex: 0
+    slideIndex: 0,
+    copied: false
 }
 
 componentDidMount(){
@@ -122,6 +140,8 @@ if(this.state.done){
         if(this.state.ordersData){
           console.log(this.state.ordersData, "History")
         let history =  this.state.ordersData.map((order, index) =>{
+          const ID = order._id
+          if(i18next.language === "EN"){
           return(
               <div key={index} className="col-xs-12 col-md-12 col-lg-12">
                 <Card className={classes.card}>
@@ -135,11 +155,11 @@ if(this.state.done){
                       }
                       title={
                         <Typography gutterBottom className={classes.headerFont2}>
-                            Paid by: {order.paymentMethod}
+                            {t('orderPaymentMethod')}: {order.paymentMethod}
                         </Typography>}
                       subheader={
                         <Typography gutterBottom className={classes.headerFont}>
-                            Order Finished At {moment(order.enddedAt).format('LL')}
+                            {t('orderFinishDate')} {moment(order.enddedAt).format('LL')}
                         </Typography>}
                     />
                     <CardMedia image={'Null'}>
@@ -153,7 +173,7 @@ if(this.state.done){
                           </div>
                         )})}
                         responsive={ {
-                            0: { items: 3 },
+                            0: { items: 2 },
                             1024: { items: 3 },
                         }}
                         autoPlayInterval={3000}
@@ -171,26 +191,127 @@ if(this.state.done){
                     </CardMedia>
                   <CardActionArea>
                     <CardContent>
-                      <Typography className={classes.headerFont2}>
-                        Last Comment:
+                      <Typography className={classes.footerFont}>
+                        {t('lastComment')}:
                       </Typography>
-                      <Typography className={classes.headerFont}>
+                      <Typography className={classes.footerFont2}>
                           {order.comment}
                       </Typography>
                     </CardContent>
                   </CardActionArea>
                   <CardActions>
                     <Grid container justify="center" alignItems="center">
-                      <Chip
-                            label={`Order ID: ${order._id}`}
+                      <CopyToClipboard text={order._id}>
+                        <Chip
+                            onClick={()=>{this.setState({copied: true})}}
+                            label={`${t('orderID', {ID})}`}
                             className={classes.chipView}
                             color={'primary'}
-                        />
+                          />
+                      </CopyToClipboard>
                     </Grid>
                   </CardActions>
                 </Card>
+                <Snackbar
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                    open={this.state.copied}
+                    onClose={()=>{this.setState({ copied: false })}}
+                    transitionDuration={500}
+                    autoHideDuration={1000}
+                    ContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<h4 id="message-id">{t('linkCopied')}</h4>}
+                />
               </div>
           )
+        }
+        else{
+          return(
+            <div key={index} className="col-xs-12 col-md-12 col-lg-12" style={{textAlign: 'right'}}>
+              <Card className={classes.card}>
+                <Grid container justify="flex-end" alignItems="center">
+                  <CardHeader
+                    title={
+                      <Typography gutterBottom className={classes.headerFont2}>
+                         {order.paymentMethod} :{t('orderPaymentMethod')}
+                      </Typography>}
+                    subheader={
+                      <Typography gutterBottom className={classes.headerFont}>
+                         {moment(order.enddedAt).format('LL')} :{t('orderFinishDate')} 
+                      </Typography>}
+                      avatar={
+                        <Avatar aria-label="Order" className={order.status === 'Passed' ? classes.avatarPassed : classes.avatarFailed}>
+                          <Typography gutterBottom className={classes.statusFont}>
+                            {order.status === 'Passed' ? t('orderPassed') : t('orderFailed')}
+                          </Typography>
+                        </Avatar>
+                      }
+                    />
+                  </Grid>
+                  <CardMedia image={'Null'} style={{textAlign: 'left'}}>
+                  <AliceCarousel
+                      items={order.cart.map((image, index)=>{
+                        return(
+                        <div key={index}>
+                          <Grid container justify="center" alignItems="center">
+                            <img src={image.defaultImage} alt={'Product'} className="userOrdersImages" />
+                          </Grid>
+                        </div>
+                      )})}
+                      responsive={ {
+                          0: { items: 2 },
+                          1024: { items: 3 },
+                      }}
+                      autoPlayInterval={3000}
+                      autoPlayDirection="ltr"
+                      autoPlay={order.cart && order.cart.length > 1 ? true : false}
+                      fadeOutAnimation={true}
+                      mouseDragEnabled={false}
+                      stopAutoPlayOnHover={true}
+                      dotsDisabled={true}
+                      buttonsDisabled={order.cart && order.cart.length > 1 ? false : true}
+                      onSlideChange={this.onSlideChange}
+                      onSlideChanged={this.onSlideChanged}
+                      showSlideInfo={order.cart && order.cart.length > 1 ? true : false}
+                  />
+                  </CardMedia>
+                <CardActionArea>
+                  <CardContent>
+                  <Grid container justify="flex-end" alignItems="center">
+                    <Typography className={classes.footerFont}>
+                      {order.comment} :{t('lastComment')}
+                    </Typography>
+                    </Grid>
+                  </CardContent>
+                </CardActionArea>
+                <CardActions>
+                  <Grid container justify="center" alignItems="center">
+                    <CopyToClipboard text={order._id}>
+                      <Chip
+                          onClick={()=>{this.setState({copied: true})}}
+                          label={`${t('orderID', {ID})}`}
+                          className={classes.chipView}
+                          color={'primary'}
+                        />
+                    </CopyToClipboard>
+                  </Grid>
+                </CardActions>
+              </Card>
+              <Snackbar
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  open={this.state.copied}
+                  onClose={()=>{this.setState({ copied: false })}}
+                  transitionDuration={500}
+                  autoHideDuration={1000}
+                  ContentProps={{
+                      'aria-describedby': 'message-id',
+                  }}
+                  message={<h4 id="message-id">{t('linkCopied')}</h4>}
+              />
+            </div>
+        )
+        }
         })
         return(
           <div>

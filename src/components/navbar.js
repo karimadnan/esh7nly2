@@ -90,6 +90,7 @@ const styles = theme => ({
     [theme.breakpoints.up('lg')]: {
       display: 'block',
       marginLeft: theme.spacing.unit * 40,
+      marginRight: theme.spacing.unit,
       width: 'auto',
     },
   },

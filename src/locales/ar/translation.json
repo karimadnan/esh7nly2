@@ -159,7 +159,14 @@
       "optionSelected": "الاختيار",
       "noOrderHistory1": "ليس لديك طلبات تم توصيلها بعد",
       "noOrderHistory2": "عند توصيل الطلب سيظهر هنا",
-      "HistoryError": "حدث خطأ لم نتمكن من استرجاع الطلبات"
+      "HistoryError": "حدث خطأ لم نتمكن من استرجاع الطلبات",
+      "linkCopied": "اتنسخ",
+      "orderPaymentMethod": "طريقة الدفع",
+      "orderFinishDate": "تم انهاء الطلب فى",
+      "lastComment": "اخر تعليق",
+      "orderID": "{{ID}} :رقم الطلب ",
+      "orderPassed": "ناجح",
+      "orderFailed": "فشل"
 
       
 
