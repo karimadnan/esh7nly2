@@ -1,8 +1,8 @@
 const initialState = {
     totalPrice: 0,
     totalItems: 0,
-    shippingPrice: 0,
-    shippingCity: ''
+    shippingPrice: 30,
+    shippingCity: 'Cairo'
 }
 
 export default function(state = initialState, action){

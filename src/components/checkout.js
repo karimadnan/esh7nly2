@@ -535,6 +535,18 @@ class Checkout extends Component {
     }
 
     updateShipping(){
+        const { t } = this.props;
+        var locationType;
+        switch(this.state.locationType){
+            case `${t('locationBusiness')}`:
+                locationType = 'Business'
+            break;
+            case `${t('locationHome')}`:
+                locationType = 'Home'
+            break;
+            default: 
+            return undefined
+        }
         var that = this
         var Data = {FirstName: this.state.firstName, 
                     LastName: this.state.lastName,
@@ -542,7 +554,7 @@ class Checkout extends Component {
                     City: this.state.city, 
                     Area: this.state.Area, 
                     StreetNameNo: this.state.StName, 
-                    LocationType: this.state.locationType,
+                    LocationType: locationType,
                     ShippingNote: this.state.note,
                     ShippingPrice: this.props.cartInfo.shippingPrice}
         axios.post(this.state.Url+"setUserAddress", Data, {headers: this.state.headers})
@@ -676,11 +688,35 @@ class Checkout extends Component {
     }
 }
 
+returnGrandTotal(){
+let outPut = 0
+    if(this.state.ShipPrice){
+        outPut = this.props.cartInfo.totalPrice + Number(this.state.ShipPrice)
+    }
+    else{
+        outPut = this.props.cartInfo.totalPrice + Number(this.props.cartInfo.shippingPrice)
+    }
+return outPut
+}
+
+returnShippingCost(){
+let outPut = 0
+    if(this.props.cartInfo.shippingPrice){
+        outPut = Number(this.props.cartInfo.shippingPrice)
+    }
+    else{
+        outPut = Number(this.state.ShipPrice)
+    }
+return outPut
+}
+
 render(){
     const { t } = this.props;
     const { classes } = this.props;
-    var total = this.props.cartInfo.totalPrice
-    var grandTotal = total > 400 ? total : total + 30
+    let total = this.props.cartInfo.totalPrice;
+    let grandTotal = this.returnGrandTotal();
+
+
     return(
     <div className="GG-BG-INVERSE">
         <Helmet>
@@ -779,6 +815,7 @@ render(){
 
                     {i18next.language === "EN" ?
                         <div>
+                            <div>
                             {this.props.cartInfo.totalPrice < 400 ?
                             <div>
                                 <div className="col-xs-6 col-md-6 col-lg-6">
@@ -791,7 +828,7 @@ render(){
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-end" alignItems="center">
                                         <Typography className={classes.shoppingCartPrice}>
-                                            {`${this.state.ShipPrice || this.props.cartInfo.shippingPrice} ${t('currency')}`}
+                                           {<CurrencyFormat value={this.returnShippingCost().toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
                                         </Typography>
                                     </Grid>
                                 </div>
@@ -805,6 +842,7 @@ render(){
                                     </Grid>
                                 </div>
                                 }
+                            </div>
                         </div>
                         :
                         <div>
@@ -813,7 +851,7 @@ render(){
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
                                         <Typography className={classes.shoppingCartPrice}>
-                                            {`${this.state.ShipPrice || this.props.cartInfo.shippingPrice} ${t('currency')}`}
+                                            {<CurrencyFormat value={this.returnShippingCost().toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
                                         </Typography>
                                     </Grid>
                                 </div>
