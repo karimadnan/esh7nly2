@@ -784,7 +784,7 @@ render(){
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
                                         <Typography className={classes.shoppingCartPrice}>
-                                            {`${t('shipping')}:`}
+                                            {`${t('shipping')} (${this.state.city || this.props.cartInfo.shippingCity}):`}
                                         </Typography>
                                     </Grid>
                                 </div>
@@ -821,7 +821,7 @@ render(){
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-end" alignItems="center">
                                         <Typography className={classes.shoppingCartPrice}>
-                                            {`: ${t('shipping')}`}
+                                            {`: (${this.state.city || this.props.cartInfo.shippingCity}) ${t('shipping')}`}
                                         </Typography>
                                     </Grid>
                                 </div>
