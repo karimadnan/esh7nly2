@@ -690,11 +690,11 @@ class Checkout extends Component {
 
 returnGrandTotal(){
 let outPut = 0
-    if(this.state.ShipPrice){
-        outPut = this.props.cartInfo.totalPrice + Number(this.state.ShipPrice)
+    if(this.props.cartInfo.shippingPrice){
+        outPut = this.props.cartInfo.totalPrice + Number(this.props.cartInfo.shippingPrice)
     }
     else{
-        outPut = this.props.cartInfo.totalPrice + Number(this.props.cartInfo.shippingPrice)
+        outPut = this.props.cartInfo.totalPrice + Number(this.state.ShipPrice)
     }
 return outPut
 }
