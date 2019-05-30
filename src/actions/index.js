@@ -86,23 +86,6 @@ export const updatePrev = (thing, action) => {
         }
 }
 
-export const setShipping = (data, action) => {
-    switch(action){
-        case 'city':
-        return {
-            type: "UPDATE_SHIPPING_CITY",
-            payload: data
-        }
-        case 'price':
-        return {
-            type: "UPDATE_SHIPPING_PRICE",
-            payload: data
-        }
-        default:
-        return undefined
-        }
-}
-
 export const loginFunction = (data, action) => {
     switch(action){
         case 'login':

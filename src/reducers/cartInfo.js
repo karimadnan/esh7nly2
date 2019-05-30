@@ -1,8 +1,6 @@
 const initialState = {
     totalPrice: 0,
-    totalItems: 0,
-    shippingPrice: 30,
-    shippingCity: 'Cairo'
+    totalItems: 0
 }
 
 export default function(state = initialState, action){
@@ -14,14 +12,6 @@ export default function(state = initialState, action){
                     totalPrice: state.totalPrice + action.payload.price,     
                     totalItems: state.totalItems + action.payload.items
                 }
-            }
-
-            case 'UPDATE_SHIPPING_PRICE': {
-                return { ...state, shippingPrice: action.payload }
-            }
-
-            case 'UPDATE_SHIPPING_CITY': {
-                return { ...state, shippingCity: action.payload }
             }
 
             case 'UPDATE_CART_REMOVE': {

@@ -11,6 +11,7 @@ let Validator =  {
 		transId:Joi.string().regex(/^[0-9]+$/, 'numbers').min(12).max(12).label('Transaction id'),
 		cart:Joi.array().min(1).required(),
 		totalPrice:Joi.string().required(),
+		shipPrice:Joi.string().required()
 	},
 	signup:{
 		Name:Joi.string().min(3).max(15).required(),
@@ -26,7 +27,7 @@ let Validator =  {
 		City:Joi.string().valid(["Cairo","Giza","Helwan", "6 of october"]).label('City').required(),
 		Area:Joi.string().min(3).max(30).label('Area').required(),
 		StreetNameNo:Joi.string().min(3).max(30).label('Street Address').required(),
-		LocationType:Joi.string().required(),
+		LocationType:Joi.string().valid(["Home","Business"]).label('Location Type').required(),
 		ShippingNote:Joi.string().max(50).label('Shipping Note'),
 		ShippingPrice:Joi.string().required(),
 	},

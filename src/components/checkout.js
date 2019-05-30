@@ -10,7 +10,7 @@ import fortniteDab from '../Images/fortnitedab.png';
 import Modal from 'react-responsive-modal';
 import isInt from 'validator/lib/isInt';
 import {bindActionCreators} from 'redux';
-import {cleanCart, cleanCartInfo, setShipping} from '../actions/index';
+import {cleanCart, cleanCartInfo} from '../actions/index';
 import CurrencyFormat from 'react-currency-format';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -165,7 +165,7 @@ class Checkout extends Component {
         firstName: '',
         lastName: '',
         Phone: '',
-        city: '',
+        city: 'Cairo',
         Area: '',
         StName: '',
         locationType: '',
@@ -178,7 +178,7 @@ class Checkout extends Component {
         ErrorMsg: '',
         SuccessModal: false,
         SuccessMsg: '',
-        ShipPrice: '',
+        ShipPrice: 30,
         shipping:[
             {label: 'Cairo', value: '30'},
             {label: 'Giza', value: '40'},
@@ -194,16 +194,16 @@ class Checkout extends Component {
 
     handleShipping = selectedShipping => {
         this.setState({selectedShipping}, () =>{
-            this.props.setShipping(this.state.selectedShipping.label, 'city')
-            this.props.setShipping(this.state.selectedShipping.value, 'price')
-            this.setState({city: this.state.selectedShipping.label})
+            this.setState({city: this.state.selectedShipping.label, ShipPrice: this.state.selectedShipping.value})
         });
     }
 
     createOrder(){
         const { t } = this.props;
         var that = this
+        var shipCost = this.props.cartInfo.totalPrice > 400 ? 0 : this.state.shipPrice
         var payment;
+
         switch(this.state.paymentMethod){
             case `${t('vodaCash')}`:
                 payment = 'Vodafone Cash'
@@ -217,13 +217,13 @@ class Checkout extends Component {
             case `${t('cashOnDel')}`:
                 payment = 'Cash On Delivery'
             break;
-            default: 
-            return undefined
         }
+        
         var Data = {paymentMethod: payment,
                     orderType: "Products",
                     cart: this.props.cart,
-                    totalPrice: this.props.cartInfo.totalPrice};
+                    totalPrice: this.props.cartInfo.totalPrice,
+                    shipPrice: shipCost};
         if(this.state.transId){
             Data['transId']=this.state.transId
         }
@@ -544,8 +544,6 @@ class Checkout extends Component {
             case `${t('locationHome')}`:
                 locationType = 'Home'
             break;
-            default: 
-            return undefined
         }
         var that = this
         var Data = {FirstName: this.state.firstName, 
@@ -556,7 +554,7 @@ class Checkout extends Component {
                     StreetNameNo: this.state.StName, 
                     LocationType: locationType,
                     ShippingNote: this.state.note,
-                    ShippingPrice: this.props.cartInfo.shippingPrice}
+                    ShippingPrice: this.state.ShipPrice}
         axios.post(this.state.Url+"setUserAddress", Data, {headers: this.state.headers})
         .then(function (response) {
             window.location.reload();
@@ -690,22 +688,11 @@ class Checkout extends Component {
 
 returnGrandTotal(){
 let outPut = 0
-    if(this.props.cartInfo.shippingPrice){
-        outPut = this.props.cartInfo.totalPrice + Number(this.props.cartInfo.shippingPrice)
+    if (this.props.cartInfo.totalPrice > 400){
+        outPut = this.props.cartInfo.totalPrice
     }
     else{
         outPut = this.props.cartInfo.totalPrice + Number(this.state.ShipPrice)
-    }
-return outPut
-}
-
-returnShippingCost(){
-let outPut = 0
-    if(this.props.cartInfo.shippingPrice){
-        outPut = Number(this.props.cartInfo.shippingPrice)
-    }
-    else{
-        outPut = Number(this.state.ShipPrice)
     }
 return outPut
 }
@@ -828,7 +815,7 @@ render(){
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-end" alignItems="center">
                                         <Typography className={classes.shoppingCartPrice}>
-                                           {<CurrencyFormat value={this.returnShippingCost().toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                           {<CurrencyFormat value={Number(this.state.ShipPrice).toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
                                         </Typography>
                                     </Grid>
                                 </div>
@@ -851,7 +838,7 @@ render(){
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
                                         <Typography className={classes.shoppingCartPrice}>
-                                            {<CurrencyFormat value={this.returnShippingCost().toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                            {<CurrencyFormat value={Number(this.state.ShipPrice).toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
                                         </Typography>
                                     </Grid>
                                 </div>
@@ -949,8 +936,7 @@ function mapStateToProps(state){
   const matchDispatchToProps = dispatch => bindActionCreators(
     {
         cleanCart,
-        cleanCartInfo,
-        setShipping
+        cleanCartInfo
     },
     dispatch,
   )
