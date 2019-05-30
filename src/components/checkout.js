@@ -808,7 +808,6 @@ render(){
                         </div>
                         :
                         <div>
-
                             {this.props.cartInfo.totalPrice < 400 ?
                             <div>
                                 <div className="col-xs-6 col-md-6 col-lg-6">

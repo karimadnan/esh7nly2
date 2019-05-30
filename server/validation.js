@@ -27,7 +27,7 @@ let Validator =  {
 		Area:Joi.string().min(3).max(30).label('Area').required(),
 		StreetNameNo:Joi.string().min(3).max(30).label('Street Address').required(),
 		LocationType:Joi.string().valid(["Home","Business"]).label('Location Type').required(),
-		ShippingNote:Joi.string().min(3).max(50).label('Shipping Note'),
+		ShippingNote:Joi.string().max(50).label('Shipping Note'),
 		ShippingPrice:Joi.string().required(),
 	},
 	
