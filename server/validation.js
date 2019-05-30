@@ -9,7 +9,8 @@ let Validator =  {
 		paymentMethod: Joi.string().valid(["Etisalat Cash","Vodafone Cash","Fawry", "Cash On Delivery"]).label('Payment Method').required(),
 		orderType: Joi.string().valid(["Games","Products"]).label('Order Type').required(),
 		transId:Joi.string().regex(/^[0-9]+$/, 'numbers').min(12).max(12).label('Transaction id'),
-		cart:Joi.array().min(1).required()
+		cart:Joi.array().min(1).required(),
+		totalPrice:Joi.string().required(),
 	},
 	signup:{
 		Name:Joi.string().min(3).max(15).required(),
@@ -26,7 +27,8 @@ let Validator =  {
 		Area:Joi.string().min(3).max(30).label('Area').required(),
 		StreetNameNo:Joi.string().min(3).max(30).label('Street Address').required(),
 		LocationType:Joi.string().valid(["Home","Business"]).label('Location Type').required(),
-		ShippingNote:Joi.string().min(3).max(50).label('Shipping Note')
+		ShippingNote:Joi.string().min(3).max(50).label('Shipping Note'),
+		ShippingPrice:Joi.string().required(),
 	},
 	
 	check: function (body, validateTarget) {

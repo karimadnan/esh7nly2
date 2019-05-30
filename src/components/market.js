@@ -645,7 +645,7 @@ if (this.state.view === "item"){
         prev.colors.forEach((element, index) => {
             let object = {
             label: element.label,
-            value: element.value,
+            value: element.value, 
             index: index
         }
             colors.push(object)

@@ -22,6 +22,21 @@ import AliceCarousel from 'react-alice-carousel';
 import "react-alice-carousel/lib/alice-carousel.css";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import Snackbar from '@material-ui/core/Snackbar';
+import ReceiptIcon from '@material-ui/icons/Description';
+import Modal from 'react-responsive-modal';
+import { Scrollbars } from 'react-custom-scrollbars';
+import CurrencyFormat from 'react-currency-format';
+
+const receiptStyle = {
+  overlay: {
+    background: fade('#000000', 0.325),
+  },
+  modal: {
+    backgroundColor: '#fff',
+    color: "#212121",
+    borderRadius: '10px',
+  },
+}
 
 const styles = theme => ({
   card:{
@@ -101,6 +116,39 @@ footerFont2: {
     fontSize: 15,
   }
 },
+cartFont: {
+  fontSize: 13,
+  fontWeight: 'bold',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: 17,
+  }
+},
+priceFont: {
+  fontSize: 13,
+  fontWeight: 'bold',
+  color: '#3F51B5',
+  [theme.breakpoints.up('sm')]: {
+    fontSize: 17,
+  }
+},
+shoppingCartFont:{
+  fontSize: 13,
+  fontWeight: 'bold',
+  color: '#212121',
+  margin: theme.spacing.unit,
+  [theme.breakpoints.up('sm')]: {
+    fontSize: 20,
+  }
+},
+shoppingCartPrice:{
+  fontSize: 13,
+  fontWeight: 'bold',
+  color: '#212121',
+  margin: theme.spacing.unit,
+  [theme.breakpoints.up('sm')]: {
+    fontSize: 17,
+  }
+},
 });
 
 class userOrdersHistory extends Component {
@@ -114,11 +162,64 @@ state = {
     loaded: false,
     done: false,
     slideIndex: 0,
-    copied: false
+    copied: false,
+    receipt: false,
+    orderReceipt: []
 }
 
 componentDidMount(){
   this.getUserOrderHistory();
+}
+
+onOpenModal = (type) => {
+  this.setState({[type]: true });
+};
+  
+onCloseModal = (type) => {
+  this.setState({[type]: false });
+};
+
+createReceipt(){
+  const { t } = this.props;
+  const { classes } = this.props;
+  let outPut = []
+  this.state.orderReceipt.map((item, index) => {
+    
+    let productName = item.Name
+    if(item.option){
+        productName = `(${item.option}) ` + productName
+    }
+    if(item.size){
+        productName = `(${item.size.charAt(0).toUpperCase()}) `+ productName
+    }
+    if(item.color){
+        productName = `(${item.color.toUpperCase()}) `+ productName
+    }
+    
+    outPut.push(<div key={index} className="col-xs-12 col-md-12 col-lg-12" style={{margin: 10}}>
+        <div className="col-xs-4 col-md-4 col-lg-4">
+            <img src={item.defaultImage} alt={'Product'} className="userOrdersImages" />
+        </div>
+        <div className="col-xs-8 col-md-8 col-lg-8">
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                <Typography className={classes.cartFont}>
+                    {productName.length > 40 ? (((productName).substring(0,40-3)) + '...') : productName}
+                </Typography>
+            </div>          
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                <Typography className={classes.priceFont}>
+                    <CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> {t('currency')}
+                </Typography>
+            </div>  
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                <Typography className={classes.cartFont}>
+                      {t('quantity')}: {item.quantity}
+                </Typography>
+            </div>  
+        </div>
+    </div>)
+})
+return outPut
 }
 
 getUserOrderHistory(){
@@ -135,10 +236,10 @@ getUserOrderHistory(){
 render(){
 const { t } = this.props;
 const { classes } = this.props;
+const grandTotal = 400
 if(this.state.done){
     if(this.state.loaded){
         if(this.state.ordersData){
-          console.log(this.state.ordersData, "History")
         let history =  this.state.ordersData.map((order, index) =>{
           const ID = order._id
           if(i18next.language === "EN"){
@@ -201,17 +302,89 @@ if(this.state.done){
                   </CardActionArea>
                   <CardActions>
                     <Grid container justify="center" alignItems="center">
+                        <Chip
+                          icon={<ReceiptIcon />}
+                          onClick={()=>{this.setState({receipt: true, orderReceipt: order.cart})}}
+                          label={`${t('Order Receipt')}`}
+                          className={classes.chipView}
+                          color={'primary'}
+                        />
                       <CopyToClipboard text={order._id}>
                         <Chip
                             onClick={()=>{this.setState({copied: true})}}
                             label={`${t('orderID', {ID})}`}
                             className={classes.chipView}
-                            color={'primary'}
+                            color={'default'}
                           />
                       </CopyToClipboard>
                     </Grid>
                   </CardActions>
                 </Card>
+                <Modal open={this.state.receipt} onClose={this.onCloseModal.bind(this,'receipt')} center
+                    styles={receiptStyle}
+                    showCloseIcon={false}>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.10)}}>
+                          <Grid container justify="center" alignItems="center">
+                              <Typography className={classes.shoppingCartPrice}>
+                                  {t('orderReceipt')}
+                              </Typography>    
+                          </Grid>
+                      </div>
+                      <Scrollbars autoHeight 
+                                  autoHeightMin={100} 
+                                  autoHeightMax={300}
+                                  renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
+                              {this.createReceipt()}
+                      </Scrollbars>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-start" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          {t('subTotal')}:
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-end" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                      </div>     
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-start" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          {t('shipping')}:
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-end" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                      </div>   
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.3)}}>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-start" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          {t('grandTotal')}:
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-end" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                      </div>   
+                </Modal>
                 <Snackbar
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     open={this.state.copied}
@@ -287,17 +460,35 @@ if(this.state.done){
                 </CardActionArea>
                 <CardActions>
                   <Grid container justify="center" alignItems="center">
+                    <Chip
+                      icon={<ReceiptIcon />}
+                      onClick={()=>{this.setState({receipt: true, orderReceipt: order.cart})}}
+                      label={`${t('Order Receipt')}`}
+                      className={classes.chipView}
+                      color={'primary'}
+                    />
                     <CopyToClipboard text={order._id}>
                       <Chip
                           onClick={()=>{this.setState({copied: true})}}
                           label={`${t('orderID', {ID})}`}
                           className={classes.chipView}
-                          color={'primary'}
+                          color={'default'}
                         />
                     </CopyToClipboard>
                   </Grid>
                 </CardActions>
               </Card>
+              <Modal open={this.state.receipt} onClose={this.onCloseModal.bind(this,'receipt')} center
+                    styles={receiptStyle}>
+                        {this.state.orderReceipt.map((item, index) => {
+                            console.log(item, "ITEM")
+                            return(
+                              <div key={index}>
+                                  
+                              </div>
+                            )
+                        })}
+              </Modal>
               <Snackbar
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   open={this.state.copied}

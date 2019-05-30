@@ -17,7 +17,7 @@ const orderApis = {
         if(!user){
             return res.status(400).send({message:"Invalid User"})
         }
-        else if(user.status !="active"){
+        else if(user.status =="banned"){
             return res.status(400).send({message:"Banned users can't place orders"})      
         }
         else if(user.status =="pending"){

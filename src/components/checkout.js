@@ -10,7 +10,7 @@ import fortniteDab from '../Images/fortnitedab.png';
 import Modal from 'react-responsive-modal';
 import isInt from 'validator/lib/isInt';
 import {bindActionCreators} from 'redux';
-import {cleanCart, cleanCartInfo} from '../actions/index';
+import {cleanCart, cleanCartInfo, setShipping} from '../actions/index';
 import CurrencyFormat from 'react-currency-format';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -29,6 +29,7 @@ import {Helmet} from "react-helmet";
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Avatar from '@material-ui/core/Avatar';
+import Select from 'react-select';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -137,6 +138,20 @@ const ErrorStyle = {
     },
   }
 
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: '1px dotted black',
+      color: state.isSelected ? 'white' : '#212121',
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+  
+      return { ...provided, opacity, transition };
+    }
+  }
+
 class Checkout extends Component {
 
     state={
@@ -162,11 +177,26 @@ class Checkout extends Component {
         ErrorModal: false,
         ErrorMsg: '',
         SuccessModal: false,
-        SuccessMsg: ''
+        SuccessMsg: '',
+        shipping:[
+            {label: 'Cairo', value: '30'},
+            {label: 'Giza', value: '40'},
+            {label: 'Helwan', value: '50'},
+            {label: '6 of october', value: '60'}
+        ],
+        selectedShipping: ''
     }
 
     componentDidMount(){
         this.getShippingData()
+    }
+
+    handleShipping = selectedShipping => {
+        this.setState({selectedShipping}, () =>{
+            this.props.setShipping(this.state.selectedShipping.label, 'city')
+            this.props.setShipping(this.state.selectedShipping.value, 'price')
+            this.setState({city: this.state.selectedShipping.label})
+        });
     }
 
     createOrder(){
@@ -191,7 +221,8 @@ class Checkout extends Component {
         }
         var Data = {paymentMethod: payment,
                     orderType: "Products",
-                    cart: this.props.cart};
+                    cart: this.props.cart,
+                    totalPrice: this.props.cartInfo.totalPrice};
         if(this.state.transId){
             Data['transId']=this.state.transId
         }
@@ -291,13 +322,14 @@ class Checkout extends Component {
                 <div className="col-xs-12 col-md-12 col-lg-12">
                     <div className="col-xs-12 col-md-6 col-lg-6">
                         <label style={{color: this.state.city !== '' ? "green" : "red"}}>{this.state.city !== '' ? "":'*'} {t('city')}</label>
-                        <select className="form-control" id="sel1" value={this.state.city} onChange={e => this.updateInput("city", e.target.value)}>
-                            <option>{t('select')}</option>
-                            <option>{t('cairo')}</option>
-                            <option>{t('giza')}</option>
-                            <option>{t('helwan')}</option>
-                            <option>{t('6oct')}</option>
-                        </select>
+                        <Select
+                            isSearchable={false}
+                            isMulti={false}
+                            styles={customStyles}
+                            value={this.state.selectedShipping}
+                            onChange={this.handleShipping}
+                            options={this.state.shipping} placeholder={t('shipping')}
+                        /> 
                     </div>
                     <div className="col-xs-12 col-md-6 col-lg-6">
                         <label style={{color: this.state.Area.length > 4 ? "green" : "red"}}>{this.state.Area.length > 4 ? "":'*'} {t('area')}</label>
@@ -472,13 +504,13 @@ class Checkout extends Component {
         this.setState({[type]: false });
     };
 
+
     getShippingData(){
         if(this.props.loginData.loggedState && !this.props.loginData.isAdmin){
             var that = this
             axios.get(`${this.state.Url}getUserAddress`, {headers: this.state.headers})
             .then(success => {
                 const shipping = success.data.user.ShippingData
-
                     if(shipping){
                         that.setState({firstName: shipping.FirstName, 
                                        lastName: shipping.LastName,
@@ -488,6 +520,7 @@ class Checkout extends Component {
                                        locationType: shipping.LocationType,
                                        StName: shipping.StreetNameNo,
                                        note: shipping.ShippingNote,
+                                       ShipPrice: shipping.ShippingPrice,
                                        gotData: true,
                                        loaded: true})
                     }
@@ -509,7 +542,8 @@ class Checkout extends Component {
                     Area: this.state.Area, 
                     StreetNameNo: this.state.StName, 
                     LocationType: this.state.locationType,
-                    ShippingNote: this.state.note}
+                    ShippingNote: this.state.note,
+                    ShippingPrice: this.props.cartInfo.shippingPrice}
         axios.post(this.state.Url+"setUserAddress", Data, {headers: this.state.headers})
         .then(function (response) {
             window.location.reload();
@@ -877,7 +911,8 @@ function mapStateToProps(state){
   const matchDispatchToProps = dispatch => bindActionCreators(
     {
         cleanCart,
-        cleanCartInfo
+        cleanCartInfo,
+        setShipping
     },
     dispatch,
   )
