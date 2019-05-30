@@ -104,7 +104,7 @@ class Account extends Component {
     handleChange = (event, value) => {
         this.setState({ value });
     };
-
+    
     Current(){
         const userName = this.props.loginData.userName
         const { t } = this.props;

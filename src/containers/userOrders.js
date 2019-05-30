@@ -30,6 +30,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import i18next from 'i18next';
 import Loader from '../containers/loader';
+import AliceCarousel from 'react-alice-carousel';
+import "react-alice-carousel/lib/alice-carousel.css";
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
@@ -174,9 +176,31 @@ render(){
                                 </Grid>
                                 <Divider variant="middle" className={classes.divider}/>
                                 <CardMedia image={'null'}>
-                                    <Grid container justify="center" alignItems="center">
-                                        <img src={row.cart[0].defaultImage} alt={'Product'} style={{margin: 5}} className="userOrdersImages" />
-                                    </Grid>
+                                <AliceCarousel
+                                    items={row.cart.map((image, index)=>{
+                                    return(
+                                    <div key={index}>
+                                        <Grid container justify="center" alignItems="center">
+                                            <img src={image.defaultImage} alt={'Product'} className="userOrdersImages" />
+                                        </Grid>
+                                    </div>
+                                    )})}
+                                    responsive={ {
+                                        0: { items: 1 },
+                                        1024: { items: 1 },
+                                    }}
+                                    autoPlayInterval={3000}
+                                    autoPlayDirection="rtl"
+                                    autoPlay={row.cart && row.cart.length > 1 ? true : false}
+                                    fadeOutAnimation={true}
+                                    mouseDragEnabled={false}
+                                    stopAutoPlayOnHover={true}
+                                    dotsDisabled={true}
+                                    buttonsDisabled={true}
+                                    onSlideChange={this.onSlideChange}
+                                    onSlideChanged={this.onSlideChanged}
+                                    showSlideInfo={row.cart && row.cart.length > 1 ? true : false}
+                                />
                                 </CardMedia>
                             </Card>
                         </div>
@@ -267,8 +291,8 @@ render(){
                   {i18next.language === "EN" ?
                   <CardContent>
                     <Typography gutterBottom variant="h3" component="h2">
-                        {row.Name}
-                    </Typography>
+                        {row.Name.length > 20 ? (((row.Name).substring(0,20-3)) + '...') : row.Name}
+                    </Typography> 
                     <Typography variant="h5" color="textSecondary">
                         <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> {t('currency')}
                     </Typography>
