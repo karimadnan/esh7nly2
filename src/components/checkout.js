@@ -178,6 +178,7 @@ class Checkout extends Component {
         ErrorMsg: '',
         SuccessModal: false,
         SuccessMsg: '',
+        ShipPrice: '',
         shipping:[
             {label: 'Cairo', value: '30'},
             {label: 'Giza', value: '40'},
@@ -790,7 +791,7 @@ render(){
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-end" alignItems="center">
                                         <Typography className={classes.shoppingCartPrice}>
-                                            {`30${t('currency')}`}
+                                            {`${this.state.ShipPrice || this.props.cartInfo.shippingPrice} ${t('currency')}`}
                                         </Typography>
                                     </Grid>
                                 </div>
@@ -813,7 +814,7 @@ render(){
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
                                         <Typography className={classes.shoppingCartPrice}>
-                                            {`30${t('currency')}`}
+                                            {`${this.state.ShipPrice || this.props.cartInfo.shippingPrice} ${t('currency')}`}
                                         </Typography>
                                     </Grid>
                                 </div>
