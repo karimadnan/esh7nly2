@@ -201,7 +201,7 @@ class Checkout extends Component {
     createOrder(){
         const { t } = this.props;
         var that = this
-        var shipCost = this.props.cartInfo.totalPrice > 400 ? 0 : this.state.shipPrice
+        var shipCost = this.props.cartInfo.totalPrice > 400 ? 0 : this.state.ShipPrice
         var payment;
 
         switch(this.state.paymentMethod){
@@ -218,12 +218,12 @@ class Checkout extends Component {
                 payment = 'Cash On Delivery'
             break;
         }
-        
+
         var Data = {paymentMethod: payment,
                     orderType: "Products",
                     cart: this.props.cart,
-                    totalPrice: this.props.cartInfo.totalPrice,
-                    shipPrice: shipCost};
+                    totalPrice: String(this.props.cartInfo.totalPrice),
+                    shipPrice: String(shipCost)};
         if(this.state.transId){
             Data['transId']=this.state.transId
         }
@@ -243,9 +243,9 @@ class Checkout extends Component {
         const { t } = this.props;
         if(this.state.currentIndex === 3){
                 return(
-                    <div>
+                    <div style={{textAlign: i18next.language === "EN" ? 'left' : 'right'}}>
                         <h1 style={{color: "green"}}>{t('madeOrder')}</h1>
-                        <p style={{color: "black"}}><span style={{color: "purple", cursor: "pointer"}} onClick={()=>{ReactRouter.goTo("/account")}}>{t('madeOrderText')}<span className="glyphicon glyphicon-user"></span></span></p>
+                        <p style={{color: "black"}}><span style={{color: "#3F51B5", cursor: "pointer"}} onClick={()=>{ReactRouter.goTo("/account")}}>{t('madeOrderText')}<span className="glyphicon glyphicon-user"></span></span></p>
                     </div>    
                 )
         }
@@ -738,7 +738,7 @@ render(){
             <div className="cartBG">
                    {!this.state.cart && this.state.currentIndex !== 3 && this.props.cartInfo.totalItems > 0 ? 
                    
-                <div style={{backgroundColor: fade('#f2efef', 0.625)}}>
+                <div style={{backgroundColor: fade('#3F51B5', 0.10)}}>
                     <Grid container justify="center" alignItems="center">
                         <Typography className={classes.shoppingCartFont}>
                             {t('yourCart')}
@@ -746,7 +746,7 @@ render(){
                     </Grid>
                 </div>
                 :
-                <div style={{backgroundColor: fade('#f2efef', 0.625)}}>
+                <div style={{backgroundColor: fade('#3F51B5', 0.10)}}>
                     <Grid container justify="center" alignItems="center">
                         <Typography className={classes.shoppingCartFont}>
                             {t('emptyCart')}   
@@ -763,7 +763,7 @@ render(){
 
                {this.props.cartInfo.totalItems > 0 ?   
                 <div>  
-                    <div className="row" style={{backgroundColor: fade('#f2efef', 0.625)}}>
+                    <div className="row" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
                     {i18next.language === "EN" ?
                         <div>
                             <div className="col-xs-6 col-md-6 col-lg-6">
@@ -864,7 +864,7 @@ render(){
 
                 </div>
 
-                <div className="row" style={{backgroundColor: fade('#ccc7c7', 1)}}>
+                <div className="row" style={{backgroundColor: fade('#3F51B5', 0.3)}}>
                 {i18next.language === "EN" ?
                     <div>
                         <div className="col-xs-6 col-md-6 col-lg-6">

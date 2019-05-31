@@ -272,6 +272,8 @@ const orderApis = {
         "comment":1,
         "endedAt":1,
         "endedBy":1,
+        "totalPrice": 1,
+        "shipPrice": 1,
         "cart":1,
         "paymentMethod": 1}}
         ]).toArray(function(err, docs) {

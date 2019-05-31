@@ -236,12 +236,15 @@ getUserOrderHistory(){
 render(){
 const { t } = this.props;
 const { classes } = this.props;
-const grandTotal = 400
 if(this.state.done){
     if(this.state.loaded){
         if(this.state.ordersData){
         let history =  this.state.ordersData.map((order, index) =>{
           const ID = order._id
+          const totalPrice = Number(order.totalPrice)
+          const shippingCost = Number(order.shipPrice)
+          const grandTotal = totalPrice + shippingCost
+          console.log(order, "ORDER")
           if(i18next.language === "EN"){
           return(
               <div key={index} className="col-xs-12 col-md-12 col-lg-12">
@@ -347,7 +350,7 @@ if(this.state.done){
                               <div className="col-xs-6 col-md-6 col-lg-6">
                                   <Grid container justify="flex-end" alignItems="center">
                                       <Typography className={classes.shoppingCartPrice}>
-                                          {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                          {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
                                       </Typography>    
                                   </Grid>
                               </div>
@@ -363,7 +366,7 @@ if(this.state.done){
                               <div className="col-xs-6 col-md-6 col-lg-6">
                                   <Grid container justify="flex-end" alignItems="center">
                                       <Typography className={classes.shoppingCartPrice}>
-                                          {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                          {<CurrencyFormat value={shippingCost.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
                                       </Typography>    
                                   </Grid>
                               </div>

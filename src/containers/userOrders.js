@@ -210,9 +210,10 @@ render(){
             )
   }
   else if(this.state.showRow){
-    var totalPrice = 0
+    console.log(this.state.MyRow, "ROW")
     var steps = [`${t('orderPending')}`, `${t('orderOnGoing')}`, `${t('orderOnWay')}`];
     var step;
+    const totalPrice = Number(this.state.MyRow.totalPrice) + Number(this.state.MyRow.shipPrice)
 
     switch(this.state.MyRow.status){
         case 'pending':
@@ -224,13 +225,7 @@ render(){
         case 'Passed':
             step = 2
         break;
-        default:
-        return undefined
     }
-
-    this.state.MyRow.cart.map(row => {
-            totalPrice = totalPrice + row.price
-    })
 
     return(
     <div>
@@ -240,8 +235,8 @@ render(){
             </Fab>
             {this.state.MyRow.status !== 'Failed' ?
             <Stepper activeStep={step} alternativeLabel>
-            {steps.map(label => (
-                <Step key={label}>
+            {steps.map((label, index) => (
+                <Step key={index}>
                 <StepLabel>{<h4>{label}</h4>}</StepLabel>
                 </Step>))}
             </Stepper>
@@ -280,12 +275,12 @@ render(){
                     <ListItemIcon>{<OrderComment />}</ListItemIcon>
                 </ListItem>
             </div>}
-        {this.state.MyRow.cart.map(row => {
+        {this.state.MyRow.cart.map((row, index) => {
             return(
-            <div className="col-xs-12 col-md-4 col-lg-4">
+            <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
             <Card className={classes.card}>
                 <CardActionArea>
-                  <CardMedia>
+                  <CardMedia image={'null'}>
                     <img src={row.defaultImage} alt={'Product'} className="userOrdersImages" />
                   </CardMedia>
                   {i18next.language === "EN" ?
