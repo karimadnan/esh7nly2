@@ -244,7 +244,7 @@ if(this.state.done){
           const totalPrice = Number(order.totalPrice)
           const shippingCost = Number(order.shipPrice)
           const grandTotal = totalPrice + shippingCost
-          console.log(order, "ORDER")
+
           if(i18next.language === "EN"){
           return(
               <div key={index} className="col-xs-12 col-md-12 col-lg-12">
@@ -308,7 +308,7 @@ if(this.state.done){
                         <Chip
                           icon={<ReceiptIcon />}
                           onClick={()=>{this.setState({receipt: true, orderReceipt: order.cart})}}
-                          label={`${t('Order Receipt')}`}
+                          label={`${t('orderReceipt')}`}
                           className={classes.chipView}
                           color={'primary'}
                         />
@@ -466,7 +466,7 @@ if(this.state.done){
                     <Chip
                       icon={<ReceiptIcon />}
                       onClick={()=>{this.setState({receipt: true, orderReceipt: order.cart})}}
-                      label={`${t('Order Receipt')}`}
+                      label={`${t('orderReceipt')}`}
                       className={classes.chipView}
                       color={'primary'}
                     />
@@ -482,16 +482,70 @@ if(this.state.done){
                 </CardActions>
               </Card>
               <Modal open={this.state.receipt} onClose={this.onCloseModal.bind(this,'receipt')} center
-                    styles={receiptStyle}>
-                        {this.state.orderReceipt.map((item, index) => {
-                            console.log(item, "ITEM")
-                            return(
-                              <div key={index}>
-                                  
+                    styles={receiptStyle}
+                    showCloseIcon={false}>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.10)}}>
+                          <Grid container justify="center" alignItems="center">
+                              <Typography className={classes.shoppingCartPrice}>
+                                  {t('orderReceipt')}
+                              </Typography>    
+                          </Grid>
+                      </div>
+                      <Scrollbars autoHeight 
+                                  autoHeightMin={100} 
+                                  autoHeightMax={300}
+                                  renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
+                              {this.createReceipt()}
+                      </Scrollbars>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-start" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                      </Typography>    
+                                  </Grid>
                               </div>
-                            )
-                        })}
-              </Modal>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-end" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          :{t('subTotal')}
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                      </div>     
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-start" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          {<CurrencyFormat value={shippingCost.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-end" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          :{t('shipping')}
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                      </div>   
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.3)}}>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-start" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          {<CurrencyFormat value={grandTotal.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                              <div className="col-xs-6 col-md-6 col-lg-6">
+                                  <Grid container justify="flex-end" alignItems="center">
+                                      <Typography className={classes.shoppingCartPrice}>
+                                          :{t('grandTotal')}
+                                      </Typography>    
+                                  </Grid>
+                              </div>
+                      </div>   
+                </Modal>
               <Snackbar
                   anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                   open={this.state.copied}

@@ -166,7 +166,8 @@
       "lastComment": "اخر تعليق",
       "orderID": "{{ID}} :رقم الاوردر",
       "orderPassed": "ناجح",
-      "orderFailed": "فشل"
+      "orderFailed": "فشل",
+      "orderReceipt": "الفاتورة"
 
 
 }
