@@ -39,9 +39,15 @@ const receiptStyle = {
 }
 
 const styles = theme => ({
-  card:{
+  cardEN:{
     backgroundColor: fade('#3F51B5', 0.225),
-    margin: theme.spacing.unit
+    margin: theme.spacing.unit,
+    borderLeft: '3px solid #3F51B5'
+  },
+  cardAR:{
+    backgroundColor: fade('#3F51B5', 0.225),
+    margin: theme.spacing.unit,
+    borderRight: '3px solid #3F51B5'
   },
   avatarPassed: {
     backgroundColor: fade('#4CAF50', 0.725),
@@ -73,10 +79,10 @@ const styles = theme => ({
   },
   chipView: {
     margin: theme.spacing.unit,
-    fontSize: 11,
+    fontSize: 12,
     cursor: 'pointer',
     [theme.breakpoints.up('sm')]: {
-      fontSize: 14,
+      fontSize: 17,
     }
 },
 statusFont: {
@@ -248,7 +254,7 @@ if(this.state.done){
           if(i18next.language === "EN"){
           return(
               <div key={index} className="col-xs-12 col-md-12 col-lg-12">
-                <Card className={classes.card}>
+                <Card className={classes.cardEN}>
                   <CardHeader
                       avatar={
                         <Avatar aria-label="Order" className={order.status === 'Passed' ? classes.avatarPassed : classes.avatarFailed}>
@@ -339,7 +345,7 @@ if(this.state.done){
                                   renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
                               {this.createReceipt()}
                       </Scrollbars>
-                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2), borderLeft: '3px solid #3F51B5'}}>
                               <div className="col-xs-6 col-md-6 col-lg-6">
                                   <Grid container justify="flex-start" alignItems="center">
                                       <Typography className={classes.shoppingCartPrice}>
@@ -355,7 +361,7 @@ if(this.state.done){
                                   </Grid>
                               </div>
                       </div>     
-                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2), borderLeft: '3px solid #3F51B5'}}>
                               <div className="col-xs-6 col-md-6 col-lg-6">
                                   <Grid container justify="flex-start" alignItems="center">
                                       <Typography className={classes.shoppingCartPrice}>
@@ -371,7 +377,7 @@ if(this.state.done){
                                   </Grid>
                               </div>
                       </div>   
-                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.3)}}>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.3), borderLeft: '3px solid #3F51B5'}}>
                               <div className="col-xs-6 col-md-6 col-lg-6">
                                   <Grid container justify="flex-start" alignItems="center">
                                       <Typography className={classes.shoppingCartPrice}>
@@ -405,7 +411,7 @@ if(this.state.done){
         else{
           return(
             <div key={index} className="col-xs-12 col-md-12 col-lg-12" style={{textAlign: 'right'}}>
-              <Card className={classes.card}>
+              <Card className={classes.cardAR}>
                 <Grid container justify="flex-end" alignItems="center">
                   <CardHeader
                     title={
@@ -421,8 +427,7 @@ if(this.state.done){
                           <Typography gutterBottom className={classes.statusFont}>
                             {order.status === 'Passed' ? t('orderPassed') : t('orderFailed')}
                           </Typography>
-                        </Avatar>
-                      }
+                        </Avatar>}
                     />
                   </Grid>
                   <CardMedia image={'Null'} style={{textAlign: 'left'}}>
@@ -471,13 +476,13 @@ if(this.state.done){
                       color={'primary'}
                     />
                     <CopyToClipboard text={order._id}>
-                      <Chip
-                          onClick={()=>{this.setState({copied: true})}}
-                          label={`${t('orderID', {ID})}`}
-                          className={classes.chipView}
-                          color={'default'}
-                        />
-                    </CopyToClipboard>
+                        <Chip
+                            onClick={()=>{this.setState({copied: true})}}
+                            label={`${t('orderID', {ID})}`}
+                            className={classes.chipView}
+                            color={'default'}
+                          />
+                      </CopyToClipboard>
                   </Grid>
                 </CardActions>
               </Card>
@@ -497,7 +502,7 @@ if(this.state.done){
                                   renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
                               {this.createReceipt()}
                       </Scrollbars>
-                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2), borderRight: '3px solid #3F51B5'}}>
                               <div className="col-xs-6 col-md-6 col-lg-6">
                                   <Grid container justify="flex-start" alignItems="center">
                                       <Typography className={classes.shoppingCartPrice}>
@@ -513,7 +518,7 @@ if(this.state.done){
                                   </Grid>
                               </div>
                       </div>     
-                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.2), borderRight: '3px solid #3F51B5'}}>
                               <div className="col-xs-6 col-md-6 col-lg-6">
                                   <Grid container justify="flex-start" alignItems="center">
                                       <Typography className={classes.shoppingCartPrice}>
@@ -529,7 +534,7 @@ if(this.state.done){
                                   </Grid>
                               </div>
                       </div>   
-                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.3)}}>
+                      <div className="col-xs-12 col-md-12 col-lg-12" style={{backgroundColor: fade('#3F51B5', 0.3), borderRight: '3px solid #3F51B5'}}>
                               <div className="col-xs-6 col-md-6 col-lg-6">
                                   <Grid container justify="flex-start" alignItems="center">
                                       <Typography className={classes.shoppingCartPrice}>

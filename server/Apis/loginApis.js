@@ -108,7 +108,7 @@ Validator.check(body,'signup').then(success=>{
             if(err){
             console.log(err)
             return res.status(500).send(err);}
-        
+            delete body.Captcha;
             body.Password = hash;
             collection.insertOne(body,(err,result)=>{
                 if(err){
