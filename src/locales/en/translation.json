@@ -166,6 +166,8 @@
       "orderID": "Order ID: {{ID}}",
       "orderPassed": "Passed",
       "orderFailed": "Failed",
-      "orderReceipt": "Order Receipt"
+      "orderReceipt": "Order Receipt",
+      "statusPending": "Pending",
+      "statusOngoing": "On Going"
 
 }

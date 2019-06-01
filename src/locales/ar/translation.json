@@ -167,8 +167,8 @@
       "orderID": "{{ID}} :رقم الطلب ",
       "orderPassed": "ناجح",
       "orderFailed": "فشل",
-      "orderReceipt": "الفاتورة"
-
+      "orderReceipt": "الفاتورة",
+      "statusPending": "قيد الانتظار",
+      "statusOngoing": "جاري التنفيذ"
       
-
 }

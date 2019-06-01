@@ -28,8 +28,8 @@ let Validator =  {
 		Area:Joi.string().min(3).max(30).label('Area').required(),
 		StreetNameNo:Joi.string().min(3).max(30).label('Street Address').required(),
 		LocationType:Joi.string().valid(["Home","Business"]).label('Location Type').required(),
-		ShippingNote:Joi.string().max(100).label('Shipping Note'),
 		ShippingPrice:Joi.string().required(),
+		ShippingNote:Joi.string().max(100).label('Shipping Note'),
 	},
 	
 	check: function (body, validateTarget) {

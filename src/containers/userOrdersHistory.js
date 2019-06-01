@@ -42,12 +42,18 @@ const styles = theme => ({
   cardEN:{
     backgroundColor: fade('#3F51B5', 0.225),
     margin: theme.spacing.unit,
-    borderLeft: '3px solid #3F51B5'
+    borderLeft: '3px solid #3F51B5',
+    '&:hover': {
+      backgroundColor: fade('#3F51B5', 0.325),
+    }
   },
   cardAR:{
     backgroundColor: fade('#3F51B5', 0.225),
     margin: theme.spacing.unit,
-    borderRight: '3px solid #3F51B5'
+    borderRight: '3px solid #3F51B5',
+    '&:hover': {
+      backgroundColor: fade('#3F51B5', 0.325),
+    }
   },
   avatarPassed: {
     backgroundColor: fade('#4CAF50', 0.725),
@@ -270,7 +276,7 @@ if(this.state.done){
                         </Typography>}
                       subheader={
                         <Typography gutterBottom className={classes.headerFont}>
-                            {t('orderFinishDate')} {moment(order.enddedAt).format('LL')}
+                            {t('orderFinishDate')}: {moment(order.enddedAt).format('LL')}
                         </Typography>}
                     />
                     <CardMedia image={'Null'}>

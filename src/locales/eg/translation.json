@@ -167,7 +167,9 @@
       "orderID": "{{ID}} :رقم الاوردر",
       "orderPassed": "ناجح",
       "orderFailed": "فشل",
-      "orderReceipt": "الفاتورة"
+      "orderReceipt": "الفاتورة",
+      "statusPending": "قيد الانتظار",
+      "statusOngoing": "جاري التنفيذ"
 
 
 }

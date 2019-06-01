@@ -36,6 +36,28 @@ import "react-alice-carousel/lib/alice-carousel.css";
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const styles = theme => ({
+    cardEN:{
+        backgroundColor: fade('#3F51B5', 0.225),
+        margin: theme.spacing.unit,
+        minHeight: 350,
+        maxHeight: 350,
+        maxWidth: 'auto',
+        borderLeft: '3px solid #3F51B5',
+        '&:hover': {
+            backgroundColor: fade('#3F51B5', 0.325),
+          }
+      },
+    cardAR:{
+        backgroundColor: fade('#3F51B5', 0.225),
+        margin: theme.spacing.unit,
+        minHeight: 350,
+        maxHeight: 350,
+        maxWidth: 'auto',
+        borderRight: '3px solid #3F51B5',
+        '&:hover': {
+            backgroundColor: fade('#3F51B5', 0.325),
+          }
+      },
     typo1: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -63,13 +85,21 @@ const styles = theme => ({
         height: 150,
         width: 120,
       },
+    firstComment: {
+        margin: theme.spacing.unit,
+        fontSize: 11,
+        color: '#3F51B5',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 15,
+        }
+    },
     pending: {
         margin: 10,
         width: 60,
         height: 60,
         color: '#fff',
         fontWeight: 'bold',
-        backgroundColor: '#3f51b5',
+        backgroundColor: fade('#ff9800', 0.825),
       },
     ongoing: {
         margin: 10,
@@ -77,7 +107,7 @@ const styles = theme => ({
         height: 60,
         color: '#fff',
         fontWeight: 'bold',
-        backgroundColor: fade('#ff9800', 0.625),
+        backgroundColor: '#3f51b5',
       },
     fab: {
         margin: theme.spacing.unit,
@@ -88,20 +118,18 @@ const styles = theme => ({
     Avatar: {
         margin: 10,
     },
+    headerFont2: {
+        fontSize: 10,
+        color: '#212121',
+        fontWeight: 'bold',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 15,
+        }
+    },
     card: {
         minHeight: 350,
         maxHeight: 350,
         marginBottom: theme.spacing.unit,
-        backgroundColor: fade('#3F51B5', 0.225),
-        maxWidth: 'auto',
-        '&:hover': {
-            backgroundColor: fade('#3F51B5', 0.325),
-          }
-      },
-    cardBeforeView: {
-        minHeight: 350,
-        maxHeight: 350,
-        margin: theme.spacing.unit,
         backgroundColor: fade('#3F51B5', 0.225),
         maxWidth: 'auto',
         '&:hover': {
@@ -137,42 +165,51 @@ showRow:false,
 loaded: false
 }
 
-render(){
-  const { t } = this.props;
-  const { classes } = this.props;
+componentDidMount(){
+    this.loadOrderData();
+}
 
-  if (!this.state.loaded){
+loadOrderData(){
+if (!this.state.loaded){
     var that = this
     axios.get(`${this.state.Url}getOrderForuser`, {headers: this.state.headers})
     .then(function (response) {
-      that.setState({ordersData: response.data.data, loaded: true})
+        that.setState({ordersData: response.data.data, loaded: true})
     })
     .catch(function (error) {
-      that.setState({loaded: true})
+        that.setState({loaded: true})
     })
-  }
-  
-  if(this.state.loaded){
-    if (this.state.ordersData.length > 0 && !this.state.showRow){
+    }
+}
+
+drawOrderCards(){
+    const { classes } = this.props;
+    const { t } = this.props; 
+    if(i18next.language === "EN"){
         return (
             this.state.ordersData.map((row, index) => (
                 <div key={index}>
-                    <Tooltip title={<h6>{t('view')}</h6>} aria-label={'View'} placement="top">
+                    <Tooltip title={<h6>{t('View')}</h6>} aria-label={'View'} placement="top">
                         <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
-                            <Card className={classes.cardBeforeView} onClick={ () => {this.setState({MyRow: row, showRow: true})}} style={{cursor: 'pointer'}}>
+                            <Card className={classes.cardEN} onClick={ () => {this.setState({MyRow: row, showRow: true})}} style={{cursor: 'pointer'}}>
                             <CardHeader
                                 avatar={
                                     row.status === 'pending' ?
-                                    <Avatar className={classes.pending}>Pending</Avatar>
+                                    <Avatar className={classes.pending}>{t('statusPending')}</Avatar>
                                 :row.status === 'onGoing' ?
-                                    <Avatar className={classes.ongoing}>OnGoing</Avatar>               
+                                    <Avatar className={classes.ongoing}>{t('statusOngoing')}</Avatar>              
                                 :undefined}
 
-                                title={<h4>{row.comment}</h4>}
+                                title={                        
+                                    <Typography gutterBottom className={classes.headerFont2}>
+                                       {t('orderPaymentMethod')}: {row.paymentMethod} 
+                                    </Typography>}
                                 subheader={<h5>{moment(row.createdAt).format('LL')}</h5>}
                                 />
                                 <Grid container justify="center" alignItems="center">
-                                    <p style={{color: '#3F51B5'}}>{row.status}</p>
+                                    <Typography className={classes.firstComment}>
+                                        {row.comment.length > 40 ? (((row.comment).substring(0,40-3)) + '...') : row.comment}
+                                    </Typography>
                                 </Grid>
                                 <Divider variant="middle" className={classes.divider}/>
                                 <CardMedia image={'null'}>
@@ -208,9 +245,73 @@ render(){
                 </div>)
                 )
             )
-  }
-  else if(this.state.showRow){
-    console.log(this.state.MyRow, "ROW")
+    }
+    else{
+        return (
+            this.state.ordersData.map((row, index) => (
+                <div key={index} style={{textAlign: 'right'}}>
+                    <Tooltip title={<h6>{t('View')}</h6>} aria-label={'View'} placement="top">
+                        <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
+                            <Card className={classes.cardAR} onClick={ () => {this.setState({MyRow: row, showRow: true})}} style={{cursor: 'pointer'}}>
+                            <CardHeader
+                                avatar={
+                                    row.status === 'pending' ?
+                                    <Avatar className={classes.pending}>{t('statusPending')}</Avatar>
+                                :row.status === 'onGoing' ?
+                                    <Avatar className={classes.ongoing}>{t('statusOngoing')}</Avatar>               
+                                :undefined}
+
+                                title={                        
+                                <Typography gutterBottom className={classes.headerFont2}>
+                                    {row.paymentMethod} :{t('orderPaymentMethod')} 
+                                </Typography>}
+                                subheader={<h5>{moment(row.createdAt).format('LL')}</h5>}
+                                />
+                                <Grid container justify="center" alignItems="center">
+                                    <Typography className={classes.firstComment}>
+                                        {row.comment.length > 40 ? (((row.comment).substring(0,40-3)) + '...') : row.comment}
+                                    </Typography>
+                                </Grid>
+                                <Divider variant="middle" className={classes.divider}/>
+                                <CardMedia image={'null'}>
+                                <AliceCarousel
+                                    items={row.cart.map((image, index)=>{
+                                    return(
+                                    <div key={index}>
+                                        <Grid container justify="center" alignItems="center">
+                                            <img src={image.defaultImage} alt={'Product'} className="userOrdersImages" />
+                                        </Grid>
+                                    </div>
+                                    )})}
+                                    responsive={ {
+                                        0: { items: 1 },
+                                        1024: { items: 1 },
+                                    }}
+                                    autoPlayInterval={3000}
+                                    autoPlayDirection="rtl"
+                                    autoPlay={row.cart && row.cart.length > 1 ? true : false}
+                                    fadeOutAnimation={true}
+                                    mouseDragEnabled={false}
+                                    stopAutoPlayOnHover={true}
+                                    dotsDisabled={true}
+                                    buttonsDisabled={true}
+                                    onSlideChange={this.onSlideChange}
+                                    onSlideChanged={this.onSlideChanged}
+                                    showSlideInfo={row.cart && row.cart.length > 1 ? true : false}
+                                />
+                                </CardMedia>
+                            </Card>
+                        </div>
+                    </Tooltip>
+                </div>)
+                )
+            )        
+    }
+}
+
+orderOpen(){
+    const { t } = this.props;
+    const { classes } = this.props; 
     var steps = [`${t('orderPending')}`, `${t('orderOnGoing')}`, `${t('orderOnWay')}`];
     var step;
     const totalPrice = Number(this.state.MyRow.totalPrice) + Number(this.state.MyRow.shipPrice)
@@ -226,7 +327,7 @@ render(){
             step = 2
         break;
     }
-
+if(i18next.language === "EN" ){
     return(
     <div>
             <Fab variant="extended" aria-label="Delete" onClick={()=>{this.setState({showRow: false})}} className={classes.fab}>
@@ -241,99 +342,147 @@ render(){
                 </Step>))}
             </Stepper>
             :undefined}
-        {i18next.language === "EN" ?
-            <div>
-                <ListItem classes={classes.listItem}>
-                    <ListItemIcon>{<Euro />}</ListItemIcon>
-                    <ListItemText primary={<h3>{t('totalPrice')}: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h3>} />
-                </ListItem>
-                <Divider/>
-                <ListItem>
-                    <ListItemIcon>{<OrderStatus />}</ListItemIcon>
-                    <ListItemText primary={<h3>{t('orderStatus')}: {this.state.MyRow.status}</h3>} />
-                </ListItem>
-                <Divider/>
-                <ListItem>
-                    <ListItemIcon>{<OrderComment />}</ListItemIcon>
-                    <ListItemText primary={<h3>{t('orderComment')}: {this.state.MyRow.comment}</h3>} />
-                </ListItem>
-            </div>
-        :
-            <div>
-                <ListItem classes={classes.listItem}>
-                    <ListItemText style={{textAlign: "right"}} primary={<h3>{t('totalPrice')}: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h3>} />
-                    <ListItemIcon>{<Euro />}</ListItemIcon>
-                </ListItem>
-                <Divider/>
-                <ListItem>
-                    <ListItemText style={{textAlign: "right"}} primary={<h3>{this.state.MyRow.status} :{t('orderStatus')}</h3>} />
-                    <ListItemIcon>{<OrderStatus />}</ListItemIcon>
-                </ListItem>
-                <Divider/>
-                <ListItem>
-                    <ListItemText style={{textAlign: "right"}} primary={<h3>{this.state.MyRow.comment} :{t('orderComment')}</h3>} />
-                    <ListItemIcon>{<OrderComment />}</ListItemIcon>
-                </ListItem>
-            </div>}
-        {this.state.MyRow.cart.map((row, index) => {
-            return(
-            <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
-            <Card className={classes.card}>
-                <CardActionArea>
-                  <CardMedia image={'null'}>
-                    <img src={row.defaultImage} alt={'Product'} className="userOrdersImages" />
-                  </CardMedia>
-                  {i18next.language === "EN" ?
-                  <CardContent>
-                    <Typography gutterBottom variant="h3" component="h2">
-                        {row.Name.length > 20 ? (((row.Name).substring(0,20-3)) + '...') : row.Name}
-                    </Typography> 
-                    <Typography variant="h5" color="textSecondary">
-                        <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> {t('currency')}
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary">
-                        {t('quantity')}: x{row.quantity}
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary">
-                        {row.size && `${t('size')}: ${row.size}` }
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary">
-                        {row.info && `Type: ${row.info}`}
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary">
-                         {row.color && `${t('color')}: ${row.color}`}
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary">
-                         {row.option && `${t('option')}: ${row.option}`}
-                    </Typography>
-                  </CardContent>
-                  :
-                  <CardContent style={{textAlign: 'right'}}>
-                    <Typography gutterBottom variant="h3" component="h2">
-                        {row.Name}
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary">
-                            {t('currency')} <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> 
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary">
-                        {row.quantity}x : {t('quantity')}
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary">
-                        {row.size && `${row.size} :${t('size')}` }
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary" >
-                        {row.color && `${row.color} :${t('color')}`}
-                    </Typography>
-                    <Typography variant="h5" color="textSecondary">
-                        {row.option && `${row.option} :${t('optionSelected')}`}
-                    </Typography>
-                 </CardContent>}
-                </CardActionArea>
-            </Card>
-            </div>)
-           })}
+
+            <ListItem classes={classes.listItem}>
+                <ListItemIcon>{<Euro />}</ListItemIcon>
+                <ListItemText primary={<h3>{t('totalPrice')}: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h3>} />
+            </ListItem>
+            <Divider/>
+            <ListItem>
+                <ListItemIcon>{<OrderStatus />}</ListItemIcon>
+                <ListItemText primary={<h3>{t('orderStatus')}: {this.state.MyRow.status}</h3>} />
+            </ListItem>
+            <Divider/>
+            <ListItem>
+                <ListItemIcon>{<OrderComment />}</ListItemIcon>
+                <ListItemText primary={<h3>{t('orderComment')}: {this.state.MyRow.comment}</h3>} />
+            </ListItem>
+            {this.state.MyRow.cart.map((row, index) => {
+                return(
+                <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
+                <Card className={classes.card}>
+                    <CardActionArea>
+                    <CardMedia image={'null'}>
+                        <img src={row.defaultImage} alt={'Product'} className="userOrdersImages" />
+                    </CardMedia>
+                    <CardContent>
+                        <Typography gutterBottom variant="h3" component="h2">
+                            {row.Name.length > 20 ? (((row.Name).substring(0,20-3)) + '...') : row.Name}
+                        </Typography> 
+                        <Typography variant="h5" color="textSecondary">
+                            <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> {t('currency')}
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                            {t('quantity')}: x{row.quantity}
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                            {row.size && `${t('size')}: ${row.size}` }
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                            {row.info && `Type: ${row.info}`}
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                            {row.color && `${t('color')}: ${row.color}`}
+                        </Typography>
+                        <Typography variant="h5" color="textSecondary">
+                            {row.option && `${t('option')}: ${row.option}`}
+                        </Typography>
+                    </CardContent>
+
+                    </CardActionArea>
+                </Card>
+                </div>)
+            })}
     </div>
     )
+}
+else{
+    return(
+    <div>
+    <Fab variant="extended" aria-label="Delete" onClick={()=>{this.setState({showRow: false})}} className={classes.fab}>
+        <BackIcon className={classes.extendedIcon} />
+            {t('back')}
+    </Fab>
+    {this.state.MyRow.status !== 'Failed' ?
+    <Stepper activeStep={step} alternativeLabel>
+    {steps.map((label, index) => (
+        <Step key={index}>
+        <StepLabel>{<h4>{label}</h4>}</StepLabel>
+        </Step>))}
+    </Stepper>
+    :undefined}
+
+    <ListItem classes={classes.listItem}>
+        <ListItemText style={{textAlign: "right"}} primary={<h3>{t('totalPrice')}: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h3>} />
+        <ListItemIcon>{<Euro />}</ListItemIcon>
+    </ListItem>
+    <Divider/>
+    <ListItem>
+        <ListItemText style={{textAlign: "right"}} primary={<h3>{this.state.MyRow.status} :{t('orderStatus')}</h3>} />
+        <ListItemIcon>{<OrderStatus />}</ListItemIcon>
+    </ListItem>
+    <Divider/>
+    <ListItem>
+        <ListItemText style={{textAlign: "right"}} primary={<h3>{this.state.MyRow.comment} :{t('orderComment')}</h3>} />
+        <ListItemIcon>{<OrderComment />}</ListItemIcon>
+    </ListItem>
+    {this.state.MyRow.cart.map((row, index) => {
+    return(
+    <div className="col-xs-12 col-md-4 col-lg-4" key={index}>
+    <Card className={classes.card}>
+        <CardActionArea>
+        <CardMedia image={'null'}>
+            <img src={row.defaultImage} alt={'Product'} className="userOrdersImages" />
+        </CardMedia>
+        <CardContent style={{textAlign: 'right'}}>
+            <Typography gutterBottom variant="h3" component="h2">
+                {row.Name}
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                    {t('currency')} <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> 
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                {row.quantity}x : {t('quantity')}
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                {row.size && `${row.size} :${t('size')}` }
+            </Typography>
+            <Typography variant="h5" color="textSecondary" >
+                {row.color && `${row.color} :${t('color')}`}
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                {row.option && `${row.option} :${t('optionSelected')}`}
+            </Typography>
+        </CardContent>
+        </CardActionArea>
+    </Card>
+    </div>)
+    })}
+    </div>
+    )
+}
+}
+
+render(){
+  const { t } = this.props;
+  const { classes } = this.props;
+
+  if(this.state.loaded){
+    if (this.state.ordersData.length > 0){
+        if(!this.state.showRow){
+            return(
+                <div>
+                    {this.drawOrderCards()}
+                </div>
+            )
+        }
+        else{
+            return(
+                <div>
+                    {this.orderOpen()}
+                </div>
+            )
+      }
   }
   else{
     return(

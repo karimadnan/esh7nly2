@@ -70,6 +70,7 @@ const styles = theme => ({
       },
     card: {
         minHeight: 350,
+        maxHeight: 350,
         maxWidth: 'auto',
         margin: theme.spacing.unit,
         backgroundColor: fade('#3e2723', 0.225),
@@ -158,8 +159,6 @@ const styles = theme => ({
         margin: theme.spacing.unit,
         fontSize: 11,
         color: 'brown',
-        whiteSpace: 'normal',
-        wordWrap: 'break-word',
         [theme.breakpoints.up('sm')]: {
           fontSize: 15,
         }
@@ -264,7 +263,7 @@ class AdminOrders extends Component {
                                 />
                                 <Grid container justify="center" alignItems="center">
                                     <Typography className={classes.firstComment}>
-                                        {order.comment}
+                                        {order.comment.length > 40 ? (((order.comment).substring(0,40-3)) + '...') : order.comment}
                                     </Typography>
                                 </Grid>
                                 <Divider variant="middle" className={classes.divider}/>
@@ -396,8 +395,7 @@ render(){
     const { classes } = this.props;
 
     if(this.state.openOrder){
-        let totalPrice = 300
-        // Number(this.state.order.totalPrice) + Number(this.state.order.shipPrice)
+        let totalPrice = Number(this.state.order.totalPrice) + Number(this.state.order.shipPrice)
         return(
         <div>
             <MuiThemeProvider theme={theme}>
@@ -453,7 +451,7 @@ render(){
                     <div className="col-xs-12 col-md-12 col-lg-12">
                         <div className="col-xs-12 col-md-8 col-lg-8">
                             <form className={classes.container} noValidate autoComplete="off">
-                                <textarea placeHolder="Comment" onChange={e => this.setState({updateComment: e.target.value})} value={this.state.updateComment} class="form-control" rows="2" id="comment"></textarea>
+                                <textarea placeholder="Comment" onChange={e => this.setState({updateComment: e.target.value})} value={this.state.updateComment} className="form-control" rows="2" id="comment"></textarea>
                             </form>
                         </div>
                         <div className="col-xs-12 col-md-4 col-lg-4">
