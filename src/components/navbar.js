@@ -122,6 +122,9 @@ const styles = theme => ({
       display: 'none',
     },
   },
+  selectedListItem:{
+      borderLeft: '4px solid #3F51B5'
+  }
 });
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
@@ -259,17 +262,17 @@ class Navbar extends React.Component {
 
           <Divider variant="middle" classes={{root: classes.divider}}/>
 
-          <ListItem onClick={()=>{this.handleChange(null, 0)}} button key={t('home')} selected={page === 0}>
+          <ListItem onClick={()=>{this.handleChange(null, 0)}} button key={t('home')} selected={page === 0} classes={{selected: classes.selectedListItem}}>
               <ListItemIcon className={classes.textColor}>{<Home />}</ListItemIcon>
               <ListItemText classes={{ primary: classes.textColor }} primary={t('home')} />
           </ListItem>
 
-          <ListItem onClick={()=>{this.handleChange(null, 1)}} button key={t('market')} selected={page === 1}>
+          <ListItem onClick={()=>{this.handleChange(null, 1)}} button key={t('market')} selected={page === 1} classes={{selected: classes.selectedListItem}}>
               <ListItemIcon className={classes.textColor}>{<ShoppingCart />}</ListItemIcon>
               <ListItemText classes={{ primary: classes.textColor }} primary={t('market')} />
           </ListItem>
 
-          <ListItem onClick={()=>{this.handleChange(null, 2)}} button key={t('contact')} selected={page === 2}>
+          <ListItem onClick={()=>{this.handleChange(null, 2)}} button key={t('contact')} selected={page === 2} classes={{selected: classes.selectedListItem}}>
               <ListItemIcon className={classes.textColor}>{<Phone />}</ListItemIcon>
               <ListItemText classes={{ primary: classes.textColor }} primary={t('contact')} />
           </ListItem>

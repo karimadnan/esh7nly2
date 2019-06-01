@@ -36,6 +36,9 @@ import NextIcon from '@material-ui/icons/Done';
 import Motorcycle from '@material-ui/icons/Motorcycle';
 import Failed from '@material-ui/icons/ReportProblem';
 import Fake from '@material-ui/icons/ThumbDown';
+import AliceCarousel from 'react-alice-carousel';
+import "react-alice-carousel/lib/alice-carousel.css";
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const theme = createMuiTheme({
     palette: {
@@ -47,16 +50,14 @@ const theme = createMuiTheme({
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const styles = theme => ({
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 280,
-        [theme.breakpoints.up('sm')]: {
-            width: 420,
-          }
-    },
     fab:{
-        margin: theme.spacing.unit
+        margin: theme.spacing.unit,
+        fontSize: 13,
+        minWidth: 200,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 14,
+          minWidth: 0,
+        }
     },
     panel:{
         margin: theme.spacing.unit,
@@ -69,7 +70,6 @@ const styles = theme => ({
       },
     card: {
         minHeight: 350,
-        maxHeight: 350,
         maxWidth: 'auto',
         margin: theme.spacing.unit,
         backgroundColor: fade('#3e2723', 0.225),
@@ -95,6 +95,9 @@ const styles = theme => ({
         margin: '0 auto',
         height: 250,
         width: 250
+    },
+    column: {
+        flexBasis: '100%',
     },
     extendedIcon1: {
         marginRight: theme.spacing.unit * 2,
@@ -142,6 +145,40 @@ const styles = theme => ({
         fontSize: 14,
         [theme.breakpoints.up('sm')]: {
           fontSize: 20,
+        }
+    },
+    respFont: {
+        margin: theme.spacing.unit,
+        fontSize: 13,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 18,
+        }
+    },
+    firstComment: {
+        margin: theme.spacing.unit,
+        fontSize: 11,
+        color: 'brown',
+        whiteSpace: 'normal',
+        wordWrap: 'break-word',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 15,
+        }
+    },
+    commentFont: {
+        margin: theme.spacing.unit,
+        fontSize: 13,
+        whiteSpace: 'normal',
+        wordWrap: 'break-word',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 18,
+        }
+    },
+    infoFont: {
+        margin: theme.spacing.unit,
+        fontSize: 14,
+        color: 'white',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 18,
         }
     },
 });
@@ -226,20 +263,38 @@ class AdminOrders extends Component {
                                 subheader={<h5>{moment(order.createdAt).format('LL')}</h5>}
                                 />
                                 <Grid container justify="center" alignItems="center">
-                                    <p style={{color: 'brown'}}>{order.comment}</p>
+                                    <Typography className={classes.firstComment}>
+                                        {order.comment}
+                                    </Typography>
                                 </Grid>
                                 <Divider variant="middle" className={classes.divider}/>
-                                {order.cart.map((imgs, index) => {
+                                <CardMedia image={'null'}>
+                                <AliceCarousel
+                                    items={order.cart.map((image, index)=>{
                                     return(
-                                    <div className="col-xs-2 col-md-2 col-lg-2" key={index}>
-                                    <CardMedia
-                                        className={classes.media}
-                                        image={imgs.defaultImage}
-                                        title="Order Images"
-                                    />
+                                    <div key={index}>
+                                        <Grid container justify="center" alignItems="center">
+                                            <img src={image.defaultImage} alt={'Product'} className="userOrdersImages" />
+                                        </Grid>
                                     </div>
-                                    )
-                                })}
+                                    )})}
+                                    responsive={ {
+                                        0: { items: 1 },
+                                        1024: { items: 1 },
+                                    }}
+                                    autoPlayInterval={3000}
+                                    autoPlayDirection="rtl"
+                                    autoPlay={order.cart && order.cart.length > 1 ? true : false}
+                                    fadeOutAnimation={true}
+                                    mouseDragEnabled={false}
+                                    stopAutoPlayOnHover={true}
+                                    dotsDisabled={true}
+                                    buttonsDisabled={true}
+                                    onSlideChange={this.onSlideChange}
+                                    onSlideChanged={this.onSlideChanged}
+                                    showSlideInfo={order.cart && order.cart.length > 1 ? true : false}
+                                />
+                                </CardMedia>
                                 <CardContent>
                                 </CardContent>
                                 <CardActions className={classes.actions} disableActionSpacing>
@@ -294,16 +349,55 @@ class AdminOrders extends Component {
     }
     }
 
+
+scrollableInfo(){
+const { classes } = this.props;
+  let info = this.state.order.cart.map((row, index) =>{
+    return(
+    <Card className={classes.card2} key={index}>
+        <CardActionArea>
+            <CardMedia image={'Null'}>
+                <img src={row.defaultImage} alt={'Product'} className="userOrdersImages" />
+            </CardMedia>
+            <CardContent>
+            <Typography gutterBottom variant="h3" component="h2">
+                {row.Name}
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> EGP
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                qty: x{row.quantity}
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                {row.size && `Size: ${row.size}` }
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                {row.info && `Type: ${row.info}`}
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                    {row.color && `Color: ${row.color}`}
+            </Typography>
+            <Typography variant="h5" color="textSecondary">
+                    {row.option && `Option: ${row.option}`}
+            </Typography>
+            </CardContent>
+        </CardActionArea>
+    </Card>
+    )})
+    return(
+        <div >
+            {info}
+        </div>
+        )
+}
+
 render(){
     const { classes } = this.props;
 
     if(this.state.openOrder){
-        let totalPrice = 0;
-    
-        this.state.order.cart.map(row => {
-            totalPrice = totalPrice + row.price
-        })
-        console.log(this.state.order, "RODERAS")
+        let totalPrice = 300
+        // Number(this.state.order.totalPrice) + Number(this.state.order.shipPrice)
         return(
         <div>
             <MuiThemeProvider theme={theme}>
@@ -322,103 +416,89 @@ render(){
                             <Typography className={classes.heading}>User Info</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails className={classes.heading}>
-                            <Grid container justify="flex-start" alignItems="center">
-                            Name: {this.state.order.user.Name}
-                            </Grid>
-                            <Grid container justify="flex-start" alignItems="center">
-                            Phone: {this.state.order.user.Phone}
-                            </Grid>
-                            <Grid container justify="flex-start" alignItems="center">
-                            Shipping Data: 
-                            </Grid>
-                            {this.state.order.user.ShippingData.Area}
-                            {this.state.order.user.ShippingData.City}
-                            {this.state.order.user.ShippingData.locationType}
-                            {this.state.order.user.ShippingData.StreetNameNo}
-                            {this.state.order.user.ShippingData.ShippingNote}
-
+                            <div className="col-xs-12 col-md-12 col-lg-12">
+                                <Typography className={classes.infoFont}>
+                                    Name: {this.state.order.user.Name}      
+                                </Typography>
+                                <Typography className={classes.infoFont}>
+                                    Phone: {this.state.order.user.Phone}      
+                                </Typography>
+                            </div>
+                            <div className="col-xs-12 col-md-12 col-lg-12">
+                                <Typography className={classes.infoFont}>
+                                    Shipping Data:    
+                                </Typography>
+                                <Typography className={classes.infoFont}>
+                                    {this.state.order.user.ShippingData.Area}
+                                </Typography>
+                                <Typography className={classes.infoFont}>
+                                    {this.state.order.user.ShippingData.City}
+                                </Typography>
+                                <Typography className={classes.infoFont}>
+                                    {this.state.order.user.ShippingData.locationType}
+                                </Typography>
+                                <Typography className={classes.infoFont}>
+                                    {this.state.order.user.ShippingData.StreetNameNo}
+                                </Typography>
+                                <Typography className={classes.infoFont}>
+                                    {this.state.order.user.ShippingData.ShippingNote}
+                                </Typography>
+                            </div>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                     <ListItem>
                         <ListItemIcon>{<OrderComment />}</ListItemIcon>
-                        <ListItemText primary={<h3 style={{whiteSpace: "normal", wordWrap: "break-word"}}>{this.state.comment}</h3>} />
+                        <ListItemText primary={this.state.comment} classes={{ primary: classes.commentFont }} />
                     </ListItem>
-                    <form className={classes.container} noValidate autoComplete="off">
-                        <TextField
-                            id="Comment"
-                            label="Comment"
-                            type="text"
-                            className={classes.textField}
-                            margin="normal"
-                            onChange={e => this.setState({updateComment: e.target.value})}
-                        />
-                            <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.updateComment(this.state.updateComment)}} className={classes.fab}>
-                                <NextIcon className={classes.extendedIcon2} />
-                                <h5>Update</h5>
-                            </Fab>
-                    </form>
+                    <div className="col-xs-12 col-md-12 col-lg-12">
+                        <div className="col-xs-12 col-md-8 col-lg-8">
+                            <form className={classes.container} noValidate autoComplete="off">
+                                <textarea placeHolder="Comment" onChange={e => this.setState({updateComment: e.target.value})} value={this.state.updateComment} class="form-control" rows="2" id="comment"></textarea>
+                            </form>
+                        </div>
+                        <div className="col-xs-12 col-md-4 col-lg-4">
+                            <Grid container justify="center" alignItems="center">
+                                <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.updateComment(this.state.updateComment)}} className={classes.fab}>
+                                    <NextIcon className={classes.extendedIcon2} />
+                                    Update
+                                </Fab>
+                            </Grid>
+                        </div>
+                    </div>
                     <ListItem>
                         <ListItemIcon>{<Timer />}</ListItemIcon>
-                        <ListItemText primary={<h3>{moment(this.state.order.createdAt).format('LLL')}</h3>} />
+                        <ListItemText primary={moment(this.state.order.createdAt).format('LLL')} classes={{ primary: classes.commentFont }}/>
                     </ListItem>
                     <Divider/>
                     <ListItem>
                         <ListItemIcon>{<Euro />}</ListItemIcon>
-                        <ListItemText primary={<h3>Grand Total: {<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} EGP</h3>} />
+                        <ListItemText primary={<CurrencyFormat value={totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} classes={{ primary: classes.commentFont }}/>
                     </ListItem>
-                    <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.endOrder(1)}} className={classes.fab}>
-                        <Motorcycle className={classes.extendedIcon1} />
-                        <h5>Order Delivered</h5>
-                    </Fab>
-                    <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.endOrder(2)}} className={classes.fab}>
-                        <Failed className={classes.extendedIcon1} />
-                        <h5>Order Failed</h5>
-                    </Fab>
-                    <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.endOrder(3)}} className={classes.fab}>
-                        <Fake className={classes.extendedIcon1} />
-                        <h5>Fake Order</h5>
-                    </Fab>
+                    <Grid container justify="center" alignItems="center">
+                        <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.endOrder(1)}} className={classes.fab}>
+                            <Motorcycle className={classes.extendedIcon1} />
+                            Order Delivered
+                        </Fab>
+                        <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.endOrder(2)}} className={classes.fab}>
+                            <Failed className={classes.extendedIcon1} />
+                            Order Failed
+                        </Fab>
+                        <Fab color="primary" variant="extended" aria-label="accActivate" onClick={()=>{this.endOrder(3)}} className={classes.fab}>
+                            <Fake className={classes.extendedIcon1} />
+                            Fake Order
+                        </Fab>
+                    </Grid>
                 </MuiThemeProvider>
             </div>
-
             <div className="col-xs-12 col-md-5 col-lg-5">
-                {this.state.order.cart.map((row, index) =>{
-                return(
-                <Card className={classes.card2} key={index}>
-                    <CardActionArea>
-                        <CardMedia
-                            className={classes.media2}
-                            image={row.defaultImage}
-                            title={row.Name}
-                        />
-                        <CardContent>
-                        <Typography gutterBottom variant="h3" component="h2">
-                            {row.Name}
-                        </Typography>
-                        <Typography variant="h5" color="textSecondary">
-                            <CurrencyFormat value={row.price.toFixed(2)} displayType={'text'} thousandSeparator={true} /> EGP
-                        </Typography>
-                        <Typography variant="h5" color="textSecondary">
-                            qty: x{row.quantity}
-                        </Typography>
-                        <Typography variant="h5" color="textSecondary">
-                            {row.size && `Size: ${row.size}` }
-                        </Typography>
-                        <Typography variant="h5" color="textSecondary">
-                            {row.info && `Type: ${row.info}`}
-                        </Typography>
-                        <Typography variant="h5" color="textSecondary">
-                                {row.color && `Color: ${row.color}`}
-                        </Typography>
-                        <Typography variant="h5" color="textSecondary">
-                                {row.option && `Option: ${row.option}`}
-                        </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
-
-                )})}
+                <Scrollbars autoHeight 
+                            autoHeightMin={100} 
+                            autoHeightMax={300}
+                            renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
+                        {this.scrollableInfo()}
+                </Scrollbars>
             </div>
+
         </div>
         )
     }

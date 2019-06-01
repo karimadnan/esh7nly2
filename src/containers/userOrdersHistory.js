@@ -170,7 +170,8 @@ state = {
     slideIndex: 0,
     copied: false,
     receipt: false,
-    orderReceipt: []
+    orderReceipt: [],
+    wholeOrder: ''
 }
 
 componentDidMount(){
@@ -247,8 +248,8 @@ if(this.state.done){
         if(this.state.ordersData){
         let history =  this.state.ordersData.map((order, index) =>{
           const ID = order._id
-          const totalPrice = Number(order.totalPrice)
-          const shippingCost = Number(order.shipPrice)
+          const totalPrice = Number(this.state.wholeOrder.totalPrice)
+          const shippingCost = Number(this.state.wholeOrder.shipPrice)
           const grandTotal = totalPrice + shippingCost
 
           if(i18next.language === "EN"){
@@ -313,7 +314,7 @@ if(this.state.done){
                     <Grid container justify="center" alignItems="center">
                         <Chip
                           icon={<ReceiptIcon />}
-                          onClick={()=>{this.setState({receipt: true, orderReceipt: order.cart})}}
+                          onClick={()=>{this.setState({receipt: true, orderReceipt: order.cart, wholeOrder: order})}}
                           label={`${t('orderReceipt')}`}
                           className={classes.chipView}
                           color={'primary'}
@@ -470,7 +471,7 @@ if(this.state.done){
                   <Grid container justify="center" alignItems="center">
                     <Chip
                       icon={<ReceiptIcon />}
-                      onClick={()=>{this.setState({receipt: true, orderReceipt: order.cart})}}
+                      onClick={()=>{this.setState({receipt: true, orderReceipt: order.cart, wholeOrder: order})}}
                       label={`${t('orderReceipt')}`}
                       className={classes.chipView}
                       color={'primary'}

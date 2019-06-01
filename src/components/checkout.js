@@ -92,27 +92,35 @@ const styles = theme => ({
     },
     vodaAvatar: {
         margin: 10,
-        width: 150,
-        height: 150,
+        width: 70,
+        height: 70,
         color: '#fff',
         fontWeight: 'bold',
         backgroundColor: '#b71c1c',
       },
     etisAvatar: {
         margin: 10,
-        width: 150,
-        height: 150,
+        width: 70,
+        height: 70,
         color: '#fff',
         fontWeight: 'bold',
         backgroundColor: '#1b5e20',
       },
     fawryAvatar: {
         margin: 10,
-        width: 150,
-        height: 150,
+        width: 70,
+        height: 70,
         fontWeight: 'bold',
         color: '#0277bd',
         backgroundColor: '#fdd835',
+      },
+      cashAvatar: {
+        margin: 10,
+        width: 70,
+        height: 70,
+        color: '#fff',
+        fontWeight: 'bold',
+        backgroundColor: '#ff9800',
       },
 });
 
@@ -476,6 +484,7 @@ class Checkout extends Component {
                       {this.state.paymentMethod === `${t('vodaCash')}` && <Avatar className={classes.vodaAvatar}>Vodafone</Avatar> }
                       {this.state.paymentMethod === `${t('etisCash')}` && <Avatar className={classes.etisAvatar}>Etisalat</Avatar>  }
                       {this.state.paymentMethod === `${t('fawry')}` && <Avatar className={classes.fawryAvatar}>Fawry</Avatar>   }
+                      {this.state.paymentMethod === `${t('cashOnDel')}` && <Avatar className={classes.cashAvatar}>Cash</Avatar>   }
                     </div>
                 </div>
 

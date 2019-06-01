@@ -153,6 +153,8 @@ const orderApis = {
         "cart":1,
         "comment":1,
         "transId":1,
+        "totalPrice":1,
+        "shipPrice":1,
         "paymentMethod": 1}},
         {$sort: { createdAt: 1 }}
         ]).toArray(function(err, docs) {

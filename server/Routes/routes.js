@@ -30,18 +30,18 @@ router.post('/getAdminbyId',Validator.checkJWT,Validator.isAdmin, loginApis.getA
 router.get('/getOrdersCount',Validator.checkJWT,loginApis.getOrdersCount);
 // order Apis-------------------------------------------------- 
 router.get('/getOrdersByType',Validator.checkJWT,Validator.isAdmin,orderApis.getOrdersByType);// Not Tested
-router.get('/getAdminOrders',Validator.checkJWT,Validator.isAdmin,orderApis.getAdminOrders);// Not Tested
+router.get('/getAdminOrders',Validator.checkJWT,Validator.isAdmin,orderApis.getAdminOrders);
 router.get('/getAdminHistory',Validator.checkJWT,Validator.isAdmin,orderApis.getAdminHistory);// Not Tested
-router.get('/assginlead',Validator.checkJWT,Validator.isAdmin,orderApis.assginlead);// Not Tested
-router.get('/getUserOrders',Validator.checkJWT,Validator.isAdmin,orderApis.getUserOrders);// Not Tested
-router.get('/getUserHistory',Validator.checkJWT,orderApis.getUserHistory);// Not Tested
+router.get('/assginlead',Validator.checkJWT,Validator.isAdmin,orderApis.assginlead);
+router.get('/getUserOrders',Validator.checkJWT,Validator.isAdmin,orderApis.getUserOrders);
+router.get('/getUserHistory',Validator.checkJWT,orderApis.getUserHistory);
 router.get('/getAllOrders',Validator.checkJWT,Validator.isAdmin,orderApis.getAllOrders);
 router.get('/getAllOrdersHistory',Validator.checkJWT,Validator.isAdmin,orderApis.getAllOrdersHistory);
 router.get('/getOrderForuser',Validator.checkJWT,orderApis.getOrderForuser);
-router.post('/createOrder',Validator.checkJWT, orderApis.createOrder);// Not Tested
-router.post('/viewOrder',Validator.checkJWT,Validator.isAdmin,orderApis.viewOrder);// Not Tested
-router.post('/endOrder',Validator.checkJWT,Validator.isAdmin,orderApis.endOrder);   // Not Tested
-router.post('/updateComment',Validator.checkJWT,Validator.isAdmin,orderApis.updateComment);   // Not Tested
+router.post('/createOrder',Validator.checkJWT, orderApis.createOrder);
+router.post('/viewOrder',Validator.checkJWT,Validator.isAdmin,orderApis.viewOrder);
+router.post('/endOrder',Validator.checkJWT,Validator.isAdmin,orderApis.endOrder);
+router.post('/updateComment',Validator.checkJWT,Validator.isAdmin,orderApis.updateComment);
 // game Apis-------------------------------------------------    
 router.get('/getGame',gameApis.getGame);
     

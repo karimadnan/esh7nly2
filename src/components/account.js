@@ -108,39 +108,40 @@ class Account extends Component {
     Current(){
         const userName = this.props.loginData.userName
         const { t } = this.props;
+
         if(this.state.value === 0){
             return(
-            <div>
-                <Helmet>
-                    <title>{t('profileTitle', {userName})}</title>
-                    <meta name="description" content={t('profileTitle', {userName})} />
-                </Helmet>
-                <Profile/>
-            </div>
+                <div>
+                    <Helmet>
+                        <title>{t('profileTitle', {userName})}</title>
+                        <meta name="description" content={t('profileTitle', {userName})} />
+                    </Helmet>
+                    <Profile/>
+                </div>
             )
         }
-      else if (this.state.value === 1){
+        else if (this.state.value === 1){
           return(
-          <div>
-            <Helmet>
-                <title>{t('ordersTitle', {userName})}</title>
-                <meta name="description" content={t('ordersTitle', {userName})} />
-            </Helmet>
-            <Orders/>
-          </div>
-        )
+                <div>
+                    <Helmet>
+                        <title>{t('ordersTitle', {userName})}</title>
+                        <meta name="description" content={t('ordersTitle', {userName})} />
+                    </Helmet>
+                    <Orders/>
+                </div>
+            )
       }
-      else if (this.state.value === 2){
-        return(
-          <div >
-            <Helmet>
-                <title>{t('historyTitle', {userName})}</title>
-                <meta name="description" content={t('historyTitle', {userName})} />
-            </Helmet>
-            <History />
-          </div>
-      )
-    }
+        else if (this.state.value === 2){
+            return(
+                <div >
+                    <Helmet>
+                        <title>{t('historyTitle', {userName})}</title>
+                        <meta name="description" content={t('historyTitle', {userName})} />
+                    </Helmet>
+                    <History />
+                </div>
+            )
+        }
     }
 
 render() {
@@ -163,8 +164,7 @@ render() {
             </div>
             <Navbar />
           </div>
-        )
-        }
+        )}
     else{
         return (
                 <div className="GG-BG-INVERSE">
@@ -200,7 +200,7 @@ render() {
                     </Modal>
                 </div>
             )
-    }
+        }
     }
 }
 
