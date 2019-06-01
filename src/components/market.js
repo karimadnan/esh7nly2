@@ -443,8 +443,6 @@ if (this.state.view === "shop"){
     let shop = this.props.shop.items && this.props.shop.items.map((item, index) =>{
         var rarity = "card splash-cardTees"
 
-        var priceAfterDiscount = item.price - item.discount / 100 * item.price
-
         if((item.discount || !this.state.hasDiscount)){
         return (
             <div className="col-xs-12 col-md-4 col-md-4" key={index} style={{cursor: 'pointer'}} onClick={() => {this.viewItem(item)}}>
@@ -477,10 +475,10 @@ if (this.state.view === "shop"){
                         </span>
                         {item.price > 0 &&
                         <span>
-                            {item.discount ?
+                            {item.oldPrice ?
                             <div>
-                                <h4 className="marketCardTitle" style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>
-                                <h5 className="marketCardTitle" style={{color: "grey", textDecoration: "line-through"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h5>
+                                <h4 className="marketCardTitle" style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>
+                                <h5 className="marketCardTitle" style={{color: "grey", textDecoration: "line-through"}}>{<CurrencyFormat value={item.oldPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h5>
                             </div>
                             :
                             <h4 className="marketCardTitle" style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>}
