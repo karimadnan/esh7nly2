@@ -6,7 +6,7 @@ import {isMobile} from 'react-device-detect';
 import Drawer from '@material-ui/core/Drawer';
 import CurrencyFormat from 'react-currency-format';
 import {bindActionCreators} from 'redux';
-import {removeCartItem, updateCartInfo} from '../actions/index';
+import {removeCartItem, updateCart} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
@@ -16,6 +16,12 @@ import { withNamespaces } from 'react-i18next';
 import compose from 'recompose/compose';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
+import { Scrollbars } from 'react-custom-scrollbars';
+import Chip from '@material-ui/core/Chip';
+import DeleteIcon from '@material-ui/icons/DeleteForever';
+import Typography from '@material-ui/core/Typography';
+import { fade } from '@material-ui/core/styles/colorManipulator';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const customStyles = {
   overlay: {
@@ -31,8 +37,35 @@ const customStyles = {
 }
 
 const styles = theme => ({
+  progress: {
+    margin: theme.spacing.unit * 2,
+  },
   drawer:{
     zIndex: 1100
+  },
+  drawerBG:{
+    backgroundColor: '#f7f7fa',
+    width: 250,
+    [theme.breakpoints.up('lg')]: {
+      width: 550,
+    }
+  },
+  cartDrawerFont:{
+    color: '#212121',
+    fontSize: 13,
+    fontWeight: 'bold',
+    [theme.breakpoints.up('lg')]: {
+      fontSize: 23,
+    }
+  },
+  drawerDeleteIcon: {
+    margin: theme.spacing.unit * 2,
+    '&:hover': {
+      color: fade('#212121', 0.525),
+    }
+  },
+  drawerChip: {
+    margin: theme.spacing.unit * 2,
   },
   margin: {
     margin: theme.spacing.unit * 2,
@@ -52,11 +85,13 @@ extendedIcon2: {
 });
 
 class GlobalCart extends Component {
-
-  state = {
-    ErrorModal: false,
-    ErrorMsg: '',
-    sideBar: false
+  constructor(props){
+    super(props); 
+    this.state = {
+      ErrorModal: false,
+      ErrorMsg: '',
+      sideBar: false
+    }
   }
 
 onOpenModal = (type) => {
@@ -66,14 +101,6 @@ onOpenModal = (type) => {
 onCloseModal = (type) => {
   this.setState({[type]: false });
 };
-
-updateInfo (data){
-  let object = {
-      price: data.price,
-      items: 1
-      }
-  this.props.updateCartInfo(object, 'remove')
-}
 
 notify = (msg) => toast.error(msg, {
   zIndex: 1100,
@@ -90,16 +117,70 @@ remove(item){
   const msg = t('removedFromCartMsg', {itemName})
   this.props.removeCartItem(item)
   this.notify(msg)
-  this.updateInfo(item)
 }
 
 goToCheckout(){
+  const { t } = this.props;
   if(this.props.loginData.loggedState){
       ReactRouter.goTo("/checkout")
   }
   else{
-      this.setState({ErrorModal: true, ErrorMsg: "Please login first to checkout"})
+      this.setState({ErrorModal: true, ErrorMsg: t('notLogged')})
   }
+}
+
+goToProduct(id){
+if(!window.location.href.includes("productpage")){
+  ReactRouter.goTo(`productpage/${id.split('-')[0]}`)
+}
+else{
+  ReactRouter.goTo(`${id.split('-')[0]}`)
+}
+}
+
+createCart(){
+const { t } = this.props;
+const { classes } = this.props;
+let cart = this.props.cart.cart.map((item, index) => {
+
+    var cartName = item.Name
+    if(item.option){
+        cartName = `(${item.option}) ` + cartName
+    }
+    if(item.size){
+        cartName = `(${item.size.charAt(0).toUpperCase()}) `+ cartName
+    }
+    if(item.color){
+        cartName = `(${item.color.toUpperCase()}) `+ cartName
+    }
+
+  return(
+    <div key={index} className="cartBG">
+        <div className="col-md-12 col-lg-12">
+            <div className="col-xs-12 col-md-4 col-lg-4">
+                <img src={item.defaultImage} className="splash-card-product-view" onClick={()=>{this.goToProduct(item.id)}} style={{cursor: 'pointer', margin: 5}} alt={item.id}/>
+            </div>
+            <div className="col-xs-12 col-md-4 col-lg-4" onClick={()=>{this.goToProduct(item.id)}} style={{cursor: 'pointer'}}>
+                <h4 style={{fontWeight: "bold", color: "#212121", whiteSpace: 'normal', wordWrap: 'break-word'}}>{cartName.length > 70 ? (((cartName).substring(0,70-3))  + '...' ) : cartName}</h4>
+            </div>
+            <div className="col-xs-12 col-md-2 col-lg-2">
+                <h4 style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h4>
+                <h5 style={{color: "#212121"}}>{t('quantity')}: {item.quantity}</h5>
+            </div>
+            <div className="col-xs-12 col-md-2 col-lg-2" className={classes.drawerDeleteIcon} onClick={()=>{this.remove(item)}} style={{cursor: 'pointer'}}>
+                <DeleteIcon />
+                <Typography>Remove</Typography>
+            </div>
+        </div>
+    </div>
+
+    )
+})
+return (
+    <div>
+      {cart}
+    </div>
+)
 }
 
 render(){
@@ -113,69 +194,75 @@ render(){
           <h2>{this.state.ErrorMsg}</h2>
       </Modal>
       <Tooltip title={<h6>{t('yourCart')}</h6>} aria-label={<h6>{t('yourCart')}</h6>} placement="bottom">
-          <Badge onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}} className={this.props.classes.margin} badgeContent={this.props.cartInfo.totalItems} color="secondary">
+          <Badge onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}} className={this.props.classes.margin} badgeContent={this.props.cart.cart ? this.props.cart.cart.length : 0} color="secondary">
               <ShoppingCart fontSize="large" />
           </Badge>
       </Tooltip>
       <Drawer
           className={classes.drawer}
+          classes={{paper: classes.drawerBG}}
           anchor="right"
           open={this.state.sideBar}
           onClose={()=>{this.setState({ sideBar: false })}}
         >
-        <div style={{padding: 20, textAlign: "center", width: isMobile ? 250 : 550}}>
-          {this.props.cart.length > 0 ? 
-              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>{t('clickToRemoveCart')}</p>
+        <div style={{textAlign: "center"}}>
+          {this.props.cart.cart.length > 0 ? 
+              <div>
+                <Badge badgeContent={this.props.cart.cart ? this.props.cart.cart.length : 0} color="secondary">
+                    <ShoppingCart fontSize="large" />
+                </Badge>
+                <Chip
+                    color="default"
+                    label={t('yourCart')}
+                    className={classes.drawerChip}
+                    classes={{label: classes.cartDrawerFont}}
+                />
+              </div>
               :
-              <p style={{textAlign: "center", fontWeight: "bold", backgroundColor: "white", color: "black"}}>{t('cartEmpty')}</p>
-            }
-            {this.props.cart.map(item => {
+            <div>
+              <Badge badgeContent={this.props.cart.cart ? this.props.cart.cart.length : 0} color="secondary">
+                  <ShoppingCart fontSize="large" />
+              </Badge>
+              <Chip
+                    color="default"
+                    label={t('cartEmpty')}
+                    className={classes.drawerChip}
+                    classes={{label: classes.cartDrawerFont}}
+                />
+            </div>}
 
-                var cartName = item.Name
-                if(item.option){
-                    cartName = `(${item.option}) ` + cartName
-                }
-                if(item.size){
-                    cartName = `(${item.size.charAt(0).toUpperCase()}) `+ cartName
-                }
-                if(item.color){
-                    cartName = `(${item.color.toUpperCase()}) `+ cartName
-                }
+          {!this.props.cart.updatingCart ? 
+          <Scrollbars autoHeight 
+                      autoHeightMin={500} 
+                      autoHeightMax={500}
+                      renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
+                  {this.createCart()}
+          </Scrollbars>:           
+          <Scrollbars autoHeight 
+                      autoHeightMin={500} 
+                      autoHeightMax={500}
+                      renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
+                  <CircularProgress size={100} color={'secondary'} className={classes.progress} />
+          </Scrollbars>}
 
-              return(
-                <li key={item.id}>
-                    <div className="col-md-12 col-lg-12 navCart" style={{cursor: "pointer"}} onClick={() => {this.remove(item)}}>
-                        <div className="col-md-4 col-lg-4">
-                            <img src={item.defaultImage} className="splash-card-product-view" style={{margin: 5}} alt={item.id}/>
-                        </div>
-                        <div className="col-md-4 col-lg-4">
-                            <h4 style={{fontWeight: "bold", color: "black"}}>{cartName.length > 30 ? (((cartName).substring(0,30-10))  + '...' ) : cartName}</h4>
-                        </div>
-                        <div className="col-md-2 col-lg-2">
-                            <h4 style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h4>
-                        </div>
-                        <div className="col-md-2 col-lg-2">
-                            <h5 style={{color: "black"}}>{t('quantity')}: {item.quantity}</h5>
-                        </div>
-                        <div style={{borderBottom: "1px dashed grey"}}/>
-                    </div>
-                </li>
-
-                )
-            })}
-
-
-
-          {this.props.cart.length > 0 && 
+          {this.props.cart.cart.length > 0 && 
           <div style={{color: "black"}}>
             <div className="col-xs-6 col-md-6 col-lg-6">
-              <span style={{textAlign: "left", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>{t('subTotal')}: </span>
+              <span style={{textAlign: "left", 
+                            textTransform: "uppercase", 
+                            fontFamily: "arial", 
+                            fontSize: !isMobile ? 18 : "3vw", 
+                            fontWeight: 'bold'}}>{t('subTotal')}: </span>
             </div>
             <div className="col-xs-6 col-md-6 col-lg-6">
-              <span style={{textAlign: "right", textTransform: "uppercase", fontFamily: "arial", fontSize: !isMobile ? 18 : "3vw"}}>{t('currency')} {<CurrencyFormat value={this.props.cartInfo.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} </span>
+              <span style={{textAlign: "right", 
+                            textTransform: "uppercase", 
+                            fontFamily: "arial", 
+                            fontSize: !isMobile ? 18 : "3vw", 
+                            fontWeight: 'bold'}}>{t('currency')} {<CurrencyFormat value={this.props.cart.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} </span>
             </div>
           </div>}
-          {!window.location.href.includes("checkout") && this.props.cart.length > 0 && 
+          {!window.location.href.includes("checkout") && this.props.cart.cart.length > 0 && 
           <div className="col-xs-12 col-md-12 col-lg-12">
                 <Grid container justify="center" alignItems="center">
                     <Fab color="secondary" variant="extended" aria-label="Next" onClick={()=>{this.goToCheckout()}} className={classes.fab}>
@@ -194,8 +281,7 @@ render(){
 
 function mapStateToProps(state){
     return {
-        cartInfo: state.updateCartInfo,
-        cart: state.cartItems.cart,
+        cart: state.cartItems,
         loginData: state.loginSession
     }
   }
@@ -204,7 +290,7 @@ function mapStateToProps(state){
 const matchDispatchToProps = dispatch => bindActionCreators(
   {
     removeCartItem,
-    updateCartInfo
+    updateCart
   },
   dispatch,
 )

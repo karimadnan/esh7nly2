@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import '../Mycss.css';
-import '../Respcss.css';
 import Navbar from './navbar';
-import { FacebookProvider, MessageUs} from 'react-facebook';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
@@ -166,9 +163,7 @@ const { t } = this.props;
 
                 <div style={{height: 50}}>
                     <Grid container justify="center" alignItems="center">
-                        <FacebookProvider appId="1984023341904164">
-                            <MessageUs messengerAppId="297486070967464" pageId="297486070967464"/>
-                        </FacebookProvider>    
+
                     </Grid>
                 </div> 
 

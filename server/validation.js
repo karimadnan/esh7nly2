@@ -5,6 +5,10 @@ const Joi =require('joi');
 
 
 let Validator =  {
+	cart:{
+		cart: Joi.array().max(100).required(),
+		totalPrice: Joi.string().required()
+	},
 	OrderValidation:{
 		paymentMethod: Joi.string().valid(["Etisalat Cash","Vodafone Cash","Fawry", "Cash On Delivery"]).label('Payment Method').required(),
 		orderType: Joi.string().valid(["Games","Products"]).label('Order Type').required(),

@@ -1,7 +1,11 @@
 const initialState = {
     cart: [],
-    itemPrev: {},
-    prevOptions: []
+    totalPrice: 0,
+    updatingCart: false,
+    updatedCart: false,
+    fetching: false,
+    fetched: false,
+    error: ''
 }
 
 const quantityForItem = (list, newItem) => {
@@ -21,92 +25,79 @@ const add = (list, newItem) =>
 const remove = (list, itemToRemove) =>
   list.filter(item => item.id !== itemToRemove.id)
 
+
 export default function(state = initialState, action){
     
     switch(action.type){
-            case 'CART_ADDITEM': {
-            const { cart } = state
-            const newItem = action.payload
-                if ( quantityForItem(cart, newItem) !== 0 ) {
-                    return { ...state, cart: updateQuantity(cart, newItem, +1) }
+
+            case 'CLEAN_CART':
+                return { 
+                    ...state, 
+                    totalPrice: 0,
+                    cart: []
                 }
-                return { ...state, cart: add(cart, newItem) }
+        
+
+            case 'UPDATE_CART_PENDING': 
+                return {
+                    ...state,
+                    updatingCart: true,
+                    updatedCart: false
+                }
+
+            case 'UPDATE_CART_SUCCESS': 
+                return {
+                    ...state,
+                    updatingCart: false,
+                    updatedCart: true
+                }
+
+            case 'FETCH_CART_PENDING': 
+                return {
+                    ...state,
+                    fetching: true,
+                    fetched: false,
+                    error: ''
+                }
+
+            case 'FETCH_CART_ERROR':
+                return {
+                    ...state,
+                    fetching: false,
+                    fetched: false,
+                    cart: [],
+                    error: action.payload
+                }
+
+            case 'FETCH_CART_SUCCESS':
+                return {
+                    ...state,
+                    fetching: false,
+                    fetched: true,
+                    cart: action.payload.cart,
+                    totalPrice: Number(action.payload.totalPrice)
+                }
+
+            case 'CART_ADDITEM': {
+                const { cart } = state
+                const { totalPrice } = state
+                const newItem = action.payload
+                    if ( quantityForItem(cart, newItem) !== 0 ) {
+                        return { ...state, cart: updateQuantity(cart, newItem, +1), totalPrice: totalPrice + newItem.price }
+                    }
+                    return { ...state, cart: add(cart, newItem), totalPrice: totalPrice + newItem.price }
             }
 
             case 'CART_REMOVEITEM': {
-            const { cart } = state
-            const itemToRemove = action.payload
-                if ( quantityForItem(cart, itemToRemove) > 1 ) {
-                    return { ...state, cart: updateQuantity(cart, itemToRemove, -1) }
-                }
-                return { ...state, cart: remove(cart, itemToRemove) }
+                const { cart } = state
+                const { totalPrice } = state
+                const itemToRemove = action.payload
+                    if ( quantityForItem(cart, itemToRemove) > 1 ) {
+                        return { ...state, cart: updateQuantity(cart, itemToRemove, -1), totalPrice: totalPrice - itemToRemove.price }
+                    }
+                    return { ...state, cart: remove(cart, itemToRemove), totalPrice: totalPrice - itemToRemove.price }
             }
 
-            case 'ADD_PREV': {
-                return Object.assign({}, state, {
-                    itemPrev: action.payload
-                  })
-                }
-
-            case 'ADD_PREV_OPTIONS': {
-                const { prevOptions } = state
-                const newItem = action.payload
-                    return { ...state, prevOptions: add(prevOptions, newItem) }
-                }
-
-            case 'CLEAN_PREV_OPTIONS': {
-                return { ...state, prevOptions: [] }
-            }
-
-            case 'UPDATE_SIZE': {
-                return {
-                    ...state,
-                    itemPrev: {
-                      ...state.itemPrev,
-                      size: action.payload
-                    }
-                  }
-                }
-            case 'UPDATE_COLOR': {
-                return {
-                    ...state,
-                    itemPrev: {
-                        ...state.itemPrev,
-                        color: action.payload
-                    }
-                    }
-                }
-            case 'UPDATE_IMG': {
-                return {
-                    ...state,
-                    itemPrev: {
-                        ...state.itemPrev,
-                        defaultImage: action.payload
-                    }
-                    }
-                }
-            case 'UPDATE_OPTION': {
-                return {
-                    ...state,
-                    itemPrev: {
-                        ...state.itemPrev,
-                        defaultOpt: action.payload
-                    }
-                    }
-                }
-    
-            case 'UPDATE_PRICE': {
-                return {
-                    ...state,
-                    itemPrev: {
-                        ...state.itemPrev,
-                        price: action.payload
-                    }
-                    }
-                }
-            case 'CLEAN_CART': {
-                return { ...state, cart: [] }
-            }
         }
 
     return state;

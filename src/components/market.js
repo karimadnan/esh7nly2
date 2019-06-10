@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {addCartItem, updateCartInfo, addPrev, updatePrev, fetchShopData, addPrevOptions, removePrevOptions} from '../actions/index';
+import {addCartItem} from '../actions/index';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
-import '../Mycss.css';
-import '../Respcss.css';
 import Navbar from './navbar';
 import CurrencyFormat from 'react-currency-format';
 import Select from 'react-select';
@@ -46,6 +43,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import Loader from '../containers/loader';
 import i18next from 'i18next';
 import {Helmet} from "react-helmet";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import axios from 'axios';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -73,6 +72,9 @@ const productTheme = createMuiTheme({
 });
 
 const styles = theme => ({
+    progress: {
+        margin: theme.spacing.unit * 2,
+      },
     root: {
         marginTop: theme.spacing.unit,
         display: 'flex',
@@ -180,55 +182,73 @@ const customStyles = {
 
 class Market extends Component {
 
-state = {
-    url: this.props.server.main,
-    value: 0,
-    copied: false,
-    category: "all",
-    condition: "new",
-    sort: "",
-    view: "shop",
-    timeLeft: "",
-    options: [],
-    colors: [],
-    sizes: [],
-    selectedOpt: "",
-    selectedColor: "",
-    selectedSize: "",
-    ErrorModal: false,
-    ErrorMsg: "",
-    activeStep: 0,
-    optionsFetched: false,
-    fortniteShop: false,
-    quantity: 1,
-    hasDiscount: false,
-    filter: '',
-    qName: '',
-    qcategory: '',
-    qskip: '0',
-    qlimit: '15',
-    qprice: 0,
-    categories: ['all', 'merch', 'micro'],
-    anchorEl: null,
-    anchorEl2: null
-}
+
+        state = {
+            headers: {
+                'Content-Type': 'application/json',
+                'authorization': this.props.loginData.token},
+            url: this.props.server.main,
+            value: 0,
+            copied: false,
+            category: "all",
+            condition: "new",
+            sort: "",
+            view: "shop",
+            timeLeft: "",
+            options: [],
+            colors: [],
+            sizes: [],
+            selectedOpt: "",
+            selectedColor: "",
+            selectedSize: "",
+            ErrorModal: false,
+            ErrorMsg: "",
+            activeStep: 0,
+            fortniteShop: false,
+            quantity: 1,
+            hasDiscount: false,
+            filter: '',
+            qName: '',
+            qcategory: '',
+            qskip: '0',
+            qlimit: '15',
+            qprice: 0,
+            categories: ['all', 'merch', 'micro'],
+            anchorEl: null,
+            anchorEl2: null,
+            fetchingShop: false,
+            fetchedShop: false,
+            errorFetchingShop: false,
+            shopData: [],
+            prevPro: '',
+            defaultOptAdded: false
+        }
 
 componentWillUnmount() {
     clearInterval(this.interval);
-    this.props.removePrevOptions()
 }
 
 componentDidMount(){
-    if(!this.props.shop.fetching){
-        this.props.removePrevOptions();
-        this.getData();
-    }
+    this.fetchShop();
 }
 
-getData(){
-    this.props.fetchShopData({Name: this.state.qName, 
-                              category: this.state.qcategory, 
-                              price: this.state.qprice});
+fetchShop(){
+    let query = {
+        Name: this.state.qName, 
+        category: this.state.qcategory, 
+        price: this.state.qprice
+    }
+
+    var that = this
+    this.setState({fetchingShop: true})
+    axios.post(this.state.url+"fetchShop", query, {headers: this.state.headers})
+
+    .then(function (response) {
+        that.setState({fetchingShop: false, fetchedShop: true, errorFetchingShop: false, shopData: response.data.data})
+    })
+    .catch(function (error) {
+        that.setState({fetchingShop: false, errorFetchingShop: true})
+    })
 }
     
 handleChange = (event, value) => {
@@ -250,7 +270,7 @@ handleClick2 = event => {
 handleChangeCategory(value) {
     this.setState({ qcategory: value === 'all' ? '' : value } ,() =>{
         this.handleClose('anchorEl');
-        this.getData();
+        this.fetchShop();
     }
     );
 };
@@ -258,7 +278,7 @@ handleChangeCategory(value) {
 handleSortPrice(value) {
     this.setState({ qprice: value === '0' ? '' : value } ,() =>{
         this.handleClose('anchorEl2');
-        this.getData();
+        this.fetchShop();
     }
     );
 };
@@ -266,24 +286,9 @@ handleSortPrice(value) {
 searchEnter(e){
     if (e.key === "Enter"){
         if(this.state.qName){
-            this.getData();
+            this.fetchShop();
         }
     }
-}
-
-goBack(){
-    if(this.interval){
-        clearInterval(this.interval)
-    }
-    this.props.removePrevOptions()
-    this.setState({view: "shop", 
-                   optionsFetched: false, 
-                   selectedOpt: "", 
-                   selectedColor: "", 
-                   colors: [], 
-                   sizes: [], 
-                   selectedSize: "",
-                   activeStep: 0})
 }
 
 notify = (msg) => toast.success(msg, {
@@ -305,45 +310,90 @@ onCloseModal = (type) => {
 
 addItemToCart(item){
     const { t } = this.props;
-    var prev = this.props.cart.itemPrev
-    const itemName = prev.Name
+    const itemName = item.Name
     const msg = t('addedToCartMsg', {itemName})
-    if(item.price > 0){
-        this.addItemToArray(prev)
-        this.updateInfo(prev)
-        this.notify(msg)
+    let uniqueId = item._id
+
+    let object = {
+        Name: item.Name,
+        price: item.price,
+        info: item.info,
+        soldBy: item.soldBy,
+        quantity: this.state.quantity,
+        defaultImage: item.defaultImage,
+     }
+
+    if (item.oldPrice){
+        object["oldPrice"] = item.oldPrice;
+    }
+    if (item.defaultOpt){
+        object["option"] = item.defaultOpt;
+        uniqueId = uniqueId + `-${this.state.prevPro.defaultOpt}`
+        object["id"] = uniqueId
+    }
+    if (item.color){
+        object["color"] = item.color;
+        uniqueId = uniqueId + `-${this.state.prevPro.color}`
+        object["id"] = uniqueId
+    }
+    if (item.size){
+        object["size"] = item.size;
+        uniqueId = uniqueId + `-${this.state.prevPro.size}`
+        object["id"] = uniqueId
+    }
+    else if (!item.defaultOpt && !item.color && !item.size){
+        object["id"] = uniqueId
+     }
+
+    if(item.options){
+        if(item.defaultOpt !== ''){
+            this.props.addCartItem(object)
+            this.notify(msg)
+        }
+        else{
+            this.setState({
+                ErrorModal: true,
+                ErrorMsg: `${t('marketOptionError')}`
+            })
+        }
     }
     else{
-        this.setState({
-            ErrorModal: true,
-            ErrorMsg: `${t('marketOptionError')}`
-          })
+        this.props.addCartItem(object)
+        this.notify(msg)
     }
+
 }
 
-handleChangeOption(type, value) {
+selectChange(type, value){
     this.setState({[type]: value}, () =>{
-        this.props.updatePrev(this.state.selectedOpt.label, 'option')
-        this.props.updatePrev(this.state.selectedOpt.value, 'price')
-        if(this.state.selectedOpt.img){
-            this.props.updatePrev(this.state.selectedOpt.img, 'img')
+        if(type === 'selectedOpt'){
+            this.setState({
+                prevPro: {
+                  ...this.state.prevPro,
+                  defaultOpt: value.label,
+                  price: value.value,
+                  defaultImage: value.img ? value.img : this.state.prevPro.defaultImage
+                }
+              })
         }
-    });
-}
-
-handleChangeColor = selectedColor => {
-    this.setState({selectedColor}, () =>{
-        this.setState({activeStep: this.state.selectedColor.index})
-        this.props.updatePrev(this.state.selectedColor.label, 'color')
-        if(this.state.selectedColor.value){
-            this.props.updatePrev(this.state.selectedColor.value, 'img')
+        if(type === 'selectedColor'){
+            this.setState({
+                prevPro: {
+                  ...this.state.prevPro,
+                  color: value.label,
+                  defaultImage: value.value,
+                },
+                activeStep: value.index
+              })
         }
-    });
-}
-
-handleChangeSize(type, value) {
-    this.setState({[type]: value}, () =>{
-        this.props.updatePrev(this.state.selectedSize.label, 'size')
+        if(type === 'selectedSize'){
+            this.setState({
+                prevPro: {
+                  ...this.state.prevPro,
+                  size: value.label
+                }
+              })
+        }
     });
 }
 
@@ -358,94 +408,15 @@ tick() {
     this.setState({timeLeft: timeCount - 1000})
 }
 
-updateInfo (data){
-    var discounted = data.discount / 100 * data.price
-    let object = {
-        price: data.discount > 0 ? data.price - discounted : data.price,
-        items: this.state.quantity
-     }
-    this.props.updateCartInfo(object, 'add')
-}
-
-addItemToArray(item){
-    let uniqueId = item.id
-    var discounted = item.discount / 100 * item.price
-
-    let object = {
-        Name: item.Name,
-        price: item.discount > 0 ? item.price - discounted : item.price,
-        rarity: item.rarity,
-        info: item.info,
-        soldBy: item.soldBy,
-        quantity: this.state.quantity,
-        defaultImage: item.defaultImage,
-     }
-     if (item.defaultOpt){
-         object["option"] = item.defaultOpt;
-         uniqueId = uniqueId + `-${this.props.cart.itemPrev.defaultOpt}`
-         object["id"] = uniqueId
-     }
-     if (item.color){
-         object["color"] = item.color;
-         uniqueId = uniqueId + `-${this.props.cart.itemPrev.color}`
-         object["id"] = uniqueId
-     }
-     if (item.size){
-         object["size"] = item.size;
-         uniqueId = uniqueId + `-${this.props.cart.itemPrev.size}`
-         object["id"] = uniqueId
-     }
-     else if (!item.defaultOpt && !item.color && !item.size){
-        object["id"] = uniqueId
-     }
-
-     this.props.addCartItem(object)
-}
-
-addItemToPrev(item){
-    let object = {
-        id: item._id,
-        Name: item.Name,
-        price: item.price,
-        desc: item.desc,
-        discount: item.discount,
-        soldBy: item.soldBy,
-        category: item.category,
-        defaultImage: item.defaultImage
-     }
-     if (item.img){
-        object["img"] = item.img;
-    }
-     if (item.options){
-        object["defaultOpt"] = item.options[0];
-        object["options"] = item.options;
-    }
-    if (item.colors){
-        object["color"] = item.colors[0].label;
-        object["colors"] = item.colors;
-    }
-    if (item.sizes){
-        object["sizes"] = item.sizes;
-        object["size"] = item.sizes[0];
-    }
-     this.props.addPrev(object)
-}
-
-viewItem(item){
-    this.addItemToPrev(item)
-    this.setState({view: 'item'})
-}
-
 Market(){
 const { t } = this.props;
 const { classes } = this.props;
 if (this.state.view === "shop"){
-    let shop = this.props.shop.items && this.props.shop.items.map((item, index) =>{
+    let shop = this.state.shopData && this.state.shopData.map((item, index) =>{
         var rarity = "card splash-cardTees"
 
-        if((item.discount || !this.state.hasDiscount)){
         return (
-            <div className="col-xs-12 col-md-4 col-md-4" key={index} style={{cursor: 'pointer'}} onClick={() => {this.viewItem(item)}}>
+            <div className="col-xs-12 col-md-4 col-md-4" key={index} style={{cursor: 'pointer'}} onClick={() => {this.setState({view: 'item', prevPro: item})}}>
             <div className ={rarity}>
                 <img src={item.defaultImage} alt={item.Name} className="splash-card-product-view-constant" />
                 
@@ -477,16 +448,16 @@ if (this.state.view === "shop"){
                         <span>
                             {item.oldPrice ?
                             <div>
-                                <h4 className="marketCardTitle" style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>
+                                <h4 className="marketCardTitle" style={{color: "#9da6d7", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>
                                 <h5 className="marketCardTitle" style={{color: "grey", textDecoration: "line-through"}}>{<CurrencyFormat value={item.oldPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h5>
                             </div>
                             :
-                            <h4 className="marketCardTitle" style={{color: "#3F51B5", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>}
+                            <h4 className="marketCardTitle" style={{color: "#9da6d7", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}  {t('currency')}</h4>}
                         </span>}
                         <span>
                            
                             <div>
-                                <h6 style={{color: "white", float: "right"}}>{t('store')}: <span style={{color: "#3F51B5"}}>{item.soldBy}</span></h6>
+                                <h6 style={{color: "white", float: "right"}}>{t('store')}: <span style={{color: "#9da6d7"}}>{item.soldBy}</span></h6>
                             </div>
                         </span>
 
@@ -494,7 +465,7 @@ if (this.state.view === "shop"){
             </div>
 
         </div>
-        )}
+        )
     })
     const anchorEl = this.state.anchorEl
     const anchorEl2 = this.state.anchorEl2
@@ -505,13 +476,13 @@ if (this.state.view === "shop"){
     }
     
     return (
-        <div className="container" style={{backgroundColor: "#121212", boxShadow: `1px 5px 5px #000000`}}>
+        <div className="container">
 
             <div className="col-xs-12 col-md-12 col-lg-12">
                 <div className="col-xs-12 col-md-12 col-lg-4" style={{padding: 0}}>  
                     <Paper className={classes.root} elevation={1}>
                         <InputBase onKeyPress={this.searchEnter.bind(this)} className={classes.input} value={this.state.qName} onChange={e => this.setState({qName: e.target.value})} placeholder="Search store" />
-                        <IconButton className={classes.iconButton} aria-label="Search" onClick={() => {this.state.qName && this.getData()}}>
+                        <IconButton className={classes.iconButton} aria-label="Search" onClick={() => {this.state.qName && this.fetchShop()}}>
                             <SearchIcon />
                         </IconButton>
                     </Paper>
@@ -566,7 +537,7 @@ if (this.state.view === "shop"){
                 </div>
             </div>
 
-            {this.props.shop.items ?
+            {this.state.shopData ?
                 shop
             :
             <Grid container justify="flex-start" alignItems="center" className={classes.grid}>
@@ -595,7 +566,7 @@ closeFortniteShop(){
 current(){
 const { t } = this.props;
 const { classes } = this.props;
-const prev = this.props.cart.itemPrev
+const prev = this.state.prevPro
 if(this.state.value === 0){
         return(
             <div>
@@ -623,36 +594,40 @@ if(this.state.value === 0){
 ViewProduct(){
 const { t } = this.props;
 const { classes } = this.props;
-const prev = this.props.cart.itemPrev
-if (this.state.view === "item"){
-    if(prev.options && !this.state.optionsFetched){
+const prev = this.state.prevPro
+let opts = []
+let colors = []
+let sizes = []
+let flexPrev = {...this.state.prevPro}
 
-    prev.options.forEach(element => {
+if (this.state.view === "item"){
+
+    if(prev.options && !this.state.options.length > 0){
+        prev.options.forEach(element => {
         let object = {
             label: element.option,
             value: element.price
         };
         if(element.img) {object['img']=element.img}
-            this.props.addPrevOptions(object)
+            opts.push(object)
         });
-            this.setState({optionsFetched: true})
+            this.setState({options: opts})
     }
 
     if(prev.colors && !this.state.colors.length > 0){
-        var colors = []
         prev.colors.forEach((element, index) => {
             let object = {
-            label: element.label,
-            value: element.value, 
-            index: index
-        }
+                label: element.label,
+                value: element.value, 
+                index: index
+            }
             colors.push(object)
           });
-          this.setState({colors: colors})  
+          flexPrev['color'] = colors[0].label
+          this.setState({colors: colors, selectedColor: colors[0]})
     }
 
     if(prev.sizes && !this.state.sizes.length > 0){
-        var sizes = []
         prev.sizes.forEach((entry, index) => {
             let objSize = {
                 label: entry,
@@ -660,11 +635,16 @@ if (this.state.view === "item"){
             }
             sizes.push(objSize)
         })
-        this.setState({sizes: sizes})  
+        flexPrev['size'] = sizes[0].label
+        this.setState({sizes: sizes, selectedSize: sizes[0]})  
     }
 
-    var discount = prev.discount / 100 * prev.price
-    var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
+    if(!this.state.defaultOptAdded){
+        this.setState({prevPro: flexPrev, defaultOptAdded: true})
+    }
+
+    var discount = (prev.oldPrice - prev.price / prev.oldPrice * 100)
+    var discounted = prev.oldPrice - prev.price
     
     const hours = moment(this.state.timeLeft).format("HH")
     const minutes = moment(this.state.timeLeft).format("mm")
@@ -765,10 +745,10 @@ if (this.state.view === "item"){
                 </SwipeableViews>
                 :
                <img src={prev.defaultImage} alt={'Product'} className="splash-card-product-view" />}
-               {prev.discount > 0 && 
+               {prev.oldPrice && 
                 <div id ="merchDiscount" className="card-body">
                 <Chip
-                    label={`${prev.discount}% ${t('discount')}`}
+                    label={`${discount}% ${t('discount')}`}
                     className={classes.chip}
                     color={'secondary'}
                 />
@@ -781,10 +761,10 @@ if (this.state.view === "item"){
 
          <div className="col-xs-12 col-md-6 col-lg-6">
             <Grid className={classes.grid2} container justify={"flex-start"} alignItems="center">
-                {prev.discount > 0 ? 
+                {prev.oldPrice ? 
                         <div>
-                            <h1 style={{color: "#3F51B5"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
-                            <span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}</span> <span style={{fontWeight: "normal"}}>- {t('youSave')} {<CurrencyFormat value={discount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</span>
+                            <h1 style={{color: "#3F51B5"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
+                            <span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.oldPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />}</span> <span style={{fontWeight: "normal"}}>- {t('youSave')} {<CurrencyFormat value={discounted.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</span>
                         </div>
                     :
                         <h1 style={{color: "#3F51B5"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
@@ -793,7 +773,7 @@ if (this.state.view === "item"){
          </div>
 
          <div style={{color: "white", fontSize: 15}} className="col-xs-12 col-md-6 col-lg-6">
-            {prev.id === "5cb82c254e1efafcd06dc1fa" &&
+            {prev._id === "5cb82c254e1efafcd06dc1fa" &&
             <div>
                 <Grid container justify="center" alignItems="center">
                     <Fab variant="extended" aria-label="Next" onClick={()=>{this.openFortniteShop()}} className={classes.fab}>
@@ -815,7 +795,7 @@ if (this.state.view === "item"){
                                 isMulti={false}
                                 styles={customStyles}
                                 value={this.state.selectedColor}
-                                onChange={this.handleChangeColor}
+                                onChange={this.selectChange.bind(this, 'selectedColor')}
                                 options={this.state.colors} placeholder={t('color')}
                             /> 
                     </div>
@@ -829,7 +809,7 @@ if (this.state.view === "item"){
                                 isMulti={false}
                                 styles={customStyles}
                                 value={this.state.selectedColor}
-                                onChange={this.handleChangeColor}
+                                onChange={this.selectChange.bind(this, 'selectedColor')}
                                 options={this.state.colors} placeholder={t('color')}
                             /> 
                     </div>
@@ -851,7 +831,7 @@ if (this.state.view === "item"){
                                 isMulti={false}
                                 styles={customStyles}
                                 value={this.state.selectedSize}
-                                onChange={this.handleChangeSize.bind(this, 'selectedSize')}
+                                onChange={this.selectChange.bind(this, 'selectedSize')}
                                 options={this.state.sizes} placeholder={t('size')}
                             /> 
                     </div>
@@ -865,7 +845,7 @@ if (this.state.view === "item"){
                             isMulti={false}
                             styles={customStyles}
                             value={this.state.selectedSize}
-                            onChange={this.handleChangeSize.bind(this, 'selectedSize')}
+                            onChange={this.selectChange.bind(this, 'selectedSize')}
                             options={this.state.sizes} placeholder={t('size')}
                         /> 
                     </div>
@@ -885,8 +865,8 @@ if (this.state.view === "item"){
                                 isMulti={false}
                                 styles={customStyles}
                                 value={this.state.selectedOpt}
-                                onChange={this.handleChangeOption.bind(this, 'selectedOpt')}
-                                options={this.props.cart.prevOptions} placeholder={t('option')}
+                                onChange={this.selectChange.bind(this, 'selectedOpt')}
+                                options={this.state.options} placeholder={t('option')}
                             />     
                         <br/>
                     </div>
@@ -898,8 +878,8 @@ if (this.state.view === "item"){
                             isMulti={false}
                             styles={customStyles}
                             value={this.state.selectedOpt}
-                            onChange={this.handleChangeOption.bind(this, 'selectedOpt')}
-                            options={this.props.cart.prevOptions} placeholder={t('option')}
+                            onChange={this.selectChange.bind(this, 'selectedOpt')}
+                            options={this.state.options} placeholder={t('option')}
                         />
                     </div>     
                     <div className="col-xs-4 col-md-4 col-lg-4">
@@ -911,7 +891,17 @@ if (this.state.view === "item"){
 
                 <div className="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
-                        <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{this.goBack()}} className={classes.fab}>
+                        <Fab color="secondary" variant="extended" aria-label="Edit" onClick={()=>{
+                            this.setState({view: "shop", 
+                            selectedOpt: "", 
+                            selectedColor: "", 
+                            colors: [], 
+                            sizes: [], 
+                            options: [],
+                            selectedSize: "",
+                            activeStep: 0,
+                            defaultOptAdded: false})}} 
+                            className={classes.fab}>
                             <BackIcon className={classes.extendedIcon2} />
                             {t('backToShop')}
                         </Fab>
@@ -919,10 +909,13 @@ if (this.state.view === "item"){
                 </div>
                 <div className="col-xs-6 col-md-6 col-lg-6">
                     <Grid container justify="center" alignItems="center">
-                        <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.addItemToCart(prev)}} className={classes.fab}>
+                    {this.props.cart.updatingCart ? 
+                        <CircularProgress className={classes.progress} />
+                    :
+                    <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.addItemToCart(prev)}} className={classes.fab}>
                             <ShoppingCart className={classes.extendedIcon2} />
                             {t('addToCart')}
-                        </Fab>
+                        </Fab>}
                     </Grid>
                 </div>
                 <div className="col-xs-6 col-md-6 col-lg-6">
@@ -981,7 +974,7 @@ if (this.state.view === "item"){
                     icon={<Timer />}
                     label={`${t('fortniteShopTimerHours', {hours})}${t('fortniteShopTimerMinutes', {minutes})}${t('fortniteShopTimerSeconds', {seconds})}`}
                     className={classes.chip}
-                    variant="outlined"
+                    variant="contained"
                     color="primary"
                 />}
             </Grid>
@@ -995,7 +988,7 @@ if (this.state.view === "item"){
 
 render(){
     const { t } = this.props;
-    if(!this.props.shop.fetched){
+    if(this.state.fetchingShop){
         return(
             <div className="GG-BG-INVERSE">
                 <Loader />
@@ -1015,8 +1008,8 @@ render(){
             <Modal 
                 open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
                 styles={ErrorStyle}>
-                <h3 class="col-xs-6">{this.state.ErrorMsg}</h3>
-                <img style ={{width: 150, height: 120}} class="col-xs-6" src={amumu} alt=""></img> 
+                <h3 className="col-xs-6">{this.state.ErrorMsg}</h3>
+                <img style ={{width: 150, height: 120}} className="col-xs-6" src={amumu} alt=""></img> 
             </Modal>
         </div>
     );
@@ -1026,22 +1019,15 @@ render(){
 
 function mapStateToProps(state){
     return {
+        loginData: state.loginSession,
         cart: state.cartItems,
-        shop: state.shop,
-        server: state.server,
-        cartInfo: state.updateCartInfo
+        server: state.server
     }
   }
   
 const matchDispatchToProps = dispatch => bindActionCreators(
     {
-        addCartItem,
-        updateCartInfo,
-        addPrev,
-        updatePrev,
-        fetchShopData,
-        addPrevOptions,
-        removePrevOptions
+        addCartItem
     },
     dispatch,
 )

@@ -13,6 +13,41 @@ let s3bucket = new AWS.S3({
 
 
 const extraApis = {
+    setUserCart:async function(req, res){
+        Validator.check(req.body,'cart').then(async ()=>{
+            const collection = DB.dbo.collection('carts');
+            let cart;
+            try{
+                cart = await collection.updateOne(
+                    {userID: new ObjectId(req.token.userId)}, 
+                    {$set: {cart: req.body.cart, totalPrice: req.body.totalPrice, userID: new ObjectId(req.token.userId)}}, 
+                    {upsert: true}
+                );
+            }
+            catch(err){
+                return res.status(500).send({ message: 'Error finding cart'});
+            }
+                return res.status(200).send({ message: 'Cart Updated'});
+    
+        },err => {return res.status(400).send(err);});
+    },
+    fetchUserCart:async function(req, res){
+        const collection = DB.dbo.collection('carts');
+        let cart;
+        try{
+            cart = await collection.findOne(
+                {userID: new ObjectId(req.token.userId)}
+            );
+        }
+        catch(err){
+            return res.status(500).send({ message: 'Error finding cart'});
+        }
+        if(!cart){
+            return res.status(404).send({ message: 'Cart was not found'});
+        }
+            return res.status(200).send({ message: 'Cart Found', data: cart});
+
+    },
     fetchShop:function(req, res){
         const collection = DB.dbo.collection('products');
         let array=[];  

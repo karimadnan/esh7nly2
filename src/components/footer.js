@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import ReactRouter from 'flux-react-router';
-import '../Mycss.css';
-import '../Respcss.css';
-import { FacebookProvider, Page} from 'react-facebook';
 import i18next from 'i18next';
 import { withNamespaces } from 'react-i18next';
 import { withStyles } from '@material-ui/core/styles';
@@ -14,6 +11,7 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import {isMobile} from 'react-device-detect';
+import Chip from '@material-ui/core/Chip';
 
 const styles = theme => ({
     descStyle: {
@@ -24,6 +22,41 @@ const styles = theme => ({
           fontWeight: 'bold'
         }
     },
+    chip: {
+        margin: theme.spacing.unit,
+        fontSize: 10,
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 16,
+        }
+    },
+    fbIcon: {
+        width: 50,
+        height: 50,
+        fontSize: 35,
+        color: '#212121',
+        fontWeight: 'bold',
+        backgroundColor: '#4e4e4e',
+        transition: "0.5s cubic-bezier(.47,1.64,.41,.8)",
+        '&:hover': {
+            backgroundColor: '#3F51B5',
+          },
+      },
+      igIcon: {
+        width: 50,
+        height: 50,
+        fontSize: 35,
+        color: '#212121',
+        fontWeight: 'bold',
+        backgroundColor: '#4e4e4e',
+        transition: "0.5s cubic-bezier(.47,1.64,.41,.8)",
+        '&:hover': {
+            background: "#f09433",
+            background: "-moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)",
+            background: "-webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)",
+            background: "linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)",
+            filter: "progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 )"
+          },
+      },
     emailAvatar: {
         width: 50,
         height: 50,
@@ -40,6 +73,15 @@ const styles = theme => ({
         fontWeight: 'bold',
         backgroundColor: '#3F51B5',
       },
+      footer: {
+        borderTop: '1px solid #333',
+        marginTop: 'auto',
+        color: '#fff',
+        backgroundColor: '#212121',
+      },
+      bottom: {
+          marginTop: theme.spacing.unit * 20
+      }
 });
 
 
@@ -50,67 +92,77 @@ render() {
     const { t } = this.props;
     return (
 
-    <footer id="page-footer">
+    <footer className={classes.footer}>
+        <div className="container">
         {i18next.language === "EN" ?
-        <div className="col-xs-12 col-md-12 col-lg-12">
-            <div className="col-xs-12 col-md-3 col-lg-3">
-                <h3 style={{fontWeight: 'bold'}}>{t('footerText1')}</h3>
-                <h4>{t('footerText2')}</h4>
-            </div>
-            <div className="col-xs-12 col-md-3 col-lg-3">
-                <ListItem className={classes.descStyle}>
-                    <ListItemIcon>{<Avatar className={classes.emailAvatar}><EmailIcon /></Avatar>}</ListItemIcon>
-                    <ListItemText disableTypography primary={"Contact@ggegypt.com"} />
-                </ListItem>
-            </div>
-            <div className="col-xs-12 col-md-3 col-lg-3">
-                <ListItem className={classes.descStyle}>
-                    <ListItemIcon>{<Avatar className={classes.emailAvatar}><PhoneIcon /></Avatar>}</ListItemIcon>
-                    <ListItemText disableTypography primary={"01146494889"} />
-                </ListItem>
-            </div>
-            <div className="col-md-3 col-lg-3 col-xs-12 ">
-                <ListItem className={classes.descStyle}>
-                    <ListItemIcon>{<Avatar className={classes.fbAvatar}>F</Avatar>}</ListItemIcon>
-                    <ListItemText disableTypography primary={t('likeUsFb')} />
-                </ListItem>
-                <Grid container justify="flex-end" alignItems="center">
-                    <FacebookProvider key="1" appId="1984023341904164">
-                        <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
-                    </FacebookProvider> 
-                </Grid>
-            </div>
-            <div className="col-md-3 col-lg-3 col-xs-5">
-                <Grid container justify="flex-start" alignItems="center">
-                    <h6 style={{fontWeight: "bold"}}> © 2019 ggegypt </h6>
-                </Grid>
-            </div>
-            <div className="col-md-3 col-lg-3 col-xs-4 ">
-                <Grid container justify="flex-end" alignItems="center">
-                    <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/privacy")}}> {t('privacyPolicy')} </p></h6>
-                </Grid>
-            </div>
-            <div className="col-md-3 col-lg-3 col-xs-3 ">
-                <Grid container justify="flex-start" alignItems="center">
-                    <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/contactus")}}> {t('contact')} </p> </h6>
-                </Grid>
-            </div>
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                <div className="col-xs-12 col-md-4 col-lg-4">
+                    <h3 style={{fontWeight: 'bold'}}>{t('footerText1')}</h3>
+                    <h4>{t('footerText2')}</h4>
+                </div>
+                <div className="col-xs-6 col-md-1 col-lg-1">
+                    <ListItem className={classes.descStyle}>
+                        <ListItemIcon>{                    
+                            <Avatar className={classes.fbIcon}>
+                                f
+                            </Avatar>}
+                        </ListItemIcon>
+                    </ListItem>
+                </div>
+                <div className="col-xs-6 col-md-1 col-lg-1">
+                    <ListItem className={classes.descStyle}>
+                        <ListItemIcon>{                    
+                            <Avatar className={classes.igIcon}>
+                                <span className="svg-icon svg-icon-insta"/>
+                            </Avatar>}
+                        </ListItemIcon>
+                    </ListItem>
+                </div>
+                <div className="col-xs-12 col-md-3 col-lg-3">
+                    <ListItem className={classes.descStyle}>
+                        <ListItemIcon>{<Avatar className={classes.emailAvatar}><EmailIcon /></Avatar>}</ListItemIcon>
+                        <ListItemText disableTypography primary={"Contact@ggegypt.com"} />
+                    </ListItem>
+                </div>
+                <div className="col-xs-12 col-md-3 col-lg-3">
+                    <ListItem className={classes.descStyle}>
+                        <ListItemIcon>{<Avatar className={classes.emailAvatar}><PhoneIcon /></Avatar>}</ListItemIcon>
+                        <ListItemText disableTypography primary={"01146494889"} />
+                    </ListItem>
+                </div>
+
+                <div className={classes.bottom}>
+                    <div className="col-md-3 col-lg-3 col-xs-4">
+                        <Grid container justify="flex-start" alignItems="center">
+                            <h6 style={{fontWeight: "bold"}}> © 2019 ggegypt </h6>
+                        </Grid>
+                    </div>
+                    <div className="col-md-3 col-lg-3 col-xs-4 ">
+                        <Grid container justify="flex-end" alignItems="center">
+                            <Chip
+                                onClick={()=>{ReactRouter.goTo("/privacy")}}
+                                label={t('privacyPolicy')}
+                                className={classes.chip}
+                                variant="outlined"
+                                color="primary"
+                            />
+                        </Grid>
+                    </div>
+                    <div className="col-md-3 col-lg-3 col-xs-4 ">
+                        <Grid container justify="flex-start" alignItems="center">
+                            <Chip
+                                onClick={()=>{ReactRouter.goTo("/contactus")}}
+                                label={t('contact')}
+                                className={classes.chip}
+                                variant="outlined"
+                                color="primary"
+                            />
+                        </Grid>
+                    </div>
+                </div>
             </div>
             : i18next.language !== "EN" && !isMobile ?
-            <div>
             <div className="col-xs-12 col-md-12 col-lg-12">
-                <div className="col-md-3 col-lg-3 col-xs-12 ">
-                    <ListItem className={classes.descStyle}>
-                        <ListItemIcon>{<Avatar className={classes.fbAvatar}>F</Avatar>}</ListItemIcon>
-                        <ListItemText disableTypography primary={t('likeUsFb')} />
-                    </ListItem>
-                    <Grid container justify="flex-end" alignItems="center">
-                        <FacebookProvider key="1" appId="1984023341904164">
-                            <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
-                        </FacebookProvider> 
-                    </Grid>
-                </div>
-                
                 <div className="col-xs-12 col-md-3 col-lg-3">
                     <ListItem className={classes.descStyle}>
                         <ListItemIcon>{<Avatar className={classes.emailAvatar}><PhoneIcon /></Avatar>}</ListItemIcon>
@@ -123,6 +175,27 @@ render() {
                         <ListItemText disableTypography primary={"Contact@ggegypt.com"} />
                     </ListItem>
                 </div>
+
+                <div className="col-xs-6 col-md-1 col-lg-1">
+                    <ListItem className={classes.descStyle}>
+                        <ListItemIcon>{                    
+                            <Avatar className={classes.igIcon}>
+                                <span className="svg-icon svg-icon-insta"/>
+                            </Avatar>}
+                        </ListItemIcon>
+                    </ListItem>
+                </div>
+                <div className="col-xs-6 col-md-1 col-lg-1">
+                    <ListItem className={classes.descStyle}>
+                        <ListItemIcon>{                    
+                            <Avatar className={classes.fbIcon}>
+                                f
+                            </Avatar>}
+                        </ListItemIcon>
+                    </ListItem>
+                </div>
+
+
                 <div className="col-xs-12 col-md-3 col-lg-3">
                 <Grid container justify="flex-end" alignItems="center">
                     <h3 style={{fontWeight: 'bold'}}>{t('footerText1')}</h3>
@@ -132,8 +205,8 @@ render() {
                 </Grid>
 
                 </div>
-            </div>
-            <div className="col-xs-12 col-md-12 col-lg-12">
+
+            <div className={classes.bottom}>
                 <div className="col-md-3 col-lg-3 col-xs-5">
                     <Grid container justify="flex-start" alignItems="center">
                         <h6 style={{fontWeight: "bold"}}> © 2019 ggegypt </h6>
@@ -141,25 +214,57 @@ render() {
                 </div>
                 <div className="col-md-3 col-lg-3 col-xs-4 ">
                     <Grid container justify="flex-end" alignItems="center">
-                        <h5 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/privacy")}}> {t('privacyPolicy')} </p></h5>
+                        <Chip
+                            onClick={()=>{ReactRouter.goTo("/privacy")}}
+                            label={t('privacyPolicy')}
+                            className={classes.chip}
+                            variant="outlined"
+                            color="primary"
+                        />
                     </Grid>
                 </div>
                 <div className="col-md-3 col-lg-3 col-xs-3 ">
                     <Grid container justify="flex-start" alignItems="center">
-                        <h5 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/contactus")}}> {t('contact')} </p> </h5>
+                        <Chip
+                            onClick={()=>{ReactRouter.goTo("/contactus")}}
+                            label={t('contact')}
+                            className={classes.chip}
+                            variant="outlined"
+                            color="primary"
+                        />
                     </Grid>
-                </div>
             </div>
-            </div>
+        </div>
+    </div>
+
+
             : i18next.language !== "EN" && isMobile ?
                 <div className="col-xs-12 col-md-12 col-lg-12">
                 <div className="col-xs-12 col-md-3 col-lg-3">
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justify="flex-end" alignItems="center">
                         <h3 style={{fontWeight: 'bold'}}>{t('footerText1')}</h3>
                     </Grid>
-                    <Grid container justify="center" alignItems="center">
+                    <Grid container justify="flex-end" alignItems="center">
                         <h4>{t('footerText2')}</h4>
                     </Grid>
+                </div>
+                <div className="col-xs-6 col-md-1 col-lg-1">
+                    <ListItem className={classes.descStyle}>
+                        <ListItemIcon>{                    
+                            <Avatar className={classes.igIcon}>
+                                <span className="svg-icon svg-icon-insta"/>
+                            </Avatar>}
+                        </ListItemIcon>
+                    </ListItem>
+                </div>
+                <div className="col-xs-6 col-md-1 col-lg-1">
+                    <ListItem className={classes.descStyle}>
+                        <ListItemIcon>{                    
+                            <Avatar className={classes.fbIcon}>
+                                f
+                            </Avatar>}
+                        </ListItemIcon>
+                    </ListItem>
                 </div>
                 <div className="col-xs-12 col-md-3 col-lg-3">
                     <ListItem className={classes.descStyle}>
@@ -173,33 +278,37 @@ render() {
                         <ListItemText disableTypography primary={"01146494889"} />
                     </ListItem>
                 </div>
-                <div className="col-md-3 col-lg-3 col-xs-12 ">
-                    <ListItem className={classes.descStyle}>
-                        <ListItemIcon>{<Avatar className={classes.fbAvatar}>F</Avatar>}</ListItemIcon>
-                        <ListItemText disableTypography primary={t('likeUsFb')} />
-                    </ListItem>
-                    <Grid container justify="flex-end" alignItems="center">
-                        <FacebookProvider key="1" appId="1984023341904164">
-                            <Page style={{width: 317}}  showFacepile="false" href="https://www.facebook.com/EgyptianObama/" />
-                        </FacebookProvider> 
-                    </Grid>
-                </div>
-                <div className="col-md-3 col-lg-3 col-xs-5">
-                    <Grid container justify="flex-start" alignItems="center">
-                        <h6 style={{fontWeight: "bold"}}> © 2019 ggegypt </h6>
-                    </Grid>
-                </div>
-                <div className="col-md-3 col-lg-3 col-xs-4 ">
-                    <Grid container justify="flex-end" alignItems="center">
-                        <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/privacy")}}> {t('privacyPolicy')} </p></h6>
-                    </Grid>
-                </div>
-                <div className="col-md-3 col-lg-3 col-xs-3 ">
-                    <Grid container justify="flex-start" alignItems="center">
-                        <h6 style={{fontWeight: "bold", cursor: 'pointer'}}> <p onClick={()=>{ReactRouter.goTo("/contactus")}}> {t('contact')} </p> </h6>
-                    </Grid>
+                <div className={classes.bottom}>
+                    <div className="col-md-3 col-lg-3 col-xs-5">
+                        <Grid container justify="flex-start" alignItems="center">
+                            <h6 style={{fontWeight: "bold"}}> © 2019 ggegypt </h6>
+                        </Grid>
+                    </div>
+                    <div className="col-md-3 col-lg-3 col-xs-4 ">
+                        <Grid container justify="flex-end" alignItems="center">
+                            <Chip
+                                onClick={()=>{ReactRouter.goTo("/privacy")}}
+                                label={t('privacyPolicy')}
+                                className={classes.chip}
+                                variant="outlined"
+                                color="primary"
+                            />
+                        </Grid>
+                    </div>
+                    <div className="col-md-3 col-lg-3 col-xs-3 ">
+                        <Grid container justify="flex-start" alignItems="center">
+                            <Chip
+                                onClick={()=>{ReactRouter.goTo("/contactus")}}
+                                label={t('contact')}
+                                className={classes.chip}
+                                variant="outlined"
+                                color="primary"
+                            />
+                        </Grid>
+                    </div>
                 </div>
                 </div>: undefined}
+            </div>
     </footer>
     );
     }

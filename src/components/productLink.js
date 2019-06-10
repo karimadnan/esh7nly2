@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {addCartItem, updateCartInfo, addPrev, updatePrev, addPrevOptions, removePrevOptions} from '../actions/index';
+import {addCartItem} from '../actions/index';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import '../Mycss.css';
@@ -39,6 +39,7 @@ import Loader from '../containers/loader';
 import Truck from '@material-ui/icons/AirportShuttle';
 import i18next from 'i18next';
 import {Helmet} from "react-helmet";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const freeShipPrice = 400
 
@@ -61,6 +62,9 @@ const productTheme = createMuiTheme({
 });
 
 const styles = theme => ({
+    progress: {
+        margin: theme.spacing.unit * 2,
+      },
     fab: {
         margin: theme.spacing.unit,
         fontSize: 10,
@@ -122,10 +126,8 @@ const customStyles = {
 }
 
 class ProductPage extends Component {
-constructor(nextProps){
-    super(nextProps);
-    console.log(nextProps)
-    this.state = {
+
+    state = {
         url: this.props.server.main,
         copied: false,
         value: 0,
@@ -143,21 +145,16 @@ constructor(nextProps){
         fortniteShop: false,
         productLoaded: false,
         productError: false,
-
+        prevPro: '',
+        defaultOptAdded: false
     }   
-}
 
     componentDidMount(){
         var that = this
-        const prev = this.props.cart.itemPrev
-
         if(!this.state.productLoaded){
-            if(prev.options){
-                this.props.removePrevOptions()
-            }
             axios.get(this.state.url+`getProduct?id=${window.location.href.split('/')[4]}`, {headers: {'Content-Type': 'application/json'}})
               .then(function (response) {
-                that.addItemToPrev(response.data.data[0]);
+                that.setState({prevPro: response.data.data[0], productLoaded: true});
             })
               .catch(function (error) {
                 that.setState({productError: true});
@@ -182,94 +179,92 @@ constructor(nextProps){
         this.setState({[type]: false });
     };
 
-    addItemToPrev(item){
+    addItemToCart(item){
+        const { t } = this.props;
+        const itemName = item.Name
+        const msg = t('addedToCartMsg', {itemName})
+        let uniqueId = item._id
+    
         let object = {
-            id: item._id,
             Name: item.Name,
             price: item.price,
-            desc: item.desc,
-            discount: item.discount,
-            soldBy: item.soldBy,
-            category: item.category,
-            defaultImage: item.defaultImage
-         }
-         if (item.img){
-             object["img"] = item.img;
-         }
-         if (item.options){
-            object["defaultOpt"] = item.options[0];
-            object["options"] = item.options;
-         }
-        if (item.colors){
-            object["color"] = item.colors[0].label;
-            object["colors"] = item.colors;
-        }
-        if (item.sizes){
-            object["sizes"] = item.sizes;
-            object["size"] = item.sizes[0];
-        }
-         this.props.addPrev(object)
-         this.setState({productLoaded: true})
-    }
-
-    addItemToArray(item){
-        let uniqueId = item.id
-        var discounted = item.discount / 100 * item.price
-    
-        let object = {
-            Name: item.Name,
-            price: item.discount > 0 ? item.price - discounted : item.price,
-            rarity: item.rarity,
             info: item.info,
             soldBy: item.soldBy,
-            quantity: 1,
+            quantity: this.state.quantity,
             defaultImage: item.defaultImage,
          }
-         if (item.defaultOpt){
-             object["option"] = item.defaultOpt;
-             uniqueId = uniqueId + `-${this.props.cart.itemPrev.defaultOpt}`
-             object["id"] = uniqueId
-         }
-         if (item.color){
-             object["color"] = item.color;
-             uniqueId = uniqueId + `-${this.props.cart.itemPrev.color}`
-             object["id"] = uniqueId
-         }
-         if (item.size){
-             object["size"] = item.size;
-             uniqueId = uniqueId + `-${this.props.cart.itemPrev.size}`
-             object["id"] = uniqueId
-         }
-         else if (!item.defaultOpt && !item.color && !item.size){
+    
+        if (item.oldPrice){
+            object["oldPrice"] = item.oldPrice;
+        }
+        if (item.defaultOpt){
+            object["option"] = item.defaultOpt;
+            uniqueId = uniqueId + `-${this.state.prevPro.defaultOpt}`
+            object["id"] = uniqueId
+        }
+        if (item.color){
+            object["color"] = item.color;
+            uniqueId = uniqueId + `-${this.state.prevPro.color}`
+            object["id"] = uniqueId
+        }
+        if (item.size){
+            object["size"] = item.size;
+            uniqueId = uniqueId + `-${this.state.prevPro.size}`
+            object["id"] = uniqueId
+        }
+        else if (!item.defaultOpt && !item.color && !item.size){
             object["id"] = uniqueId
          }
-         console.log(object, "OBJECT")
-         this.props.addCartItem(object)
+    
+        if(item.options){
+            if(item.defaultOpt !== ''){
+                this.props.addCartItem(object)
+                this.notify(msg)
+            }
+            else{
+                this.setState({
+                    ErrorModal: true,
+                    ErrorMsg: `${t('marketOptionError')}`
+                })
+            }
+        }
+        else{
+            this.props.addCartItem(object)
+            this.notify(msg)
+        }
+    
     }
 
-    handleChangeOption(type, value) {
+    selectChange(type, value){
         this.setState({[type]: value}, () =>{
-            this.props.updatePrev(this.state.selectedOpt.label, 'option')
-            this.props.updatePrev(this.state.selectedOpt.value, 'price')
-            if(this.state.selectedOpt.img){
-                this.props.updatePrev(this.state.selectedOpt.img, 'img')
+            if(type === 'selectedOpt'){
+                this.setState({
+                    prevPro: {
+                      ...this.state.prevPro,
+                      defaultOpt: value.label,
+                      price: value.value,
+                      defaultImage: value.img ? value.img : this.state.prevPro.defaultImage
+                    }
+                  })
             }
-        });
-    }
-    
-    handleChangeColor = selectedColor => {
-        this.setState({selectedColor}, () =>{
-            this.setState({activeStep: this.state.selectedColor.index})
-            this.props.updatePrev(this.state.selectedColor.label, 'color')
-            if(this.state.selectedColor.value){
-                this.props.updatePrev(this.state.selectedColor.value, 'img')
+            if(type === 'selectedColor'){
+                this.setState({
+                    prevPro: {
+                      ...this.state.prevPro,
+                      color: value.label,
+                      defaultImage: value.value,
+                    },
+                    activeStep: value.index
+                  })
             }
-        });
-    }
-    
-    handleChangeSize(type, value) {
-        this.setState({[type]: value}, () =>{
-            this.props.updatePrev(this.state.selectedSize.label, 'size')
+            if(type === 'selectedSize'){
+                this.setState({
+                    prevPro: {
+                      ...this.state.prevPro,
+                      size: value.label
+                    }
+                  })
+            }
         });
     }
     
@@ -284,37 +279,10 @@ constructor(nextProps){
         this.setState({timeLeft: timeCount - 1000})
     }
 
-    updateInfo (data){
-        var discounted = data.discount / 100 * data.price
-        let object = {
-            price: data.discount > 0 ? data.price - discounted : data.price,
-            items: 1
-         }
-        this.props.updateCartInfo(object, 'add')
-    }
-
-    addItemToCart(item){
-        const { t } = this.props;
-        var prev = this.props.cart.itemPrev
-        const itemName = prev.Name
-        const msg = t('addedToCartMsg', {itemName})
-        if(item.price > 0){
-            this.addItemToArray(prev)
-            this.updateInfo(prev)
-            this.notify(msg)
-        }
-        else{
-            this.setState({
-                ErrorModal: true,
-                ErrorMsg: `${t('marketOptionError')}`
-            })
-        }
-    }
-    
     current(){
         const { t } = this.props;
         const { classes } = this.props;
-        const prev = this.props.cart.itemPrev
+        const prev = this.state.prevPro
         if(this.state.value === 0){
             return(
                 <div>
@@ -362,36 +330,40 @@ constructor(nextProps){
     ViewProduct(){
         const { t } = this.props;
         const { classes } = this.props;
-        const prev = this.props.cart.itemPrev
-        if (this.state.productLoaded){
-            if(prev.options && !this.state.optionsFetched){
+        const prev = this.state.prevPro
+        let opts = []
+        let colors = []
+        let sizes = []
+        let flexPrev = {...this.state.prevPro}
         
-            prev.options.forEach(element => {
+        if (this.state.productLoaded){
+        
+            if(prev.options && !this.state.options.length > 0){
+                prev.options.forEach(element => {
                 let object = {
                     label: element.option,
                     value: element.price
                 };
-                if(element.img){object['img']=element.img}
-                    this.props.addPrevOptions(object)
+                if(element.img) {object['img']=element.img}
+                    opts.push(object)
                 });
-                    this.setState({optionsFetched: true})
+                    this.setState({options: opts})
             }
         
             if(prev.colors && !this.state.colors.length > 0){
-                var colors = []
                 prev.colors.forEach((element, index) => {
                     let object = {
-                    label: element.label,
-                    value: element.value,
-                    index: index
-                }
+                        label: element.label,
+                        value: element.value, 
+                        index: index
+                    }
                     colors.push(object)
                   });
-                  this.setState({colors: colors})  
+                  flexPrev['color'] = colors[0].label
+                  this.setState({colors: colors, selectedColor: colors[0]})
             }
         
             if(prev.sizes && !this.state.sizes.length > 0){
-                var sizes = []
                 prev.sizes.forEach((entry, index) => {
                     let objSize = {
                         label: entry,
@@ -399,11 +371,16 @@ constructor(nextProps){
                     }
                     sizes.push(objSize)
                 })
-                this.setState({sizes: sizes})  
+                flexPrev['size'] = sizes[0].label
+                this.setState({sizes: sizes, selectedSize: sizes[0]})  
             }
         
-            var discount = prev.discount / 100 * prev.price
-            var priceAfterDiscount = prev.price - prev.discount / 100 * prev.price
+            if(!this.state.defaultOptAdded){
+                this.setState({prevPro: flexPrev, defaultOptAdded: true})
+            }
+        
+            var discount = (prev.oldPrice - prev.price / prev.oldPrice * 100)
+            var discounted = prev.oldPrice - prev.price
             
             const hours = moment(this.state.timeLeft).format("HH")
             const minutes = moment(this.state.timeLeft).format("mm")
@@ -420,12 +397,15 @@ constructor(nextProps){
                 <div className="BlackBG">
                 
                 <div className="col-xs-12 col-md-12 col-lg-12">
-                    <div className="col-xs-12 col-md-6 col-lg-6">
+                    <div className="col-xs-12 col-md-12 col-lg-12">
                         <Grid  container justify={"flex-start"} alignItems="center">
                             <h1 style={{color: "white", fontWeight: "bold", wordBreak: 'break-word'}}>{prev.Name}</h1>
                         </Grid>
                         <Grid  container justify={"flex-start"} alignItems="center">
-                            <h5 style={{color: "#3F51B5", fontWeight: "bold"}}>By: {prev.soldBy}</h5>
+                            {i18next.language === 'EN' ?
+                            <h5 style={{color: "#3F51B5", fontWeight: "bold"}}>{t('byStore')}: {prev.soldBy}</h5>
+                            :
+                            <h5 style={{color: "#3F51B5", fontWeight: "bold"}}> {prev.soldBy} :{t('byStore')}</h5>}
                         </Grid>
                     </div>
                 </div>
@@ -500,10 +480,10 @@ constructor(nextProps){
                         </SwipeableViews>
                         :
                     <img src={prev.defaultImage} alt={'Product'} className="splash-card-product-view" />}
-                    {prev.discount > 0 && 
+                    {prev.oldPrice && 
                         <div id ="merchDiscount" className="card-body">
                             <Chip
-                                label={`${prev.discount}% ${t('discount')}`}
+                                label={`${discount}% ${t('discount')}`}
                                 className={classes.chip}
                                 color={'secondary'}
                             />                    
@@ -515,10 +495,10 @@ constructor(nextProps){
         
                  <div className="col-xs-12 col-md-6 col-lg-6">
                     <Grid className={classes.grid2} container justify={"flex-start"} alignItems="center">
-                        {prev.discount > 0 ? 
+                        {prev.oldPrice ? 
                                 <div>
-                                    <h1 style={{color: "#3F51B5"}}>{<CurrencyFormat value={priceAfterDiscount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
-                                    <span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />}</span> <span style={{fontWeight: "normal"}}>- {t('youSave')} {<CurrencyFormat value={discount.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</span>
+                                    <h1 style={{color: "#3F51B5"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
+                                    <span style={{textDecoration: "line-through", color: "grey"}}>{<CurrencyFormat value={prev.oldPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />}</span> <span style={{fontWeight: "normal"}}>- {t('youSave')} {<CurrencyFormat value={discounted.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</span>
                                 </div>
                             :
                                 <h1 style={{color: "#3F51B5"}}>{<CurrencyFormat value={prev.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h1>
@@ -527,7 +507,7 @@ constructor(nextProps){
                  </div>
         
                  <div style={{color: "white", fontSize: 15}} className="col-xs-12 col-md-6 col-lg-6">
-                    {prev.id === "5cb82c254e1efafcd06dc1fa" &&
+                    {prev._id === "5cb82c254e1efafcd06dc1fa" &&
                     <div>
                         <Grid container justify="center" alignItems="center">
                             <Fab variant="extended" aria-label="Next" onClick={()=>{this.openFortniteShop()}} className={classes.fab}>
@@ -549,7 +529,7 @@ constructor(nextProps){
                                         isMulti={false}
                                         styles={customStyles}
                                         value={this.state.selectedColor}
-                                        onChange={this.handleChangeColor}
+                                        onChange={this.selectChange.bind(this, 'selectedColor')}
                                         options={this.state.colors} placeholder={t('color')}
                                     /> 
                             </div>
@@ -563,7 +543,7 @@ constructor(nextProps){
                                         isMulti={false}
                                         styles={customStyles}
                                         value={this.state.selectedColor}
-                                        onChange={this.handleChangeColor}
+                                        onChange={this.selectChange.bind(this, 'selectedColor')}
                                         options={this.state.colors} placeholder={t('color')}
                                     /> 
                             </div>
@@ -585,7 +565,7 @@ constructor(nextProps){
                                         isMulti={false}
                                         styles={customStyles}
                                         value={this.state.selectedSize}
-                                        onChange={this.handleChangeSize.bind(this, 'selectedSize')}
+                                        onChange={this.selectChange.bind(this, 'selectedSize')}
                                         options={this.state.sizes} placeholder={t('size')}
                                     /> 
                             </div>
@@ -599,7 +579,7 @@ constructor(nextProps){
                                     isMulti={false}
                                     styles={customStyles}
                                     value={this.state.selectedSize}
-                                    onChange={this.handleChangeSize.bind(this, 'selectedSize')}
+                                    onChange={this.selectChange.bind(this, 'selectedSize')}
                                     options={this.state.sizes} placeholder={t('size')}
                                 /> 
                             </div>
@@ -619,8 +599,8 @@ constructor(nextProps){
                                         isMulti={false}
                                         styles={customStyles}
                                         value={this.state.selectedOpt}
-                                        onChange={this.handleChangeOption.bind(this, 'selectedOpt')}
-                                        options={this.props.cart.prevOptions} placeholder={t('option')}
+                                        onChange={this.selectChange.bind(this, 'selectedOpt')}
+                                        options={this.state.options} placeholder={t('option')}
                                     />     
                                 <br/>
                             </div>
@@ -632,8 +612,8 @@ constructor(nextProps){
                                     isMulti={false}
                                     styles={customStyles}
                                     value={this.state.selectedOpt}
-                                    onChange={this.handleChangeOption.bind(this, 'selectedOpt')}
-                                    options={this.props.cart.prevOptions} placeholder={t('option')}
+                                    onChange={this.selectChange.bind(this, 'selectedOpt')}
+                                    options={this.state.options} placeholder={t('option')}
                                 />
                             </div>     
                             <div className="col-xs-4 col-md-4 col-lg-4">
@@ -653,10 +633,13 @@ constructor(nextProps){
                         </div>
                         <div className="col-xs-6 col-md-6 col-lg-6">
                             <Grid container justify="center" alignItems="center">
+                            {this.props.cart.updatingCart ? 
+                                    <CircularProgress className={classes.progress} />
+                                :
                                 <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.addItemToCart(prev)}} className={classes.fab}>
                                     <ShoppingCart className={classes.extendedIcon2} />
                                     {t('addToCart')}
-                                </Fab>
+                                </Fab>}
                             </Grid>
                         </div>
                         <div className="col-xs-6 col-md-6 col-lg-6">
@@ -679,7 +662,7 @@ constructor(nextProps){
                                 ContentProps={{
                                     'aria-describedby': 'message-id',
                                 }}
-                                message={<h4 id="message-id">Link copied</h4>}
+                                message={<h4 id="message-id">{t('linkCopied')}</h4>}
                             />
                         </div>
                  </div>
@@ -716,7 +699,7 @@ constructor(nextProps){
                             icon={<Timer />}
                             label={`${t('fortniteShopTimerHours', {hours})}${t('fortniteShopTimerMinutes', {minutes})}${t('fortniteShopTimerSeconds', {seconds})}`}
                             className={classes.chip}
-                            variant="outlined"
+                            variant="conainted"
                             color="primary"
                         />}
                     </Grid>
@@ -781,20 +764,13 @@ constructor(nextProps){
 function mapStateToProps(state){
     return {
         cart: state.cartItems,
-        shop: state.shop,
         server: state.server,
-        cartInfo: state.updateCartInfo
     }
   }
   
 const matchDispatchToProps = dispatch => bindActionCreators(
     {
-        addCartItem,
-        updateCartInfo,
-        addPrev,
-        updatePrev,
-        addPrevOptions,
-        removePrevOptions
+        addCartItem
     },
     dispatch,
 )

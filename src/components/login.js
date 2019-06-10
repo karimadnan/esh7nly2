@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-
-import '../Mycss.css';
-import '../Respcss.css';
 import Navbar from './navbar';
 import ReactRouter from 'flux-react-router';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {loginFunction} from '../actions/index';
+import {loginFunction, fetchCart} from '../actions/index';
 import isEmail from 'validator/lib/isEmail';
 import axios from 'axios';
 import amumu from '../Images/amumusad.png';
@@ -117,6 +114,7 @@ login() {
             axios.get(`${this.state.Url}login?Phone=${this.state.Phone}&Password=${this.state.Password}`)
             .then(function (response) {
                 that.props.loginFunction(response.data.data, 'login')
+                that.props.fetchCart(that.props.loginData.token)
                 ReactRouter.goTo("/account")
             })
             .catch(function (error) {
@@ -239,7 +237,8 @@ function mapStateToProps(state){
   
   const matchDispatchToProps = dispatch => bindActionCreators(
       {
-        loginFunction
+        loginFunction,
+        fetchCart
       },
       dispatch,
     )

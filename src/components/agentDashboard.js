@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-
-import '../Mycss.css';
-import '../Respcss.css';
 import Navbar from './navbar';
 import {connect} from 'react-redux';
 import axios from 'axios';

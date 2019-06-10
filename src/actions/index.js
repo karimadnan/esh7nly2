@@ -1,89 +1,10 @@
 import axios from 'axios';
 
-export const addCartItem = (item) => {
-    return {
-        type: "CART_ADDITEM",
-        payload: item
-    }
-};
-
-export const removeCartItem = (item) => {
-    return {
-        type: "CART_REMOVEITEM",
-        payload: item
-    }
-}
-
-export const addPrev = (data) => {
-    return {
-        type: "ADD_PREV",
-        payload: data
-    }
-}
-
-export const addPrevOptions = (data) => {
-    return {
-        type: "ADD_PREV_OPTIONS",
-        payload: data
-    }
-}
-
-export const removePrevOptions = () => {
-    return {
-        type: "CLEAN_PREV_OPTIONS"
-    }
-}
-
-export const cleanCart = () =>{
-    return {
-        type: "CLEAN_CART"
-    }
-}
-
 export const changeLang = (lang) =>{
     return {
         type: "UPDATE_LANG",
         payload: lang 
     }
-}
-
-
-export const cleanCartInfo = () =>{
-    return {
-        type: "CLEAN_CART_INFO"
-    }
-}
-
-export const updatePrev = (thing, action) => {
-    switch(action){
-        case 'size':
-        return {
-            type: "UPDATE_SIZE",
-            payload: thing
-        }
-        case 'color':
-        return {
-            type: "UPDATE_COLOR",
-            payload: thing
-        }
-        case 'img':
-        return {
-            type: "UPDATE_IMG",
-            payload: thing
-        }
-        case 'option':
-        return {
-            type: "UPDATE_OPTION",
-            payload: thing
-        }
-        case 'price':
-        return {
-            type: "UPDATE_PRICE",
-            payload: thing
-        }
-        default:
-            return undefined
-        }
 }
 
 export const loginFunction = (data, action) => {
@@ -102,34 +23,15 @@ export const loginFunction = (data, action) => {
         }
 }
 
-export const updateCartInfo = (data, action) => {
+export const updateCartPrice = (data, action) => {
     switch(action){
-        case 'add':
+        case 'clean':
         return {
-            type: "UPDATE_CART_ADD",
-            payload: data
-        }
-        case 'remove':
-        return {
-            type: "UPDATE_CART_REMOVE",
-            payload: data
+            type: "CLEAN_CART",
         }
         default:
         return undefined
         }
-}
-
-export function fetchProductsPending() {
-    return {
-        type: 'FETCH_PRODUCTS_PENDING'
-    }
-}
-
-export function fetchProductsSuccess(products) {
-    return {
-        type: 'FETCH_PRODUCTS_SUCCESS',
-        payload: products
-    }
 }
 
 export function updateProfilePhoto(photo) {
@@ -139,23 +41,77 @@ export function updateProfilePhoto(photo) {
     }
 }
 
-export function fetchProductsError(error) {
+export const removeCartItem = (item) => {
     return {
-        type: 'FETCH_PRODUCTS_ERROR',
-        error: error
+        type: "CART_REMOVEITEM",
+        payload: item
+    }
+};
+
+export const addCartItem = (item) => {
+    return {
+        type: "CART_ADDITEM",
+        payload: item
+    }
+};
+
+export function updateCart(cart, token) {
+    return function(dispatch) {
+      dispatch(updateCartPending())
+      return  axios.post("https://www.ggegypt.com/server/setUserCart", cart, {headers: {
+        'Content-Type': 'application/json',
+        'authorization': token}})
+      .then(function (response) {
+        dispatch(updateCartSuccess())
+      })
+      .catch(function (error) {
+    });
+    };
+}
+
+export function updateCartPending() {
+    return {
+        type: 'UPDATE_CART_PENDING'
     }
 }
 
-export function fetchShopData(query={}) {
+export function updateCartSuccess() {
+    return {
+        type: 'UPDATE_CART_SUCCESS',
+    }
+}
+
+export function fetchCart(token) {
     return function(dispatch) {
-      dispatch(fetchProductsPending())
-      return  axios.post("https://www.ggegypt.com/server/fetchShop", query, {headers: {
-        'Content-Type': 'application/json'}})
+      dispatch(fetchCartPending())
+      return  axios.get("https://www.ggegypt.com/server/fetchUserCart", {headers: {
+        'Content-Type': 'application/json',
+        'authorization': token}})
       .then(function (response) {
-        dispatch(fetchProductsSuccess(response.data.data))
+        dispatch(fetchCartSuccess(response.data.data))
       })
       .catch(function (error) {
-        dispatch(fetchProductsError(error))
+        dispatch(fetchCartError(error))
     });
     };
+}
+
+export function fetchCartPending() {
+    return {
+        type: 'FETCH_CART_PENDING'
+    }
+}
+
+export function fetchCartSuccess(cart) {
+    return {
+        type: 'FETCH_CART_SUCCESS',
+        payload: cart
+    }
+}
+
+export function fetchCartError(error) {
+    return {
+        type: 'FETCH_CART_ERROR',
+        payload: error
+    }
 }

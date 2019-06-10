@@ -16,7 +16,7 @@
 
 .svg-icon {
   background-size: 27px;
-  background-position: 90%;
+  background-position: 50%;
   background-repeat: no-repeat;
   position: relative;
   display: inline-block;
@@ -116,6 +116,10 @@
 
 .svg-icon-facebook {
   background-image: url(./Images/svg/facebook.svg);
+}
+
+.svg-icon-insta {
+  background-image: url(./Images/svg/insta.svg);
 }
 
 .svg-icon-face1 {

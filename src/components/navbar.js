@@ -1,6 +1,4 @@
 import React from 'react';
-import '../Mycss.css';
-import '../svg.css';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,7 +16,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import ReactRouter from 'flux-react-router';
-import {loginFunction} from '../actions/index';
+import {loginFunction, updateCart} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import GlobalCart from '../containers/global-cart';
@@ -84,12 +82,12 @@ const styles = theme => ({
     width: '100%',
     [theme.breakpoints.up('md')]: {
       display: 'block',
-      marginLeft: theme.spacing.unit * 15,
+      marginLeft: theme.spacing.unit * 5,
       width: 'auto',
     },
     [theme.breakpoints.up('lg')]: {
       display: 'block',
-      marginLeft: theme.spacing.unit * 40,
+      marginLeft: theme.spacing.unit * 5,
       marginRight: theme.spacing.unit,
       width: 'auto',
     },
@@ -151,7 +149,9 @@ class Navbar extends React.Component {
     Url: this.props.server.main,
     drawer: false,
     ErrorModal: false,
-    ErrorMsg: ''
+    ErrorMsg: '',
+    cart: '',
+    totalPrice: ''
   };
 
   componentWillMount(){
@@ -195,6 +195,15 @@ class Navbar extends React.Component {
   logout =() =>{
     this.props.loginFunction(null, 'logout')
     ReactRouter.goTo("/main")
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.cart.cart !== this.props.cart.cart){
+          if(this.props.loginData.loggedState){
+            this.props.updateCart( 
+                {cart: nextProps.cart.cart, totalPrice: String(nextProps.cart.totalPrice)}, this.props.loginData.token)
+            }
+    }
   }
 
   profile() {
@@ -365,13 +374,16 @@ function mapStateToProps(state){
   return {
     loginData: state.loginSession,
     server: state.server,
+    cart: state.cartItems
   }
 }
 
 
+
 const matchDispatchToProps = dispatch => bindActionCreators(
 {
-  loginFunction
+  loginFunction,
+  updateCart
 },
 dispatch,
 )

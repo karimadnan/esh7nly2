@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-
-import '../Mycss.css';
-import '../Respcss.css';
 import Navbar from './navbar';
 import axios from 'axios';
 import ReCAPTCHA from "react-google-recaptcha";

@@ -13,6 +13,8 @@ res.render('index', { title: 'Express' });
 });    
 // extra APIS ------------------------------------------------
 router.post('/fetchShop', extraApis.fetchShop);
+router.post('/setUserCart',Validator.checkJWT,extraApis.setUserCart);
+router.get('/fetchUserCart',Validator.checkJWT,extraApis.fetchUserCart);
 router.get('/getProduct', extraApis.getProduct);
 router.post('/testUpload', upload.single('image'), extraApis.testUpload); 
 // login Apis ------------------------------------------------

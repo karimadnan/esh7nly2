@@ -1,19 +1,47 @@
-import "react-alice-carousel/lib/alice-carousel.css";
-import '../Mycss.css';
 import AliceCarousel from 'react-alice-carousel';
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {isMobile} from 'react-device-detect';
-import {fetchShopData} from '../actions/index';
-import {bindActionCreators} from 'redux';
 import { withNamespaces } from 'react-i18next';
 import ReactRouter from 'flux-react-router';
 import Loader from './loader';
 import { withStyles } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import Chip from '@material-ui/core/Chip';
+import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import LeftArrow from '@material-ui/icons/ArrowBackIos';
+import RightArrow from '@material-ui/icons/ArrowForwardIos';
 
 const styles = theme => ({
+    slideNav:{
+        marginTop: theme.spacing.unit * 6,
+        cursor: 'pointer',
+        '&:hover': {
+            color: '#3F51B5',
+          },
+        [theme.breakpoints.up('sm')]: {
+            marginTop: theme.spacing.unit * 15
+          }
+    },
+    titleFont: {
+        fontFamily: 'arial black',
+        fontSize: 25,
+        fontWeight: 'bold',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 40,
+        }
+    },
+    subtitleFont: {
+        fontFamily: 'arial black',
+        fontSize: 13,
+        fontWeight: 'bold',
+        color: 'white',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 15,
+        }
+    },
     chipDiscount: {
         margin: theme.spacing.unit,
         fontSize: 10,
@@ -34,21 +62,44 @@ const styles = theme => ({
 
 class NewProducts extends Component {
 
-componentDidMount(){
-    if(!this.props.shop.fetching){
-        this.props.fetchShopData();
+    state ={
+        fetchingShop: false,
+        fetchedShop: false,
+        errorFetchingShop: false,
+        shopData: [],
+        url: this.props.server.main,
+        headers: {
+            'Content-Type': 'application/json'}
     }
+
+componentDidMount(){
+    this.fetchShop();
+}
+
+fetchShop(){
+    let query = {}
+    var that = this
+    this.setState({fetchingShop: true})
+    axios.post(this.state.url+"fetchShop", query, {headers: this.state.headers})
+
+    .then(function (response) {
+        that.setState({fetchingShop: false, fetchedShop: true, errorFetchingShop: false, shopData: response.data.data})
+    })
+    .catch(function (error) {
+        that.setState({fetchingShop: false, errorFetchingShop: true})
+    })
 }
 
 Discounted(){
 const { classes } = this.props;
 const { t } = this.props;
 
-if(this.props.shop.fetched && this.props.shop.items){
+if(this.state.shopData){
 let outPut = []
-this.props.shop.items.map((item, index) =>{
+this.state.shopData.map((item, index) =>{
     var rarity = "fortniteCard splash-cardTees"
-    if(item.discount){
+    var discount = (item.oldPrice - item.price / item.oldPrice * 100)
+    if(item.oldPrice){
         outPut.push(            
         <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
             <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
@@ -63,10 +114,10 @@ this.props.shop.items.map((item, index) =>{
                     />
                 </div>
 
-                {item.discount > 0 && 
+                {item.oldPrice && 
                 <div id ="merchDiscount" className="card-body">
                     <Chip
-                        label={`${item.discount}% ${t('discount')}`}
+                        label={`${discount}% ${t('discount')}`}
                         className={classes.chipDiscount}
                         color={'secondary'}
                     />
@@ -85,9 +136,9 @@ New(){
 const { t } = this.props;
 const { classes } = this.props;
 
-if(this.props.shop.fetched && this.props.shop.items){
+if(this.state.shopData){
 let outPut = []
-this.props.shop.items.map((item, index) =>{
+this.state.shopData.map((item, index) =>{
     var rarity = "fortniteCard splash-cardTees rarity-"
         outPut.push(            
         <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
@@ -115,9 +166,9 @@ Micro(){
     const { t } = this.props;
     const { classes } = this.props;
     
-    if(this.props.shop.fetched && this.props.shop.items){
+    if(this.state.shopData){
     let outPut = []
-    this.props.shop.items.map((item, index) =>{
+    this.state.shopData.map((item, index) =>{
         var rarity = "fortniteCard splash-cardTees rarity-"
         if(item.category === 'micro'){
             outPut.push(            
@@ -152,7 +203,8 @@ Micro(){
 
 render(){
     const { t } = this.props;
-    if(!this.props.shop.fetched){
+    const { classes } = this.props;
+    if(this.state.fetchingShop){
         return(
             <div className="BlackBG" style={{margin: 10}}>
                 <Loader />
@@ -161,67 +213,129 @@ render(){
     }
     return(
     <div className="BlackBG" style={{margin: 10}}>
-        <h1 style={{color: "#3F51B5", textAlign: "center", fontWeight: "bold"}}>{t('micro')}</h1>
-        <h3 style={{color: "white", textAlign: "center"}}>{t('microText')}</h3>
-            <AliceCarousel
-                items={this.Micro()}
-                responsive={ {
-                    0: { items: 1 },
-                    1024: { items: 1 },
-                }}
-                autoPlayInterval={3000}
-                autoPlayDirection="rtl"
-                autoPlay={true}
-                fadeOutAnimation={true}
-                mouseDragEnabled={true}
-                stopAutoPlayOnHover={true}
-                dotsDisabled={true}
-                buttonsDisabled={true}
-                onSlideChange={this.onSlideChange}
-                onSlideChanged={this.onSlideChanged}
-            />
+            <Grid container justify="center" alignItems="center">
+                <div id="gradi">
+                    <Typography className={classes.titleFont}>
+                        {t('micro')}
+                    </Typography>
+                </div>
+            </Grid>
+            <Grid container justify="center" alignItems="center">
+                <Typography className={classes.subtitleFont}>
+                    {t('microText')}
+                </Typography>
+            </Grid>
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                    <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games._slidePrev()}/>
+                </div>}
+                <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
+                    <AliceCarousel
+                        items={this.Micro()}
+                        responsive={ {
+                            0: { items: 1 },
+                            1024: { items: 1 },
+                        }}
+                        autoPlayInterval={7000}
+                        autoPlayDirection="rtl"
+                        autoPlay={true}
+                        mouseDragEnabled={false}
+                        stopAutoPlayOnHover={true}
+                        dotsDisabled={true}
+                        buttonsDisabled={true}
+                        ref={(el) => (this.Games = el)}
+                    />
+                </div>
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                    <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games._slideNext()}/>
+                </div>}
+            </div>
+            <Grid container justify="center" alignItems="center">
+                <div id="gradi">
+                    <Typography className={classes.titleFont}>
+                        {t('newProductsSlider')}
+                    </Typography>
+                </div>
+            </Grid>
+            <Grid container justify="center" alignItems="center">
+                <Typography className={classes.subtitleFont}>
+                    {t('newProductsSliderText')}
+                </Typography>
+            </Grid>
 
-        <h1 style={{color: "#3F51B5", textAlign: "center", fontWeight: "bold"}}>{t('newProductsSlider')}</h1>
-        <h3 style={{color: "white", textAlign: "center"}}>{t('newProductsSliderText')}</h3>
-            <AliceCarousel
-                items={this.New()}
-                responsive={{
-                    0: { items: 3 },
-                    1024: { items: 3 },
-                }
-                }
-                autoPlayInterval={3000}
-                autoPlayDirection="rtl"
-                autoPlay={true}
-                fadeOutAnimation={true}
-                mouseDragEnabled={true}
-                stopAutoPlayOnHover={true}
-                dotsDisabled={true}
-                buttonsDisabled={true}
-                onSlideChange={this.onSlideChange}
-                onSlideChanged={this.onSlideChanged}
-            />
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                    <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals._slidePrev()}/>
+                </div>}
+                <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
+                    <AliceCarousel
+                        items={this.New()}
+                        responsive={{
+                            0: { items: 3 },
+                            1024: { items: 3 },
+                        }
+                        }
+                        autoPlayInterval={3000}
+                        autoPlayDirection="rtl"
+                        autoPlay={true}
+                        fadeOutAnimation={true}
+                        mouseDragEnabled={true}
+                        stopAutoPlayOnHover={true}
+                        dotsDisabled={true}
+                        buttonsDisabled={true}
+                        onSlideChange={this.onSlideChange}
+                        onSlideChanged={this.onSlideChanged}
+                        ref={(el) => (this.Arrivals = el)}
+                    />
+                </div>
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                    <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals._slideNext()}/>
+                </div>}
+            </div>
 
-        <h1 style={{color: "#3F51B5", textAlign: "center", fontWeight: "bold"}}>{t('discountsProductsSlider')}</h1>
-        <h3 style={{color: "white", textAlign: "center"}}>{t('discountsProductsSliderText')}</h3>
-            <AliceCarousel
-                items={this.Discounted()}
-                responsive={{
-                    0: { items: 2 },
-                    1024: { items: 2 },
-                }
-                }
-                autoPlayInterval={5000}
-                autoPlayDirection="rtl"
-                autoPlay={true}
-                fadeOutAnimation={true}
-                mouseDragEnabled={true}
-                stopAutoPlayOnHover={true}
-                dotsDisabled={true}
-                buttonsDisabled={true}
-                onSlideChange={this.onSlideChange}
-                onSlideChanged={this.onSlideChanged}
-        />
+
+            <Grid container justify="center" alignItems="center">
+                <div id="gradi">
+                    <Typography className={classes.titleFont}>
+                        {t('discountsProductsSlider')}
+                    </Typography>
+                </div>
+            </Grid>
+            <Grid container justify="center" alignItems="center">
+                <Typography className={classes.subtitleFont}>
+                    {t('discountsProductsSliderText')}
+                </Typography>
+            </Grid>
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                    <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts._slidePrev()}/>
+                </div>}
+                <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
+                <AliceCarousel
+                    items={this.Discounted()}
+                    responsive={{
+                        0: { items: 2 },
+                        1024: { items: 2 },
+                    }
+                    }
+                    autoPlayInterval={5000}
+                    autoPlayDirection="rtl"
+                    autoPlay={true}
+                    fadeOutAnimation={true}
+                    mouseDragEnabled={true}
+                    stopAutoPlayOnHover={true}
+                    dotsDisabled={true}
+                    buttonsDisabled={true}
+                    onSlideChange={this.onSlideChange}
+                    onSlideChanged={this.onSlideChanged}
+                    ref={(el) => (this.Discounts = el)}
+                />
+                </div>
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                    <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts._slideNext()}/>
+                </div>}
+            </div>
+
     </div>
     )
 }
@@ -229,19 +343,12 @@ render(){
 
 function mapStateToProps(state){
     return {
-        shop: state.shop,
+        server: state.server
     }
   }
-
-  const matchDispatchToProps = dispatch => bindActionCreators(
-    {
-        fetchShopData
-    },
-    dispatch,
-)
 
 export default compose(
     withStyles(styles),
     withNamespaces(),
-    connect(mapStateToProps, matchDispatchToProps),
+    connect(mapStateToProps),
 )(NewProducts); 

@@ -3,14 +3,12 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import NavBar from './navbar';
 import ReactRouter from 'flux-react-router';
-import '../Mycss.css';
-import '../Respcss.css';
 import amumu from '../Images/amumusad.png';
 import fortniteDab from '../Images/fortnitedab.png';
 import Modal from 'react-responsive-modal';
 import isInt from 'validator/lib/isInt';
 import {bindActionCreators} from 'redux';
-import {cleanCart, cleanCartInfo} from '../actions/index';
+import {updateCartPrice} from '../actions/index';
 import CurrencyFormat from 'react-currency-format';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -30,11 +28,15 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Avatar from '@material-ui/core/Avatar';
 import Select from 'react-select';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 
 const styles = theme => ({
+    progress: {
+        margin: theme.spacing.unit * 2,
+      },
     Avatar: {
         margin: 10,
         width: 80,
@@ -169,6 +171,7 @@ class Checkout extends Component {
         Url: this.props.server.main,
         currentN: [0, 33, 66, 100],
         currentIndex: 0,
+        creatingOrder: false,
         cart: false,
         firstName: '',
         lastName: '',
@@ -209,7 +212,7 @@ class Checkout extends Component {
     createOrder(){
         const { t } = this.props;
         var that = this
-        var shipCost = this.props.cartInfo.totalPrice > 400 ? 0 : this.state.ShipPrice
+        var shipCost = this.props.cart.totalPrice > 400 ? 0 : this.state.ShipPrice
         var payment;
 
         switch(this.state.paymentMethod){
@@ -229,21 +232,21 @@ class Checkout extends Component {
 
         var Data = {paymentMethod: payment,
                     orderType: "Products",
-                    cart: this.props.cart,
-                    totalPrice: String(this.props.cartInfo.totalPrice),
+                    cart: this.props.cart.cart,
+                    totalPrice: String(this.props.cart.totalPrice),
                     shipPrice: String(shipCost)};
         if(this.state.transId){
             Data['transId']=this.state.transId
         }
+        this.setState({creatingOrder: true})
         axios.post(this.state.Url+"createOrder", Data, {headers: this.state.headers})
         .then(function (response) {
-            that.props.cleanCart()
-            that.props.cleanCartInfo()
-            that.setState({SuccessModal: true, SuccessMsg: response.data.message, currentIndex: that.state.currentIndex+1})
+            that.props.updateCartPrice(null, 'clean')
+            that.setState({SuccessModal: true, SuccessMsg: response.data.message, currentIndex: that.state.currentIndex+1, creatingOrder: false})
         })
         .catch(function (error) {
             console.log(error)
-            that.setState({ErrorModal: true, ErrorMsg: error.response.data.message})
+            that.setState({ErrorModal: true, ErrorMsg: error.response.data.message, creatingOrder: false})
         })
     }
 
@@ -562,8 +565,12 @@ class Checkout extends Component {
                     Area: this.state.Area, 
                     StreetNameNo: this.state.StName, 
                     LocationType: locationType,
-                    ShippingNote: this.state.note,
                     ShippingPrice: this.state.ShipPrice}
+
+        if(this.state.note){
+            Data['ShippingNote'] = this.state.note;
+        }
+
         axios.post(this.state.Url+"setUserAddress", Data, {headers: this.state.headers})
         .then(function (response) {
             window.location.reload();
@@ -581,7 +588,7 @@ class Checkout extends Component {
         const { t } = this.props;
         const { classes } = this.props;
 
-        let CART = this.props.cart.map(item => {
+        let CART = this.props.cart.cart.map(item => {
             let productName = item.Name
             if(item.option){
                 productName = `(${item.option}) ` + productName
@@ -653,10 +660,13 @@ class Checkout extends Component {
                         <ListItemText primary={<h4>{this.state.paymentMethod}</h4>} />
                     </div>
                     <div className="col-xs-12 col-md-offset-6 col-lg-offset-6">
+                    {this.state.creatingOrder ? 
+                        <CircularProgress className={classes.progress} />
+                    :
                     <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.createOrder()}} className={classes.fab}>
                         <NextIcon className={classes.extendedIcon2} />
                         <h5>{t('submit')}</h5>
-                    </Fab>
+                    </Fab>}
                     </div>
                 </div>
             )}
@@ -684,10 +694,13 @@ class Checkout extends Component {
                         <ListItemText primary={<h4>{this.state.paymentMethod}</h4>} />
                 </div>
                 <div className="col-xs-12 col-md-offset-6 col-lg-offset-6">
+                {this.state.creatingOrder ? 
+                        <CircularProgress className={classes.progress} />
+                    :
                     <Fab color="primary" variant="extended" aria-label="Save" onClick={()=>{this.createOrder()}} className={classes.fab}>
                         <NextIcon className={classes.extendedIcon2} />
                         <h5>{t('submit')}</h5>
-                    </Fab>
+                    </Fab>}
                 </div>
             </div>
             )
@@ -697,11 +710,11 @@ class Checkout extends Component {
 
 returnGrandTotal(){
 let outPut = 0
-    if (this.props.cartInfo.totalPrice > 400){
-        outPut = this.props.cartInfo.totalPrice
+    if (this.props.cart.totalPrice > 400){
+        outPut = this.props.cart.totalPrice
     }
     else{
-        outPut = this.props.cartInfo.totalPrice + Number(this.state.ShipPrice)
+        outPut = this.props.cart.totalPrice + Number(this.state.ShipPrice)
     }
 return outPut
 }
@@ -709,7 +722,7 @@ return outPut
 render(){
     const { t } = this.props;
     const { classes } = this.props;
-    let total = this.props.cartInfo.totalPrice;
+    let total = this.props.cart.totalPrice;
     let grandTotal = this.returnGrandTotal();
 
 
@@ -727,7 +740,7 @@ render(){
                 {!this.props.loginData.loggedState && !this.state.cart ?
                     <h1 style={{color: "red"}}>{t('notLogged')}</h1>
                     : 
-                    this.props.loginData.loggedState && this.state.currentIndex !== 3 && this.props.cartInfo.totalItems === 0 ?
+                    this.props.loginData.loggedState && this.state.currentIndex !== 3 && (this.props.cart.cart.length <= 0) ?
                          <h1 style={{color: "red"}}>{t('emptyCart')}</h1>  
                     :
                     <div>
@@ -745,7 +758,7 @@ render(){
             <div className="col-xs-12 col-md-4 col-lg-4">
             <div style={{margin: 10}}>
             <div className="cartBG">
-                   {!this.state.cart && this.state.currentIndex !== 3 && this.props.cartInfo.totalItems > 0 ? 
+                   {!this.state.cart && this.state.currentIndex !== 3 && (this.props.cart.cart.length > 0) ? 
                    
                 <div style={{backgroundColor: fade('#3F51B5', 0.10)}}>
                     <Grid container justify="center" alignItems="center">
@@ -770,7 +783,7 @@ render(){
                         {this.createCart()}
                 </Scrollbars>
 
-               {this.props.cartInfo.totalItems > 0 ?   
+               {this.props.cart.cart && this.props.cart.cart.length > 0 ?   
                 <div>  
                     <div className="row" style={{backgroundColor: fade('#3F51B5', 0.2)}}>
                     {i18next.language === "EN" ?
@@ -812,7 +825,7 @@ render(){
                     {i18next.language === "EN" ?
                         <div>
                             <div>
-                            {this.props.cartInfo.totalPrice < 400 ?
+                            {this.props.cart.totalPrice < 400 ?
                             <div>
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
@@ -842,7 +855,7 @@ render(){
                         </div>
                         :
                         <div>
-                            {this.props.cartInfo.totalPrice < 400 ?
+                            {this.props.cart.totalPrice < 400 ?
                             <div>
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
@@ -937,15 +950,13 @@ function mapStateToProps(state){
     return {
         loginData: state.loginSession,
         server: state.server,
-        cart: state.cartItems.cart,
-        cartInfo: state.updateCartInfo
+        cart: state.cartItems,
     }
   }
   
   const matchDispatchToProps = dispatch => bindActionCreators(
     {
-        cleanCart,
-        cleanCartInfo
+        updateCartPrice
     },
     dispatch,
   )

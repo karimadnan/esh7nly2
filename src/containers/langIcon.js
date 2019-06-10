@@ -5,8 +5,6 @@ import Badge from '@material-ui/core/Badge';
 import {connect} from 'react-redux';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import '../svg.css';
-import '../flag-icon.css'
 import i18n from '../i18n';
 import i18next from 'i18next';
 import Language from '@material-ui/icons/Language';

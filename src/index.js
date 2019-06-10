@@ -1,7 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Flux from 'flux-react-router';
+import 'bootstrap/dist/css/bootstrap.css';
 import './index.css'
+import './Mycss.css';
+import './svg.css';
+import './flag-icon.css';
+import 'react-toastify/dist/ReactToastify.min.css';
+import "react-alice-carousel/lib/alice-carousel.css";
 
 import Main from './components/main';
 import SignUp from './components/SignUp';
@@ -22,10 +28,10 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
 import allReducers from './reducers';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react'
-import { persistStore, persistReducer } from 'redux-persist'
-import storage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
-import createEncryptor from 'redux-persist-transform-encrypt'
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import createEncryptor from 'redux-persist-transform-encrypt';
 import './i18n';
 
 const key = "MyReduxSecretKeyPleaseKeepAway"

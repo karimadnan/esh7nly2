@@ -391,7 +391,7 @@ const orderApis = {
     });
     },
     updateComment:async function(req, res, next){
-        var body= req.body;
+        var body= req.body; 
         if(!body.comment && !body.orderID){
             return res.status(400).send({message:'Missing fields'})
         }

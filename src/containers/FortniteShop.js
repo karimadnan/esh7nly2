@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import '../Mycss.css';
-import '../Respcss.css';
 import axios from 'axios';
 import { css } from '@emotion/core';
-import { PacmanLoader } from 'react-spinners';
 import { withNamespaces } from 'react-i18next';
 import Grid from '@material-ui/core/Grid';
+import Loader from './loader';
 
 const override = css`
     display: block;
@@ -75,18 +73,9 @@ class FortniteShop extends Component {
     }
 
     RenderPage = () => {
-    const { t } = this.props;
       if(!this.state.loaded){
         return(
-          <div className="container">
-              <h1 style={{color: "white", textAlign: "center"}}> {t('loading')}...</h1>
-              <PacmanLoader
-              css={override}
-              sizeUnit={"px"}
-              size={100}
-              color={'#FFFF00'}
-              loading={true}/>
-          </div>
+          <Loader color={'white'} />
         )
     }
     else{
