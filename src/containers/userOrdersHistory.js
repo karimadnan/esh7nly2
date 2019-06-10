@@ -298,11 +298,9 @@ if(this.state.done){
                         autoPlay={order.cart && order.cart.length > 1 ? true : false}
                         fadeOutAnimation={true}
                         mouseDragEnabled={false}
+                        buttonsDisabled={true}
                         stopAutoPlayOnHover={true}
                         dotsDisabled={true}
-                        buttonsDisabled={order.cart && order.cart.length > 1 ? false : true}
-                        onSlideChange={this.onSlideChange}
-                        onSlideChanged={this.onSlideChanged}
                         showSlideInfo={order.cart && order.cart.length > 1 ? true : false}
                     />
                     </CardMedia>
@@ -458,9 +456,7 @@ if(this.state.done){
                       mouseDragEnabled={false}
                       stopAutoPlayOnHover={true}
                       dotsDisabled={true}
-                      buttonsDisabled={order.cart && order.cart.length > 1 ? false : true}
-                      onSlideChange={this.onSlideChange}
-                      onSlideChanged={this.onSlideChanged}
+                      buttonsDisabled={true}
                       showSlideInfo={order.cart && order.cart.length > 1 ? true : false}
                   />
                   </CardMedia>

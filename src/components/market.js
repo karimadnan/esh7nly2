@@ -45,6 +45,7 @@ import i18next from 'i18next';
 import {Helmet} from "react-helmet";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import axios from 'axios';
+import Typography from '@material-ui/core/Typography';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -72,6 +73,16 @@ const productTheme = createMuiTheme({
 });
 
 const styles = theme => ({
+    cardName: {
+        color: 'white',
+        fontFamily: 'arial black',
+        wordBreak: 'break-word',
+        fontSize: 15,
+        fontWeight: 'bold',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 17,
+        }
+    },
     progress: {
         margin: theme.spacing.unit * 2,
       },
@@ -442,7 +453,9 @@ if (this.state.view === "shop"){
                 </div>
                     <div className="marketInfoBox">
                         <span className="marketCardText">
-                            <h4 className="marketCardTitle" style={{wordBreak: 'break-word'}}>{item.Name.length > 50 ? (((item.Name).substring(0,50-5))  + '..' ) : item.Name}</h4>
+                            <Typography className={classes.cardName}>
+                                {item.Name.length > 55 ? (((item.Name).substring(0,55-3))  + '...' ) : item.Name}
+                            </Typography>
                         </span>
                         {item.price > 0 &&
                         <span>

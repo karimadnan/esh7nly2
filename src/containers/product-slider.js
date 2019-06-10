@@ -140,6 +140,7 @@ if(this.state.shopData){
 let outPut = []
 this.state.shopData.map((item, index) =>{
     var rarity = "fortniteCard splash-cardTees rarity-"
+    if(item.category !== 'micro'){
         outPut.push(            
         <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
             <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
@@ -157,6 +158,7 @@ this.state.shopData.map((item, index) =>{
             </div>
         </div> 
         )
+    }
     })
     return outPut
 }
@@ -165,7 +167,7 @@ this.state.shopData.map((item, index) =>{
 Micro(){
     const { t } = this.props;
     const { classes } = this.props;
-    
+
     if(this.state.shopData){
     let outPut = []
     this.state.shopData.map((item, index) =>{
@@ -204,6 +206,7 @@ Micro(){
 render(){
     const { t } = this.props;
     const { classes } = this.props;
+
     if(this.state.fetchingShop){
         return(
             <div className="BlackBG" style={{margin: 10}}>
@@ -226,8 +229,12 @@ render(){
                 </Typography>
             </Grid>
             <div className="col-xs-12 col-md-12 col-lg-12">
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
-                    <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games._slidePrev()}/>
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1" 
+                    onMouseEnter={() => this.Games._pause()}
+                    onMouseLeave={() => this.Games._play()}>
+                    <Grid container justify="center" alignItems="center">
+                        <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games._slidePrev()}/>
+                    </Grid>
                 </div>}
                 <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
                     <AliceCarousel
@@ -237,7 +244,7 @@ render(){
                             1024: { items: 1 },
                         }}
                         autoPlayInterval={7000}
-                        autoPlayDirection="rtl"
+                        autoPlayDirection="ltr"
                         autoPlay={true}
                         mouseDragEnabled={false}
                         stopAutoPlayOnHover={true}
@@ -246,8 +253,12 @@ render(){
                         ref={(el) => (this.Games = el)}
                     />
                 </div>
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
-                    <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games._slideNext()}/>
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
+                    onMouseEnter={() => this.Games._pause()}
+                    onMouseLeave={() => this.Games._play()}>
+                    <Grid container justify="center" alignItems="center">
+                        <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games._slideNext()}/>
+                    </Grid>
                 </div>}
             </div>
             <Grid container justify="center" alignItems="center">
@@ -264,7 +275,9 @@ render(){
             </Grid>
 
             <div className="col-xs-12 col-md-12 col-lg-12">
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
+                    onMouseEnter={() => this.Arrivals._pause()}
+                    onMouseLeave={() => this.Arrivals._play()}>
                     <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals._slidePrev()}/>
                 </div>}
                 <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
@@ -275,20 +288,20 @@ render(){
                             1024: { items: 3 },
                         }
                         }
-                        autoPlayInterval={3000}
-                        autoPlayDirection="rtl"
+                        autoPlayInterval={5000}
+                        autoPlayDirection="ltr"
                         autoPlay={true}
                         fadeOutAnimation={true}
                         mouseDragEnabled={true}
                         stopAutoPlayOnHover={true}
                         dotsDisabled={true}
                         buttonsDisabled={true}
-                        onSlideChange={this.onSlideChange}
-                        onSlideChanged={this.onSlideChanged}
                         ref={(el) => (this.Arrivals = el)}
                     />
                 </div>
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
+                    onMouseEnter={() => this.Arrivals._pause()}
+                    onMouseLeave={() => this.Arrivals._play()}>
                     <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals._slideNext()}/>
                 </div>}
             </div>
@@ -307,7 +320,9 @@ render(){
                 </Typography>
             </Grid>
             <div className="col-xs-12 col-md-12 col-lg-12">
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
+                    onMouseEnter={() => this.Discounts._pause()}
+                    onMouseLeave={() => this.Discounts._play()}>
                     <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts._slidePrev()}/>
                 </div>}
                 <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
@@ -319,19 +334,19 @@ render(){
                     }
                     }
                     autoPlayInterval={5000}
-                    autoPlayDirection="rtl"
+                    autoPlayDirection="ltr"
                     autoPlay={true}
                     fadeOutAnimation={true}
                     mouseDragEnabled={true}
                     stopAutoPlayOnHover={true}
                     dotsDisabled={true}
                     buttonsDisabled={true}
-                    onSlideChange={this.onSlideChange}
-                    onSlideChanged={this.onSlideChanged}
                     ref={(el) => (this.Discounts = el)}
                 />
                 </div>
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
+                    onMouseEnter={() => this.Discounts._pause()}
+                    onMouseLeave={() => this.Discounts._play()}>
                     <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts._slideNext()}/>
                 </div>}
             </div>

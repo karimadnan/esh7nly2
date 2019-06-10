@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import CountUp from 'react-countup';
 import axios from 'axios';
 import i18next from 'i18next';
 import Person from '@material-ui/icons/VerifiedUser';
@@ -288,7 +287,7 @@ render(){
             <Divider />
             <ListItem>
                 <ListItemIcon>{<Whatshot />}</ListItemIcon>
-                <ListItemText primary={<h4>{t('ggPoints')}: <CountUp duration={5} end={this.state.vouchPoints}/></h4>} />
+                <ListItemText primary={<h4>{t('ggPoints')}: {this.state.vouchPoints}</h4>} />
             </ListItem>
         </div>
     :
@@ -346,7 +345,7 @@ render(){
          </ListItem>
          <Divider />
          <ListItem>
-             <ListItemText style={{textAlign: "right"}} primary={<h4> <CountUp duration={5} end={this.state.vouchPoints}/> :{t('ggPoints')}</h4>} />
+             <ListItemText style={{textAlign: "right"}} primary={<h4> {this.state.vouchPoints} :{t('ggPoints')}</h4>} />
              <ListItemIcon>{<Whatshot />}</ListItemIcon>
          </ListItem>
      </div>

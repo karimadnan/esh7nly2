@@ -33,7 +33,7 @@ button:hover .text { display: none; }
   color: white;
   overflow: hidden;
   padding: .54rem 1.25rem;
-  height: 30%;
+  height: 31%;
   width: 100%;
   bottom: 0;
   position: absolute;
@@ -187,7 +187,7 @@ body {
 } 
 
 .BlackBG {
-  border-radius: 1.95rem;
+  border-radius: 0.50rem;
   color: rgb(182, 180, 180);
   overflow-x: hidden;
   background-size: cover;
@@ -404,7 +404,6 @@ background-color: #ffffff;
 }
 
 .fortniteCard {
-
   min-height: 300px;
   max-height: 400px;
   position: relative;
@@ -416,9 +415,9 @@ background-color: #ffffff;
   -ms-flex-direction: column;
   flex-direction: column;
   word-wrap: break-word;
-  background-color: rgba(241, 241, 241, 0.112);
+  background-color: rgba(48, 48, 48, 0.262);
   background-clip: border-box;
-  border-radius: 0.30rem;
+  border-radius: 0.50rem;
 }
 
 #itemdesc {
