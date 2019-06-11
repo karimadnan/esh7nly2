@@ -44,9 +44,14 @@ const styles = theme => ({
     },
     chipDiscount: {
         margin: theme.spacing.unit,
+        backgroundColor: '#F44336',
+        color: '#fff',
+        fontWeight: 'bold',
         fontSize: 10,
+        maxHeight: 15,
         [theme.breakpoints.up('sm')]: {
-          fontSize: 17,
+          fontSize: 14,
+          maxHeight: 30,
         }
     },
     chipView: {
