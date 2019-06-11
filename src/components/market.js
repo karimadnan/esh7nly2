@@ -781,35 +781,55 @@ if (this.state.view === "item"){
          <div className="col-xs-12 col-md-5 col-lg-5">
             <div className="cardItemPrev">
                {prev.colors && prev.colors.length > 1 ?
+                    <div>
+                        <SwipeableViews 
+                                axis={'x'}
+                                index={this.state.activeStep}
+                                onChangeIndex={this.handleStepChange}
+                                enableMouseEvents
+                                >
+                                {prev.colors.map((step, index) => (
+                                    <div key={index}>
+                                    {Math.abs(this.state.activeStep - index) <= 2 ? (
+                                        <img src={step.value} alt={'Step'} className="splash-card-product-view" />
+                                    ) : null}
+                                    </div>
+                                ))}
+                        </SwipeableViews>
+                        {isMobile && 
+                        <Grid  container justify={"center"} alignItems="center">
+                            {prev.colors.map((dots, index) =>{
+                                return(
+                                    <DotIcon onClick={()=>{this.setState({activeStep: index})}} color={this.state.activeStep === index ? 'primary' : 'default'}/>
+                                )
+                            })}
+                        </Grid>}
+                    </div>
+                : prev.img && prev.img.length > 1 ?
+                <div>
                     <SwipeableViews 
                             axis={'x'}
                             index={this.state.activeStep}
                             onChangeIndex={this.handleStepChange}
                             enableMouseEvents
                             >
-                            {prev.colors.map((step, index) => (
+                            {prev.img.map((img, index) => (
                                 <div key={index}>
                                 {Math.abs(this.state.activeStep - index) <= 2 ? (
-                                    <img src={step.value} alt={'Step'} className="splash-card-product-view" />
+                                    <img src={img} alt={'Product'} className="splash-card-product-view" />
                                 ) : null}
                                 </div>
                             ))}
                     </SwipeableViews>
-                : prev.img && prev.img.length > 1 ?
-                <SwipeableViews 
-                        axis={'x'}
-                        index={this.state.activeStep}
-                        onChangeIndex={this.handleStepChange}
-                        enableMouseEvents
-                        >
-                        {prev.img.map((img, index) => (
-                            <div key={index}>
-                            {Math.abs(this.state.activeStep - index) <= 2 ? (
-                                <img src={img} alt={'Product'} className="splash-card-product-view" />
-                            ) : null}
-                            </div>
-                        ))}
-                </SwipeableViews>
+                    {isMobile && 
+                        <Grid  container justify={"center"} alignItems="center">
+                            {prev.colors.map((dots, index) =>{
+                                return(
+                                    <DotIcon onClick={()=>{this.setState({activeStep: index})}} color={this.state.activeStep === index ? 'primary' : 'default'}/>
+                                )
+                            })}
+                        </Grid>}
+                </div>
                 :
                <img src={prev.defaultImage} alt={'Product'} className="splash-card-product-view" />}
                {prev.oldPrice && 
