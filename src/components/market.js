@@ -743,10 +743,10 @@ if (this.state.view === "item"){
             <meta name="description" content={`${prev.Name} | ${prev.category} | ${prev.soldBy}`} />
         </Helmet>
         <div className="BlackBG">
-    
+
+        {/* SMALL IMAGES PREVIEW START*/}
         {!isMobile ?
         <div>
-        {/* SMALL IMAGES PREVIEW START*/}
         {prev.colors && prev.colors.length > 1 ?
         <div className="col-md-1 col-lg-1">
             {prev.colors.map((item, index) =>{
@@ -777,6 +777,7 @@ if (this.state.view === "item"){
         {/* SMALL IMAGES PREVIEW END*/}
         </div>
         :undefined}
+
         {/* MAIN IMAGE SLIDER START*/}
          <div className="col-xs-12 col-md-5 col-lg-5">
             <div className="cardItemPrev">
@@ -1124,6 +1125,4 @@ export default compose(
     withStyles(styles),
     withNamespaces(),
     connect(mapStateToProps, matchDispatchToProps),
-)(Market); 
-
-
+)(Market);

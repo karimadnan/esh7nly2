@@ -253,7 +253,7 @@ render(){
                         autoPlay={true}
                         mouseDragEnabled={false}
                         stopAutoPlayOnHover={true}
-                        dotsDisabled={true}
+                        dotsDisabled={false}
                         buttonsDisabled={true}
                         ref={(el) => (this.Games = el)}
                     />
@@ -299,7 +299,7 @@ render(){
                         fadeOutAnimation={true}
                         mouseDragEnabled={true}
                         stopAutoPlayOnHover={true}
-                        dotsDisabled={true}
+                        dotsDisabled={false}
                         buttonsDisabled={true}
                         ref={(el) => (this.Arrivals = el)}
                     />
@@ -344,7 +344,7 @@ render(){
                     fadeOutAnimation={true}
                     mouseDragEnabled={true}
                     stopAutoPlayOnHover={true}
-                    dotsDisabled={true}
+                    dotsDisabled={false}
                     buttonsDisabled={true}
                     ref={(el) => (this.Discounts = el)}
                 />

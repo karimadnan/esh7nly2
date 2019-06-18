@@ -31,11 +31,22 @@ import Grid from '@material-ui/core/Grid';
 import i18next from 'i18next';
 import Loader from '../containers/loader';
 import AliceCarousel from 'react-alice-carousel';
-import "react-alice-carousel/lib/alice-carousel.css";
+import LeftArrow from '@material-ui/icons/ArrowBackIos';
+import RightArrow from '@material-ui/icons/ArrowForwardIos';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const styles = theme => ({
+    slideNav:{
+        marginTop: theme.spacing.unit * 6,
+        cursor: 'pointer',
+        '&:hover': {
+            color: '#3F51B5',
+          },
+        [theme.breakpoints.up('sm')]: {
+            marginTop: theme.spacing.unit * 15
+          }
+    },
     cardEN:{
         backgroundColor: fade('#3F51B5', 0.225),
         margin: theme.spacing.unit,
@@ -298,6 +309,7 @@ drawOrderCards(){
                                     onSlideChange={this.onSlideChange}
                                     onSlideChanged={this.onSlideChanged}
                                     showSlideInfo={row.cart && row.cart.length > 1 ? true : false}
+                                    ref={(el) => (this.Orders = el)}
                                 />
                                 </CardMedia>
                             </Card>

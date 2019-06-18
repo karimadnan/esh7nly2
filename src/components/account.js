@@ -31,7 +31,7 @@ const ErrorStyle = {
 const theme = createMuiTheme({
     palette: {
         primary: { 500: '#3F51B5' }, // custom color in hex
-        secondary: { 'A400': '#ff9800' },
+        secondary: { 'A400': '#fff' },
         textColor: { 500: '#fafafa' }  // custom color in hex
     }
 });
