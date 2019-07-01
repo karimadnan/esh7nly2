@@ -527,7 +527,7 @@ class ProductPage extends Component {
                         <h1 style={{color: "white", wordBreak: 'break-word', fontFamily: 'arial'}}>{prev.Name}</h1>
                     </Grid>
                     <Grid  container justify={"center"} alignItems="center">
-                            <CopyToClipboard text={`www.ggegypt.com/productpage/${prev.id}`}>
+                            <CopyToClipboard text={`www.ggegypt.com/productpage/${prev._id}`}>
                                 <Chip
                                     onClick={()=>{this.setState({copied: true})}}
                                     label={t('copylink')}

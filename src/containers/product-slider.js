@@ -177,7 +177,7 @@ Micro(){
     let outPut = []
     this.state.shopData.map((item, index) =>{
         var rarity = "fortniteCard splash-cardTees rarity-"
-        if(item.category === 'micro'){
+        if(item.category === 'games'){
             outPut.push(            
             <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
                 <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>

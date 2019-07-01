@@ -47,6 +47,7 @@ import axios from 'axios';
 import Typography from '@material-ui/core/Typography';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import {isMobile} from 'react-device-detect';
+import AliceCarousel from 'react-alice-carousel';
 
 const freeShipPrice = 400
 const ErrorStyle = {
@@ -81,6 +82,14 @@ const productTheme = createMuiTheme({
 });
 
 const styles = theme => ({
+    titleFont: {
+        fontFamily: 'arial black',
+        fontSize: 25,
+        fontWeight: 'bold',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 70,
+        }
+    },
     priceFont: {
         margin: theme.spacing.unit,
         fontWeight: 'bold',
@@ -275,7 +284,7 @@ class Market extends Component {
             qskip: '0',
             qlimit: '15',
             qprice: 0,
-            categories: ['all', 'merch', 'micro'],
+            categories: ['all', 'clothes', 'games'],
             anchorEl: null,
             anchorEl2: null,
             fetchingShop: false,
@@ -470,6 +479,47 @@ tick() {
     this.setState({timeLeft: timeCount - 1000})
 }
 
+Discounted(){
+    const { classes } = this.props;
+    const { t } = this.props;
+    
+    if(this.state.shopData){
+    let outPut = []
+    this.state.shopData.map((item, index) =>{
+        var rarity = "splash-cardTees"
+        if(item.oldPrice){
+            outPut.push(            
+            <div key={index} className={rarity} style={{margin: 5}} onClick={() => {this.setState({view: 'item', prevPro: item})}}>
+                <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
+            
+                <div className="overlayHover">
+    
+                    <div id="ViewButton">
+                        <Chip
+                            label={t('viewButton')}
+                            className={classes.chipView}
+                            color={'default'}
+                        />
+                    </div>
+    
+                    {item.oldPrice && 
+                    <div id ="merchDiscount" className="card-body">
+                        <Chip
+                            label={`${item.discount}% ${t('discount')}`}
+                            className={classes.chipDiscount}
+                            color={'secondary'}
+                        />
+                    </div> 
+                    }
+                </div>
+            </div> 
+            )
+            }
+        })
+        return outPut
+    }
+    }
+
 Market(){
 const { t } = this.props;
 const { classes } = this.props;
@@ -538,7 +588,38 @@ if (this.state.view === "shop"){
     
     return (
         <div className="container">
-
+            <div className="BlackBG" style={{margin: 10}}>
+                <div className="col-xs-6 col-md-6 col-lg-6">
+                    <div id="gradi">
+                        <Typography className={classes.titleFont}>
+                            PRE-SALE
+                        </Typography>
+                        <Typography className={classes.titleFont}>
+                            50% OFF!
+                        </Typography>
+                        <Typography className={classes.priceFont}>
+                            *PRESALE - Will be shipped the 20th of july
+                        </Typography>
+                    </div>
+                </div>
+                <div className="col-xs-6 col-md-6 col-lg-6">
+                <AliceCarousel
+                        items={this.Discounted()}
+                        responsive={ {
+                            0: { items: 1 },
+                            1024: { items: 1 },
+                        }}
+                        autoPlayInterval={5000}
+                        autoPlayDirection="ltr"
+                        autoPlay={true}
+                        mouseDragEnabled={false}
+                        stopAutoPlayOnHover={true}
+                        dotsDisabled={true}
+                        buttonsDisabled={true}
+                        ref={(el) => (this.Games = el)}
+                    />
+                </div>
+            </div>
             <div className="col-xs-12 col-md-12 col-lg-12">
                 <div className="col-xs-12 col-md-12 col-lg-4" style={{padding: 0}}>  
                     <Paper className={classes.root} elevation={1}>
@@ -704,7 +785,7 @@ if (this.state.view === "item"){
         this.setState({prevPro: flexPrev, defaultOptAdded: true})
     }
 
-    var discount = (prev.oldPrice - prev.price / prev.oldPrice * 100)
+    var discount = prev.discount
     var discounted = prev.oldPrice - prev.price
     
     const hours = moment(this.state.timeLeft).format("HH")
@@ -850,7 +931,7 @@ if (this.state.view === "item"){
                     <h1 style={{color: "white", wordBreak: 'break-word', fontFamily: 'arial'}}>{prev.Name}</h1>
                 </Grid>
                 <Grid  container justify={"center"} alignItems="center">
-                        <CopyToClipboard text={`www.ggegypt.com/productpage/${prev.id}`}>
+                        <CopyToClipboard text={`www.ggegypt.com/productpage/${prev._id}`}>
                             <Chip
                                 onClick={()=>{this.setState({copied: true})}}
                                 label={t('copylink')}

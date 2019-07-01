@@ -233,14 +233,14 @@ render(){
 
           {!this.props.cart.updatingCart ? 
           <Scrollbars autoHeight 
-                      autoHeightMin={500} 
-                      autoHeightMax={500}
+                      autoHeightMin={470} 
+                      autoHeightMax={470}
                       renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
                   {this.createCart()}
           </Scrollbars>:           
           <Scrollbars autoHeight 
-                      autoHeightMin={500} 
-                      autoHeightMax={500}
+                      autoHeightMin={470} 
+                      autoHeightMax={470}
                       renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
                   <CircularProgress size={100} color={'secondary'} className={classes.progress} />
           </Scrollbars>}
