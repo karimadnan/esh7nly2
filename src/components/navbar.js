@@ -9,6 +9,7 @@ import { withStyles, MuiThemeProvider, createMuiTheme  } from '@material-ui/core
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Home from '@material-ui/icons/Home';
 import ShoppingCart from '@material-ui/icons/ShoppingCart';
+import AddIcon from '@material-ui/icons/AddCircle';
 import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import Phone from '@material-ui/icons/Phone';
 import Menu from '@material-ui/icons/Menu';
@@ -33,6 +34,10 @@ import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 import Pp from '../Images/avatar.png';
 import Avatar from '@material-ui/core/Avatar';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import Grid from '@material-ui/core/Grid';
+import CurrencyFormat from 'react-currency-format';
 
 const customStyles = {
   overlay: {
@@ -45,7 +50,61 @@ const customStyles = {
   }
 }
 
+const currencyStyle = {
+  overlay: {
+    background: 'rgba(0, 0, 0, 0.9)'
+  },
+  modal: {
+    marginTop: 80,
+    backgroundColor: '#fff',
+    color: "Black",
+    borderRadius: '6.35px',
+  }
+}
+
 const styles = theme => ({
+  balHeader:{
+    fontWeight: 'bold',
+    fontSize: 14
+  },
+  balInfo:{
+    fontWeight: 'bold',
+    fontSize: 14,
+    marginLeft: 5,
+    marginTop: 10
+  },
+  card: {
+    border: "2px dashed grey",
+    margin: 10,
+    minHeight: 400
+  },
+  cardHighlighted: {
+    border: "2px solid #3F51B5",
+    margin: 10
+  },
+  billEgp: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff'
+  },
+  avatar: {
+    textAlign: 'center',
+    backgroundColor: "#3F51B5",
+    margin: 5,
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+    height: 100,
+    width: 100
+  },
+  balAvatar: {
+    width: 35,
+    height: 35,
+    fontSize: 15,
+    color: '#000',
+    fontWeight: 'bold',
+    backgroundColor: '#c4ccdf',
+  },
   root: {
     width: '100%',
   },
@@ -54,7 +113,8 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit * 4,
   },
   paper: {
-    background: "#212121"
+    background: "#212121",
+    maxWidth: 190
   },
   selected: {
     backgroundColor: "#fff"
@@ -99,7 +159,7 @@ const styles = theme => ({
     margin: theme.spacing.unit,
   },
   chipDesktop: {
-    marginTop: theme.spacing.unit * 2,
+    margin: theme.spacing.unit * 2,
   },
   grow: {
     flexGrow: 1,
@@ -151,7 +211,9 @@ class Navbar extends React.Component {
     ErrorModal: false,
     ErrorMsg: '',
     cart: '',
-    totalPrice: ''
+    totalPrice: '',
+    currencyModal: false,
+    balToAdd: 0
   };
 
   componentWillMount(){
@@ -183,6 +245,17 @@ class Navbar extends React.Component {
       [side]: open,
     });
   };
+
+  updateInput(key, value) {
+    if(value < 10000){
+      this.setState({ [key]: value }, () => {
+        console.log(this.state.balToAdd, "BALANCE")
+      });
+    }
+    else{
+      this.setState({ [key]: 10000 });
+    }
+  }
 
   onOpenModal = (type) => {
     this.setState({[type]: true });
@@ -243,6 +316,7 @@ class Navbar extends React.Component {
     const { classes } = this.props;
     const page  = this.props.page || 0;
     const { t } = this.props;
+    const bill = Number(this.state.balToAdd)
     const renderMobileDrawer = (
         <Drawer anchor="right" classes={{ paper: classes.paper }} open={this.state.drawer} onClose={this.toggleDrawer('drawer', false)}>
           <div
@@ -252,7 +326,9 @@ class Navbar extends React.Component {
             onKeyDown={this.toggleDrawer('drawer', false)}
           >
           {this.props.loginData.loggedState ?
+          <div>
           <MuiThemeProvider theme={this.props.loginData.isAdmin ? adminTheme : theme}>
+          <div className="col-xs-12">
             <Chip
                 color="secondary"
                 avatar={<Avatar alt="PP" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} />}
@@ -260,7 +336,20 @@ class Navbar extends React.Component {
                 onClick={this.profile.bind(this)}
                 className={classes.chipMobile}
             />
+            </div>
+            <div className="col-xs-12">
+              <Chip
+                  color="secondary"
+                  avatar={<Avatar className={classes.balAvatar}>E£</Avatar>}
+                  label={<h4>100 EGP</h4>}
+                  onClick={this.profile.bind(this)}
+                  onDelete={()=>{this.setState({currencyModal: true})}}
+                  deleteIcon={<AddIcon />}
+                  className={classes.chipMobile}
+              />
+            </div>
           </MuiThemeProvider>
+          </div>
           : undefined}  
 
           {!this.props.loginData.loggedState ?  
@@ -335,7 +424,17 @@ class Navbar extends React.Component {
                         onDelete={this.logoutClick.bind(this)}
                         className={classes.chipDesktop}
                     />
+                    {!this.props.loginData.isAdmin &&
+                    <Chip
+                        color="secondary"
+                        avatar={<Avatar className={classes.balAvatar}>E£</Avatar>}
+                        label={<h4>100 EGP</h4>}
+                        onDelete={()=>{this.setState({currencyModal: true})}}
+                        deleteIcon={<AddIcon />}
+                        className={classes.chipDesktop}
+                    />}
                   </MuiThemeProvider>
+
                   : undefined}  
 
                   {!this.props.loginData.loggedState ?  
@@ -360,6 +459,66 @@ class Navbar extends React.Component {
             open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
             styles={customStyles}>
             <h2>{this.state.ErrorMsg}</h2>
+        </Modal>
+        <Modal          
+            open={this.state.currencyModal} onClose={this.onCloseModal.bind(this,'currencyModal')} center
+            styles={currencyStyle}
+            showCloseIcon={false}>
+            <div className="contaier">
+            <Grid container justify="center" alignItems="center">
+                <Typography className={classes.balHeader}>
+                  Current Balance: 100 EGP
+                </Typography>
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                    <Card className={classes.card}>
+                      <CardMedia
+                        className={classes.media}
+                        image="Null"
+                      >
+                        <Grid container justify="center" alignItems="center">
+                          <Avatar aria-label="Bill" className={classes.avatar}>
+
+                            {this.state.balToAdd > 0 ? 
+                            <div>
+                              <CurrencyFormat value={bill.toFixed(2)} displayType={'text'} thousandSeparator={true} />
+                              <Typography className={classes.billEgp}>
+                                EGP
+                              </Typography>
+                            </div>
+                            :
+                            <div>
+                              <CurrencyFormat value={0.00} displayType={'text'} thousandSeparator={true} />
+                              <Typography className={classes.billEgp}>
+                                EGP
+                              </Typography>
+                            </div>
+                              
+                              
+                            } 
+
+
+                          </Avatar>
+                          <input style={{margin: 10}} className="form-control" type="number" min="10" max="10000" onChange={e => this.updateInput("balToAdd", e.target.value)} placeholder={t('Balance')} required></input>
+                          <Button variant="contained" color="primary">
+                              <h6>{t('Pay Now')}</h6>
+                          </Button>
+                        </Grid>
+                        <Grid container justify="flex-start" alignItems="center">
+                        <Typography className={classes.balInfo}>
+                          * Minimum amount to add is 10 EGP.
+                        </Typography>
+                        <Typography className={classes.balInfo}>
+                          * Your balance cannot be withdrawen later it will always remain in your GG-Account.
+                        </Typography>
+                        <Typography className={classes.balInfo}>
+                          * Balance can only be spent in our store.
+                        </Typography>
+                        </Grid>
+                      </CardMedia>
+                    </Card>
+                </div>
+            </Grid>
+            </div>
         </Modal>
       </div>
     );

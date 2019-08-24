@@ -95,6 +95,17 @@ fetchShop(){
     })
 }
 
+CalcDiscount(product){
+    var discount = ''
+    if(product.discount === '%'){
+        discount = `${product.price / product.oldPrice * 100}%`
+    }
+    else if (product.discount === 'EGP'){
+        discount = `${product.oldPrice - product.price} EGP`
+    }
+    return discount
+}
+
 Discounted(){
 const { classes } = this.props;
 const { t } = this.props;
@@ -103,7 +114,6 @@ if(this.state.shopData){
 let outPut = []
 this.state.shopData.map((item, index) =>{
     var rarity = "fortniteCard splash-cardTees"
-    var discount = (item.oldPrice - item.price / item.oldPrice * 100)
     if(item.oldPrice){
         outPut.push(            
         <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
@@ -122,7 +132,7 @@ this.state.shopData.map((item, index) =>{
                 {item.oldPrice && 
                 <div id ="merchDiscount" className="card-body">
                     <Chip
-                        label={`${discount}% ${t('discount')}`}
+                        label={`${this.CalcDiscount(item)} ${t('discount')}`}
                         className={classes.chipDiscount}
                         color={'secondary'}
                     />

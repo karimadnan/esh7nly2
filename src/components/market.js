@@ -86,6 +86,7 @@ const styles = theme => ({
         fontFamily: 'arial black',
         fontSize: 25,
         fontWeight: 'bold',
+
         [theme.breakpoints.up('sm')]: {
           fontSize: 70,
         }
@@ -95,7 +96,7 @@ const styles = theme => ({
         fontWeight: 'bold',
         fontFamily: 'arial',
         color: fade('#9da6d7', 1.725),
-        fontSize: 15,
+        fontSize: 12,
         [theme.breakpoints.up('sm')]: {
           fontSize: 18,
         }
@@ -236,64 +237,53 @@ const styles = theme => ({
     }
 });
 
-
-const customStyles = {
-    option: (provided, state) => ({
-      ...provided,
-      borderBottom: '1px dotted black',
-      color: state.isSelected ? 'white' : '#212121',
-    }),
-    singleValue: (provided, state) => {
-      const opacity = state.isDisabled ? 0.5 : 1;
-      const transition = 'opacity 300ms';
-  
-      return { ...provided, opacity, transition };
-    }
-  }
-
 class Market extends Component {
 
-
-        state = {
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': this.props.loginData.token},
-            url: this.props.server.main,
-            value: 0,
-            copied: false,
-            category: "all",
-            condition: "new",
-            sort: "",
-            view: "shop",
-            timeLeft: "",
-            options: [],
-            colors: [],
-            sizes: [],
-            selectedOpt: "",
-            selectedColor: "",
-            selectedSize: "",
-            ErrorModal: false,
-            ErrorMsg: "",
-            activeStep: 0,
-            fortniteShop: false,
-            quantity: 1,
-            hasDiscount: false,
-            filter: '',
-            qName: '',
-            qcategory: '',
-            qskip: '0',
-            qlimit: '15',
-            qprice: 0,
-            categories: ['all', 'clothes', 'games'],
-            anchorEl: null,
-            anchorEl2: null,
-            fetchingShop: false,
-            fetchedShop: false,
-            errorFetchingShop: false,
-            shopData: [],
-            prevPro: '',
-            defaultOptAdded: false
+        constructor(props) {
+            super(props)
+            this.state = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'authorization': this.props.loginData.token},
+                url: this.props.server.main,
+                value: 0,
+                copied: false,
+                category: "all",
+                condition: "new",
+                sort: "",
+                view: "shop",
+                timeLeft: "",
+                options: [],
+                colors: [],
+                sizes: [],
+                selectedOpt: "",
+                selectedColor: "",
+                selectedSize: "",
+                ErrorModal: false,
+                ErrorMsg: "",
+                activeStep: 0,
+                fortniteShop: false,
+                quantity: 1,
+                hasDiscount: false,
+                filter: '',
+                qName: '',
+                qcategory: '',
+                qskip: '0',
+                qlimit: '15',
+                qprice: 0,
+                categories: ['all', 'clothes', 'games'],
+                anchorEl: null,
+                anchorEl2: null,
+                fetchingShop: false,
+                fetchedShop: false,
+                errorFetchingShop: false,
+                shopData: [],
+                prevPro: '',
+                defaultOptAdded: false
+            }
         }
+
+
 
 componentWillUnmount() {
     clearInterval(this.interval);
@@ -479,6 +469,17 @@ tick() {
     this.setState({timeLeft: timeCount - 1000})
 }
 
+CalcDiscount(product){
+    var discount = ''
+    if(product.discount === '%'){
+        discount = `${product.price / product.oldPrice * 100}%`
+    }
+    else if (product.discount === 'EGP'){
+        discount = `${product.oldPrice - product.price} EGP`
+    }
+    return discount
+}
+
 Discounted(){
     const { classes } = this.props;
     const { t } = this.props;
@@ -489,7 +490,9 @@ Discounted(){
         var rarity = "splash-cardTees"
         if(item.oldPrice){
             outPut.push(            
-            <div key={index} className={rarity} style={{margin: 5}} onClick={() => {this.setState({view: 'item', prevPro: item})}}>
+            <div key={index} className={rarity} style={{margin: 5}} onClick={() => {this.setState({view: 'item', prevPro: item})}} 
+                onMouseEnter={() => this.Offers._pause()}
+                onMouseLeave={() => this.Offers._play()}>
                 <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
             
                 <div className="overlayHover">
@@ -505,7 +508,7 @@ Discounted(){
                     {item.oldPrice && 
                     <div id ="merchDiscount" className="card-body">
                         <Chip
-                            label={`${item.discount}% ${t('discount')}`}
+                            label={`${this.CalcDiscount(item)} ${t('discount')}`}
                             className={classes.chipDiscount}
                             color={'secondary'}
                         />
@@ -540,10 +543,10 @@ if (this.state.view === "shop"){
                             />
                         </div>
 
-                        {item.discount > 0 && 
+                        {item.discount && 
                         <div id ="merchDiscount" className="card-body">
                             <Chip
-                                label={`${item.discount}% ${t('discount')}`}
+                                label={`${this.CalcDiscount(item)} ${t('discount')}`}
                                 className={classes.chipDiscount}
                                 color={'secondary'}
                             />
@@ -587,7 +590,7 @@ if (this.state.view === "shop"){
     }
     
     return (
-        <div className="container">
+        <div className="row" style={{margin: 10}}>
             <div className="BlackBG" style={{margin: 10}}>
                 <div className="col-xs-6 col-md-6 col-lg-6">
                     <div id="gradi">
@@ -596,9 +599,6 @@ if (this.state.view === "shop"){
                         </Typography>
                         <Typography className={classes.titleFont}>
                             50% OFF!
-                        </Typography>
-                        <Typography className={classes.priceFont}>
-                            *PRESALE - Will be shipped the 20th of july
                         </Typography>
                     </div>
                 </div>
@@ -616,8 +616,15 @@ if (this.state.view === "shop"){
                         stopAutoPlayOnHover={true}
                         dotsDisabled={true}
                         buttonsDisabled={true}
-                        ref={(el) => (this.Games = el)}
+                        ref={(el) => (this.Offers = el)}
                     />
+                </div>
+                <div className="col-xs-12 col-md-12 col-lg-12">
+                <div id="gradi">
+                <Typography className={classes.priceFont}>
+                            *PRESALE - Will be shipped the 20th of july
+                        </Typography>
+                </div>
                 </div>
             </div>
             <div className="col-xs-12 col-md-12 col-lg-12">
@@ -917,7 +924,7 @@ if (this.state.view === "item"){
                {prev.oldPrice && 
                 <div id ="merchDiscount" className="card-body">
                 <Chip
-                    label={`${discount}% ${t('discount')}`}
+                    label={`${this.CalcDiscount(prev)} ${t('discount')}`}
                     className={classes.chipDiscount}
                     color={'secondary'}
                 />

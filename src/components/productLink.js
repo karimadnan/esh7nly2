@@ -350,6 +350,17 @@ class ProductPage extends Component {
         this.setState({ activeStep });
     };
 
+    CalcDiscount(product){
+        var discount = ''
+        if(product.discount === '%'){
+            discount = `${product.price / product.oldPrice * 100}%`
+        }
+        else if (product.discount === 'EGP'){
+            discount = `${product.oldPrice - product.price} EGP`
+        }
+        return discount
+    }
+
     ViewProduct(){
         const { t } = this.props;
         const { classes } = this.props;
@@ -513,7 +524,7 @@ class ProductPage extends Component {
                     {prev.oldPrice && 
                     <div id ="merchDiscount" className="card-body">
                     <Chip
-                        label={`${discount}% ${t('discount')}`}
+                        label={`${this.CalcDiscount(prev)} ${t('discount')}`}
                         className={classes.chipDiscount}
                         color={'secondary'}
                     />
