@@ -913,8 +913,13 @@ if (this.state.view === "item"){
                             ))}
                     </SwipeableViews>
                     {isMobile && 
-                        <Grid  container justify={"center"} alignItems="center">
-                            {prev.colors.map((dots, index) =>{
+                        <Grid container justify={"center"} alignItems="center">
+                            {prev.colors && prev.colors.map((dots, index) =>{
+                                return(
+                                    <DotIcon onClick={()=>{this.setState({activeStep: index})}} color={this.state.activeStep === index ? 'primary' : 'default'}/>
+                                )
+                            })}
+                            {prev.img && prev.img.map((dots, index) =>{
                                 return(
                                     <DotIcon onClick={()=>{this.setState({activeStep: index})}} color={this.state.activeStep === index ? 'primary' : 'default'}/>
                                 )
