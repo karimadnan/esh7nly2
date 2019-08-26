@@ -169,6 +169,7 @@
       "orderFailed": "فشل",
       "orderReceipt": "الفاتورة",
       "statusPending": "قيد الانتظار",
-      "statusOngoing": "جاري التنفيذ"
+      "statusOngoing": "جاري التنفيذ",
+      "EGPdiscount": "جنيه {{price}} ارخص"
       
 }

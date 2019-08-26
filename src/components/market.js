@@ -470,12 +470,14 @@ tick() {
 }
 
 CalcDiscount(product){
+    const { t } = this.props
+    const price = product.oldPrice - product.price
     var discount = ''
     if(product.discount === '%'){
-        discount = `${product.price / product.oldPrice * 100}%`
+        discount = `${product.price / product.oldPrice * 100}% ${t('discount')}`
     }
     else if (product.discount === 'EGP'){
-        discount = `${product.oldPrice - product.price} EGP`
+        discount = `${t('EGPdiscount', {price})}`
     }
     return discount
 }
@@ -508,7 +510,7 @@ Discounted(){
                     {item.oldPrice && 
                     <div id ="merchDiscount" className="card-body">
                         <Chip
-                            label={`${this.CalcDiscount(item)} ${t('discount')}`}
+                            label={`${this.CalcDiscount(item)}`}
                             className={classes.chipDiscount}
                             color={'secondary'}
                         />
@@ -546,7 +548,7 @@ if (this.state.view === "shop"){
                         {item.discount && 
                         <div id ="merchDiscount" className="card-body">
                             <Chip
-                                label={`${this.CalcDiscount(item)} ${t('discount')}`}
+                                label={`${this.CalcDiscount(item)}`}
                                 className={classes.chipDiscount}
                                 color={'secondary'}
                             />
@@ -924,7 +926,7 @@ if (this.state.view === "item"){
                {prev.oldPrice && 
                 <div id ="merchDiscount" className="card-body">
                 <Chip
-                    label={`${this.CalcDiscount(prev)} ${t('discount')}`}
+                    label={`${this.CalcDiscount(prev)}`}
                     className={classes.chipDiscount}
                     color={'secondary'}
                 />

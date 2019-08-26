@@ -96,12 +96,13 @@ fetchShop(){
 }
 
 CalcDiscount(product){
+    const { t } = this.props
     var discount = ''
     if(product.discount === '%'){
         discount = `${product.price / product.oldPrice * 100}%`
     }
     else if (product.discount === 'EGP'){
-        discount = `${product.oldPrice - product.price} EGP`
+        discount = `${t('currency')} ${product.oldPrice - product.price} `
     }
     return discount
 }
@@ -248,7 +249,7 @@ render(){
                     onMouseEnter={() => this.Games._pause()}
                     onMouseLeave={() => this.Games._play()}>
                     <Grid container justify="center" alignItems="center">
-                        <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games._slidePrev()}/>
+                        <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games.slidePrev()}/>
                     </Grid>
                 </div>}
                 <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
@@ -258,7 +259,7 @@ render(){
                             0: { items: 1 },
                             1024: { items: 1 },
                         }}
-                        autoPlayInterval={7000}
+                        autoPlayInterval={5000}
                         autoPlayDirection="ltr"
                         autoPlay={true}
                         mouseDragEnabled={false}
@@ -272,7 +273,7 @@ render(){
                     onMouseEnter={() => this.Games._pause()}
                     onMouseLeave={() => this.Games._play()}>
                     <Grid container justify="center" alignItems="center">
-                        <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games._slideNext()}/>
+                        <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games.slideNext()}/>
                     </Grid>
                 </div>}
             </div>
@@ -293,7 +294,7 @@ render(){
                 {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
                     onMouseEnter={() => this.Arrivals._pause()}
                     onMouseLeave={() => this.Arrivals._play()}>
-                    <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals._slidePrev()}/>
+                    <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals.slidePrev()}/>
                 </div>}
                 <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
                     <AliceCarousel
@@ -317,7 +318,7 @@ render(){
                 {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
                     onMouseEnter={() => this.Arrivals._pause()}
                     onMouseLeave={() => this.Arrivals._play()}>
-                    <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals._slideNext()}/>
+                    <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals.slideNext()}/>
                 </div>}
             </div>
 
@@ -338,7 +339,7 @@ render(){
                 {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
                     onMouseEnter={() => this.Discounts._pause()}
                     onMouseLeave={() => this.Discounts._play()}>
-                    <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts._slidePrev()}/>
+                    <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts.slidePrev()}/>
                 </div>}
                 <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
                 <AliceCarousel
@@ -362,7 +363,7 @@ render(){
                 {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
                     onMouseEnter={() => this.Discounts._pause()}
                     onMouseLeave={() => this.Discounts._play()}>
-                    <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts._slideNext()}/>
+                    <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts.slideNext()}/>
                 </div>}
             </div>
 
