@@ -24,7 +24,7 @@ i18n
   .init({
     whitelist: ['AR', 'EN', 'EG'],
     resources,
-    fallbackLng: "EN", // use en if detected lng is not available
+    fallbackLng: "EG", // use en if detected lng is not available
     keySeparator: false, // we do not use keys in form messages.welcome
 
     interpolation: {

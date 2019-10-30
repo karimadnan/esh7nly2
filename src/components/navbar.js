@@ -38,6 +38,7 @@ import Card from '@material-ui/core/Card';
 import CardMedia from '@material-ui/core/CardMedia';
 import Grid from '@material-ui/core/Grid';
 import CurrencyFormat from 'react-currency-format';
+import i18next from 'i18next';
 
 const customStyles = {
   overlay: {
@@ -63,6 +64,17 @@ const currencyStyle = {
 }
 
 const styles = theme => ({
+  tabLabel:{
+    color: '#fff',
+    fontSize: 17,
+    textTransform: 'capitalize',
+    fontWeight: 'bold'
+  },
+  tabLabelActive:{
+    fontSize: 17,
+    textTransform: 'capitalize',
+    fontWeight: 'bold'
+  },
   balHeader:{
     fontWeight: 'bold',
     fontSize: 14
@@ -133,10 +145,6 @@ const styles = theme => ({
     position: 'relative',
     display: 'none',
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.025),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.03),
-    },
     marginRight: theme.spacing.unit * 2,
     marginLeft: 0,
     width: '100%',
@@ -189,7 +197,7 @@ window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const theme = createMuiTheme({
   palette: {
-      primary: { main: '#212121', contrastText: "#fff" },
+      primary: { main: '#161616', contrastText: "#fff" },
       secondary: { main: '#3f51b5', contrastText: "#fff" }
   },
 });
@@ -397,16 +405,21 @@ class Navbar extends React.Component {
               <span className="svg-icon-logo svg-icon-logo"/>
             </Typography>
             <div className={classes.tabs} >
-              <Tabs
-                value={page}
-                onChange={this.handleChange}
-                indicatorColor="secondary"
-                textColor="secondary"
-              >
-              <Tab label={<h5 style={{color: "white", fontWeight: "bold"}}>{t('home')}</h5>} />
-              <Tab label={<h5 style={{color: "white", fontWeight: "bold"}}>{t('market')}</h5>} />
-              <Tab label={<h5 style={{color: "white", fontWeight: "bold"}}>{t('contact')}</h5>} />
+
+
+            <Tabs
+              value={page}
+              onChange={this.handleChange}
+              indicatorColor="secondary"
+              textColor="secondary"
+            >
+              <Tab label={<span className={page === 0 ? classes.tabLabelActive : classes.tabLabel}>{t('home')}</span>}/>
+              <Tab label={<span className={page === 1 ? classes.tabLabelActive : classes.tabLabel}>{t('market')}</span>} />
+              <Tab label={<span className={page === 2 ? classes.tabLabelActive : classes.tabLabel}>{t('contact')}</span>} />
             </Tabs>
+
+
+
             </div>
             <div className={classes.grow} />
 

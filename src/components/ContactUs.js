@@ -51,9 +51,9 @@ const styles = theme => ({
         width: 50,
         height: 50,
         fontSize: 20,
-        color: '#fff',
+        color: '#000',
         fontWeight: 'bold',
-        backgroundColor: '#f50057',
+        backgroundColor: '#ff9800',
       },
     container: {
         display: 'flex',
@@ -140,7 +140,6 @@ render() {
 const { classes } = this.props;
 const { t } = this.props;
     return (
-  <div>
     <div className="GG-BG-INVERSE"> 
     <Helmet>
         <title>{t('contactTitle')}</title>
@@ -148,7 +147,7 @@ const { t } = this.props;
     </Helmet>
     <Navbar page={2}/>
         <div className="container">
-            <div className="BlackBG" style={{minHeight: 450}}>
+            <div className="BlackBG">
 
                 <div style={{height: 70, margin: 10}}>
                     <Grid container justify="center" alignItems="center">
@@ -183,40 +182,6 @@ const { t } = this.props;
                         <ListItemText disableTypography primary={t('contactRule2')} />
                     </ListItem>
 
-
-                    <Grid container justify="center" alignItems="center">
-                        <CopyToClipboard text={`contact@ggegypt.com`}>
-                            <div>
-                                <Tooltip  title={<h4>{t('copyEmail')}</h4>} aria-label={t('copylink')} placement="right">
-                                    <Chip
-                                        onClick={()=>{this.setState({copied: true})}}
-                                        color={'primary'}
-                                        label={'contact@ggegypt.com'}
-                                        className={classes.chip}
-                                    />
-                                </Tooltip>
-                            </div>
-                        </CopyToClipboard>
-                    </Grid>
-
-                    <ListItem className={classes.descStyle}>
-                        <ListItemText disableTypography primary={t('contactAdmin')} />
-                    </ListItem>
-                    
-                    <Grid container justify="center" alignItems="center">
-                        <CopyToClipboard text={`admin@ggegypt.com`}>
-                            <div>
-                                <Tooltip title={<h4>{t('copyEmail')}</h4>} aria-label={t('copylink')} placement="right">
-                                    <Chip
-                                        onClick={()=>{this.setState({copied: true})}}
-                                        color={'primary'}
-                                        label={'admin@ggegypt.com'}
-                                        className={classes.chip}
-                                    />
-                                </Tooltip>
-                            </div>
-                        </CopyToClipboard>
-                    </Grid>
                     <Snackbar
                         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                         open={this.state.copied}
@@ -241,7 +206,6 @@ const { t } = this.props;
             <img style ={{width: 150, height: 120}} className="col-xs-6" src={fortniteDab} alt=""></img>
         </Modal>
     </div>
-  </div>
     );
   }
 }

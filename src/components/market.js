@@ -592,8 +592,8 @@ if (this.state.view === "shop"){
     }
     
     return (
-        <div className="row" style={{margin: 10}}>
-            <div className="BlackBG" style={{margin: 10}}>
+        <div className="row" style={{margin: 0}}>
+            <div className="BlackBG" style={{margin: 0}}>
                 <div className="col-xs-6 col-md-6 col-lg-6">
                     <div id="gradi">
                         <Typography className={classes.titleFont}>
@@ -688,11 +688,11 @@ if (this.state.view === "shop"){
                 </div>
             </div>
 
-            {this.state.shopData ?
+            {this.state.shopData.length > 0 ?
                 shop
             :
             <Grid container justify="flex-start" alignItems="center" className={classes.grid}>
-                    {t('No Matches Found')}
+                    {t('No Products Found')}
             </Grid>}
 
         </div>
@@ -1042,17 +1042,19 @@ if (this.state.view === "item"){
                         <h4 style={{textAlign: 'right'}}>:{t('color')}</h4>
                     </div>
                     <div className="col-xs-12 col-md-12 col-lg-12">
+                    <Grid container justify="flex-end" alignItems="flex-end">
                         {this.state.colors.map((payload, index) => (
                             <MuiThemeProvider theme={chipTheme} key={index}>
-                                <Chip
-                                    onClick={()=>{this.selectChange('selectedColor', payload)}}
-                                    label={payload.label}
-                                    className={classes.chip}
-                                    variant={this.state.selectedColor === payload ? 'default' : 'outlined'}
-                                    color={this.state.selectedColor === payload ? 'primary' : 'secondary'}
-                                />
+                                    <Chip
+                                        onClick={()=>{this.selectChange('selectedColor', payload)}}
+                                        label={payload.label}
+                                        className={classes.chip}
+                                        variant={this.state.selectedColor === payload ? 'default' : 'outlined'}
+                                        color={this.state.selectedColor === payload ? 'primary' : 'secondary'}
+                                    />
                             </MuiThemeProvider>
                         ))}
+                    </Grid>
                     </div>
                 </div>:undefined} 
                 
@@ -1083,6 +1085,7 @@ if (this.state.view === "item"){
                         <h4 style={{textAlign: 'right'}}>:{t('size')}</h4>
                     </div>
                     <div className="col-xs-12 col-md-12 col-lg-12">
+                    <Grid container justify="flex-end" alignItems="flex-end">
                         {this.state.sizes.map((payload, index) => (
                             <MuiThemeProvider theme={chipTheme} key={index}>
                                 <Chip
@@ -1094,6 +1097,7 @@ if (this.state.view === "item"){
                                 />
                             </MuiThemeProvider>
                         ))}
+                    </Grid>
                     </div>
                 </div>:undefined} 
 
@@ -1121,17 +1125,19 @@ if (this.state.view === "item"){
                         <h4 style={{textAlign: 'right'}}>:{t('option')}</h4>
                     </div>
                     <div className="col-xs-12 col-md-12 col-lg-12">
-                        {this.state.options.map((payload, index) => (
-                            <MuiThemeProvider theme={chipTheme} key={index}>
-                                <Chip
-                                    onClick={()=>{this.selectChange('selectedOpt', payload)}}
-                                    label={payload.label}
-                                    className={classes.chip}
-                                    variant={this.state.selectedOpt === payload ? 'default' : 'outlined'}
-                                    color={this.state.selectedOpt === payload ? 'primary' : 'secondary'}
-                                />
-                            </MuiThemeProvider>
-                        ))}
+                        <Grid container justify="flex-end" alignItems="flex-end">
+                            {this.state.options.map((payload, index) => (
+                                <MuiThemeProvider theme={chipTheme} key={index}>
+                                    <Chip
+                                        onClick={()=>{this.selectChange('selectedOpt', payload)}}
+                                        label={payload.label}
+                                        className={classes.chip}
+                                        variant={this.state.selectedOpt === payload ? 'default' : 'outlined'}
+                                        color={this.state.selectedOpt === payload ? 'primary' : 'secondary'}
+                                    />
+                                </MuiThemeProvider>
+                            ))}
+                        </Grid>
                     </div>  
                 </div>:undefined} 
                 <Snackbar

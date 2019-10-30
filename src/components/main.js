@@ -61,8 +61,8 @@ render(){
   const { classes } = this.props;
 
   return(
-    <div>
-      <div className="bg-image">
+    <div className="blackBackground">
+
         <Helmet>
             <title>{t('mainTitle')}</title>
             <meta name="description" content={t('mainTitle')} />
@@ -71,21 +71,7 @@ render(){
             {i18next.language === "EN" ? 
             <div className="badge-logo"/>:
             <div className="badge-logo-ar"/>}
-            <MuiThemeProvider theme={theme}>
-            <Grid container justify="center" alignItems="center">
-               {this.state.timeLeft > 0 && 
-               <Chip
-                    icon={<Timer />}
-                    label={`${t('openDayDays', {days})}${t('openDayHours', {hours})}${t('openDayMinutes', {minutes})}`}
-                    className={classes.chip}
-                    color="primary"
-                />}
-            </Grid>
-            </MuiThemeProvider>
-             <ProductSlider />
-        <Footer />
-      </div>
-
+        <ProductSlider />
     </div>
   )
 }

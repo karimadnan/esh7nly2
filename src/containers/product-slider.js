@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import LeftArrow from '@material-ui/icons/ArrowBackIos';
 import RightArrow from '@material-ui/icons/ArrowForwardIos';
+import i18next from 'i18next';
 
 const styles = theme => ({
     slideNav:{
@@ -28,18 +29,10 @@ const styles = theme => ({
     titleFont: {
         fontFamily: 'arial black',
         fontSize: 25,
+        color: '#c5c5cc',
         fontWeight: 'bold',
         [theme.breakpoints.up('sm')]: {
-          fontSize: 40,
-        }
-    },
-    subtitleFont: {
-        fontFamily: 'arial black',
-        fontSize: 13,
-        fontWeight: 'bold',
-        color: 'white',
-        [theme.breakpoints.up('sm')]: {
-          fontSize: 15,
+          fontSize: 33,
         }
     },
     chipDiscount: {
@@ -187,7 +180,7 @@ Micro(){
     if(this.state.shopData){
     let outPut = []
     this.state.shopData.map((item, index) =>{
-        var rarity = "fortniteCard splash-cardTees rarity-"
+        var rarity = "fortniteCard splash-cardTees"
         if(item.category === 'games'){
             outPut.push(            
             <div key={index} className={rarity} style={{margin: 5}} onClick={()=>{ReactRouter.goTo(`productpage/${item._id}`)}}>
@@ -225,29 +218,21 @@ render(){
 
     if(this.state.fetchingShop){
         return(
-            <div className="BlackBG" style={{margin: 10}}>
                 <Loader />
-            </div>
         )
     }
     return(
-    <div className="BlackBG" style={{margin: 10}}>
-            <Grid container justify="center" alignItems="center">
+    <div className="container">
+            <Grid container justify={i18next.language === "EN" ? "flex-start" : "flex-end"}>
                 <div id="gradi">
                     <Typography className={classes.titleFont}>
                         {t('micro')}
                     </Typography>
                 </div>
             </Grid>
-            <Grid container justify="center" alignItems="center">
-                <Typography className={classes.subtitleFont}>
-                    {t('microText')}
-                </Typography>
-            </Grid>
+
             <div className="col-xs-12 col-md-12 col-lg-12">
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1" 
-                    onMouseEnter={() => this.Games._pause()}
-                    onMouseLeave={() => this.Games._play()}>
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
                     <Grid container justify="center" alignItems="center">
                         <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games.slidePrev()}/>
                     </Grid>
@@ -261,7 +246,7 @@ render(){
                         }}
                         autoPlayInterval={5000}
                         autoPlayDirection="ltr"
-                        autoPlay={true}
+                        autoPlay={false}
                         mouseDragEnabled={false}
                         stopAutoPlayOnHover={true}
                         dotsDisabled={false}
@@ -269,76 +254,23 @@ render(){
                         ref={(el) => (this.Games = el)}
                     />
                 </div>
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
-                    onMouseEnter={() => this.Games._pause()}
-                    onMouseLeave={() => this.Games._play()}>
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
                     <Grid container justify="center" alignItems="center">
                         <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games.slideNext()}/>
                     </Grid>
                 </div>}
             </div>
-            <Grid container justify="center" alignItems="center">
-                <div id="gradi">
-                    <Typography className={classes.titleFont}>
-                        {t('newProductsSlider')}
-                    </Typography>
-                </div>
-            </Grid>
-            <Grid container justify="center" alignItems="center">
-                <Typography className={classes.subtitleFont}>
-                    {t('newProductsSliderText')}
-                </Typography>
-            </Grid>
 
-            <div className="col-xs-12 col-md-12 col-lg-12">
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
-                    onMouseEnter={() => this.Arrivals._pause()}
-                    onMouseLeave={() => this.Arrivals._play()}>
-                    <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals.slidePrev()}/>
-                </div>}
-                <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
-                    <AliceCarousel
-                        items={this.New()}
-                        responsive={{
-                            0: { items: 3 },
-                            1024: { items: 3 },
-                        }
-                        }
-                        autoPlayInterval={5000}
-                        autoPlayDirection="ltr"
-                        autoPlay={true}
-                        fadeOutAnimation={true}
-                        mouseDragEnabled={true}
-                        stopAutoPlayOnHover={true}
-                        dotsDisabled={false}
-                        buttonsDisabled={true}
-                        ref={(el) => (this.Arrivals = el)}
-                    />
-                </div>
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
-                    onMouseEnter={() => this.Arrivals._pause()}
-                    onMouseLeave={() => this.Arrivals._play()}>
-                    <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Arrivals.slideNext()}/>
-                </div>}
-            </div>
-
-
-            <Grid container justify="center" alignItems="center">
+            <Grid container justify={i18next.language === "EN" ? "flex-start" : "flex-end"} >
                 <div id="gradi">
                     <Typography className={classes.titleFont}>
                         {t('discountsProductsSlider')}
                     </Typography>
                 </div>
             </Grid>
-            <Grid container justify="center" alignItems="center">
-                <Typography className={classes.subtitleFont}>
-                    {t('discountsProductsSliderText')}
-                </Typography>
-            </Grid>
+            
             <div className="col-xs-12 col-md-12 col-lg-12">
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
-                    onMouseEnter={() => this.Discounts._pause()}
-                    onMouseLeave={() => this.Discounts._play()}>
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
                     <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts.slidePrev()}/>
                 </div>}
                 <div className={!isMobile ? "col-xs-8 col-md-10 col-lg-10" : "col-xs-12 col-md-12 col-lg-12" }>
@@ -351,7 +283,7 @@ render(){
                     }
                     autoPlayInterval={5000}
                     autoPlayDirection="ltr"
-                    autoPlay={true}
+                    autoPlay={false}
                     fadeOutAnimation={true}
                     mouseDragEnabled={true}
                     stopAutoPlayOnHover={true}
@@ -360,9 +292,7 @@ render(){
                     ref={(el) => (this.Discounts = el)}
                 />
                 </div>
-                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1"
-                    onMouseEnter={() => this.Discounts._pause()}
-                    onMouseLeave={() => this.Discounts._play()}>
+                {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
                     <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts.slideNext()}/>
                 </div>}
             </div>

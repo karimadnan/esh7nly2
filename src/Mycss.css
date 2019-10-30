@@ -60,17 +60,6 @@ button:hover .text { display: none; }
   width: 100%;
 }
 
-html { height: 100%; overflow:auto; }
-
-body { 
-  padding-top: 66px; 
-  height: 100%;
-}
-
-.container {
-  padding: 10px;
-}
-
 .navbar .navbar-nav {
   display: inline-block;
   float: none;
@@ -82,12 +71,11 @@ body {
 }
 
 #gradi {
-  padding: 10px;
-  font-weight: bold;
+  margin-left: 33px;
+  font-family: Noto!important;
   background: -webkit-linear-gradient(left, rgb(31, 51, 175),#3F51B5);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-transform: uppercase;
 }
 
 .navbar .navbar-right {
@@ -165,15 +153,14 @@ body {
 }
 
 .GG-BG-INVERSE {
-  background-attachment: fixed;
-  max-width: 100%;
-  max-height: 100%; 
-  height: stretch;
-  overflow-x: hidden;
-  background-position: center;
+  background: url('Images/bginverse.png'); 
+  background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-image: url('Images/bginverse.png');
+  background-attachment: fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
 }
 
 .PrivacyBGWhite {
@@ -205,6 +192,14 @@ body {
   background-size: cover;
   background-color: rgb(255, 255, 255); 
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.9);
+}
+
+.blackBackground {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #121212; 
+  width: 100%
 }
 
 .cartBG {
@@ -659,7 +654,7 @@ background-color: #ffffff;
   max-width: 100%;
   max-height: 100%; 
   height: stretch;
-  overflow-x: hidden;
+  overflow: hidden;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
