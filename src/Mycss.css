@@ -645,10 +645,10 @@ background-color: #ffffff;
   background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
 }
 
-.badge-logo {
+.badge-logoEn {
   padding: 7em;
   margin: 0 auto;
-  background-image: url('Images/mainlogo.svg');
+  background-image: url('Images/whiteLogoEn.svg');
   background-repeat: no-repeat;
   background-position: center;
   max-height: 100%;
@@ -658,10 +658,10 @@ background-color: #ffffff;
 }
 
 
-.badge-logo-ar {
+.badge-logoAr {
   padding: 7em;
   margin: 0 auto;
-  background-image: url('Images/mainlogoar.svg');
+  background-image: url('Images/whiteLogoAr.svg');
   background-repeat: no-repeat;
   background-position: center;
   max-height: 100%;

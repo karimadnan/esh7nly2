@@ -69,8 +69,8 @@ render(){
         </Helmet>
         <Navbar page={0}/>
             {i18next.language === "EN" ? 
-            <div className="badge-logo"/>:
-            <div className="badge-logo-ar"/>}
+            <div className="badge-logoEn"/>:
+            <div className="badge-logoAr"/>}
         <ProductSlider />
     </div>
   )
