@@ -71,7 +71,6 @@ button:hover .text { display: none; }
 }
 
 #gradi {
-  margin-left: 33px;
   font-family: Noto!important;
   background: -webkit-linear-gradient(left, rgb(31, 51, 175),#3F51B5);
   -webkit-background-clip: text;
@@ -212,7 +211,35 @@ button:hover .text { display: none; }
   box-shadow: 0 2px 2px 0 #b6b6b6;
 }
 
+.cart-blackBG {
+  border-radius: 0.55rem;
+  margin: 15px;
+  height: fit-content;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: rgb(75, 73, 73); 
+  box-shadow: 0 2px 2px 0 #615e5e;
+}
 
+.textBackgroundEng {
+  margin: 10px;
+  padding: 5px;
+  border-radius: 0.55rem;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: rgba(48, 48, 48, 0.262);
+  border-left: 10px solid #3F51B5;
+}
+
+.textBackgroundAr {
+  margin: 10px;
+  padding: 5px;
+  border-radius: 0.55rem;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: rgba(48, 48, 48, 0.262);
+  border-right: 10px solid #3F51B5;
+}
 
 .g-recaptcha{
   transform:scale(1);

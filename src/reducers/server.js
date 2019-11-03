@@ -1,6 +1,6 @@
 export default function() {
     return {
-        main: 'https://www.ggegypt.com/server/',
+        main: 'http://192.168.1.2:4000/server/',
         localHost: 'http://192.168.1.2:4000/server/'
     }
 }

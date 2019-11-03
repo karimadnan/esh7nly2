@@ -20,7 +20,8 @@ import ReactRouter from 'flux-react-router';
 import {loginFunction, updateCart} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import GlobalCart from '../containers/global-cart';
+import WhiteGlobalCart from '../containers/global-cart-white';
+import BlackGlobalCart from '../containers/global-cart-black';
 import LangIcon from '../containers/langIcon';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
@@ -65,12 +66,13 @@ const currencyStyle = {
 
 const styles = theme => ({
   tabLabel:{
-    color: '#fff',
+    color: '#b5b5b5',
     fontSize: 17,
     textTransform: 'capitalize',
     fontWeight: 'bold'
   },
   tabLabelActive:{
+    
     fontSize: 17,
     textTransform: 'capitalize',
     fontWeight: 'bold'
@@ -197,7 +199,7 @@ window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 const theme = createMuiTheme({
   palette: {
-      primary: { main: '#161616', contrastText: "#fff" },
+      primary: { main: '#212121', contrastText: "#fff" },
       secondary: { main: '#3f51b5', contrastText: "#fff" }
   },
 });
@@ -296,7 +298,7 @@ class Navbar extends React.Component {
         ReactRouter.goTo("/admindashboard")
     }
   }
-  
+
   logoutClick() {
     this.logout();
   }
@@ -425,7 +427,7 @@ class Navbar extends React.Component {
 
             <div className={classes.sectionDesktop}>
                   <LangIcon />
-                  <GlobalCart />
+                  <BlackGlobalCart/>
 
                   {this.props.loginData.loggedState ?
                   <MuiThemeProvider theme={this.props.loginData.isAdmin ? adminTheme : theme}>
@@ -459,7 +461,7 @@ class Navbar extends React.Component {
             </div>
             <div className={classes.sectionMobile}>
               <LangIcon />
-              <GlobalCart />
+              <BlackGlobalCart />
               <IconButton aria-haspopup="true" onClick={this.toggleDrawer('drawer', true)} color="inherit">
                 <Menu />
               </IconButton>

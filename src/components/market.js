@@ -271,7 +271,7 @@ class Market extends Component {
                 qskip: '0',
                 qlimit: '15',
                 qprice: 0,
-                categories: ['all', 'clothes', 'games'],
+                categories: ['all', 'apparel', 'games'],
                 anchorEl: null,
                 anchorEl2: null,
                 fetchingShop: false,
@@ -354,7 +354,7 @@ searchEnter(e){
 
 notify = (msg) => toast.success(msg, {
     position: "top-right",
-    autoClose: 1500,
+    autoClose: 3500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: false,
@@ -372,7 +372,7 @@ onCloseModal = (type) => {
 addItemToCart(item){
     const { t } = this.props;
     const itemName = item.Name
-    const msg = t('addedToCartMsg', {itemName})
+    const msg = item.defaultOpt ? `${item.defaultOpt}  ${t('addedToCartMsg', {itemName})}` : t('addedToCartMsg', {itemName})
     let uniqueId = item._id
 
     let object = {
@@ -422,7 +422,6 @@ addItemToCart(item){
         this.props.addCartItem(object)
         this.notify(msg)
     }
-
 }
 
 selectChange(type, value){
@@ -592,8 +591,8 @@ if (this.state.view === "shop"){
     }
     
     return (
-        <div className="row" style={{margin: 0}}>
-            <div className="BlackBG" style={{margin: 0}}>
+        <div className="container">
+            <div className="BlackBG">
                 <div className="col-xs-6 col-md-6 col-lg-6">
                     <div id="gradi">
                         <Typography className={classes.titleFont}>

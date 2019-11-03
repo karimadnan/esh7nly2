@@ -5,7 +5,8 @@ const initialState = {
     updatedCart: false,
     fetching: false,
     fetched: false,
-    error: ''
+    error: '',
+    updateError: ''
 }
 
 const quantityForItem = (list, newItem) => {
@@ -45,6 +46,14 @@ export default function(state = initialState, action){
                     updatedCart: false
                 }
 
+            case 'UPDATE_CART_ERROR': 
+                return {
+                    ...state,
+                    updatingCart: false,
+                    updateError: action.payload
+
+                }
+
             case 'UPDATE_CART_SUCCESS': 
                 return {
                     ...state,
@@ -65,6 +74,7 @@ export default function(state = initialState, action){
                     ...state,
                     fetching: false,
                     fetched: false,
+                    updatingCart: false,
                     cart: [],
                     error: action.payload
                 }

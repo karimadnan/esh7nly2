@@ -27,12 +27,13 @@ const styles = theme => ({
           }
     },
     titleFont: {
-        fontFamily: 'arial black',
+        fontFamily: 'arial',
+        margin: 5,
         fontSize: 25,
         color: '#c5c5cc',
         fontWeight: 'bold',
         [theme.breakpoints.up('sm')]: {
-          fontSize: 33,
+          fontSize: 30,
         }
     },
     chipDiscount: {
@@ -221,15 +222,18 @@ render(){
                 <Loader />
         )
     }
-    return(
+    return( 
     <div className="container">
-            <Grid container justify={i18next.language === "EN" ? "flex-start" : "flex-end"}>
-                <div id="gradi">
-                    <Typography className={classes.titleFont}>
-                        {t('micro')}
-                    </Typography>
+
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                <div className={i18next.language === "EN" ? "textBackgroundEng" : "textBackgroundAr"}>
+                    <Grid container justify={i18next.language === "EN" ? "flex-start" : "flex-end"}>
+                            <Typography className={classes.titleFont}>
+                                {t('micro')}
+                            </Typography>
+                    </Grid>
                 </div>
-            </Grid>
+            </div>
 
             <div className="col-xs-12 col-md-12 col-lg-12">
                 {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
@@ -261,13 +265,15 @@ render(){
                 </div>}
             </div>
 
-            <Grid container justify={i18next.language === "EN" ? "flex-start" : "flex-end"} >
-                <div id="gradi">
-                    <Typography className={classes.titleFont}>
-                        {t('discountsProductsSlider')}
-                    </Typography>
+            <div className="col-xs-12 col-md-12 col-lg-12">
+                <div className={i18next.language === "EN" ? "textBackgroundEng" : "textBackgroundAr"}>
+                    <Grid container justify={i18next.language === "EN" ? "flex-start" : "flex-end"}>
+                            <Typography className={classes.titleFont}>
+                                {t('discountsProductsSlider')}
+                            </Typography>
+                    </Grid>
                 </div>
-            </Grid>
+            </div>
             
             <div className="col-xs-12 col-md-12 col-lg-12">
                 {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">

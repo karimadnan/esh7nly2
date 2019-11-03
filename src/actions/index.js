@@ -58,13 +58,14 @@ export const addCartItem = (item) => {
 export function updateCart(cart, token) {
     return function(dispatch) {
       dispatch(updateCartPending())
-      return  axios.post("https://www.ggegypt.com/server/setUserCart", cart, {headers: {
+      return  axios.post("http://192.168.1.2:4000/server/setUserCart", cart, {headers: {
         'Content-Type': 'application/json',
         'authorization': token}})
       .then(function (response) {
         dispatch(updateCartSuccess())
       })
       .catch(function (error) {
+        dispatch(updateCartError(error))
     });
     };
 }
@@ -81,10 +82,17 @@ export function updateCartSuccess() {
     }
 }
 
+export function updateCartError(error) {
+    return {
+        type: 'UPDATE_CART_ERROR',
+        payload: error
+    }
+}
+
 export function fetchCart(token) {
     return function(dispatch) {
       dispatch(fetchCartPending())
-      return  axios.get("https://www.ggegypt.com/server/fetchUserCart", {headers: {
+      return  axios.get("http://192.168.1.2:4000/server/fetchUserCart", {headers: {
         'Content-Type': 'application/json',
         'authorization': token}})
       .then(function (response) {

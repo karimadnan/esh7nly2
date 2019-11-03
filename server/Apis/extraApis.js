@@ -18,11 +18,16 @@ const extraApis = {
             const collection = DB.dbo.collection('carts');
             let cart;
             try{
+                if( Array.isArray(req.body.cart) && req.body.cart.length == 0){
+                    await collection.remove({userID: new ObjectId(req.token.userId)});
+                }
+                else{
                 cart = await collection.updateOne(
                     {userID: new ObjectId(req.token.userId)}, 
                     {$set: {cart: req.body.cart, totalPrice: req.body.totalPrice, userID: new ObjectId(req.token.userId)}}, 
                     {upsert: true}
                 );
+                }
             }
             catch(err){
                 return res.status(500).send({ message: 'Error finding cart'});
