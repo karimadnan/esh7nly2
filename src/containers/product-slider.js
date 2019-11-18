@@ -14,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import LeftArrow from '@material-ui/icons/ArrowBackIos';
 import RightArrow from '@material-ui/icons/ArrowForwardIos';
 import i18next from 'i18next';
+import amumu from '../Images/amumusad.png';
 
 const styles = theme => ({
     slideNav:{
@@ -30,7 +31,6 @@ const styles = theme => ({
         fontFamily: 'arial',
         margin: 5,
         fontSize: 25,
-        color: '#c5c5cc',
         fontWeight: 'bold',
         [theme.breakpoints.up('sm')]: {
           fontSize: 30,
@@ -217,24 +217,31 @@ render(){
     const { t } = this.props;
     const { classes } = this.props;
 
-    if(this.state.fetchingShop){
+    if(this.state.errorFetchingShop){
         return(
-                <Loader />
+        <Grid container justify="center" alignItems="center">
+            <h1 style={{textAlign: "center"}}> {t('403')} :(</h1>
+            <img style ={{width: 150, height: 120}} src={amumu} alt=""/>
+        </Grid>
         )
     }
+
     return( 
     <div className="container">
 
             <div className="col-xs-12 col-md-12 col-lg-12">
                 <div className={i18next.language === "EN" ? "textBackgroundEng" : "textBackgroundAr"}>
                     <Grid container justify={i18next.language === "EN" ? "flex-start" : "flex-end"}>
-                            <Typography className={classes.titleFont}>
+                            <Typography className={classes.titleFont} style={{color: this.props.settings.mode === "dark" ? "#c5c5cc" : "#212121"}}>
                                 {t('micro')}
                             </Typography>
                     </Grid>
                 </div>
             </div>
 
+            {this.state.fetchingShop ?
+                <Loader size={60}/>
+            : 
             <div className="col-xs-12 col-md-12 col-lg-12">
                 {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
                     <Grid container justify="center" alignItems="center">
@@ -263,18 +270,21 @@ render(){
                         <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Games.slideNext()}/>
                     </Grid>
                 </div>}
-            </div>
+            </div>}
 
             <div className="col-xs-12 col-md-12 col-lg-12">
                 <div className={i18next.language === "EN" ? "textBackgroundEng" : "textBackgroundAr"}>
                     <Grid container justify={i18next.language === "EN" ? "flex-start" : "flex-end"}>
-                            <Typography className={classes.titleFont}>
+                            <Typography className={classes.titleFont} style={{color: this.props.settings.mode === "dark" ? "#c5c5cc" : "#212121"}}>
                                 {t('discountsProductsSlider')}
                             </Typography>
                     </Grid>
                 </div>
             </div>
             
+            {this.state.fetchingShop  ?
+                <Loader size={60}/>
+            :
             <div className="col-xs-12 col-md-12 col-lg-12">
                 {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
                     <LeftArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts.slidePrev()}/>
@@ -301,7 +311,7 @@ render(){
                 {!isMobile && <div className="col-xs-2 col-md-1 col-lg-1">
                     <RightArrow className={classes.slideNav} fontSize="large" onClick={() => this.Discounts.slideNext()}/>
                 </div>}
-            </div>
+            </div>}
 
     </div>
     )
@@ -310,7 +320,8 @@ render(){
 
 function mapStateToProps(state){
     return {
-        server: state.server
+        server: state.server,
+        settings: state.settings
     }
   }
 

@@ -172,6 +172,26 @@ button:hover .text { display: none; }
   background-color: #ffffff;
 } 
 
+.slidesBackgroundEn {
+  border-left: 10px solid #3F51B5;
+  margin-top: 10px;
+  min-height: 285px;
+  border-radius: 0.50rem;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: rgb(32, 32, 32); /* Fallback color */
+}
+ 
+.slidesBackgroundAr {
+  border-right: 10px solid #3F51B5;
+  margin-top: 10px;
+  min-height: 285px;
+  border-radius: 0.50rem;
+  overflow-x: hidden;
+  background-size: cover;
+  background-color: rgb(32, 32, 32); /* Fallback color */
+}
+
 .BlackBG {
   border-radius: 0.50rem;
   color: rgb(182, 180, 180);
@@ -201,12 +221,21 @@ button:hover .text { display: none; }
   width: 100%
 }
 
+.whiteBackground {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #ffff; 
+  width: 100%
+}
+
 .cartBG {
   border-radius: 0.55rem;
   margin: 15px;
   height: fit-content;
   overflow-x: hidden;
   background-size: cover;
+  color: #212121;
   background-color: rgb(255, 255, 255); 
   box-shadow: 0 2px 2px 0 #b6b6b6;
 }
@@ -217,6 +246,7 @@ button:hover .text { display: none; }
   height: fit-content;
   overflow-x: hidden;
   background-size: cover;
+  color: #b5b5b5;
   background-color: rgb(75, 73, 73); 
   box-shadow: 0 2px 2px 0 #615e5e;
 }
@@ -321,6 +351,12 @@ button:hover .text { display: none; }
   overflow: hidden;
 }
 
+.rarity-dark {
+  background: radial-gradient(#fb22df,#520c6f);
+  border: 3px solid #ff42e7;
+  overflow: hidden;
+}
+
 .splash-card {
   margin: 10px;
   height: auto;
@@ -330,6 +366,14 @@ button:hover .text { display: none; }
 }
 
 .splash-cardTees {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.splash-card-slides {
   margin: 10px;
   max-width: 100%;
   height: auto;
@@ -420,7 +464,7 @@ background-color: #ffffff;
     -ms-flex-direction: column;
     flex-direction: column;
     word-wrap: break-word;
-    background-color: rgba(44, 43, 43, 0.788);
+    background-color: rgba(44, 43, 43, 0.888);
     background-clip: border-box;
     border-radius: 0.30rem;
 }
@@ -645,7 +689,31 @@ background-color: #ffffff;
   background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
 }
 
-.badge-logoEn {
+.white-badge-logoEn {
+  padding: 7em;
+  margin: 0 auto;
+  background-image: url('Images/blackLogoEn.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.white-badge-logoAr {
+  padding: 7em;
+  margin: 0 auto;
+  background-image: url('Images/blackLogoAr.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  max-height: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.black-badge-logoEn {
   padding: 7em;
   margin: 0 auto;
   background-image: url('Images/whiteLogoEn.svg');
@@ -658,7 +726,7 @@ background-color: #ffffff;
 }
 
 
-.badge-logoAr {
+.black-badge-logoAr {
   padding: 7em;
   margin: 0 auto;
   background-image: url('Images/whiteLogoAr.svg');

@@ -20,7 +20,7 @@ render(){
             <PacmanLoader
                 css={override}
                 sizeUnit={"px"}
-                size={100}
+                size={this.props.size || 100}
                 color={'#FFFF00'}
                 loading={true}/>
         </div>

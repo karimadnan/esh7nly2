@@ -83,12 +83,22 @@ const productTheme = createMuiTheme({
 
 const styles = theme => ({
     titleFont: {
-        fontFamily: 'arial black',
+        fontFamily: 'arial',
+        margin: 10,
         fontSize: 25,
+        color: '#c5c5cc',
         fontWeight: 'bold',
-
         [theme.breakpoints.up('sm')]: {
           fontSize: 70,
+        }
+    },
+    subtitleFont: {
+        fontFamily: 'arial',
+        margin: 10,
+        fontSize: 15,
+        color: '#c5c5cc',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 30,
         }
     },
     priceFont: {
@@ -113,13 +123,13 @@ const styles = theme => ({
     },
     cardName: {
         margin: theme.spacing.unit,
-        color: 'white',
+        color: '#b5b5b5',
         fontFamily: 'arial',
         wordBreak: 'break-word',
-        fontSize: 12,
+        fontSize: 15,
         fontWeight: 'bold',
         [theme.breakpoints.up('sm')]: {
-          fontSize: 14,
+          fontSize: 18,
         }
     },
     progress: {
@@ -164,13 +174,14 @@ const styles = theme => ({
           fontSize: 15,
         }
     },
-    fabCategory: {
+    fabSelect: {
         fontSize: 10,
+        minWidth: 120,
         fontWeight: 'bold',
-        minWidth: 90,
-        margin: theme.spacing.unit,
+        marginTop: theme.spacing.unit,
+        marginBottom: theme.spacing.unit,
         [theme.breakpoints.up('lg')]: {
-          minWidth: 170,
+          minWidth: 140,
           fontSize: 15,
         }
     },
@@ -382,6 +393,7 @@ addItemToCart(item){
         soldBy: item.soldBy,
         quantity: this.state.quantity,
         defaultImage: item.defaultImage,
+        DBID: item._id
      }
 
     if (item.oldPrice){
@@ -481,55 +493,128 @@ CalcDiscount(product){
     return discount
 }
 
-Discounted(){
-    const { classes } = this.props;
+slides(){
     const { t } = this.props;
-    
-    if(this.state.shopData){
+    const { classes } = this.props;
     let outPut = []
-    this.state.shopData.map((item, index) =>{
-        var rarity = "splash-cardTees"
-        if(item.oldPrice){
-            outPut.push(            
-            <div key={index} className={rarity} style={{margin: 5}} onClick={() => {this.setState({view: 'item', prevPro: item})}} 
-                onMouseEnter={() => this.Offers._pause()}
-                onMouseLeave={() => this.Offers._play()}>
-                <img className="splash-card-product-view-constant" src={item.defaultImage} alt={item.id}/>
-            
-                <div className="overlayHover">
-    
-                    <div id="ViewButton">
-                        <Chip
-                            label={t('viewButton')}
-                            className={classes.chipView}
-                            color={'default'}
-                        />
+    var slides = [
+        {
+            title : t('merch'),
+            subtitle: t('merchText'),
+            img : "https://saletproducts.s3.us-east-2.amazonaws.com/draven.png",
+            rarity : "epic"
+        },
+        {
+            title : t('micro'),
+            subtitle: t('microText'),
+            img : "https://res.cloudinary.com/dols73omt/image/upload/v1572431994/fortnite_1_pwbn5y.png",
+            rarity : "legendary"
+        },
+        {
+            title : t('micro'),
+            subtitle: 'testing subtitle font',
+            img : "https://saletproducts.s3.us-east-2.amazonaws.com/715_nagahexv2_500x500.png",
+            rarity : "uncommon"
+        }
+]
+slides.map((item, index) =>{
+    var rarity = `splash-card-slides rarity-${item.rarity}`
+    if(i18next.language === "EN"){
+    outPut.push(      
+    <div id={index}>
+        <div className="col-xs-7 col-md-7 col-lg-7"> 
+            <div className={"slidesBackgroundEn"}>
+                <Grid container justify={"flex-start"}>
+                    <Typography className={classes.titleFont}>
+                        {item.title}
+                    </Typography>
+                    <Typography className={classes.subtitleFont}>
+                        {item.subtitle}
+                    </Typography>
+                </Grid>
+            </div>
+        </div>   
+        <div className="col-xs-5 col-md-5 col-lg-5">   
+            <div key={index} className={rarity} >
+                <img className="splash-card-product-view-constant" src={item.img} alt={item.text}/>
+                    <div className="overlayHover">
+                        <div id="ViewButton">
+                            <Chip
+                                label={t('viewButton')}
+                                className={classes.chipView}
+                                color={'default'}
+                            />
+                        </div>
                     </div>
-    
-                    {item.oldPrice && 
-                    <div id ="merchDiscount" className="card-body">
-                        <Chip
-                            label={`${this.CalcDiscount(item)}`}
-                            className={classes.chipDiscount}
-                            color={'secondary'}
-                        />
-                    </div> 
-                    }
-                </div>
             </div> 
-            )
-            }
-        })
-        return outPut
+        </div>
+    </div>
+        )}
+    else{
+        outPut.push(      
+            <div id={index}>
+                <div className="col-xs-5 col-md-5 col-lg-5">   
+                    <div key={index} className={rarity} >
+                        <img className="splash-card-product-view-constant" src={item.img} alt={item.text}/>
+                            <div className="overlayHover">
+                                <div id="ViewButton">
+                                    <Chip
+                                        label={t('viewButton')}
+                                        className={classes.chipView}
+                                        color={'default'}
+                                    />
+                                </div>
+                            </div>
+                    </div> 
+                </div>
+                <div className="col-xs-7 col-md-7 col-lg-7"> 
+                    <div className={"slidesBackgroundAr"}>
+                            <div className="col-xs-12 col-md-12 col-lg-12"> 
+                                <Grid container justify={"flex-end"}>
+                                    <Typography className={classes.titleFont}>
+                                        {item.title}
+                                    </Typography>
+                                </Grid>
+                            </div>
+                            <div className="col-xs-12 col-md-12 col-lg-12"> 
+                                <Grid container justify={"flex-end"}>
+                                    <Typography className={classes.subtitleFont}>
+                                        {item.subtitle}
+                                    </Typography>
+                                </Grid>
+                            </div>
+                    </div>
+                </div>   
+            </div>
+                )
     }
-    }
+})
+if (this.state.view === 'shop'){
+return (
+    <AliceCarousel
+        items={outPut}
+        responsive={ {
+            0: { items: 1 },
+            1024: { items: 1 },
+        }}
+        autoPlayInterval={5000}
+        autoPlayDirection="ltr"
+        autoPlay={true}
+        mouseDragEnabled={false}
+        stopAutoPlayOnHover={true}
+        dotsDisabled={true}
+        buttonsDisabled={true}
+        ref={(el) => (this.Offers = el)}
+    />
+)}
+}
 
 Market(){
 const { t } = this.props;
 const { classes } = this.props;
 if (this.state.view === "shop"){
     let shop = this.state.shopData && this.state.shopData.map((item, index) =>{
-        var rarity = "card splash-cardTees"
+        var rarity = "card splash-cardTees" 
 
         return (
         <div className="col-xs-12 col-md-4 col-md-4" key={index} style={{cursor: 'pointer'}} onClick={() => {this.setState({view: 'item', prevPro: item})}}>
@@ -592,42 +677,6 @@ if (this.state.view === "shop"){
     
     return (
         <div className="container">
-            <div className="BlackBG">
-                <div className="col-xs-6 col-md-6 col-lg-6">
-                    <div id="gradi">
-                        <Typography className={classes.titleFont}>
-                            PRE-SALE
-                        </Typography>
-                        <Typography className={classes.titleFont}>
-                            50% OFF!
-                        </Typography>
-                    </div>
-                </div>
-                <div className="col-xs-6 col-md-6 col-lg-6">
-                <AliceCarousel
-                        items={this.Discounted()}
-                        responsive={ {
-                            0: { items: 1 },
-                            1024: { items: 1 },
-                        }}
-                        autoPlayInterval={5000}
-                        autoPlayDirection="ltr"
-                        autoPlay={true}
-                        mouseDragEnabled={false}
-                        stopAutoPlayOnHover={true}
-                        dotsDisabled={true}
-                        buttonsDisabled={true}
-                        ref={(el) => (this.Offers = el)}
-                    />
-                </div>
-                <div className="col-xs-12 col-md-12 col-lg-12">
-                <div id="gradi">
-                <Typography className={classes.priceFont}>
-                            *PRESALE - Will be shipped the 20th of july
-                        </Typography>
-                </div>
-                </div>
-            </div>
             <div className="col-xs-12 col-md-12 col-lg-12">
                 <div className="col-xs-12 col-md-12 col-lg-4" style={{padding: 0}}>  
                     <Paper className={classes.root} elevation={1}>
@@ -638,10 +687,9 @@ if (this.state.view === "shop"){
                     </Paper>
                     
                 </div>
-                <div className="col-xs-4 col-md-2 col-lg-2" style={{padding: 0}}>  
+                <div className="col-xs-6 col-md-4 col-lg-2">  
                 <MuiThemeProvider theme={menuTheme}>
-                    <Grid container justify="flex-start" alignItems="center">
-                        <Fab onClick={this.handleClick} color="primary" variant="extended" aria-label="Next" className={classes.fabCategory} aria-owns={anchorEl ? 'simple-menu' : undefined}
+                        <Fab onClick={this.handleClick} color="primary" variant="extended" aria-label="Next" className={classes.fabSelect} aria-owns={anchorEl ? 'simple-menu' : undefined}
                                             aria-haspopup="true">
                             <CategoryIcon className={classes.extendedIcon} />
                             {this.state.qcategory ?
@@ -649,7 +697,6 @@ if (this.state.view === "shop"){
                             :
                             `${t('category')}`}
                         </Fab>
-                    </Grid>
                     </MuiThemeProvider>
                     <Menu
                         id="simple-menu"
@@ -660,10 +707,9 @@ if (this.state.view === "shop"){
                     {catergories}
                     </Menu>
                 </div>
-                <div className="col-xs-4 col-md-2 col-lg-2" style={{padding: 0}}>  
+                <div className="col-xs-6 col-md-4 col-lg-2">  
                 <MuiThemeProvider theme={menuTheme}>
-                    <Grid container justify="flex-end" alignItems="center">
-                        <Fab onClick={this.handleClick2} color="primary" variant="extended" aria-label="Sort" className={classes.fabCategory} aria-owns={anchorEl2 ? 'simple-menu' : undefined}
+                        <Fab onClick={this.handleClick2} color="primary" variant="extended" aria-label="Sort" className={classes.fabSelect} aria-owns={anchorEl2 ? 'simple-menu' : undefined}
                                             aria-haspopup="true">
                             <SortIcon className={classes.extendedIcon} />
                             {this.state.qprice === 1 ?
@@ -672,7 +718,6 @@ if (this.state.view === "shop"){
                             : 
                             `${t('Sortby')}`}
                         </Fab>
-                    </Grid>
                     </MuiThemeProvider>
                     <Menu
                         id="simple-menu"
@@ -1191,6 +1236,7 @@ render(){
                 <title>{t('marketTitle')}</title>
                 <meta name="description" content={t('marketTitle')} />
             </Helmet>
+                {this.slides()}
                 {this.Market()}
                 {this.ViewProduct()}
             <Navbar page={1}/>

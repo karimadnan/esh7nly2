@@ -7,7 +7,6 @@ import Drawer from '@material-ui/core/Drawer';
 import CurrencyFormat from 'react-currency-format';
 import {bindActionCreators} from 'redux';
 import {removeCartItem, updateCart} from '../actions/index';
-import { ToastContainer, toast } from 'react-toastify';
 import ReactRouter from 'flux-react-router';
 import Modal from 'react-responsive-modal';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -22,6 +21,8 @@ import DeleteIcon from '@material-ui/icons/DeleteForever';
 import Typography from '@material-ui/core/Typography';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import i18next from 'i18next';
+import FacePalm from '../Images/facepalm.png';
 
 const customStyles = {
   overlay: {
@@ -29,8 +30,9 @@ const customStyles = {
     zIndex: 1100
   },
   modal: {
-    backgroundColor: 'rgba(219, 105, 105, 1)',
+    backgroundColor: 'rgba(219, 105, 105, 0.7)',
     minWidth: 300,
+    maxWidth: 500,
     color: "white",
     borderRadius: '10px',
   }
@@ -43,8 +45,23 @@ const styles = theme => ({
   drawer:{
     zIndex: 1100
   },
-  drawerBG:{
+  drawerDark:{
     backgroundColor: '#212121',
+    width: 250,
+    [theme.breakpoints.up('lg')]: {
+      width: 550,
+    }
+  },
+  subtotalDark:{
+    color: '#fff',
+    fontWeight: 'bold'
+  },
+  subtotalNormal:{
+    color: '#212121',
+    fontWeight: 'bold'
+  },
+  drawerWhite:{
+    backgroundColor: '#f7f7fa',
     width: 250,
     [theme.breakpoints.up('lg')]: {
       width: 550,
@@ -58,9 +75,16 @@ const styles = theme => ({
       fontSize: 23,
     }
   },
-  drawerDeleteIcon: {
+  drawerDeleteDark: {
     margin: theme.spacing.unit * 2,
     color: '#fff',
+    '&:hover': {
+      color: fade('#fff', 0.525),
+    }
+  },
+  drawerDeleteNormal: {
+    margin: theme.spacing.unit * 2,
+    color: '#212121',
     '&:hover': {
       color: fade('#fff', 0.525),
     }
@@ -85,10 +109,10 @@ extendedIcon2: {
 },
 });
 
-const whiteTheme = createMuiTheme({
+const cartColor = createMuiTheme({
   palette: {
       primary: { main: '#b5b5b5', contrastText: "#fff" },
-      secondary: { main: '#3f51b5', contrastText: "#fff" }
+      secondary: { main: '#212121', contrastText: "#fff" }
   },
 });
 
@@ -98,8 +122,7 @@ class GlobalCart extends Component {
     this.state = {
       ErrorModal: false,
       ErrorMsg: '',
-      sideBar: false,
-      routeNew2: this.props.routeNew
+      sideBar: false
     }
   }
 
@@ -111,21 +134,11 @@ onCloseModal = (type) => {
   this.setState({[type]: false });
 };
 
-notify = (msg) => toast.error(msg, {
-  zIndex: 1100,
-  position: toast.POSITION.TOP_CENTER,
-  autoClose: 2000,
-  pauseOnHover: false,
-  pauseOnFocusLoss: false,
-  closeOnClick: true
-});
-
 remove(item){
   const { t } = this.props;
   const itemName = item.Name
   const msg = t('removedFromCartMsg', {itemName})
   this.props.removeCartItem(item)
-  this.notify(msg)
 }
 
 goToCheckout(){
@@ -142,9 +155,16 @@ goToProduct(id){
   ReactRouter.goTo("/productpage/"+id.split('-')[0])
 }
 
+calcPayment(){
+  let totalPrice = 0
+  this.props.cart.cart.map((item) => {
+      totalPrice = totalPrice + item.price * item.quantity
+  })
+  return totalPrice
+}
+
 createCart(){
-const { t } = this.props;
-const { classes } = this.props;
+const { t, classes } = this.props;
 let cart = this.props.cart.cart.map((item, index) => {
 
     var cartName = item.Name
@@ -159,19 +179,19 @@ let cart = this.props.cart.cart.map((item, index) => {
     }
 
   return(
-    <div key={index} className="cart-blackBG">
+    <div key={index} className={this.props.settings.mode === "dark" ? "cart-blackBG" : "cartBG"}>
         <div className="col-md-12 col-lg-12">
             <div className="col-xs-12 col-md-4 col-lg-4">
                 <img src={item.defaultImage} className="splash-card-product-view" onClick={()=>{this.goToProduct(item.id)}} style={{cursor: 'pointer', margin: 5}} alt={item.id}/>
             </div>
             <div className="col-xs-12 col-md-4 col-lg-4" onClick={()=>{this.goToProduct(item.id)}} style={{cursor: 'pointer'}}>
-                <h4 style={{fontWeight: "bold", color: "#b5b5b5", whiteSpace: 'normal', wordWrap: 'break-word'}}>{cartName.length > 70 ? (((cartName).substring(0,70-3))  + '...' ) : cartName}</h4>
+                <h4 style={{whiteSpace: 'normal', wordWrap: 'break-word'}}>{cartName.length > 70 ? (((cartName).substring(0,70-3))  + '...' ) : cartName}</h4>
             </div>
             <div className="col-xs-12 col-md-2 col-lg-2">
-                <h4 style={{color: "#4a60d9", fontWeight: "bold"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h4>
-                <h5 style={{color: "#b5b5b5"}}>{t('quantity')}: {item.quantity}</h5>
+                <h4 style={{color: "#4a60d9"}}>{<CurrencyFormat value={item.price.toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')}</h4>
+                <h5>{t('quantity')}: {item.quantity}</h5>
             </div>
-            <div className="col-xs-12 col-md-2 col-lg-2" className={classes.drawerDeleteIcon} onClick={()=>{this.remove(item)}} style={{cursor: 'pointer'}}>
+            <div className="col-xs-12 col-md-2 col-lg-2" className={this.props.settings.mode === 'dark' ? classes.drawerDeleteDark : classes.drawerDeleteNormal} onClick={()=>{this.remove(item)}} style={{cursor: 'pointer'}}>
                 <DeleteIcon />
                 <Typography>Remove</Typography>
             </div>
@@ -180,6 +200,7 @@ let cart = this.props.cart.cart.map((item, index) => {
 
     )
 })
+
 return (
     <div>
       {cart}
@@ -187,15 +208,75 @@ return (
 )
 }
 
+subtotal(){
+  const { t, classes } = this.props;
+  if(this.props.cart.cart.length > 0){
+    if(i18next.language === "EN"){
+      return(
+        <div className={this.props.settings.mode === 'dark' ? classes.subtotalDark : classes.subtotalNormal}>
+          <div className="col-xs-6 col-md-6 col-lg-6">
+            <p style={{
+                textTransform: "uppercase", 
+                fontFamily: "arial", 
+                fontSize: !isMobile ? 18 : "3vw", 
+                fontWeight: 'bold'}}>{t('subTotal')}: 
+            </p>
+          </div>
+          <div className="col-xs-6 col-md-6 col-lg-6">
+            <p style={{ 
+                textTransform: "uppercase", 
+                fontFamily: "arial", 
+                fontSize: !isMobile ? 18 : "3vw", 
+                fontWeight: 'bold'}}>{t('currency')} {<CurrencyFormat value={this.calcPayment().toFixed(2)} displayType={'text'} thousandSeparator={true} />}
+            </p>
+          </div>
+        </div>
+      )
+    }
+    else{
+      return(
+        <div className={this.props.settings.mode === 'dark' ? classes.subtotalDark : classes.subtotalNormal}>
+          <div className="col-xs-6 col-md-6 col-lg-6">
+            <p style={{
+                textTransform: "uppercase", 
+                fontFamily: "arial", 
+                fontSize: !isMobile ? 18 : "3vw", 
+                fontWeight: 'bold'}}>{<CurrencyFormat value={this.calcPayment().toFixed(2)} displayType={'text'} thousandSeparator={true} />} {t('currency')} 
+            </p>
+          </div>
+          <div className="col-xs-6 col-md-6 col-lg-6">
+            <p style={{
+                textTransform: "uppercase", 
+                fontFamily: "arial", 
+                fontSize: !isMobile ? 18 : "3vw", 
+                fontWeight: 'bold'}}>: {t('subTotal')} 
+            </p>
+          </div>
+        </div>
+      )
+    }
+  }
+}
+
 render(){
-  const { t } = this.props;
-  const { classes } = this.props;
+  const { t, classes } = this.props;
   return (
     <div> 
       <Modal          
       open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
       styles={customStyles}>
-          <h2>{this.state.ErrorMsg}</h2>
+          {i18next.language === "EN" ? 
+              <div>
+                <h2 className="col-xs-6">{this.state.ErrorMsg}</h2>
+                <img className="col-xs-6" src={FacePalm} alt=""></img>
+              </div>
+              :
+              <div>
+                <img className="col-xs-6" src={FacePalm} alt=""></img>
+                <h2 className="col-xs-6" style={{textAlign: "right"}}>{this.state.ErrorMsg}</h2>
+              </div>
+          }
+
       </Modal>
       <Tooltip title={<h6>{t('yourCart')}</h6>} aria-label={<h6>{t('yourCart')}</h6>} placement="bottom">
           <Badge onClick={()=>{this.setState({ sideBar: !this.state.sideBar })}} style={{cursor: "pointer"}} className={this.props.classes.margin} badgeContent={this.props.cart.cart ? this.props.cart.cart.length : 0} color="secondary">
@@ -204,70 +285,38 @@ render(){
       </Tooltip>
       <Drawer
           className={classes.drawer}
-          classes={{paper: classes.drawerBG}}
+          classes={{paper: this.props.settings.mode === 'dark' ? classes.drawerDark : classes.drawerWhite}}
           anchor="right"
           open={this.state.sideBar}
           onClose={()=>{this.setState({ sideBar: false })}}
         >
         <div style={{textAlign: "center"}}>
-          {this.props.cart.cart.length > 0 ? 
-              <div>
-                <Badge badgeContent={this.props.cart.cart ? this.props.cart.cart.length : 0} color="secondary">
-                <MuiThemeProvider theme={whiteTheme}>
-                    <ShoppingCart fontSize="large" color="primary"/>
-                </MuiThemeProvider>
-                </Badge>
-                <Chip
-                    color="default"
-                    label={t('yourCart')}
-                    className={classes.drawerChip}
-                    classes={{label: classes.cartDrawerFont}}
-                />
-              </div>
-              :
-            <div>
-              <Badge badgeContent={this.props.cart.cart ? this.props.cart.cart.length : 0} color="secondary">
-                  <ShoppingCart fontSize="large" />
-              </Badge>
-              <Chip
-                    color="default"
-                    label={t('cartEmpty')}
-                    className={classes.drawerChip}
-                    classes={{label: classes.cartDrawerFont}}
-                />
-            </div>}
-
-          {!this.props.cart.updatingCart ? 
+            <Badge badgeContent={this.props.cart.cart ? this.props.cart.cart.length : 0} color="secondary">
+              <MuiThemeProvider theme={cartColor}>
+                  <ShoppingCart fontSize="large" color={this.props.settings.mode === 'dark' ? "primary" : "secondary"}/>
+              </MuiThemeProvider>
+            </Badge>
+            <Chip
+                color="default"
+                label={this.props.cart.cart.length > 0 ? t('yourCart') : t('cartEmpty')}
+                className={classes.drawerChip}
+                classes={{label: classes.cartDrawerFont}}
+            />
+    
           <Scrollbars autoHeight 
                       autoHeightMin={470} 
                       autoHeightMax={470}
                       renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
-                  {this.createCart()}
-          </Scrollbars>:           
-          <Scrollbars autoHeight 
-                      autoHeightMin={470} 
-                      autoHeightMax={470}
-                      renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}>
-                  <CircularProgress size={100} color={'secondary'} className={classes.progress} />
-          </Scrollbars>}
+                      {!this.props.cart.updatingCart ? 
+                        <div>
+                          {this.createCart()} 
+                        </div>
+                        : 
+                      <CircularProgress size={100} color={'secondary'} className={classes.progress} />}
+          </Scrollbars>
 
-          {this.props.cart.cart.length > 0 && 
-          <div style={{color: "#b5b5b5"}}>
-            <div className="col-xs-6 col-md-6 col-lg-6">
-              <span style={{textAlign: "left", 
-                            textTransform: "uppercase", 
-                            fontFamily: "arial", 
-                            fontSize: !isMobile ? 18 : "3vw", 
-                            fontWeight: 'bold'}}>{t('subTotal')}: </span>
-            </div>
-            <div className="col-xs-6 col-md-6 col-lg-6">
-              <span style={{textAlign: "right", 
-                            textTransform: "uppercase", 
-                            fontFamily: "arial", 
-                            fontSize: !isMobile ? 18 : "3vw", 
-                            fontWeight: 'bold'}}>{t('currency')} {<CurrencyFormat value={this.props.cart.totalPrice.toFixed(2)} displayType={'text'} thousandSeparator={true} />} </span>
-            </div>
-          </div>}
+          {this.subtotal()}
+
           {!window.location.href.includes("checkout") && this.props.cart.cart.length > 0 && 
           <div className="col-xs-12 col-md-12 col-lg-12">
                 <Grid container justify="center" alignItems="center">
@@ -279,7 +328,6 @@ render(){
             </div>}
           </div>
           </Drawer>
-          <ToastContainer/>
         </div>
   );
 }
@@ -288,7 +336,8 @@ render(){
 function mapStateToProps(state){
     return {
         cart: state.cartItems,
-        loginData: state.loginSession
+        loginData: state.loginSession,
+        settings: state.settings
     }
   }
 

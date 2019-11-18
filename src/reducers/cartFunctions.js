@@ -1,6 +1,5 @@
 const initialState = {
     cart: [],
-    totalPrice: 0,
     updatingCart: false,
     updatedCart: false,
     fetching: false,
@@ -85,27 +84,24 @@ export default function(state = initialState, action){
                     fetching: false,
                     fetched: true,
                     cart: action.payload.cart,
-                    totalPrice: Number(action.payload.totalPrice)
                 }
 
             case 'CART_ADDITEM': {
                 const { cart } = state
-                const { totalPrice } = state
                 const newItem = action.payload
                     if ( quantityForItem(cart, newItem) !== 0 ) {
-                        return { ...state, cart: updateQuantity(cart, newItem, +1), totalPrice: totalPrice + newItem.price }
+                        return { ...state, cart: updateQuantity(cart, newItem, +1) }
                     }
-                    return { ...state, cart: add(cart, newItem), totalPrice: totalPrice + newItem.price }
+                    return { ...state, cart: add(cart, newItem) }
             }
 
             case 'CART_REMOVEITEM': {
                 const { cart } = state
-                const { totalPrice } = state
                 const itemToRemove = action.payload
                     if ( quantityForItem(cart, itemToRemove) > 1 ) {
-                        return { ...state, cart: updateQuantity(cart, itemToRemove, -1), totalPrice: totalPrice - itemToRemove.price }
+                        return { ...state, cart: updateQuantity(cart, itemToRemove, -1) }
                     }
-                    return { ...state, cart: remove(cart, itemToRemove), totalPrice: totalPrice - itemToRemove.price }
+                    return { ...state, cart: remove(cart, itemToRemove) }
             }
 
         }

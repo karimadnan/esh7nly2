@@ -209,10 +209,18 @@ class Checkout extends Component {
         });
     }
 
+    calcPayment(){
+        let totalPrice = 0
+        this.props.cart.cart.map((item) => {
+            totalPrice = totalPrice + item.price * item.quantity
+        })
+        return totalPrice
+    }
+
     createOrder(){
         const { t } = this.props;
         var that = this
-        var shipCost = this.props.cart.totalPrice > 400 ? 0 : this.state.ShipPrice
+        var shipCost = this.calcPayment() > 400 ? 0 : this.state.ShipPrice
         var payment;
 
         switch(this.state.paymentMethod){
@@ -233,7 +241,7 @@ class Checkout extends Component {
         var Data = {paymentMethod: payment,
                     orderType: "Products",
                     cart: this.props.cart.cart,
-                    totalPrice: String(this.props.cart.totalPrice),
+                    totalPrice: String(this.calcPayment()),
                     shipPrice: String(shipCost)};
         if(this.state.transId){
             Data['transId']=this.state.transId
@@ -708,22 +716,11 @@ class Checkout extends Component {
     }
 }
 
-returnGrandTotal(){
-let outPut = 0
-    if (this.props.cart.totalPrice > 400){
-        outPut = this.props.cart.totalPrice
-    }
-    else{
-        outPut = this.props.cart.totalPrice + Number(this.state.ShipPrice)
-    }
-return outPut
-}
-
 render(){
     const { t } = this.props;
     const { classes } = this.props;
-    let total = this.props.cart.totalPrice;
-    let grandTotal = this.returnGrandTotal();
+    let total = this.calcPayment();
+    let grandTotal = this.calcPayment() > 400 ? total : total + Number(this.state.ShipPrice)
 
 
     return(
@@ -825,7 +822,7 @@ render(){
                     {i18next.language === "EN" ?
                         <div>
                             <div>
-                            {this.props.cart.totalPrice < 400 ?
+                            {this.calcPayment() < 400 ?
                             <div>
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
@@ -855,7 +852,7 @@ render(){
                         </div>
                         :
                         <div>
-                            {this.props.cart.totalPrice < 400 ?
+                            {this.calcPayment() < 400 ?
                             <div>
                                 <div className="col-xs-6 col-md-6 col-lg-6">
                                     <Grid container justify="flex-start" alignItems="center">
@@ -932,12 +929,12 @@ render(){
         <Modal open={this.state.SuccessModal} onClose={this.onCloseModal.bind(this,'SuccessModal')} center
             styles={SuccessStyle}>
             <h3 className="col-xs-6">{this.state.SuccessMsg}</h3>
-            <img style ={{width: 150, height: 120}} className="col-xs-6" src={fortniteDab} alt=""></img>
+            <img style ={{width: 150, height: 120}} className="col-xs-6" src={fortniteDab} alt=""/>
         </Modal>
         <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
             styles={ErrorStyle}>
             <h3 className="col-xs-6">{this.state.ErrorMsg}</h3>
-            <img style ={{width: 150, height: 120}} className="col-xs-6" src={amumu} alt=""></img> 
+            <img style ={{width: 150, height: 120}} className="col-xs-6" src={amumu} alt=""/>
         </Modal>
         <NavBar/>
     </div>

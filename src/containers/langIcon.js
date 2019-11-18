@@ -13,7 +13,7 @@ const styles = theme => ({
   margin: {
     margin: theme.spacing.unit * 2,
     marginRight: theme.spacing.unit * 3,
-  },
+  }
 }); 
 
 const changeLanguage = (lng) => {
@@ -78,7 +78,8 @@ langIcon.propTypes = {
 
 function mapStateToProps(state){
     return {
-        cartInfo: state.updateCartInfo
+        cartInfo: state.updateCartInfo,
+        settings: state.settings
     }
   }
 

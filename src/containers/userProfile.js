@@ -22,12 +22,58 @@ import compose from 'recompose/compose';
 import { withNamespaces } from 'react-i18next';
 import {connect} from 'react-redux';
 import Loader from '../containers/loader';
+import Modal from 'react-responsive-modal';
+import Typography from '@material-ui/core/Typography';
+import {bindActionCreators} from 'redux';
+import {updateProfilePhoto} from '../actions/index';
+
+const avatarModal = {
+    overlay: {
+      background: 'rgba(0, 0, 0, 0.3)'
+    },
+    modal: {
+      backgroundColor: '#212121',
+      color: "Black",
+      borderRadius: '6.35px',
+      height: 350,
+      width: 700
+    }
+  }
 
 const styles = theme => ({
+    Divider:{
+        backgroundColor: '#c5c5cc',
+    },
+    avatarTitle: {
+        fontFamily: 'arial',
+        margin: 10,
+        fontSize: 25,
+        color: '#c5c5cc',
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+        [theme.breakpoints.up('sm')]: {
+          fontSize: 20,
+        }
+    },
     Avatar: {
+        border: '5px solid #3F51B5',
         margin: 10,
         width: 150,
         height: 150,
+        cursor: 'pointer',
+        '&:hover': {
+            border: '5px solid #ff9800',
+          }
+      },
+    pickAvatar: {
+        border: '2px solid #3F51B5',
+        margin: 10,
+        width: 70,
+        height: 70,
+        cursor: 'pointer',
+        '&:hover': {
+            border: '2px solid #ff9800',
+          }
       },
     container: {
         display: 'flex',
@@ -61,7 +107,8 @@ class UserProfile extends Component {
         health: '',
         photo: '',
         vouchPoints: '',
-        actKey: ''
+        actKey: '',
+        avatarModal: false
     }
 
     componentDidMount(){
@@ -130,17 +177,18 @@ class UserProfile extends Component {
           return hearts
     }
 
-        // setPhoto(photo){
-    //     let data = {photo: photo}
-    //     var that = this
-    //     axios.post(this.state.Url+"setUserPhoto", data, {headers: this.state.headers})
-    //     .then(function (response) {
-    //         that.props.updateProfilePhoto(photo)
-    //     })
-    //     .catch(function (error) {
-    //         console.log(error, "ERROR")
-    //     })
-    // }
+    setPhoto(photo){
+        let data = {photo: photo}
+        var that = this
+        axios.post(this.state.Url+"setUserPhoto", data, {headers: this.state.headers})
+        .then(function (response) {
+            that.props.updateProfilePhoto(photo)
+            that.setState({avatarModal: false})
+        })
+        .catch(function (error) {
+            console.log(error, "ERROR")
+        })
+    }
 
     // getFbPhoto (){
     //     var that = this
@@ -222,16 +270,37 @@ render(){
     const { t } = this.props;
     const { classes } = this.props;
     const { email } = this.state;
-    // if(!this.state.fbStatus){
-    //     this.fbCheckLogin();
-    // }
+    const avatars = [
+        "https://saletproducts.s3.us-east-2.amazonaws.com/daff09158fa71fafd85855863a8665f2.png",
+        "https://saletproducts.s3.us-east-2.amazonaws.com/viAvatar.png",
+        "https://saletproducts.s3.us-east-2.amazonaws.com/marsh+and+lama.png",
+        "https://saletproducts.s3.us-east-2.amazonaws.com/fortnite_battle_royale_zoey_by_sianisdead_dcayl96.png",
+    ]
+
     if(this.state.status){
     return(
     <div>
         <Grid container justify="center" alignItems="center">
-            <Avatar alt="Profile Picture" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} className={classes.Avatar} />
+            <Avatar onClick={()=>{this.setState({avatarModal: true})}} alt="Profile Picture" src={this.props.loginData.photo ? this.props.loginData.photo : Pp} className={classes.Avatar} />
         </Grid>
-
+        <Modal          
+            open={this.state.avatarModal} onClose={this.onCloseModal.bind(this,'avatarModal')} center
+            styles={avatarModal}>
+            <Grid container justify="flex-start" alignItems="center">
+                <Typography className={classes.avatarTitle}>
+                    Profile Avatar
+                </Typography>
+            </Grid>
+            <Divider className={classes.Divider}/>
+            {avatars.map((item, index) =>{
+                return(
+                <div key={index} className="col-xs-2 col-md-2 col-lg-2">
+                    <Avatar onClick={()=>{this.setPhoto(item)}} alt="Profile Picture" src={item} className={classes.pickAvatar} />
+                </div>
+                )
+            }
+            )}
+        </Modal>
     {i18next.language === "EN" ?
     //  ENGLISH ALIGN
     <div>
@@ -371,8 +440,15 @@ return {
 }
 }
 
+const matchDispatchToProps = dispatch => bindActionCreators(
+    {
+        updateProfilePhoto
+    },
+    dispatch,
+)
+
 export default compose(
     withStyles(styles),
     withNamespaces(),
-    connect(mapStateToProps),
+    connect(mapStateToProps, matchDispatchToProps),
 )(UserProfile);

@@ -34,6 +34,13 @@ export const updateCartPrice = (data, action) => {
         }
 }
 
+export function switchMode(mode) {
+    return {
+        type: 'SWT_MODE',
+        payload: mode
+    }
+}
+
 export function updateProfilePhoto(photo) {
     return {
         type: 'USR_UPDATE_PHOTO',

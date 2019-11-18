@@ -170,6 +170,8 @@
       "orderReceipt": "الفاتورة",
       "statusPending": "قيد الانتظار",
       "statusOngoing": "جاري التنفيذ",
-      "EGPdiscount": "جنيه {{price}} ارخص"
+      "EGPdiscount": "جنيه {{price}} ارخص",    
+      "merch": "ملابس واكسسوارات",
+      "merchText": "ملابس من الالعاب المفضلة لك تبدأ من 100 جنيه"
       
 }

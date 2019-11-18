@@ -1,4 +1,25 @@
 @media screen and (max-width: 900px) {
+
+    .slidesBackgroundEn {
+      border-left: 10px solid #3F51B5;
+      margin-top: 10px;
+      min-height: 150px;
+      border-radius: 0.50rem;
+      overflow-x: hidden;
+      background-size: cover;
+      background-color: rgb(32, 32, 32); /* Fallback color */
+    }
+    
+    .slidesBackgroundAr {
+      border-right: 10px solid #3F51B5;
+      margin-top: 10px;
+      min-height: 150px;
+      border-radius: 0.50rem;
+      overflow-x: hidden;
+      background-size: cover;
+      background-color: rgb(32, 32, 32); /* Fallback color */
+    }
+    
     .fortniteCard {
       min-height: 120px;
     }

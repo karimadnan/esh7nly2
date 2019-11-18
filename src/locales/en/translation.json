@@ -169,6 +169,8 @@
       "orderReceipt": "Order Receipt",
       "statusPending": "Pending",
       "statusOngoing": "On Going",
-      "EGPdiscount": "{{price}} EGP Off"
+      "EGPdiscount": "{{price}} EGP Off",
+      "merch": "Merch and apparel",
+      "merchText": "Merch and apparel for your favorite games starting from 100 EGP"
 
 }

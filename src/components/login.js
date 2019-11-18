@@ -17,6 +17,7 @@ import SignUpIcon from '@material-ui/icons/AccountCircle';
 import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import compose from 'recompose/compose';
 import {Helmet} from "react-helmet";
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ErrorStyle = {
     overlay: {
@@ -30,6 +31,9 @@ const ErrorStyle = {
 }
 
 const styles = theme => ({
+    progress: {
+        margin: theme.spacing.unit * 2,
+    },
     fab: {
         margin: theme.spacing.unit,
         fontSize: 10,
@@ -55,8 +59,6 @@ const theme = createMuiTheme({
     },
 });
 
-window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
-
 class Login extends Component {
 
     state ={
@@ -64,7 +66,8 @@ class Login extends Component {
         ErrorMsg: '',
         Url: this.props.server.main,
         Phone: '',
-        Password: ''
+        Password: '',
+        logging: false
     }
 
 updateInput(key, value) {
@@ -85,66 +88,64 @@ keyClicked (e) {
     }
 }
 
+loginRedirect(){
+    if(!this.props.loginData.isAdmin){
+        ReactRouter.goTo("/account") 
+    }
+    else if (this.props.loginData.isAdmin && this.props.loginData.session === 1){
+        ReactRouter.goTo("/agentdashboard") 
+    }
+    else if (this.props.loginData.isAdmin && this.props.loginData.session === 2){
+        ReactRouter.goTo("/admindashboard") 
+    }
+}
+
 login() {
     var that=this;
     const { t } = this.props;
     if(this.state.Phone  && this.state.Password){
-
+        this.setState({logging: true})
     if(isEmail(this.state.Phone)){
             axios.get(`${this.state.Url}adminLogin?Email=${this.state.Phone}&Password=${this.state.Password}`)
             .then(function (response) {
-                that.props.loginFunction(response.data.data, 'login')
-                if(that.props.loginData.session === 1){  
-                    ReactRouter.goTo("/agentdashboard") 
-                } 
-                else if(that.props.loginData.session === 2){ 
-                    ReactRouter.goTo("/admindashboard") 
-                }
+                    that.props.loginFunction(response.data.data, 'login')
+                    that.loginRedirect()
+                    that.setState({logging: false})
             })
             .catch(function (error) {
                 if (error.response.data.message){
                     that.setState({
                     ErrorModal:true,
-                    ErrorMsg:error.response.data.message
+                    ErrorMsg:error.response.data.message,
+                    logging: false
                     })
                 }
             });
         }
-        else{
+    else{
             axios.get(`${this.state.Url}login?Phone=${this.state.Phone}&Password=${this.state.Password}`)
             .then(function (response) {
-                that.props.loginFunction(response.data.data, 'login')
-                that.props.fetchCart(that.props.loginData.token)
-                ReactRouter.goTo("/account")
+                    that.props.loginFunction(response.data.data, 'login')
+                    that.props.fetchCart(that.props.loginData.token)
+                    that.loginRedirect()
+                    that.setState({logging: false})
             })
             .catch(function (error) {
             if (error.response.data.message){
                 that.setState({
                 ErrorModal:true,
-                ErrorMsg:error.response.data.message
+                ErrorMsg:error.response.data.message,
+                logging: false
                 })
             }
-
             }); 
         }
 
     }
     else{
-    this.setState({ErrorModal: true, ErrorMsg: `${t('loginEmpty')}`})
+        this.setState({ErrorModal: true, ErrorMsg: `${t('loginEmpty')}`})
     }
 } 
-
-loginRedirect(){
-if(!this.props.loginData.isAdmin){
-    ReactRouter.goTo("/account") 
-}
-else if (this.props.loginData.isAdmin && this.props.loginData.session === 1){
-    ReactRouter.goTo("/agentdashboard") 
-}
-else if (this.props.loginData.isAdmin && this.props.loginData.session === 2){
-    ReactRouter.goTo("/admindashboard") 
-}
-}
 
 render() {
     const { classes } = this.props;
@@ -158,7 +159,9 @@ render() {
             </Helmet>
                 <div className="container">
                         <div className="BlackBG" style={{color: "white", textAlign: "center"}}>
-                            <div className="badge-logo"/>
+                        {i18next.language === "EN" ? 
+                            <div className="black-badge-logoEn"/>:
+                            <div className="black-badge-logoAr"/>}
                                 <h1>{t('welcome')}, {this.props.loginData.userName}</h1>
                                 <h4>{t('alreadyLogged')} <span style={{color: "#3F51B5", cursor: "pointer", textDecoration: "underline"}} onClick={()=>{this.loginRedirect()}}>{t('account')}</span></h4>
                         </div>
@@ -174,11 +177,13 @@ render() {
             <title>{t('loginTitle')}</title>
             <meta name="description" content={t('loginTitle')} />
         </Helmet>
-        <div className="container">
-            <div className="BlackBG" style={{padding: 20}}>
+
+            <div className="BlackBG" >
+
                             {i18next.language === "EN" ? 
-                            <div className="badge-logo"/>:
-                            <div className="badge-logo-ar"/>}
+                            <div className="black-badge-logoEn"/>:
+                            <div className="black-badge-logoAr"/>}
+
                             <div className="form-group has-feedback" style={{textAlign: i18next.language === "EN" ? "left" : "right"}}>
                                 <div className="col-xs-12 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
                                         <label style={{color: this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "green" : "#3F51B5"}}>{this.state.Phone.length === 11 || isEmail(this.state.Phone) ? "":'*'} {t('phone')}</label>
@@ -192,10 +197,13 @@ render() {
 
                                 <div className="col-xs-12 col-md-12 col-lg-12">
                                     <Grid container justify="center" alignItems="center">
+                                    {this.state.logging ? 
+                                            <CircularProgress className={classes.progress} />
+                                        :
                                         <Fab color="primary" variant="extended" aria-label="Next" onClick={()=>{this.login()}} className={classes.fab}>
                                             <LoginIcon className={classes.extendedIcon} />
                                             {t('login')}
-                                        </Fab>
+                                        </Fab>}
                                     </Grid>
                                 </div>
 
@@ -216,7 +224,7 @@ render() {
 
                             </div>
                         </div>
-                    </div>
+
                 <Modal open={this.state.ErrorModal} onClose={this.onCloseModal.bind(this,'ErrorModal')} center
                     styles={ErrorStyle}>
                     <h3 className="col-xs-6">{this.state.ErrorMsg}</h3>

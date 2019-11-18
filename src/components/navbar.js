@@ -20,8 +20,8 @@ import ReactRouter from 'flux-react-router';
 import {loginFunction, updateCart} from '../actions/index';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import WhiteGlobalCart from '../containers/global-cart-white';
-import BlackGlobalCart from '../containers/global-cart-black';
+import GlobalCart from '../containers/global-cart';
+import ModeSwitcher from '../containers/modeSwitcher';
 import LangIcon from '../containers/langIcon';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
@@ -426,8 +426,9 @@ class Navbar extends React.Component {
             <div className={classes.grow} />
 
             <div className={classes.sectionDesktop}>
+                  <ModeSwitcher />
                   <LangIcon />
-                  <BlackGlobalCart/>
+                  <GlobalCart/>
 
                   {this.props.loginData.loggedState ?
                   <MuiThemeProvider theme={this.props.loginData.isAdmin ? adminTheme : theme}>
@@ -461,7 +462,7 @@ class Navbar extends React.Component {
             </div>
             <div className={classes.sectionMobile}>
               <LangIcon />
-              <BlackGlobalCart />
+              <GlobalCart/>
               <IconButton aria-haspopup="true" onClick={this.toggleDrawer('drawer', true)} color="inherit">
                 <Menu />
               </IconButton>
@@ -548,7 +549,8 @@ function mapStateToProps(state){
   return {
     loginData: state.loginSession,
     server: state.server,
-    cart: state.cartItems
+    cart: state.cartItems,
+    settings: state.settings
   }
 }
 

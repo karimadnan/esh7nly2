@@ -119,7 +119,7 @@
       "fbPhotoDuplicate": "يعم مهيا نفس الصورة",
       "totalCart": " جنيه {{total}}: السعر",
       "micro": "الشحن فى الالعاب",
-      "microText": "اشحن فأى لعبة او تطبيق",
+      "microText": "اشحن فى الالعاب و التطبيقات",
       "copylink": "لينك المنتج",
       "byStore": "الشركة" ,
       "copyEmail": "نسخ الأيميل",
@@ -170,7 +170,9 @@
       "orderReceipt": "الفاتورة",
       "statusPending": "قيد الانتظار",
       "statusOngoing": "جاري التنفيذ",
-      "EGPdiscount": " ارخص {{price}} جنيه"
+      "EGPdiscount": " ارخص {{price}} جنيه",    
+      "merch": "تيشرتس من الالعاب ",
+      "merchText": "تشيرتس بتبدأ من 100 جنيه"
 
 
 }
